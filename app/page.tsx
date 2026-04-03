@@ -8,7 +8,7 @@ export default function Home() {
         {/* Hero Section */}
         <div className="flex flex-col items-center gap-8 text-center sm:items-start sm:text-left">
           
-          <h1 className="font-heading text-4xl md:text-6xl uppercase tracking-tighter leading-none">
+          <h1 className="font-hackdaddy text-4xl md:text-6xl uppercase tracking-tighter leading-none">
           
             <span className="text-primary">Next Gen Platform</span> <br />
          
