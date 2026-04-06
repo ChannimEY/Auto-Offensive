@@ -60,10 +60,10 @@ const toolLinks: ToolItem[] = [
 ];
 
 const featureLinks: FeatureItem[] = [
-  { title: 'Integration CI/CD', description: 'Seamlessly connect with your development pipelines',   href: '#', icon: '/icons/feature-cicd.png'       },
-  { title: 'Ai Pentest',        description: 'Accelerate testing with intelligent automation',        href: '#', icon: '/icons/feature-aipentest.png'  },
-  { title: 'CLI Access',        description: 'Execute tools remotely via terminal',                   href: '#', icon: '/icons/feature-cli.png'        },
-  { title: 'Automation Tools',  description: 'Run tools instantly from the web UI',                   href: '#', icon: '/icons/feature-automation.png' },
+  { title: 'Integration CI/CD', description: 'Seamlessly connect with your development pipelines',   href: '/feature/cicd', icon: '/icons/feature-cicd.png'       },
+  { title: 'Ai Pentest',        description: 'Accelerate testing with intelligent automation',        href: '/feature/ai', icon: '/icons/feature-aipentest.png'  },
+  { title: 'CLI Access',        description: 'Execute tools remotely via terminal',                   href: '/feature/cli', icon: '/icons/feature-cli.png'        },
+  { title: 'Automation Tools',  description: 'Run tools instantly from the web UI',                   href: '/feature/webui', icon: '/icons/feature-automation.png' },
 ];
 
 const resourceDocLinks: ResourceItem[] = [
@@ -89,7 +89,7 @@ function Logo() {
     ? '/Auto_Offensive_Dark-mode.png'
     : '/Auto_Offensive_Light-mode.png';
   return (
-    <Link href="/" className="cursor-pointer flex-shrink-0">
+    <Link href="/" className="cursor-pointer shrink-0">
       <Image src={src} alt="Auto-Offensive" width={100} height={40} priority />
     </Link>
   );
@@ -107,7 +107,7 @@ function ThemeToggle() {
       onClick={() => setTheme(isDark ? 'light' : 'dark')}
       aria-label="Toggle theme"
       className={cn(
-        'relative inline-flex items-center w-14 h-7 rounded-full border-2 transition-colors duration-300 cursor-pointer flex-shrink-0',
+        'relative inline-flex items-center w-14 h-7 rounded-full border-2 transition-colors duration-300 cursor-pointer shrink-0',
         isDark
           ? 'bg-gray-700 border-gray-600'
           : 'bg-gray-200 border-gray-300',
@@ -158,7 +158,7 @@ function LanguageToggle() {
   const current = options.find(o => o.value === lang)!;
 
   return (
-    <div ref={ref} className="relative flex-shrink-0">
+    <div ref={ref} className="relative shrink-0">
       <button
         onClick={() => setOpen(v => !v)}
         className="flex items-center gap-1.5 px-2.5 py-1.5   bg-transparent text-sm font-medium cursor-pointer hover:bg-primary/10 transition-colors"
@@ -210,7 +210,7 @@ function ToolItem({ title, href, icon }: ToolItem) {
         href={href}
         className="flex items-center gap-2.5 rounded-md px-2 py-2 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group"
       >
-        <div className="flex-shrink-0 w-8 h-8 rounded-md border border-border bg-background flex items-center justify-center overflow-hidden shadow-sm">
+        <div className="shrink-0 w-8 h-8 rounded-md border border-border bg-background flex items-center justify-center overflow-hidden shadow-sm">
           <Image
             src={icon}
             alt={title}
@@ -235,7 +235,7 @@ function FeatureItem({ title, description, href, icon }: FeatureItem) {
         href={href}
         className="flex items-start gap-3 rounded-md p-2.5 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group"
       >
-        <div className="flex-shrink-0 w-10 h-10  bg-background flex items-center justify-center overflow-hidden shadow-sm">
+        <div className="shrink-0 w-10 h-10  bg-background flex items-center justify-center overflow-hidden shadow-sm">
           <Image
             src={icon}
             alt={title}
@@ -263,7 +263,7 @@ function ResourceDocItem({ title, description, href, icon }: ResourceItem) {
         href={href}
         className="flex items-start gap-3 rounded-md p-2 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group"
       >
-        <div className="flex-shrink-0 w-9 h-9 rounded-md border border-border bg-background flex items-center justify-center overflow-hidden shadow-sm">
+        <div className="shrink-0 w-9 h-9 rounded-md border border-border bg-background flex items-center justify-center overflow-hidden shadow-sm">
           <Image
             src={icon}
             alt={title}
@@ -293,7 +293,7 @@ function ResourceMiscItem({ title, href, icon }: ResourceItem) {
         href={href}
         className="flex items-center gap-2.5 rounded-md px-2 py-2  hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group"
       >
-        <div className="flex-shrink-0 w-8 h-8 rounded-md border border-border bg-background flex items-center justify-center overflow-hidden shadow-sm">
+        <div className="shrink-0 w-8 h-8 rounded-md border border-border bg-background flex items-center justify-center overflow-hidden shadow-sm">
           <Image
             src={icon}
             alt={title}
@@ -331,7 +331,7 @@ function MobileMenu({ open, children, className, ...props }: MobileMenuProps) {
     <div
       id="mobile-menu"
       className={cn(
-        'bg-background/95 supports-[backdrop-filter]:bg-background/50 backdrop-blur-lg',
+        'bg-background/95 [@supports(backdrop-filter:blur(0))]:bg-background/60',
         'fixed top-14 right-0 bottom-0 left-0 z-40 flex flex-col overflow-hidden border-y md:hidden',
       )}
     >
@@ -364,10 +364,10 @@ export function Header() {
   return (
     <header
       className={cn('sticky top-0 z-50 w-full border-b border-transparent', {
-        'bg-background/95 supports-[backdrop-filter]:bg-background/50 border-border backdrop-blur-lg': scrolled,
+        'bg-background/95 [@supports(backdrop-filter:blur(0))]:bg-background/60': scrolled,
       })}
     >
-      <nav className="mx-auto flex h-14 w-full max-w-7xl items-center justify-between px-4">
+      <nav className="mx-auto z-50 flex h-14 w-full max-w-7xl items-center justify-between px-4">
 
         {/* Left: Logo  */}
         <div >
@@ -382,11 +382,11 @@ export function Header() {
 
               {/* ── Tools ── */}
               <NavigationMenuItem>
-                <NavigationMenuTrigger className="bg-transparent hover:bg-transparent focus:bg-transparent data-[active]:bg-transparent data-[state=open]:bg-transparent text-primary font-semibold">
+                <NavigationMenuTrigger className="bg-transparent hover:bg-transparent focus:bg-transparent data-[state=active]:bg-transparent data-[state=open]:bg-transparent text-primary font-semibold">
                 <Link href="/page/tools">  Tools</Link>
                 </NavigationMenuTrigger>
                 <NavigationMenuContent className="bg-background">
-                  <div className="w-[520px] rounded-xl border border-border bg-popover shadow-xl p-3">
+                  <div className="w-120 rounded-xl border border-border bg-popover shadow-xl p-3">
                     <ul className="grid grid-cols-2 gap-0.5">
                       {toolLinks.map((item, i) => (
                         <li key={i}>
@@ -400,11 +400,11 @@ export function Header() {
 
               {/* ── Features ── */}
               <NavigationMenuItem>
-                <NavigationMenuTrigger className="bg-transparent hover:bg-transparent focus:bg-transparent data-[active]:bg-transparent data-[state=open]:bg-transparent">
+                <NavigationMenuTrigger className="bg-transparent hover:bg-transparent focus:bg-transparent data-[state=active]:bg-transparent data-[state=open]:bg-transparent">
                 <Link href="/feature">  Features</Link>
                 </NavigationMenuTrigger>
                 <NavigationMenuContent className="bg-background">
-                  <div className="w-[480px] rounded-xl border border-border bg-popover shadow-xl p-3">
+                  <div className="w-120 rounded-xl border border-border bg-popover shadow-xl p-3">
                     <ul className="grid grid-cols-2 gap-1">
                       {featureLinks.map((item, i) => (
                         <li key={i}>
@@ -418,11 +418,11 @@ export function Header() {
 
               {/* ── Resources ── */}
               <NavigationMenuItem>
-                <NavigationMenuTrigger className="bg-transparent hover:bg-transparent focus:bg-transparent data-[active]:bg-transparent data-[state=open]:bg-transparent">
+                <NavigationMenuTrigger className="bg-transparent hover:bg-transparent focus:bg-transparent data-[state=active]:bg-transparent data-[state=open]:bg-transparent">
                   <Link href="/page/resource">  Resources</Link>
                 </NavigationMenuTrigger>
                 <NavigationMenuContent className="bg-background">
-                  <div className="w-[480px] rounded-xl border border-border bg-popover shadow-xl p-3">
+                  <div className="w-120 rounded-xl border border-border bg-popover shadow-xl p-3">
                     <div className="grid grid-cols-2 gap-2">
                       {/* Left: doc links */}
                       <ul className="space-y-0.5 border-r border-border pr-2">

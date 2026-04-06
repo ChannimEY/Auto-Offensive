@@ -226,12 +226,12 @@ export default function ToolsPage() {
                 className="group bg-white border border-gray-100 rounded-2xl p-6 flex flex-col gap-4 shadow-sm hover:shadow-lg hover:border-[#00C896]/40 hover:-translate-y-1 transition-all duration-200 cursor-pointer"
               >
                 <div className="flex items-start justify-between">
-                  <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#f0fdf8] to-[#e6fff7] border border-[#00C896]/20 flex items-center justify-center text-[#00C896] group-hover:scale-105 transition-transform">
+                  <div className="w-11 h-11 rounded-xl bg-linear-to-r from-[#f0fdf8] to-[#e6fff7] border border-[#00C896]/20 flex items-center justify-center text-[#00C896] group-hover:scale-105 transition-transform">
                     <Icon id={tool.id} />
                   </div>
                   <div className="flex items-center gap-2">
                     {tool.badge && (
-                      <span className="text-[10px] font-bold uppercase tracking-wider bg-gradient-to-r from-[#00C896] to-[#00B386] text-white px-2.5 py-1 rounded-md">
+                      <span className="text-[10px] font-bold uppercase tracking-wider bg-linear-to-r from-[#00C896] to-[#00B386] text-white px-2.5 py-1 rounded-md">
                         {tool.badge}
                       </span>
                     )}

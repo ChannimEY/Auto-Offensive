@@ -94,7 +94,7 @@ export default function ResourcePage() {
 
       {/* ── Newsletter CTA ── */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
-        <div className="bg-gradient-to-r from-[#0D1B2A] via-[#0f2940] to-[#0D1B2A] rounded-2xl px-8 py-14 flex flex-col md:flex-row items-center justify-between gap-8 relative overflow-hidden">
+        <div className="bg-linear-to-r from-[#0D1B2A] via-[#0f2940] to-[#0D1B2A] rounded-2xl px-8 py-14 flex flex-col md:flex-row items-center justify-between gap-8 relative overflow-hidden">
           <div className="absolute -top-10 -left-10 w-40 h-40 rounded-full bg-[#00C896]/10 blur-2xl" />
           <div className="absolute -bottom-10 -right-10 w-40 h-40 rounded-full bg-[#0077B6]/10 blur-2xl" />
           <div className="relative z-10 text-center md:text-left">

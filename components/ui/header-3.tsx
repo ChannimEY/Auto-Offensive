@@ -55,7 +55,7 @@ export function Header() {
 	return (
 		<header
 			className={cn('sticky top-0 z-50 w-full border-b border-transparent', {
-				'bg-background/95 supports-[backdrop-filter]:bg-background/50 border-border backdrop-blur-lg':
+				'bg-background/95 [@supports(backdrop-filter:blur(0))]:bg-background/60':
 					scrolled,
 			})}
 		>
@@ -175,7 +175,7 @@ function MobileMenu({ open, children, className, ...props }: MobileMenuProps) {
 		<div
 			id="mobile-menu"
 			className={cn(
-				'bg-background/95 supports-[backdrop-filter]:bg-background/50 backdrop-blur-lg',
+				'bg-background/95 [@supports(backdrop-filter:blur(0))]:bg-background/60 backdrop-blur-lg',
 				'fixed top-14 right-0 bottom-0 left-0 z-40 flex flex-col overflow-hidden border-y md:hidden',
 			)}
 		>

@@ -127,37 +127,39 @@ function CardInner({ member: m, index }: CardInnerProps) {
       </div>
 
       {/* Avatar */}
-      <div className="relative z-[2] flex justify-center pt-3 mb-5">
-        <div className="tf-photo-outer relative w-[200px] h-[200px] bg-[rgba(0,208,178,0.05)] rounded-full flex items-center justify-center">
+      <div className="relative z-2 flex justify-center pt-3 mb-5">
+        <div className="tf-photo-outer relative w-50 h-50 bg-[rgba(0,208,178,0.05)] rounded-full flex items-center justify-center">
           <img
             src={m.img}
             alt={m.name}
-            className="w-[200px] h-[200px] rounded-full object-cover object-top border-[3px] border-white/90 shadow-[0_4px_32px_rgba(0,0,0,0.15)] block"
+            width={200}
+            height={200}
+            className="w-50 h-50 rounded-full object-cover object-top border-[3px] border-white/90 shadow-[0_4px_32px_rgba(0,0,0,0.15)] block"
           />
           <span className="tf-status-dot" />
         </div>
       </div>
 
       {/* Body */}
-      <div className="relative z-[2]">
-        <div className="text-[1.18rem] font-bold text-[#0a1f1a] tracking-[-0.01em] mb-[4px]">{m.name}</div>
-        <div className="text-[0.78rem] font-semibold text-[#00D0B2] tracking-[0.1em] uppercase mb-[12px]">{m.role}</div>
-        <div className="w-7 h-px bg-gradient-to-r from-[#00D0B2] to-[#00cfff] mx-auto mb-[12px] rounded-sm opacity-45" />
-        <div className="text-[0.84rem] text-[#8aada6] leading-[1.9] tracking-[0.03em] mb-4 min-h-[34px] italic">
-          <em className="text-[rgba(0,208,178,0.55)] not-italic">// </em>
+      <div className="relative z-2">
+        <div className="text-[1.18rem] font-bold text-[#0a1f1a] tracking-[-0.01em] mb-1">{m.name}</div>
+        <div className="text-[0.78rem] font-semibold text-primary tracking-widest uppercase mb-3">{m.role}</div>
+        <div className="w-7 h-px  bg-linear-to-r from-primary to-[#00cfff] mx-auto mb-3 rounded-sm opacity-45" />
+        <div className="text-[0.84rem] text-[#8aada6] leading-[1.9] tracking-[0.03em] mb-4 min-h-9 italic">
+          {/* */}<em className="text-[rgba(0,208,178,0.55)] not-italic">&gt;</em>
           {m.slogan.split("\n")[0]}<br />
           {m.slogan.split("\n")[1]} <em className="text-[rgba(0,208,178,0.55)] not-italic">_</em>
         </div>
         <div className="flex justify-center mb-4">
           {m.isMentor ? (
-            <span className="text-[0.72rem] font-bold tracking-[0.14em] uppercase text-[#8a0000] bg-[rgba(200,10,10,0.05)] border border-[rgba(200,10,10,0.18)] rounded-full px-4 py-[5px]">
+            <span className="text-[0.72rem] font-bold tracking-[0.14em] uppercase text-[#8a0000] bg-[rgba(200,10,10,0.05)] border border-[rgba(200,10,10,0.18)] rounded-full px-4 py-1">
               {m.badge}
             </span>
           ) : (
-            <span className={`text-[0.72rem] font-bold tracking-[0.14em] uppercase rounded-full px-4 py-[5px] ${
+            <span className={`text-[0.72rem] font-bold tracking-[0.14em] uppercase rounded-full px-4 py-2 ${
               m.badge === "Team Leader"
                 ? "text-[#c97000] bg-[rgba(200,120,0,0.05)] border border-[rgba(200,120,0,0.18)]"
-                : "text-[#00D0B2] bg-[rgba(0,208,178,0.06)] border border-[rgba(0,208,178,0.15)]"
+                : "text-primary bg-[rgba(0,208,178,0.06)] border border-[rgba(0,208,178,0.15)]"
             }`}>
               {m.badge}
             </span>
@@ -165,7 +167,7 @@ function CardInner({ member: m, index }: CardInnerProps) {
         </div>
         
         {/* Social links - EASILY EDITABLE */}
-        <div className="flex justify-center gap-[10px]">
+        <div className="flex justify-center gap-3">
           {m.social && Object.entries(m.social).map(([key, url]) => {
             const link = SOCIAL_LINKS[key as keyof typeof SOCIAL_LINKS];
             if (!link) return null;
@@ -620,12 +622,12 @@ export default function TeamAndFooter() {
         </div>
 
         {/* ── Top divider ── */}
-        <div className="relative z-[10] w-full h-px bg-gradient-to-r from-transparent via-[rgba(0,208,177,0.45)] to-transparent" />
+        <div className="relative z-10 w-full h-px  bg-linear-to-r from-transparent via-[rgba(0,208,177,0.45)] to-transparent" />
 
         {/* ── Intro ── */}
-        <div className="relative z-[10] tf-intro px-[6%] pt-[90px] pb-[40px] text-center overflow-hidden">
+        <div className="relative z-10 tf-intro px-[6%] pt-23 pb-10 text-center overflow-hidden">
           <div
-            className="inline-flex items-center gap-[10px] text-[0.68rem] font-semibold tracking-[0.16em] uppercase text-[rgba(0,208,178,0.55)] mb-4 tf-eyebrow"
+            className="inline-flex items-center gap-3 text-[0.68rem] font-semibold tracking-[0.16em] uppercase text-[rgba(0,208,178,0.55)] mb-4 tf-eyebrow"
           >
             Auto-Offensive
           </div>
@@ -633,9 +635,9 @@ export default function TeamAndFooter() {
             className="text-[clamp(2rem,3.6vw,3.2rem)] font-bold leading-[1.08] tracking-[-0.035em] text-[#0a1f1a] mb-[0.9rem]"
             style={{ fontFamily: "var(--font-hackdaddy), var(--font-noto-khmer), monospace" }}
           >
-            The People Behind<br />the <em className="text-[#00D0B2] not-italic">Platform</em>
+            The People Behind<br />the <em className="text-primary not-italic">Platform</em>
           </h2>
-          <p className="text-[0.92rem] text-[#4a6e65] max-w-[460px] mx-auto leading-[1.8]">
+          <p className="text-[0.92rem] text-[#4a6e65] max-w-115 mx-auto leading-[1.8]">
             Security researchers, engineers and builders — united by one mission:
             make offensive security accessible to everyone.
           </p>
@@ -644,16 +646,16 @@ export default function TeamAndFooter() {
         {/* ══════════════════════════════════════
             MENTORS SECTION
         ══════════════════════════════════════ */}
-        <div className="relative z-[10] px-[6%] pt-6 pb-3">
+        <div className="relative z-10 px-[6%] pt-6 pb-3">
           <div className="mb-4">
-            <div className="tf-group-label flex items-center gap-[10px] text-[0.62rem] font-semibold tracking-[0.16em] uppercase text-[rgba(0,208,178,0.5)] mb-[0.7rem]">
+            <div className="tf-group-label flex items-center gap-3 text-[0.62rem] font-semibold tracking-[0.16em] uppercase text-[rgba(0,208,178,0.5)] mb-[0.7rem]">
               Section 01
             </div>
             <h2
               className="text-[clamp(1.5rem,2.4vw,2.1rem)] font-bold tracking-[-0.03em] text-[#0a1f1a] mb-[0.35rem]"
               style={{ fontFamily: "var(--font-hackdaddy), var(--font-noto-khmer), monospace" }}
             >
-              Our <em className="text-[#00D0B2] not-italic">Mentors</em>
+              Our <em className="text-primary not-italic">Mentors</em>
             </h2>
             <p className="text-[0.86rem] text-[#4a6e65] leading-[1.7]">Leading the way with expertise and guidance</p>
           </div>
@@ -676,7 +678,7 @@ export default function TeamAndFooter() {
             {MENTORS.map((m, i) => (
               <div
                 key={m.name}
-                className="tf-card tf-card--mentor ao-card relative bg-[rgba(255,252,246,0.42)] backdrop-blur-[8px] border border-[rgba(200,134,10,0.12)] rounded-2xl text-center overflow-hidden"
+                className="tf-card tf-card--mentor ao-card relative bg-[rgba(255,252,246,0.42)] backdrop-blur-2 border border-[rgba(200,134,10,0.12)] rounded-2xl text-center overflow-hidden"
                 ref={(el) => { cardRefs.current[i] = el; }}
                 style={{ transitionDelay: `${i * 80}ms` }}
               >
@@ -687,21 +689,21 @@ export default function TeamAndFooter() {
         </div>
 
         {/* thin divider between sections */}
-        <div className="relative z-[10] mx-[6%] my-8 h-px bg-gradient-to-r from-transparent via-[rgba(0,208,178,0.12)] to-transparent" />
+        <div className="relative z-10 mx-[6%] my-8 h-px bg-linear-to-r from-transparent via-teal-400/10 to-transparent" />
 
         {/* ══════════════════════════════════════
             CORE TEAM SECTION
         ══════════════════════════════════════ */}
-        <div className="relative z-[10] px-[6%] pt-2 pb-3">
+        <div className="relative z-10 px-[6%] pt-2 pb-3">
           <div className="mb-4">
-            <div className="tf-group-label flex items-center gap-[10px] text-[0.62rem] font-semibold tracking-[0.16em] uppercase text-[rgba(0,208,178,0.5)] mb-[0.7rem]">
+            <div className="tf-group-label flex items-center gap-3 text-[0.62rem] font-semibold tracking-[0.16em] uppercase text-[rgba(0,208,178,0.5)] mb-[0.7rem]">
               Section 02
             </div>
             <h2
               className="text-[clamp(1.5rem,2.4vw,2.1rem)] font-bold tracking-[-0.03em] text-[#0a1f1a] mb-[0.35rem]"
               style={{ fontFamily: "var(--font-hackdaddy), var(--font-noto-khmer), monospace" }}
             >
-              Core <em className="text-[#00D0B2] not-italic">Team</em>
+              Core <em className="text-primary not-italic">Team</em>
             </h2>
             <p className="text-[0.86rem] text-[#4a6e65] leading-[1.7]">Dedicated professionals building the platform</p>
           </div>
@@ -724,7 +726,7 @@ export default function TeamAndFooter() {
             {TEAM.map((m, i) => (
               <div
                 key={m.name}
-                className="tf-card ao-card relative backdrop-blur-[8px] rounded-2xl text-center overflow-hidden border border-[rgba(0,208,178,0.1)]"
+                className="tf-card ao-card relative backdrop-blur-2 rounded-2xl text-center overflow-hidden border border-[rgba(0,208,178,0.1)]"
                 ref={(el) => { cardRefs.current[MENTORS.length + i] = el; }}
                 style={{ transitionDelay: `${(i % 3) * 60}ms` }}
               >
@@ -734,18 +736,18 @@ export default function TeamAndFooter() {
           </div>
         </div>
 
-        <div className="relative z-[10] w-full h-px bg-gradient-to-r from-transparent via-[rgba(0,208,178,0.14)] to-transparent mt-12" />
+        <div className="relative z-10 w-full h-px  bg-linear-to-r from-transparent via-[rgba(0,208,178,0.14)] to-transparent mt-12" />
 
         {/* ══════════════════════════════════════
             FOOTER
         ══════════════════════════════════════ */}
-        <footer className="relative z-[10] tf-footer flex flex-col items-center justify-center text-center px-[6%] pt-[90px] pb-16 bg-[#F7F5F0] overflow-hidden">
+        <footer className="relative z-10 tf-footer flex flex-col items-center justify-center text-center px-[6%] pt-23 pb-16 bg-[#F7F5F0] overflow-hidden">
           <div className="tf-footer-grid" />
 
-          <div className="relative z-[1] w-full flex flex-col items-center">
+          <div className="relative z-1 w-full flex flex-col items-center">
 
             {/* Footer path — 01 ── 02 ── 03 like the reference */}
-            <div className="tf-footer-path w-full max-w-[480px] mb-12">
+            <div className="tf-footer-path w-full max-w-120 mb-12">
               <div style={{ position: "relative", height: "28px" }}>
                 {/* track line */}
                 <div className="tf-footer-path-track" style={{ position: "absolute", top: "50%", left: "28px", right: "28px", transform: "translateY(-50%)" }} />
@@ -770,15 +772,15 @@ export default function TeamAndFooter() {
               className="text-[clamp(1.9rem,3.6vw,3.2rem)] font-bold tracking-[-0.03em] text-[#0a1f1a] mb-[0.9rem] leading-[1.1]"
               style={{ fontFamily: "var(--font-hackdaddy), var(--font-noto-khmer), monospace" }}
             >
-              Ready to automate your<br /><em className="text-[#00D0B2] not-italic">security testing</em>?
+              Ready to automate your<br /><em className="text-primary not-italic">security testing</em>?
             </h2>
-            <p className="text-[0.92rem] text-[#4a6e65] mb-8 max-w-[420px] leading-[1.78] mx-auto">
+            <p className="text-[0.92rem] text-[#4a6e65] mb-8 max-w-105 leading-[1.78] mx-auto">
               Join thousands of engineers who scan smarter — not harder.
               No CLI. No complexity. Just results.
             </p>
             <a
               href="#"
-              className="inline-flex items-center gap-2 bg-[#00D0B2] text-[#020f0c] px-8 py-[14px] rounded-[10px] text-[0.9rem] font-bold cursor-pointer tracking-[0.04em] transition-colors duration-200 no-underline hover:bg-[#00b894]"
+              className="inline-flex items-center gap-2 bg-primary text-[#020f0c] px-8 py-4 rounded-3 text-[0.9rem] font-bold cursor-pointer tracking-[0.04em] transition-colors duration-200 no-underline hover:bg-[#00b894]"
             >
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
                 <circle cx="11" cy="11" r="8" /><path d="M21 21l-4.35-4.35" />
