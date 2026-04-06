@@ -4,6 +4,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { Separator } from "@/components/ui/separator";
 import { FaFacebook, FaLinkedin, FaGithub, FaTwitter } from "react-icons/fa";
+import { useTheme } from "next-themes";
+import * as React from "react";
 
 const footerLinks = {
   product: [
@@ -34,63 +36,77 @@ const socialLinks = [
 ];
 
 export function Footer() {
+  const { theme } = useTheme();
+  const [mounted, setMounted] = React.useState(false);
+
+  React.useEffect(() => setMounted(true), []);
+
+  if (!mounted) return null;
+
+  const logoSrc =
+    theme === "dark"
+      ? "/Auto_Offensive_Dark-mode.png"
+      : "/Auto_Offensive_Light-mode.png";
+
   return (
-    <footer className="w-full border-t bg-zinc-100 text-zinc-700 mt-auto">
-      <div className="max-w-7xl mx-auto px-6 py-14">
+    <footer className="w-full border-t bg-zinc-100 dark:bg-zinc-900 text-zinc-700 dark:text-zinc-300 mt-auto">
+      <div className="max-w-7xl mx-auto px-4  py-12 flex flex-col justify-between gap-10">
 
         {/* TOP GRID */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
 
           {/* LOGO + DESC */}
-          <div className="flex flex-col gap-4">
-            <Link href="/" className="flex items-center gap-3">
+          <div className="flex flex-col">
+            <Link href="/" className="flex items-center mb-4">
               <Image
-                src="/logo.png" 
-                alt="logo"
-                width={60}
-                height={60}
+                src={logoSrc}
+                alt="Auto-Offensive"
+                width={140}  
+                height={80}
+                priority
               />
-              <span className="text-lg font-semibold text-blue-600">
-                Auto-Offensive
-              </span>
             </Link>
 
-            <p className="text-sm text-zinc-600 leading-relaxed max-w-xs">
+            <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed max-w-xs">
               Automated penetration testing platform for developers, security engineers, and DevSecOps teams.
             </p>
 
             {/* SOCIAL */}
-            <div className="flex items-center gap-3 mt-2">
+            <div className="flex items-center gap-3 mt-4">
               {socialLinks.map((social, index) => (
                 <Link
                   key={index}
                   href={social.href}
-                  className="w-8 h-8 flex items-center justify-center rounded-full border border-zinc-300 hover:bg-zinc-200 transition"
+                  className="w-8 h-8 flex items-center justify-center rounded-full border border-zinc-300 dark:border-zinc-700 hover:bg-zinc-200 dark:hover:bg-zinc-800 transition"
                 >
-                  <social.icon className="text-sm text-zinc-700" />
+                  <social.icon className="text-sm text-zinc-700 dark:text-zinc-300" />
                 </Link>
               ))}
             </div>
 
-            <p className="text-xs text-zinc-500 italic mt-2">
+            <p className="text-xs text-zinc-500 dark:text-zinc-400 italic mt-3">
               “Scan. Detect. Secure.”
             </p>
           </div>
 
           {/* ORGANIZED */}
-          <div className="flex flex-col gap-4">
-            <h3 className="text-xs font-bold uppercase tracking-widest text-zinc-500">
+          <div className="flex flex-col gap-4 lg:ms-18">
+            <h3 className="text-xs font-bold uppercase tracking-widest text-zinc-500 dark:text-zinc-400">
               Organized and Sponsored by
             </h3>
 
             <Image
-              src="/istad_logo.png"
-              alt="ISTAD"
-              width={120}
-              height={50}
+              src={
+                theme === "dark"
+                  ? "/istad-logo-white.png"
+                  : "/istad_logo.png"
+              }
+              alt="ISTAD logo"
+              width={180}
+              height={90}
             />
 
-            <p className="text-sm text-zinc-600">
+            <p className="text-sm text-zinc-600 text-center dark:text-zinc-400">
               Institute of Science and Technology Advanced Development
             </p>
           </div>
@@ -98,16 +114,16 @@ export function Footer() {
           {/* LINKS */}
           {Object.entries(footerLinks).map(([key, links]) => (
             <div key={key}>
-              <h3 className="text-xs font-bold uppercase tracking-widest text-zinc-500 mb-4">
+              <h3 className="text-xs font-bold uppercase tracking-widest lg:ms-20 justify-center flex text-zinc-500 dark:text-zinc-400 mb-4">
                 {key}
               </h3>
 
-              <ul className="space-y-2">
+              <ul className="space-y-2 ">
                 {links.map((link) => (
                   <li key={link.title}>
                     <Link
                       href={link.href}
-                      className="text-sm text-zinc-600 hover:text-black transition"
+                      className="text-sm text-zinc-600 dark:text-zinc-400 lg:ms-20 justify-center flex gap-2 hover:text-black dark:hover:text-white transition"
                     >
                       {link.title}
                     </Link>
@@ -120,20 +136,20 @@ export function Footer() {
         </div>
 
         {/* DIVIDER */}
-        <Separator className="my-10 bg-zinc-300" />
+        <Separator className="my-2 bg-zinc-300 dark:bg-zinc-700" />
 
         {/* BOTTOM */}
-        <div className="flex flex-col md:flex-row justify-between items-center text-sm text-zinc-500 gap-4">
+        <div className="flex flex-col md:flex-row justify-between items-center text-sm text-zinc-500 dark:text-zinc-400 gap-4">
           <p>
             © Copyright 2026, All Rights Reserved by Auto-Offensive <br />
             Built for Security Engineers & Pentesters
           </p>
 
           <div className="flex gap-6">
-            <Link href="#" className="hover:text-black transition">
+            <Link href="#" className="hover:text-black dark:hover:text-white transition">
               Privacy Policy
             </Link>
-            <Link href="#" className="hover:text-black transition">
+            <Link href="#" className="hover:text-black dark:hover:text-white transition">
               Terms of Service
             </Link>
           </div>

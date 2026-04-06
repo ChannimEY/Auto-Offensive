@@ -591,7 +591,7 @@ export default function OurMission() {
             style={{ fontFamily: "var(--font-body, sans-serif)" }}
           >
             <span className="text-[0.6rem] font-semibold tracking-[0.18em] uppercase text-[rgba(0,208,178,.5)]">
-              // Our Mission
+              {'// Our Mission'}
             </span>
             <span className="text-[0.6rem] font-semibold tracking-[0.18em] uppercase text-[rgba(0,208,178,.5)]">
               <span ref={counterRef}>01 — 04</span>
