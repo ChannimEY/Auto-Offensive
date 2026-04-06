@@ -300,6 +300,20 @@ export default function HomeHero() {
           0%   { opacity: 0; }
           100% { opacity: 1; }
         }
+
+        /* ─────────────────────────────────────────────
+           SOFT BLOB PLANET SPHERE — AiBanner style
+           ─────────────────────────────────────────────
+           Layout mirrors the AiBanner blobs exactly:
+             Left  blob  → deep blue  #01509e  (small, top-left)
+             Right blob  → teal       #00d0b2  (small, top-right)
+             Center blob → white      F7F5F0  (large, centre-to-top)
+             Fourth blob → cyan       #0194c7  (bottom-right, small)
+           All blurred 70–80 px so they bleed softly
+           and never look harsh inside the sphere.
+           overflow:hidden on the container clips
+           everything to the circle.
+        ───────────────────────────────────────────── */
         .ao-planet-sphere {
           opacity: 0;
           animation: planetReveal 0.9s ease-out 2.0s 1 forwards;
@@ -310,14 +324,127 @@ export default function HomeHero() {
           padding-top: 150%;
           border-radius: 50%;
           transform: translateX(-50%);
-          background: radial-gradient(
-            ellipse at 50% 1.5%,
-            rgba(9,9,11,1) 0%,
-            rgba(9,9,11,0.95) 40%,
-            rgba(9,9,11,0.85) 70%,
-            rgba(9,9,11,0.7) 100%
-          );
+          /* F7F5F0 base — sphere sits on white ground */
+          background: F7F5F0;
+          overflow: hidden;
         }
+
+        /* LEFT blob — deep blue, small, top-left corner */
+        .ao-planet-sphere::before {
+          content: '';
+          position: absolute;
+          border-radius: 50%;
+          width: 46%;
+          height: 42%;
+          top: -8%;
+          left: -6%;
+          background: #01509e;
+          opacity: 0.95;
+          filter: blur(80px);
+        }
+
+        /* RIGHT blob — teal, small, top-right corner */
+        .ao-planet-sphere::after {
+          content: '';
+          position: absolute;
+          border-radius: 50%;
+          width: 38%;
+          height: 34%;
+          top: -5%;
+          right: -4%;
+          background: #00d0b2;
+          opacity: 0.50;
+          filter: blur(70px);
+        }
+
+        /* CENTER-TO-TOP blob — white, large, dominates centre */
+        .ao-planet-blob-white {
+          position: absolute;
+          border-radius: 50%;
+          width: 72%;
+          height: 66%;
+          top: -55%;
+          left: 50%;
+          transform: translateX(-50%);
+          background: F7F5F0;
+          opacity: 1;
+          filter: blur(75px);
+        }
+
+        /* BOTTOM-LEFT blob — cyan #0194c7 fills the free space,
+           mirrors AiBanner's bottom-right cyan accent.
+           Positioned at bottom-left where the sphere has open white space
+           so it bleeds into the blue blob and creates a blue→cyan gradient mix */
+        .ao-planet-blob-cyan {
+          position: absolute;
+          border-radius: 50%;
+          width: 42%;
+          height: 38%;
+          bottom: -8%;
+          left: -4%;
+          background: #0194c7;
+          opacity: 0.75;
+          filter: blur(72px);
+        }
+
+        /* BOTTOM-RIGHT secondary cyan — smaller, echoes the left blob
+           to wrap the sphere bottom edge with colour like AiBanner */
+        .ao-planet-blob-cyan2 {
+          position: absolute;
+          border-radius: 50%;
+          width: 30%;
+          height: 26%;
+          bottom: -6%;
+          right: -2%;
+          background: #0194c7;
+          opacity: 0.50;
+          filter: blur(60px);
+        }
+
+        /* Subtle teal mid-centre softener — same as AiBanner's 4th blob */
+        .ao-planet-blob-mid {
+          position: absolute;
+          border-radius: 50%;
+          width: 30%;
+          height: 26%;
+          top: 22%;
+          left: 35%;
+          background: #00d0b2;
+          opacity: 0.18;
+          filter: blur(55px);
+        }
+
+        /* Vignette overlay — darkens edges so it reads as a sphere */
+        .ao-planet-sphere-overlay {
+          position: absolute;
+          inset: 0;
+          border-radius: 50%;
+          background: radial-gradient(
+            ellipse at 50% 50%,
+            transparent 0%,
+            transparent 38%,
+            rgba(240,248,255,0.25) 55%,
+            rgba(220,235,245,0.55) 72%,
+            rgba(200,220,240,0.80) 88%,
+            rgba(185,210,235,0.92) 100%
+          );
+          pointer-events: none;
+        }
+
+        /* Top-centre gentle wash — keeps white centre luminous */
+        .ao-planet-sphere-top {
+          position: absolute;
+          inset: 0;
+          border-radius: 50%;
+          background: radial-gradient(
+            ellipse at 50% 0%,
+            rgba(255,255,255,0.55) 0%,
+            transparent 48%
+          );
+          pointer-events: none;
+        }
+
+        /* ── glow, rim, fade, sweep — UNCHANGED ── */
         .ao-planet-glow {
           position: absolute;
           top: -3%; left: 50%;
@@ -528,7 +655,6 @@ export default function HomeHero() {
           50%       { transform: translateX(-50%) translateY(5px); }
         }
 
-        /* ── KEY FIX: higher z-index so nothing covers it ── */
         .scroll-indicator {
           position: absolute;
           bottom: 28px;
@@ -549,7 +675,7 @@ export default function HomeHero() {
           font-[var(--font-google-sans),var(--font-noto-khmer),sans-serif]
           transition-[background] duration-400
         "
-        style={{ background: "#ffffff" }}
+        style={{ background: "F7F5F0" }}
       >
 
         {/* ── STAR DOTS ── */}
@@ -559,7 +685,24 @@ export default function HomeHero() {
 
         {/* ── PLANET ARC ── */}
         <div className="ao-planet" aria-hidden="true">
-          <div className="ao-planet-sphere" />
+          {/*
+            Soft blob sphere — AiBanner style blobs:
+            ::before             = LEFT  blue blob  (#01509e, small, top-left)
+            ::after              = RIGHT teal blob  (#00d0b2, small, top-right)
+            .ao-planet-blob-white = CENTER white blob (large, centre-to-top)
+            .ao-planet-blob-cyan  = BOTTOM-RIGHT cyan accent (small)
+            .ao-planet-blob-mid   = subtle teal mid-centre softener
+            .ao-planet-sphere-overlay = vignette
+            .ao-planet-sphere-top     = top luminous wash
+          */}
+          <div className="ao-planet-sphere">
+            <div className="ao-planet-blob-white" />
+            <div className="ao-planet-blob-cyan" />
+            <div className="ao-planet-blob-cyan2" />
+            <div className="ao-planet-blob-mid" />
+            <div className="ao-planet-sphere-overlay" />
+            <div className="ao-planet-sphere-top" />
+          </div>
           <div className="ao-planet-glow"   />
           <div className="ao-planet-rim"    />
           <div className="ao-planet-sweep" aria-hidden="true">
@@ -573,13 +716,13 @@ export default function HomeHero() {
                   x1="0" y1="100" x2="200" y2="100">
                   <stop offset="0%"   stopColor="#00D0B2" stopOpacity="0" />
                   <stop offset="60%"  stopColor="#00D0B2" stopOpacity="0.55" />
-                  <stop offset="100%" stopColor="#ffffff" stopOpacity="0.95" />
+                  <stop offset="100%" stopColor="F7F5F0" stopOpacity="0.95" />
                 </linearGradient>
                 <linearGradient id="cometGradR" gradientUnits="userSpaceOnUse"
                   x1="200" y1="100" x2="0" y2="100">
                   <stop offset="0%"   stopColor="#00D0B2" stopOpacity="0" />
                   <stop offset="60%"  stopColor="#00D0B2" stopOpacity="0.55" />
-                  <stop offset="100%" stopColor="#ffffff" stopOpacity="0.95" />
+                  <stop offset="100%" stopColor="F7F5F0" stopOpacity="0.95" />
                 </linearGradient>
                 <filter id="cometGlow" x="-50%" y="-50%" width="200%" height="200%">
                   <feGaussianBlur stdDeviation="1.5" result="blur" />
@@ -714,7 +857,7 @@ export default function HomeHero() {
             w-full
           ">
             <div className="text-center">
-              <div className="text-[1.65rem] font-bold tracking-[-0.02em] text-[oklch(0.985_0_0)] dark:text-[oklch(0.985_0_0)] leading-none">
+              <div className="text-[1.65rem] font-bold tracking-[-0.02em] text-[oklch(0.556_0_0)] dark:text-[oklch(0.985_0_0)] leading-none">
                 12<em className="text-[#00D0B2] not-italic">K+</em>
               </div>
               <div className="text-[0.78rem] text-[oklch(0.556_0_0)] dark:text-[oklch(0.708_0_0)] mt-[3px]">
@@ -722,7 +865,7 @@ export default function HomeHero() {
               </div>
             </div>
             <div className="text-center">
-              <div className="text-[1.65rem] font-bold tracking-[-0.02em] text-[oklch(0.985_0_0)] dark:text-[oklch(0.985_0_0)] leading-none">
+              <div className="text-[1.65rem] font-bold tracking-[-0.02em] text-[oklch(0.556_0_0)] dark:text-[oklch(0.985_0_0)] leading-none">
                 <em className="text-[#00D0B2] not-italic">99</em>.9%
               </div>
               <div className="text-[0.78rem] text-[oklch(0.556_0_0)] dark:text-[oklch(0.708_0_0)] mt-[3px]">
@@ -730,7 +873,7 @@ export default function HomeHero() {
               </div>
             </div>
             <div className="text-center">
-              <div className="text-[1.65rem] font-bold tracking-[-0.02em] text-[oklch(0.985_0_0)] dark:text-[oklch(0.985_0_0)] leading-none">
+              <div className="text-[1.65rem] font-bold tracking-[-0.02em] text-[oklch(0.556_0_0)] dark:text-[oklch(0.985_0_0)] leading-none">
                 3<em className="text-[#00D0B2] not-italic">x</em>
               </div>
               <div className="text-[0.78rem] text-[oklch(0.556_0_0)] dark:text-[oklch(0.708_0_0)] mt-[3px]">
@@ -741,7 +884,7 @@ export default function HomeHero() {
 
         </div>{/* end content */}
 
-        {/* ── SCROLL INDICATOR — lives in section, pinned via absolute ── */}
+        {/* ── SCROLL INDICATOR ── */}
         <div className="scroll-indicator flex flex-col items-center gap-[6px] pointer-events-none">
           <span className="text-[0.58rem] font-semibold tracking-[0.16em] uppercase text-[oklch(0.708_0_0)] dark:text-[oklch(0.556_0_0)]">
             Scroll
