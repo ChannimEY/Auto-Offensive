@@ -59,6 +59,26 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+  --font-serif: "Instrument Serif", Georgia, serif;
+  --radius: var(----radius);
+  --color-text-400: var(----text-400);
+  --color-text-300: var(----text-300);
+  --color-text-200: var(----text-200);
+  --color-text-100: var(----text-100);
+  --color-bg-300: var(----bg-300);
+  --color-bg-200: var(----bg-200);
+  --color-bg-100: var(----bg-100);
+  --color-bg-0: var(----bg-0);
+  @keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+    }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    }
+  }
 }
 
 /* --- Theme Variables --- */
@@ -96,6 +116,14 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+  --bg-0: #09090b;
+  --bg-100: #18181b;
+  --bg-200: #27272a;
+  --bg-300: #3f3f46;
+  --text-100: #fafafa;
+  --text-200: #e4e4e7;
+  --text-300: #a1a1aa;
+  --text-400: #71717a;
 }
 
 @media (prefers-color-scheme: dark) {

@@ -1,0 +1,797 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+
+/* ─────────────────────────────────────────────
+   Social links config (EASILY EDITABLE - GLOBAL)
+───────────────────────────────────────────── */
+const SOCIAL_LINKS = {
+  github: {
+    label: "GitHub",
+    Icon: IconGithub,
+  },
+  telegram: {
+    label: "Telegram",
+    Icon: IconTelegram,
+  },
+  linkedin: {
+    label: "LinkedIn",
+    Icon: IconLinkedin,
+  },
+};
+
+/* ─────────────────────────────────────────────
+   Team data (EASILY EDITABLE - ADD SOCIAL LINKS HERE)
+───────────────────────────────────────────── */
+const MENTORS = [
+  {
+    name: "Kim Chansokpheng",
+    role: "Cybersecurity Professional",
+    badge: "Mentor",
+    isMentor: true,
+    slogan: "Defending the digital frontier,\none exploit at a time.",
+    img: "/images/teacher_Sokpheng.jpg",
+    social: {
+      github: "https://github.com/sokpheng001",
+      telegram: "https://t.me/chansokpheng",
+      linkedin: "https://www.linkedin.com/in/kim-chansokpheng-6b6513267/",
+    },
+  },
+  {
+    name: "Sreng Chipor",
+    role: "Exploit Specialist",
+    badge: "Mentor",
+    isMentor: true,
+    slogan: "Breaking systems so\nyou don't have to.",
+    img: "./images/teacher_chipor.png",
+    social: {
+      github: "https://github.com/jiporCK",
+      telegram: "https://t.me/srengchipor",
+      linkedin: "https://linkedin.com/in/srengchipor",
+    },
+  },
+];
+
+const TEAM = [
+  { name: "Chheng Panharoth",  role: "Full Stack Developer", badge: "Team Leader", slogan: "Building the engine\nunder the hood.",   img: "./images/panharoth.jpg", social: { github: "https://github.com/panharoth", telegram: "https://t.me/panharoth", linkedin: "https://linkedin.com/in/panharoth" } },
+  { name: "Pech Rathanakmony", role: "Full Stack Developer", badge: "Team Leader", slogan: "Pixels with\npurpose.",                  img: "./images/rathanakmony.jpg", social: { github: "https://github.com/rathanakmony", telegram: "https://t.me/rathanakmony", linkedin: "https://linkedin.com/in/rathanakmony" } },
+  { name: "So Bohty",          role: "Full Stack Developer", badge: "Member",      slogan: "Ship fast,\nship secure.",               img: "./images/bohty.jpg", social: { github: "https://github.com/sobohty", telegram: "https://t.me/sobohty", linkedin: "https://linkedin.com/in/sobohty" } },
+  { name: "Rin Bunvarn",       role: "Full Stack Developer", badge: "Member",      slogan: "Every threat\nhas a signature.",         img: "./images/bunvarn (2).JPG", social: { github: "https://github.com/rinbunvarn", telegram: "https://t.me/rinbunvarn", linkedin: "https://linkedin.com/in/rinbunvarn" } },
+  { name: "Ey Channim",        role: "Full Stack Developer", badge: "Member",      slogan: "Teaching machines\nto hunt.",            img: "./images/channim.JPG", social: { github: "https://github.com/eychannim", telegram: "https://t.me/eychannim", linkedin: "https://linkedin.com/in/eychannim" } },
+  { name: "Mom Reaksmey",      role: "Full Stack Developer", badge: "Member",      slogan: "Security that\nfeels effortless.",       img: "./images/reaksmey.jpg", social: { github: "https://github.com/momreaksmey", telegram: "https://t.me/momreaksmey", linkedin: "https://linkedin.com/in/momreaksmey" } },
+  { name: "Hor Ratha",         role: "Full Stack Developer", badge: "Member",      slogan: "Every endpoint\na fortress.",            img: "./images/ratha.jpg", social: { github: "https://github.com/HorRatha", telegram: "https://t.me/xeinn7", linkedin: "https://www.linkedin.com/in/hor-ratha-42bb35388/" } },
+  { name: "Ben Loemheng",      role: "Full Stack Developer", badge: "Member",      slogan: "Quality is\nnot optional.",              img: "./images/loemheng.jpg", social: { github: "https://github.com/benloemheng", telegram: "https://t.me/benloemheng", linkedin: "https://linkedin.com/in/benloemheng" } },
+  { name: "Dina Pisethi",      role: "Full Stack Developer", badge: "Member",      slogan: "Find the crack\nbefore they do.",        img: "./images/pisethi.jpg", social: { github: "https://github.com/dinapisethi", telegram: "https://t.me/dinapisethi", linkedin: "https://linkedin.com/in/dinapisethi" } },
+];
+
+/* ── SVG icons ── */
+function IconGithub() {
+  return (
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
+    </svg>
+  );
+}
+
+function IconTelegram() {
+  return (
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.833.941z" />
+    </svg>
+  );
+}
+
+function IconLinkedin() {
+  return (
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+      <rect x="2" y="9" width="4" height="12" />
+      <circle cx="4" cy="4" r="2" />
+    </svg>
+  );
+}
+
+/* ── Circuit traces SVG ── */
+function CardTraces() {
+  return (
+    <svg className="tf-traces" viewBox="0 0 300 420" preserveAspectRatio="none">
+      <path className="tf-tb" d="M0 80 H24 V68 H48" /><path className="tf-tf tf-c1" d="M0 80 H24 V68 H48" />
+      <path className="tf-tb" d="M0 126 H16 V136 H48" /><path className="tf-tf tf-c2" d="M0 126 H16 V136 H48" />
+      <path className="tf-tb" d="M0 290 H24 V278 H48" /><path className="tf-tf tf-c3" d="M0 290 H24 V278 H48" />
+      <path className="tf-tb" d="M0 336 H16 V346 H48" /><path className="tf-tf tf-c4" d="M0 336 H16 V346 H48" />
+      <path className="tf-tb" d="M300 80 H276 V68 H252" /><path className="tf-tf tf-c2" d="M300 80 H276 V68 H252" />
+      <path className="tf-tb" d="M300 126 H284 V136 H252" /><path className="tf-tf tf-c1" d="M300 126 H284 V136 H252" />
+      <path className="tf-tb" d="M300 290 H276 V278 H252" /><path className="tf-tf tf-c4" d="M300 290 H276 V278 H252" />
+      <path className="tf-tb" d="M300 336 H284 V346 H252" /><path className="tf-tf tf-c3" d="M300 336 H284 V346 H252" />
+    </svg>
+  );
+}
+
+/* ── Card inner ── */
+interface CardInnerProps {
+  member: (typeof MENTORS)[0] & { isMentor?: boolean; social?: Record<string, string> };
+  index: number;
+}
+function CardInner({ member: m, index }: CardInnerProps) {
+  return (
+    <>
+      <span className="tf-tick tf-tick-tl" />
+      <span className="tf-tick tf-tick-tr" />
+      <span className="tf-tick tf-tick-bl" />
+      <span className="tf-tick tf-tick-br" />
+      <CardTraces />
+
+      {/* Node index badge */}
+      <div className="tf-node-badge">
+        {String(index + 1).padStart(2, "0")}
+      </div>
+
+      {/* Avatar */}
+      <div className="relative z-[2] flex justify-center pt-3 mb-5">
+        <div className="tf-photo-outer relative w-[200px] h-[200px] bg-[rgba(0,208,178,0.05)] rounded-full flex items-center justify-center">
+          <img
+            src={m.img}
+            alt={m.name}
+            className="w-[200px] h-[200px] rounded-full object-cover object-top border-[3px] border-white/90 shadow-[0_4px_32px_rgba(0,0,0,0.15)] block"
+          />
+          <span className="tf-status-dot" />
+        </div>
+      </div>
+
+      {/* Body */}
+      <div className="relative z-[2]">
+        <div className="text-[1.18rem] font-bold text-[#0a1f1a] tracking-[-0.01em] mb-[4px]">{m.name}</div>
+        <div className="text-[0.78rem] font-semibold text-[#00D0B2] tracking-[0.1em] uppercase mb-[12px]">{m.role}</div>
+        <div className="w-7 h-px bg-gradient-to-r from-[#00D0B2] to-[#00cfff] mx-auto mb-[12px] rounded-sm opacity-45" />
+        <div className="text-[0.84rem] text-[#8aada6] leading-[1.9] tracking-[0.03em] mb-4 min-h-[34px] italic">
+          <em className="text-[rgba(0,208,178,0.55)] not-italic">// </em>
+          {m.slogan.split("\n")[0]}<br />
+          {m.slogan.split("\n")[1]} <em className="text-[rgba(0,208,178,0.55)] not-italic">_</em>
+        </div>
+        <div className="flex justify-center mb-4">
+          {m.isMentor ? (
+            <span className="text-[0.72rem] font-bold tracking-[0.14em] uppercase text-[#8a0000] bg-[rgba(200,10,10,0.05)] border border-[rgba(200,10,10,0.18)] rounded-full px-4 py-[5px]">
+              {m.badge}
+            </span>
+          ) : (
+            <span className={`text-[0.72rem] font-bold tracking-[0.14em] uppercase rounded-full px-4 py-[5px] ${
+              m.badge === "Team Leader"
+                ? "text-[#c97000] bg-[rgba(200,120,0,0.05)] border border-[rgba(200,120,0,0.18)]"
+                : "text-[#00D0B2] bg-[rgba(0,208,178,0.06)] border border-[rgba(0,208,178,0.15)]"
+            }`}>
+              {m.badge}
+            </span>
+          )}
+        </div>
+        
+        {/* Social links - EASILY EDITABLE */}
+        <div className="flex justify-center gap-[10px]">
+          {m.social && Object.entries(m.social).map(([key, url]) => {
+            const link = SOCIAL_LINKS[key as keyof typeof SOCIAL_LINKS];
+            if (!link) return null;
+            const { Icon, label } = link;
+            return (
+              <a
+                key={key}
+                href={url}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={label}
+                title={label}
+                className="tf-social-btn"
+              >
+                <Icon />
+              </a>
+            );
+          })}
+        </div>
+      </div>
+    </>
+  );
+}
+
+/* ─────────────────────────────────────────────
+   Main export
+───────────────────────────────────────────── */
+export default function TeamAndFooter() {
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const bgRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const obs = new IntersectionObserver(
+      (entries) =>
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            setTimeout(() => {
+              (e.target as HTMLElement).classList.add("tf-visible");
+            }, 50);
+          }
+        }),
+      { threshold: 0.12, rootMargin: "40px" }
+    );
+    cardRefs.current.forEach((el) => el && obs.observe(el));
+    return () => obs.disconnect();
+  }, []);
+
+  // Parallax locked background effect
+  useEffect(() => {
+    const bg = bgRef.current;
+    if (!bg) return;
+
+    const handleScroll = () => {
+      const rect = bg.parentElement?.getBoundingClientRect();
+      if (rect) {
+        const scrollProgress = Math.max(0, Math.min(1, -rect.top / (rect.height - window.innerHeight)));
+        bg.style.transform = `translateY(${scrollProgress * 30}%)`;
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  return (
+    <>
+      <style>{`
+        @keyframes tf-spin  { to { transform: rotate(360deg); } }
+        @keyframes tf-blink { 0%,100% { opacity:1; } 50% { opacity:.4; } }
+        @keyframes tf-flow  { to { stroke-dashoffset: 0; } }
+
+        /* ── Card base ── */
+        .ao-card {
+          max-width: 340px;
+          width: 100%;
+          margin: 0 auto;
+          padding: 32px 26px 28px;
+        }
+
+        /* ── Scroll-in animation ── */
+        .tf-card {
+          opacity: 0;
+          transform: translateY(40px) scale(0.92);
+          transition:
+            opacity 0.75s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+            transform 0.75s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+            border-color 0.2s,
+            box-shadow 0.2s;
+        }
+        .tf-card.tf-visible {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+        .tf-card:hover {
+          border-color: rgba(0,208,178,.22) !important;
+        }
+        .tf-card--mentor:hover {
+          border-color: rgba(255,59,59,0.4) !important;
+        }
+
+        /* ── Intro glow ── */
+        .tf-intro::before {
+          content: '';
+          position: absolute;
+          top: -60px; left: 50%;
+          transform: translateX(-50%);
+          width: 560px; height: 260px;
+          background: radial-gradient(ellipse, rgba(0,208,178,.04) 0%, transparent 70%);
+          pointer-events: none;
+        }
+        .tf-eyebrow::before, .tf-eyebrow::after {
+          content: ''; width: 22px; height: 1px; background: #00D0B2; opacity: .4;
+        }
+
+        /* ── Photo ring ── */
+        .tf-photo-outer::before {
+          content: '';
+          position: absolute; inset: -10px; border-radius: 50%;
+          border: 2px solid transparent;
+          border-top-color: #00D0B2;
+          border-right-color: rgba(0,207,255,.6);
+          animation: tf-spin 6s linear infinite;
+        }
+        .tf-photo-outer::after {
+          content: '';
+          position: absolute; inset: -20px; border-radius: 50%;
+          border: 1.5px solid rgba(0,208,178,.12);
+        }
+
+        /* ── Status dot ── */
+        .tf-status-dot {
+          position: absolute;
+          bottom: 8px; right: 8px;
+          width: 14px; height: 14px;
+          border-radius: 50%;
+          background: #00D0B2;
+          border: 2.5px solid #F7F5F0;
+          box-shadow: 0 0 8px rgba(0,208,178,.4);
+          animation: tf-blink 2.4s ease-in-out infinite;
+        }
+
+        /* ── Social buttons ── */
+        .tf-social-btn {
+          width: 36px; height: 36px;
+          border-radius: 50%;
+          border: 1px solid rgba(0,208,178,.12);
+          background: transparent;
+          display: flex; align-items: center; justify-content: center;
+          color: #8aada6;
+          text-decoration: none;
+          transition: border-color .18s, color .18s, background .18s;
+          position: relative;
+          cursor: pointer;
+        }
+        .tf-social-btn:hover {
+          border-color: rgba(0,208,178,.4);
+          color: #00D0B2;
+          background: rgba(0,208,178,.06);
+        }
+        /* tooltip */
+        .tf-social-btn::after {
+          content: attr(title);
+          position: absolute;
+          bottom: calc(100% + 6px);
+          left: 50%;
+          transform: translateX(-50%) translateY(4px);
+          background: #0a1f1a;
+          color: #e0f5f1;
+          font-size: 9px;
+          font-weight: 700;
+          letter-spacing: .08em;
+          white-space: nowrap;
+          padding: 3px 8px;
+          border-radius: 6px;
+          opacity: 0;
+          pointer-events: none;
+          transition: opacity .15s, transform .15s;
+          z-index: 99;
+        }
+        .tf-social-btn:hover::after {
+          opacity: 1;
+          transform: translateX(-50%) translateY(0);
+        }
+
+        /* ── Node badge (top-right corner index) ── */
+        .tf-node-badge {
+          position: absolute;
+          top: 14px; right: 18px;
+          font-size: 9px;
+          font-weight: 700;
+          letter-spacing: .12em;
+          color: rgba(0,208,178,.4);
+          font-family: monospace;
+          z-index: 3;
+        }
+        .tf-card--mentor .tf-node-badge {
+          color: rgba(200,80,30,.4);
+        }
+
+        /* ── Circuit traces ── */
+        .tf-traces {
+          position: absolute; inset: 0;
+          width: 100%; height: 100%;
+          overflow: visible; pointer-events: none;
+          z-index: 0; opacity: .25;
+        }
+        .tf-tb { stroke: rgba(0,208,178,.08); stroke-width: 1; fill: none; }
+        .tf-tf {
+          fill: none; stroke-width: 1;
+          stroke-dasharray: 14 200;
+          stroke-dashoffset: 214;
+          animation: tf-flow 4s cubic-bezier(.4,0,.85,1) infinite;
+        }
+        .tf-c1 { stroke: #00D0B2; }
+        .tf-c2 { stroke: #00cfff; animation-delay: -1.4s; }
+        .tf-c3 { stroke: #00D0B2; animation-delay: -2.6s; }
+        .tf-c4 { stroke: #00cfff; animation-delay: -.8s; }
+
+        /* ── Corner ticks ── */
+        .tf-tick { position: absolute; width: 100px; height: 50px; pointer-events: none; }
+        .tf-tick-tl { top:12px;    left:12px;  border-top:   1px solid rgba(0,208,178,.35); border-left:  1px solid rgba(0,208,178,.35); }
+        .tf-tick-tr { top:12px;    right:12px; border-top:   1px solid rgba(0,207,255,.3);  border-right: 1px solid rgba(0,207,255,.3); }
+        .tf-tick-bl { bottom:12px; left:12px;  border-bottom:1px solid rgba(0,207,255,.3);  border-left:  1px solid rgba(0,207,255,.3); }
+        .tf-tick-br { bottom:12px; right:12px; border-bottom:1px solid rgba(0,208,178,.35); border-right: 1px solid rgba(0,208,178,.35); }
+
+        /* ── Path connector ── */
+        .tf-path-connector {
+          width: 100%;
+          padding: 12px 40px 0;
+          position: relative;
+          z-index: 0;
+        }
+
+        /* ── Section path line ── */
+        .tf-section-path {
+          position: relative;
+          width: 100%;
+          padding: 0 6%;
+          margin: 12px 0 32px;
+        }
+        .tf-section-path-inner {
+          position: relative;
+          height: 24px;
+          display: flex;
+          align-items: center;
+        }
+        .tf-section-path-line {
+          position: absolute;
+          left: 0; right: 0; top: 50%;
+          height: 1px;
+          background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(0,208,178,.2) 10%,
+            rgba(0,208,178,.35) 50%,
+            rgba(0,208,178,.2) 90%,
+            transparent 100%
+          );
+        }
+        .tf-section-path-line--mentor {
+          background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(200,80,30,.18) 10%,
+            rgba(200,80,30,.3) 50%,
+            rgba(200,80,30,.18) 90%,
+            transparent 100%
+          );
+        }
+        .tf-section-path-nodes {
+          position: relative;
+          z-index: 1;
+          width: 100%;
+          display: flex;
+          justify-content: space-around;
+        }
+        .tf-path-node {
+          width: 22px; height: 22px;
+          border-radius: 50%;
+          background: #F7F5F0;
+          border: 1px solid rgba(0,208,178,.35);
+          display: flex; align-items: center; justify-content: center;
+          font-size: 8px;
+          font-weight: 700;
+          letter-spacing: .06em;
+          color: rgba(0,208,178,.7);
+          font-family: monospace;
+        }
+        .tf-path-node--mentor {
+          border-color: rgba(200,80,30,.35);
+          color: rgba(200,80,30,.7);
+        }
+
+        /* ── Footer grid ── */
+        .tf-footer-grid {
+          position: absolute; inset: 0; pointer-events: none;
+          background-image:
+            linear-gradient(rgba(0,208,178,.035) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0,208,178,.035) 1px, transparent 1px);
+          background-size: 72px 72px;
+          mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+        }
+        .tf-footer::before {
+          content: '';
+          position: absolute; inset: 0;
+          background: radial-gradient(ellipse 55% 45% at 50% 50%, rgba(0,208,178,.04) 0%, transparent 70%);
+          pointer-events: none;
+        }
+
+        /* ── Footer path connector ── */
+        .tf-footer-path {
+          position: relative;
+          width: 100%;
+          max-width: 560px;
+          margin: 0 auto 40px;
+          padding: 0 20px;
+        }
+        .tf-footer-path-track {
+          position: relative;
+          height: 1px;
+          background: linear-gradient(90deg,
+            transparent,
+            rgba(0,208,178,.3) 20%,
+            rgba(0,208,178,.3) 80%,
+            transparent
+          );
+          margin: 0 28px;
+        }
+        .tf-footer-path-nodes {
+          position: absolute;
+          top: 50%;
+          left: 0; right: 0;
+          transform: translateY(-50%);
+          display: flex;
+          justify-content: space-between;
+        }
+        .tf-footer-path-node {
+          width: 28px; height: 28px;
+          border-radius: 50%;
+          background: #F7F5F0;
+          border: 1px solid rgba(0,208,178,.3);
+          display: flex; align-items: center; justify-content: center;
+          font-size: 9px;
+          font-weight: 700;
+          color: rgba(0,208,178,.6);
+          font-family: monospace;
+          letter-spacing: .06em;
+          margin-top: -13px;
+        }
+        .tf-footer-path-label {
+          display: flex;
+          justify-content: space-between;
+          padding: 6px 28px 0;
+          font-size: 9px;
+          letter-spacing: .1em;
+          text-transform: uppercase;
+          color: rgba(0,208,178,.35);
+          font-family: monospace;
+          font-weight: 600;
+        }
+
+        /* ── Card grids ── */
+        .tf-grid   { display: grid; gap: 75px; justify-items: center; }
+        .tf-grid-2 { grid-template-columns: repeat(2, 340px); justify-content: center; }
+        .tf-grid-3 { grid-template-columns: repeat(3, 340px); justify-content: center; }
+        @media (max-width: 1120px) { .tf-grid-3 { grid-template-columns: repeat(2, 340px); } }
+        @media (max-width: 740px)  { .tf-grid-2, .tf-grid-3 { grid-template-columns: 340px; } }
+
+        /* ── Group label ── */
+        .tf-group-label::before {
+          content: ''; width: 18px; height: 1px; background: #00D0B2; opacity: .35;
+        }
+
+        /* ── Gradient background wrapper (LOCKED PARALLAX) ── */
+        .tf-gradient-wrapper {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+          pointer-events: none;
+          z-index: 0;
+          will-change: transform;
+        }
+        
+        .tf-gradient-bg {
+          width: 100%;
+          height: 120%;
+          will-change: transform;
+        }
+      `}</style>
+
+      <div
+        className="relative bg-[#F7F5F0] text-[#0a1f1a] overflow-hidden"
+        style={{ fontFamily: "var(--font-google-sans), var(--font-noto-khmer), sans-serif" }}
+      >
+        {/* ── LOCKED PARALLAX Background ── */}
+        <div className="tf-gradient-wrapper">
+          <div ref={bgRef} className="tf-gradient-bg">
+            <svg
+              width="100%" height="100%"
+              viewBox="0 0 800 600" fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              preserveAspectRatio="xMidYMid slice"
+              style={{ position: "absolute", top: 0, left: 0 }}
+            >
+              <defs>
+                <linearGradient id="tf_grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%"   style={{ stopColor: "#00D0B2", stopOpacity: 0.25 }} />
+                  <stop offset="100%" style={{ stopColor: "#0ea5e9", stopOpacity: 0.15 }} />
+                </linearGradient>
+                <linearGradient id="tf_grad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%"   style={{ stopColor: "#0ea5e9", stopOpacity: 0.2 }} />
+                  <stop offset="50%"  style={{ stopColor: "#00D0B2", stopOpacity: 0.18 }} />
+                  <stop offset="100%" style={{ stopColor: "#00cfff", stopOpacity: 0.12 }} />
+                </linearGradient>
+                <radialGradient id="tf_grad3" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%"   style={{ stopColor: "#00cfff", stopOpacity: 0.22 }} />
+                  <stop offset="100%" style={{ stopColor: "#00D0B2", stopOpacity: 0.08 }} />
+                </radialGradient>
+                <filter id="tf_blur1" x="-50%" y="-50%" width="200%" height="200%">
+                  <feGaussianBlur stdDeviation="40" />
+                </filter>
+                <filter id="tf_blur2" x="-50%" y="-50%" width="200%" height="200%">
+                  <feGaussianBlur stdDeviation="28" />
+                </filter>
+                <filter id="tf_blur3" x="-50%" y="-50%" width="200%" height="200%">
+                  <feGaussianBlur stdDeviation="50" />
+                </filter>
+              </defs>
+
+              <ellipse
+                cx="150" cy="480" rx="240" ry="160"
+                fill="url(#tf_grad1)"
+                filter="url(#tf_blur1)"
+              />
+              <rect
+                x="520" y="120" width="280" height="240" rx="75"
+                fill="url(#tf_grad2)"
+                filter="url(#tf_blur2)"
+              />
+              <circle
+                cx="680" cy="420" r="140"
+                fill="url(#tf_grad3)"
+                filter="url(#tf_blur3)"
+                opacity="0.5"
+              />
+              <ellipse
+                cx="80" cy="180" rx="160" ry="110"
+                fill="#00D0B2"
+                filter="url(#tf_blur2)"
+                opacity="0.15"
+              />
+            </svg>
+          </div>
+        </div>
+
+        {/* ── Top divider ── */}
+        <div className="relative z-[10] w-full h-px bg-gradient-to-r from-transparent via-[rgba(0,208,177,0.45)] to-transparent" />
+
+        {/* ── Intro ── */}
+        <div className="relative z-[10] tf-intro px-[6%] pt-[90px] pb-[40px] text-center overflow-hidden">
+          <div
+            className="inline-flex items-center gap-[10px] text-[0.68rem] font-semibold tracking-[0.16em] uppercase text-[rgba(0,208,178,0.55)] mb-4 tf-eyebrow"
+          >
+            Auto-Offensive
+          </div>
+          <h2
+            className="text-[clamp(2rem,3.6vw,3.2rem)] font-bold leading-[1.08] tracking-[-0.035em] text-[#0a1f1a] mb-[0.9rem]"
+            style={{ fontFamily: "var(--font-hackdaddy), var(--font-noto-khmer), monospace" }}
+          >
+            The People Behind<br />the <em className="text-[#00D0B2] not-italic">Platform</em>
+          </h2>
+          <p className="text-[0.92rem] text-[#4a6e65] max-w-[460px] mx-auto leading-[1.8]">
+            Security researchers, engineers and builders — united by one mission:
+            make offensive security accessible to everyone.
+          </p>
+        </div>
+
+        {/* ══════════════════════════════════════
+            MENTORS SECTION
+        ══════════════════════════════════════ */}
+        <div className="relative z-[10] px-[6%] pt-6 pb-3">
+          <div className="mb-4">
+            <div className="tf-group-label flex items-center gap-[10px] text-[0.62rem] font-semibold tracking-[0.16em] uppercase text-[rgba(0,208,178,0.5)] mb-[0.7rem]">
+              Section 01
+            </div>
+            <h2
+              className="text-[clamp(1.5rem,2.4vw,2.1rem)] font-bold tracking-[-0.03em] text-[#0a1f1a] mb-[0.35rem]"
+              style={{ fontFamily: "var(--font-hackdaddy), var(--font-noto-khmer), monospace" }}
+            >
+              Our <em className="text-[#00D0B2] not-italic">Mentors</em>
+            </h2>
+            <p className="text-[0.86rem] text-[#4a6e65] leading-[1.7]">Leading the way with expertise and guidance</p>
+          </div>
+
+          {/* Mentor path connector */}
+          <div className="tf-section-path">
+            <div className="tf-section-path-inner">
+              <div className="tf-section-path-line tf-section-path-line--mentor" />
+              <div className="tf-section-path-nodes">
+                {MENTORS.map((_, i) => (
+                  <div key={i} className="tf-path-node tf-path-node--mentor">
+                    {String(i + 1).padStart(2, "0")}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="tf-grid tf-grid-2">
+            {MENTORS.map((m, i) => (
+              <div
+                key={m.name}
+                className="tf-card tf-card--mentor ao-card relative bg-[rgba(255,252,246,0.42)] backdrop-blur-[8px] border border-[rgba(200,134,10,0.12)] rounded-2xl text-center overflow-hidden"
+                ref={(el) => { cardRefs.current[i] = el; }}
+                style={{ transitionDelay: `${i * 80}ms` }}
+              >
+                <CardInner member={m} index={i} />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* thin divider between sections */}
+        <div className="relative z-[10] mx-[6%] my-8 h-px bg-gradient-to-r from-transparent via-[rgba(0,208,178,0.12)] to-transparent" />
+
+        {/* ══════════════════════════════════════
+            CORE TEAM SECTION
+        ══════════════════════════════════════ */}
+        <div className="relative z-[10] px-[6%] pt-2 pb-3">
+          <div className="mb-4">
+            <div className="tf-group-label flex items-center gap-[10px] text-[0.62rem] font-semibold tracking-[0.16em] uppercase text-[rgba(0,208,178,0.5)] mb-[0.7rem]">
+              Section 02
+            </div>
+            <h2
+              className="text-[clamp(1.5rem,2.4vw,2.1rem)] font-bold tracking-[-0.03em] text-[#0a1f1a] mb-[0.35rem]"
+              style={{ fontFamily: "var(--font-hackdaddy), var(--font-noto-khmer), monospace" }}
+            >
+              Core <em className="text-[#00D0B2] not-italic">Team</em>
+            </h2>
+            <p className="text-[0.86rem] text-[#4a6e65] leading-[1.7]">Dedicated professionals building the platform</p>
+          </div>
+
+          {/* Team path connector — 01 through 09 */}
+          <div className="tf-section-path">
+            <div className="tf-section-path-inner">
+              <div className="tf-section-path-line" />
+              <div className="tf-section-path-nodes">
+                {TEAM.map((_, i) => (
+                  <div key={i} className="tf-path-node">
+                    {String(i + 1).padStart(2, "0")}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="tf-grid tf-grid-3">
+            {TEAM.map((m, i) => (
+              <div
+                key={m.name}
+                className="tf-card ao-card relative backdrop-blur-[8px] rounded-2xl text-center overflow-hidden border border-[rgba(0,208,178,0.1)]"
+                ref={(el) => { cardRefs.current[MENTORS.length + i] = el; }}
+                style={{ transitionDelay: `${(i % 3) * 60}ms` }}
+              >
+                <CardInner member={{ ...m, isMentor: false }} index={i} />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="relative z-[10] w-full h-px bg-gradient-to-r from-transparent via-[rgba(0,208,178,0.14)] to-transparent mt-12" />
+
+        {/* ══════════════════════════════════════
+            FOOTER
+        ══════════════════════════════════════ */}
+        <footer className="relative z-[10] tf-footer flex flex-col items-center justify-center text-center px-[6%] pt-[90px] pb-16 bg-[#F7F5F0] overflow-hidden">
+          <div className="tf-footer-grid" />
+
+          <div className="relative z-[1] w-full flex flex-col items-center">
+
+            {/* Footer path — 01 ── 02 ── 03 like the reference */}
+            <div className="tf-footer-path w-full max-w-[480px] mb-12">
+              <div style={{ position: "relative", height: "28px" }}>
+                {/* track line */}
+                <div className="tf-footer-path-track" style={{ position: "absolute", top: "50%", left: "28px", right: "28px", transform: "translateY(-50%)" }} />
+                {/* nodes */}
+                <div className="tf-footer-path-nodes">
+                  {["Scan", "Analyse", "Report"].map((label, i) => (
+                    <div key={label} className="tf-footer-path-node">
+                      {String(i + 1).padStart(2, "0")}
+                    </div>
+                  ))}
+                </div>
+              </div>
+              {/* labels */}
+              <div className="tf-footer-path-label">
+                {["Scan", "Analyse", "Report"].map((label) => (
+                  <span key={label}>{label}</span>
+                ))}
+              </div>
+            </div>
+
+            <h2
+              className="text-[clamp(1.9rem,3.6vw,3.2rem)] font-bold tracking-[-0.03em] text-[#0a1f1a] mb-[0.9rem] leading-[1.1]"
+              style={{ fontFamily: "var(--font-hackdaddy), var(--font-noto-khmer), monospace" }}
+            >
+              Ready to automate your<br /><em className="text-[#00D0B2] not-italic">security testing</em>?
+            </h2>
+            <p className="text-[0.92rem] text-[#4a6e65] mb-8 max-w-[420px] leading-[1.78] mx-auto">
+              Join thousands of engineers who scan smarter — not harder.
+              No CLI. No complexity. Just results.
+            </p>
+            <a
+              href="#"
+              className="inline-flex items-center gap-2 bg-[#00D0B2] text-[#020f0c] px-8 py-[14px] rounded-[10px] text-[0.9rem] font-bold cursor-pointer tracking-[0.04em] transition-colors duration-200 no-underline hover:bg-[#00b894]"
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
+                <circle cx="11" cy="11" r="8" /><path d="M21 21l-4.35-4.35" />
+              </svg>
+              Start a Free Scan
+            </a>
+
+            <p className="text-[0.68rem] text-[#8aada6] mt-[1.2rem] tracking-[0.04em]">
+              © 2026 Auto-Offensive · All rights reserved
+            </p>
+          </div>
+        </footer>
+      </div>
+    </>
+  );
+}
