@@ -36,23 +36,21 @@ const socialLinks = [
 export function Footer() {
   return (
     <footer className="w-full border-t bg-zinc-100 text-zinc-700 mt-auto">
-      <div className="max-w-7xl mx-auto px-6 py-14">
+      <div className="max-w-7xl mx-auto px-2 py-10">
 
         {/* TOP GRID */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3">
 
           {/* LOGO + DESC */}
-          <div className="flex flex-col gap-4">
-            <Link href="/" className="flex items-center gap-3">
+          <div className="flex flex-col">
+            <Link href="/" className="items-center gap-2 flex mb-4">
               <Image
-                src="/logo.png" 
+                src="/Auto_Offensive_Light-mode.png"
                 alt="logo"
                 width={60}
-                height={60}
+                height={400}
               />
-              <span className="text-lg font-semibold text-blue-600">
-                Auto-Offensive
-              </span>
+        
             </Link>
 
             <p className="text-sm text-zinc-600 leading-relaxed max-w-xs">
