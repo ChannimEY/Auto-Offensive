@@ -10,7 +10,7 @@ export default function TeamShowcase() {
       className="bg-[#F7F5F0] pb-20 px-10 overflow-hidden"
       style={{ fontFamily: "var(--font-google-sans), var(--font-noto-khmer), sans-serif" }}
     >
-      <div className="max-w-[1200px] mx-auto grid grid-cols-[1fr_1.6fr] gap-16 items-center">
+      <div className="max-w-300 mx-auto grid grid-cols-[1fr_1.6fr] gap-16 items-center">
 
         {/* ── Left: Text Content ── */}
         <div>
@@ -34,7 +34,7 @@ export default function TeamShowcase() {
 
           {/* Accent bar */}
           <div
-            className="w-[52px] h-1 rounded-sm my-5"
+            className="w-13 h-1 rounded-sm my-5"
             style={{ background: "linear-gradient(90deg, #00BCA1, #01509e)" }}
           />
 
@@ -77,7 +77,7 @@ export default function TeamShowcase() {
           {/* Image wrapper */}
           <div
             ref={imageRef}
-            className="relative z-[1] rounded-[18px] overflow-hidden"
+            className="relative z-1 rounded-[18px] overflow-hidden"
             style={{
               boxShadow:
                 "0 20px 60px rgba(1,80,158,0.13), 0 4px 16px rgba(0,0,0,0.06)",
@@ -123,7 +123,7 @@ export default function TeamShowcase() {
           </div>
 
           {/* Caption bar */}
-          <div className="relative z-[1] mt-4 flex items-center justify-center gap-2">
+          <div className="relative z-1 mt-4 flex items-center justify-center gap-2">
             <span className="w-2 h-2 rounded-full bg-[#00BCA1] inline-block" />
             <p className="text-[13px] text-[#888] m-0 italic">
               The team at our summer outing
@@ -132,7 +132,7 @@ export default function TeamShowcase() {
 
           {/* Floating stat badge — top-left */}
           <div
-            className="absolute top-4 -left-5 z-[2] bg-white rounded-xl px-[18px] py-3 flex items-center gap-[10px] border border-[rgba(0,188,161,0.2)]"
+            className="absolute top-4 -left-5 z-2 bg-white rounded-xl px-4.5 py-3 flex items-center gap-2.5 border border-[rgba(0,188,161,0.2)]"
             style={{ boxShadow: "0 8px 24px rgba(1,80,158,0.12)" }}
           >
             <div
@@ -156,7 +156,7 @@ export default function TeamShowcase() {
               </svg>
             </div>
             <div>
-              <p className="text-[11px] text-[#999] font-medium m-0 mb-[2px]">
+              <p className="text-[11px] text-[#999] font-medium m-0 mb-0.5">
                 Team size
               </p>
               <p className="text-lg font-bold text-[#01509e] m-0">
@@ -167,10 +167,10 @@ export default function TeamShowcase() {
 
           {/* Floating year badge — bottom-right */}
           <div
-            className="absolute bottom-12 -right-4 z-[2] bg-[#01509e] rounded-xl px-[18px] py-[10px]"
+            className="absolute bottom-12 -right-4 z-2 bg-[#01509e] rounded-xl px-4.5 py-2.5"
             style={{ boxShadow: "0 8px 24px rgba(1,80,158,0.25)" }}
           >
-            <p className="text-[11px] text-white/70 font-medium m-0 mb-[2px]">
+            <p className="text-[11px] text-white/70 font-medium m-0 mb-0.5">
               Est.
             </p>
             <p className="text-xl font-bold text-white m-0">2026</p>
