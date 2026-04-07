@@ -20,10 +20,10 @@ export default function AiBanner() {
           <div className="absolute pointer-events-none rounded-full blur-3xl w-64 h-52 top-[20%] left-[42%] bg-[#00d0b2] opacity-20 dark:opacity-10" />
 
           {/* Content */}
-          <div className="relative z-10 shrink-0 max-w-md">
+          <div className="relative z-10 shrink-0 max-w-xl">
             {/* Eyebrow */}
             <div
-              className="inline-flex items-center gap-2 text-[10px] tracking-widest uppercase text-black/60 dark:text-white/50 mb-4"
+              className="inline-flex items-center gap-2 text-[11px] md:text-xs tracking-widest uppercase text-black/60 dark:text-white/50 mb-4"
               style={{ fontFamily: "monospace" }}
             >
               <span className="w-1.5 h-1.5 rounded-full bg-black/85 dark:bg-[#00d0b2]" />
@@ -32,16 +32,17 @@ export default function AiBanner() {
 
             {/* Title */}
             <h2
-              className="text-3xl md:text-4xl lg:text-5xl font-extrabold leading-tight tracking-tighter text-[oklch(0.145_0_0)] dark:text-white mb-5"
+              className="text-[2.15rem] md:text-[2.9rem] lg:text-[3.45rem] font-extrabold leading-tight tracking-tighter text-[oklch(0.145_0_0)] dark:text-white mb-5"
               style={{ fontFamily: "var(--font-hackdaddy), var(--font-noto-khmer), sans-serif" }}
             >
-              AI amplifies your<br />
-              <span className="font-extrabold text-primary dark:text-[#00BCA1]">expertise, not replace it</span>
+              <span className="block whitespace-nowrap">AI amplifies your</span>
+              <span className="block whitespace-nowrap font-extrabold text-primary dark:text-[#00BCA1]">expertise,</span>
+              <span className="block whitespace-nowrap font-extrabold text-primary dark:text-[#00BCA1]">not replace it</span>
             </h2>
 
             {/* Description */}
             <p
-              className="text-sm leading-relaxed text-[oklch(0.556_0_0)] dark:text-white/60 font-normal max-w-sm"
+              className="text-base md:text-[18px] lg:text-[20px] leading-relaxed text-[oklch(0.556_0_0)] dark:text-white/60 font-normal max-w-lg"
               style={{ fontFamily: "var(--font-google-sans), var(--font-noto-khmer), sans-serif" }}
             >
               Auto Offensive doesn&apos;t replace skilled security professionals.
@@ -55,23 +56,23 @@ export default function AiBanner() {
           {/* Invisible placeholder */}
           <div
             className="shrink-0 self-stretch pointer-events-none max-[900px]:hidden"
-            style={{ width: "min(24rem, 32vw)" }}
+            style={{ width: "min(26rem, 34vw)" }}
           />
         </div>
 
         {/* Real image — outside card */}
         <div
-          className="absolute top-0 bottom-0 z-20 pointer-events-none flex items-end justify-center max-[900px]:right-1/2 max-[900px]:translate-x-1/2 max-[900px]:w-48 max-[900px]:top-auto max-[900px]:bottom-0"
+          className="absolute -top-10 bottom-0 z-20 pointer-events-none flex items-end justify-center max-[900px]:right-1/2 max-[900px]:translate-x-1/2 max-[900px]:w-64 max-[900px]:top-auto max-[900px]:bottom-0"
           style={{
-            right: "calc(50% - min(12rem, 16vw) - 26rem)",
-            width: "min(35rem, 48vw)",
+            right: "calc(50% - min(14rem, 18vw) - 26rem)",
+            width: "min(39rem, 51vw)",
           }}
         >
           <Image
             src="/fox.png"
             alt="Auto Offensive mascot"
-            width={560}
-            height={560}
+            width={960}
+            height={960}
             className="w-full h-full object-contain object-bottom drop-shadow-2xl brightness-110 dark:brightness-100"
           />
         </div>
