@@ -147,6 +147,28 @@ export default function Values() {
   return (
     <>
       <style>{`
+        @keyframes vs-float-1 {
+          0%   { transform: translate3d(0, 0, 0); }
+          50%  { transform: translate3d(-12px, 10px, 0); }
+          100% { transform: translate3d(0, 0, 0); }
+        }
+        @keyframes vs-float-2 {
+          0%   { transform: translate3d(0, 0, 0); }
+          50%  { transform: translate3d(10px, -12px, 0); }
+          100% { transform: translate3d(0, 0, 0); }
+        }
+        @keyframes vs-blob-in-1 {
+          0%   { opacity: 0; transform: scale(0.78); }
+          45%  { opacity: 0.75; transform: scale(1.06); }
+          70%  { opacity: 1; transform: scale(0.98); }
+          100% { opacity: 1; transform: scale(1); }
+        }
+        @keyframes vs-blob-in-2 {
+          0%   { opacity: 0; transform: scale(0.7); }
+          45%  { opacity: 0.7; transform: scale(1.08); }
+          70%  { opacity: 1; transform: scale(0.97); }
+          100% { opacity: 1; transform: scale(1); }
+        }
         /* ── Values palette (cream) ── */
         .vs-section {
           --teal:   #00D0B2;
@@ -180,6 +202,79 @@ export default function Values() {
           overflow: hidden;
           background: var(--bg);
           transition: background .4s;
+        }
+        .vs-drum-sticky::before {
+          content: "";
+          position: absolute;
+          inset: 0;
+          pointer-events: none;
+          background: radial-gradient(
+            ellipse 62% 52% at 50% 46%,
+            color-mix(in srgb, #00D0B2 6%, transparent) 0%,
+            transparent 72%
+          );
+          z-index: 0;
+        }
+        .vs-shell {
+          width: 100%;
+          max-width: 80rem;
+          height: 100%;
+          margin: 0 auto;
+          position: relative;
+          z-index: 1;
+        }
+        .vs-blobs {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+          pointer-events: none;
+          z-index: 0;
+        }
+        .vs-blob {
+          position: absolute;
+          filter: blur(70px);
+          border-radius: 9999px;
+          will-change: transform, opacity;
+        }
+        .vs-blob-1 {
+          width: 420px;
+          height: 300px;
+          left: -100px;
+          bottom: 4%;
+          background: linear-gradient(135deg, rgba(1,80,158,0.16), rgba(0,208,178,0.12));
+          opacity: 0;
+          animation:
+            vs-blob-in-1 1.9s cubic-bezier(.34,1.4,.64,1) .05s forwards,
+            vs-float-1 20s ease-in-out 1.95s infinite;
+        }
+        .vs-blob-2 {
+          width: 360px;
+          height: 260px;
+          right: -60px;
+          top: 10%;
+          background: linear-gradient(135deg, rgba(0,208,178,0.11), rgba(1,80,158,0.18));
+          opacity: 0;
+          animation:
+            vs-blob-in-2 2.1s cubic-bezier(.34,1.4,.64,1) .15s forwards,
+            vs-float-2 24s ease-in-out 2.2s infinite;
+        }
+        .vs-blob-3 {
+          width: 260px;
+          height: 220px;
+          right: 18%;
+          bottom: 8%;
+          background: radial-gradient(circle, rgba(1,80,158,0.14) 0%, rgba(0,208,178,0.08) 100%);
+          opacity: .65;
+          animation: vs-float-1 22s ease-in-out .4s infinite;
+        }
+        .dark .vs-blob-1 {
+          background: linear-gradient(135deg, rgba(1,80,158,0.22), rgba(0,208,178,0.12));
+        }
+        .dark .vs-blob-2 {
+          background: linear-gradient(135deg, rgba(0,208,178,0.1), rgba(1,80,158,0.24));
+        }
+        .dark .vs-blob-3 {
+          background: radial-gradient(circle, rgba(1,80,158,0.18) 0%, rgba(0,208,178,0.08) 100%);
         }
 
         /* ── Split grid ── */
@@ -232,7 +327,6 @@ export default function Values() {
         }
         .vs-title-ac { color: var(--teal); }
         .vs-sub {
-          font-size: .9rem;
           color: var(--muted);
           line-height: 1.78;
           font-weight: 400;
@@ -332,11 +426,23 @@ export default function Values() {
         }
         .vdf-t { color: #00D0B2; }
         .vdf-body {
-          font-size: .88rem;
           color: var(--muted);
           line-height: 1.82;
           max-width: 420px;
           font-family: var(--font-body);
+        }
+        .vs-copy {
+          font-size: 16px;
+        }
+        @media (min-width: 768px) {
+          .vs-copy {
+            font-size: 18px;
+          }
+        }
+        @media (min-width: 1024px) {
+          .vs-copy {
+            font-size: 20px;
+          }
         }
         .vdf-pill {
           display: inline-block;
@@ -410,7 +516,26 @@ export default function Values() {
           }
           .vdf-bg-num { display: none; }
           .vdf-title { font-size: clamp(1.3rem, 4.5vw, 1.7rem); }
-          .vdf-body { font-size: .82rem; max-width: 100%; }
+          .vdf-body { max-width: 100%; }
+          .vs-blob-1 {
+            width: 240px;
+            height: 180px;
+            left: -80px;
+            bottom: auto;
+            top: 6%;
+          }
+          .vs-blob-2 {
+            width: 220px;
+            height: 160px;
+            right: -70px;
+            top: 24%;
+          }
+          .vs-blob-3 {
+            width: 180px;
+            height: 150px;
+            right: -30px;
+            bottom: 10%;
+          }
         }
       `}</style>
 
@@ -419,33 +544,40 @@ export default function Values() {
 
       <div ref={sectionRef} className="vs-outer vs-section">
         <div className="vs-drum-sticky">
-          <div className="vs-grid">
+          <div className="vs-blobs" aria-hidden="true">
+            <div className="vs-blob vs-blob-1" />
+            <div className="vs-blob vs-blob-2" />
+            <div className="vs-blob vs-blob-3" />
+          </div>
+          <div className="vs-shell">
+            <div className="vs-grid">
 
-            {/* ── Left ── */}
-            <div className="vs-left">
-              <div className="vs-left-inner">
-                <div className="vs-eyebrow">Core Values</div>
-                <h2 className="vs-title">
-                  Built on <span className="vs-title-ac">principles</span><br />
-                  that matter
-                </h2>
-                <p className="vs-sub">
-                  Every feature we ship maps back to one of these four beliefs about what
-                  great security tooling should be.
-                </p>
-                <div className="vs-counter" ref={counterRef}>01 / 04</div>
+              {/* ── Left ── */}
+              <div className="vs-left">
+                <div className="vs-left-inner">
+                  <div className="vs-eyebrow">Core Values</div>
+                  <h2 className="vs-title">
+                    Built on <span className="vs-title-ac">principles</span><br />
+                    that matter
+                  </h2>
+                  <p className="vs-sub vs-copy">
+                    Every feature we ship maps back to one of these four beliefs about what
+                    great security tooling should be.
+                  </p>
+                  <div className="vs-counter" ref={counterRef}>01 / 04</div>
+                </div>
               </div>
-            </div>
 
-            {/* ── Right ── */}
-            <div className="vs-right">
-              <div className="vs-bg-label">VALUES</div>
-              <div className="vs-h-line" />
-              <div ref={drumWrapRef} style={{ width: "100%", position: "relative" }}>
-                <div ref={drumRef} />
+              {/* ── Right ── */}
+              <div className="vs-right">
+                <div className="vs-bg-label">VALUES</div>
+                <div className="vs-h-line" />
+                <div ref={drumWrapRef} style={{ width: "100%", position: "relative" }}>
+                  <div ref={drumRef} />
+                </div>
               </div>
-            </div>
 
+            </div>
           </div>
         </div>
       </div>

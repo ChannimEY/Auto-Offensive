@@ -198,6 +198,93 @@ export default function AboutHero() {
           transform: translateX(-50%);
           animation: ao-bob 2.5s ease-in-out infinite;
         }
+        .ao-content {
+          width: 100%;
+          max-width: 80rem;
+          margin: 0 auto;
+        }
+        .ao-body-text {
+          font-size: 16px;
+        }
+        .ao-stat-value {
+          font-size: clamp(1.75rem, 3vw, 2.15rem);
+          font-weight: 700;
+          letter-spacing: -0.04em;
+          line-height: 1;
+          margin-bottom: 0.45rem;
+          color: oklch(0.145 0 0);
+        }
+        .dark .ao-stat-value {
+          color: oklch(0.985 0 0);
+        }
+        .ao-stat-label {
+          font-size: 0.72rem;
+          font-weight: 600;
+          letter-spacing: 0.08em;
+          line-height: 1.5;
+          text-transform: uppercase;
+          color: oklch(0.708 0 0);
+        }
+        .dark .ao-stat-label {
+          color: oklch(0.556 0 0);
+        }
+        .ao-stats-grid {
+          width: min(100%, 660px);
+          display: grid;
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+        .ao-stat-card {
+          padding: 1.35rem 1.5rem;
+          text-align: center;
+          min-height: 88px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+        }
+        .ao-stat-card + .ao-stat-card {
+          border-left: 1px solid color-mix(in srgb, #00D0B2 15%, transparent);
+        }
+        @media (min-width: 768px) {
+          .ao-body-text {
+            font-size: 18px;
+          }
+        }
+        @media (min-width: 1024px) {
+          .ao-body-text {
+            font-size: 20px;
+          }
+        }
+        @media (max-width: 900px) {
+          .ao-stat-card {
+            padding: 1.15rem 1rem;
+          }
+        }
+        @media (max-width: 767px) {
+          .ao-stats-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            width: min(100%, 420px);
+          }
+          .ao-stat-card {
+            min-height: 104px;
+            padding: 1.1rem 0.9rem;
+          }
+          .ao-stat-card + .ao-stat-card {
+            border-left: none;
+          }
+          .ao-stat-card:nth-child(odd) {
+            border-right: 1px solid color-mix(in srgb, #00D0B2 15%, transparent);
+          }
+          .ao-stat-card:nth-child(-n + 2) {
+            border-bottom: 1px solid color-mix(in srgb, #00D0B2 15%, transparent);
+          }
+          .ao-stat-label {
+            font-size: 0.68rem;
+          }
+          .ao-scroll {
+            bottom: 18px;
+          }
+        }
       `}</style>
 
       <section
@@ -218,7 +305,7 @@ export default function AboutHero() {
         </div>
 
         {/* All content sits above the background */}
-        <div className="relative z-10 flex flex-col items-center">
+        <div className="ao-content relative z-10 flex flex-col items-center">
 
           {/* ── Eyebrow ── */}
           <div
@@ -231,40 +318,40 @@ export default function AboutHero() {
           </div>
 
           {/* ── Title ── */}
-          <h1 className="font-[var(--font-hackdaddy),var(--font-noto-khmer),monospace] text-[clamp(2.8rem,5.8vw,5rem)] leading-[1.1] tracking-[-0.04em] text-[oklch(0.145_0_0)] dark:text-[oklch(0.985_0_0)] mb-[1.6rem] max-w-225">
+          <h1 className="font-[var(--font-hackdaddy),var(--font-noto-khmer),monospace] text-[clamp(2.6rem,6vw,5.25rem)] leading-[1.08] tracking-[-0.04em] text-[oklch(0.145_0_0)] dark:text-[oklch(0.985_0_0)] mb-[1.4rem] max-w-225">
             <span className="block overflow-hidden"><span ref={hl0Ref} className="ao-hli block">Meet Our</span></span>
             <span className="block overflow-hidden"><span ref={hl1Ref} className="ao-hli block"><span className="text-primary">Next-Gen</span></span></span>
             <span className="block overflow-hidden"><span ref={hl2Ref} className="ao-hli block"><span className="text-[oklch(0.556_0_0)] dark:text-[oklch(0.708_0_0)] font-light">Security Platform</span></span></span>
           </h1>
 
           {/* ── Subtitle ── */}
-          <p ref={hsubRef} className="ao-sub text-[0.98rem] text-[oklch(0.556_0_0)] dark:text-[oklch(0.708_0_0)] leading-[1.8] max-w-125 mx-auto mb-[2.6rem]">
+          <p ref={hsubRef} className="ao-sub ao-body-text text-[oklch(0.556_0_0)] dark:text-[oklch(0.708_0_0)] leading-[1.8] max-w-125 mx-auto mb-[2.4rem]">
             Auto-Offensive is a PaaS that automates web, network and code security scanning — powered by AI, with zero CLI setup required.
           </p>
 
           {/* ── Buttons ── */}
-          <div ref={hbtnsRef} className="ao-btns flex items-center justify-center gap-2.5 flex-wrap mb-[3.8rem]">
-            <button className="bg-primary text-white border-none px-6.5 py-3 rounded-[8px] text-[0.88rem] font-bold cursor-pointer font-[inherit] hover:bg-[#006C52] transition-colors duration-200">Our Story</button>
-            <button className="bg-transparent text-[oklch(0.145_0_0)] dark:text-[oklch(0.985_0_0)] border border-[color-mix(in_srgb,#00D0B2_18%,transparent)] px-5.5 py-3 rounded-[8px] text-[0.88rem] font-medium cursor-pointer font-[inherit] hover:border-primary transition-[border-color] duration-200">Meet the Team</button>
+          <div ref={hbtnsRef} className="ao-btns flex items-center justify-center gap-2.5 flex-wrap mb-[3.2rem] md:mb-[3.8rem]">
+            <button className="bg-primary text-white border-none px-6 py-3.5 rounded-[8px] text-[0.96rem] md:text-[1rem] font-bold cursor-pointer font-[inherit] hover:bg-[#006C52] transition-colors duration-200">Our Story</button>
+            <button className="bg-transparent text-[oklch(0.145_0_0)] dark:text-[oklch(0.985_0_0)] border border-[color-mix(in_srgb,#00D0B2_18%,transparent)] px-5.5 py-3.5 rounded-[8px] text-[0.96rem] md:text-[1rem] font-medium cursor-pointer font-[inherit] hover:border-primary transition-[border-color] duration-200">Meet the Team</button>
           </div>
 
           {/* ── Stats ── */}
-          <div ref={hstatsRef} className="ao-stats flex items-stretch justify-center border border-[color-mix(in_srgb,#00D0B2_15%,transparent)] rounded-[14px] overflow-hidden">
-            <div className="px-8.5 py-5.5. text-center border-r border-[color-mix(in_srgb,#00D0B2_15%,transparent)]">
-              <div className="text-[1.6rem] font-bold tracking-[-0.04em] text-[oklch(0.145_0_0)] dark:text-[oklch(0.985_0_0)] leading-none mb-[0.3rem]"><span ref={counter1Ref}>0</span><span className="text-primary">+</span></div>
-              <div className="text-[0.64rem] font-medium tracking-[0.08em] uppercase text-[oklch(0.708_0_0)] dark:text-[oklch(0.556_0_0)]">Report Formats</div>
+          <div ref={hstatsRef} className="ao-stats ao-stats-grid border border-[color-mix(in_srgb,#00D0B2_15%,transparent)] rounded-[14px] overflow-hidden">
+            <div className="ao-stat-card">
+              <div className="ao-stat-value"><span ref={counter1Ref}>0</span><span className="text-primary">+</span></div>
+              <div className="ao-stat-label">Report Formats</div>
             </div>
-            <div className="px-8.5 py-5.5 text-center border-r border-[color-mix(in_srgb,#00D0B2_15%,transparent)]">
-              <div className="text-[1.6rem] font-bold tracking-[-0.04em] text-[oklch(0.145_0_0)] dark:text-[oklch(0.985_0_0)] leading-none mb-[0.3rem]"><span ref={counter2Ref}>0</span><span className="text-primary">x</span></div>
-              <div className="text-[0.64rem] font-medium tracking-[0.08em] uppercase text-[oklch(0.708_0_0)] dark:text-[oklch(0.556_0_0)]">Faster Scanning</div>
+            <div className="ao-stat-card">
+              <div className="ao-stat-value"><span ref={counter2Ref}>0</span><span className="text-primary">x</span></div>
+              <div className="ao-stat-label">Faster Scanning</div>
             </div>
-            <div className="px-8.5 py-5.5 text-center border-r border-[color-mix(in_srgb,#00D0B2_15%,transparent)]">
-              <div className="text-[1.6rem] font-bold tracking-[-0.04em] text-[oklch(0.145_0_0)] dark:text-[oklch(0.985_0_0)] leading-none mb-[0.3rem]">CI/<span className="text-primary">CD</span></div>
-              <div className="text-[0.64rem] font-medium tracking-[0.08em] uppercase text-[oklch(0.708_0_0)] dark:text-[oklch(0.556_0_0)]">API Ready</div>
+            <div className="ao-stat-card">
+              <div className="ao-stat-value">CI/<span className="text-primary">CD</span></div>
+              <div className="ao-stat-label">API Ready</div>
             </div>
-            <div className="px-8.5 py-5.5 text-center">
-              <div className="text-[1.6rem] font-bold tracking-[-0.04em] text-[oklch(0.145_0_0)] dark:text-[oklch(0.985_0_0)] leading-none mb-[0.3rem]"><span className="text-primary">AI</span></div>
-              <div className="text-[0.64rem] font-medium tracking-[0.08em] uppercase text-[oklch(0.708_0_0)] dark:text-[oklch(0.556_0_0)]">MCP + SonarQube</div>
+            <div className="ao-stat-card">
+              <div className="ao-stat-value"><span className="text-primary">AI</span></div>
+              <div className="ao-stat-label">MCP + SonarQube</div>
             </div>
           </div>
 

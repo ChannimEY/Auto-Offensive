@@ -541,6 +541,19 @@ export default function OurMission() {
           animation: ms-pp-icon-pulse 2s ease-in-out infinite alternate;
         }
         .ms-pp-step-icon--last { animation-delay: .4s; }
+        .ms-copy {
+          font-size: 16px;
+        }
+        @media (min-width: 768px) {
+          .ms-copy {
+            font-size: 18px;
+          }
+        }
+        @media (min-width: 1024px) {
+          .ms-copy {
+            font-size: 20px;
+          }
+        }
 
         /* ── Mobile overrides ── */
         @media (max-width: 768px) {
@@ -614,7 +627,7 @@ export default function OurMission() {
                     ref={(el) => { slideRefs.current[i] = el; }}
                   >
                     <div
-                      className="ms-slide-inner grid items-center gap-9 w-full max-w-300"
+                      className="ms-slide-inner grid items-center gap-9 w-full max-w-7xl mx-auto"
                       style={{ gridTemplateColumns: "auto 1fr 1fr" }}
                     >
 
@@ -647,14 +660,14 @@ export default function OurMission() {
                           {slide.title}
                         </h2>
                         <p
-                          className="ms-slide-body text-[0.88rem] leading-[1.75] max-w-100"
+                          className="ms-slide-body ms-copy leading-[1.75] max-w-100"
                           style={{ color: "var(--muted)", fontFamily: "var(--font-body, sans-serif)" }}
                         >
                           {slide.body}
                         </p>
                         {slide.quote && (
                           <blockquote
-                            className="ms-bq mt-[1.4rem] pl-[1.2rem] relative text-[0.82rem] italic leading-[1.75] max-w-90"
+                            className="ms-bq ms-copy mt-[1.4rem] pl-[1.2rem] relative italic leading-[1.75] max-w-90"
                             style={{ color: "var(--dim)", fontFamily: "var(--font-body, sans-serif)" }}
                           >
                             <span className="ms-bq-bar absolute left-0 top-0 bottom-0 w-0.5 rounded-xs" />
