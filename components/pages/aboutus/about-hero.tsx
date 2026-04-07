@@ -205,7 +205,7 @@ export default function AboutHero() {
           ao-hero
           relative min-h-screen overflow-hidden
           flex flex-col items-center justify-center text-center
-          px-[6%] py-[100px]
+          px-[6%] py-25
           bg-white dark:bg-[oklch(0.145_0_0)]
           text-[oklch(0.145_0_0)] dark:text-[oklch(0.985_0_0)]
           font-[var(--font-google-sans),var(--font-noto-khmer),sans-serif]
@@ -223,47 +223,47 @@ export default function AboutHero() {
           {/* ── Eyebrow ── */}
           <div
             ref={eyebrowRef}
-            className="ao-eyebrow inline-flex items-center gap-[10px] text-[0.66rem] font-semibold tracking-[0.18em] uppercase text-[#00D0B2] mb-[1.8rem]"
+            className="ao-eyebrow inline-flex items-center gap-2.5 text-[0.66rem] font-semibold tracking-[0.18em] uppercase text-primary mb-[1.8rem]"
           >
-            <span className="w-[22px] h-[1.5px] bg-[#00D0B2] rounded-sm opacity-55" />
+            <span className="w-5.5 h-[1.5px] bg-primary rounded-sm opacity-55" />
             Auto Offensive
-            <span className="w-[22px] h-[1.5px] bg-[#00D0B2] rounded-sm opacity-55" />
+            <span className="w-5.5 h-[1.5px] bg-primary rounded-sm opacity-55" />
           </div>
 
           {/* ── Title ── */}
-          <h1 className="font-[var(--font-hackdaddy),var(--font-noto-khmer),monospace] text-[clamp(2.8rem,5.8vw,5rem)] font-bold leading-[1.1] tracking-[-0.04em] text-[oklch(0.145_0_0)] dark:text-[oklch(0.985_0_0)] mb-[1.6rem] max-w-[900px]">
+          <h1 className="font-[var(--font-hackdaddy),var(--font-noto-khmer),monospace] text-[clamp(2.8rem,5.8vw,5rem)] leading-[1.1] tracking-[-0.04em] text-[oklch(0.145_0_0)] dark:text-[oklch(0.985_0_0)] mb-[1.6rem] max-w-225">
             <span className="block overflow-hidden"><span ref={hl0Ref} className="ao-hli block">Meet Our</span></span>
-            <span className="block overflow-hidden"><span ref={hl1Ref} className="ao-hli block"><span className="text-[#00D0B2]">Next-Gen</span></span></span>
+            <span className="block overflow-hidden"><span ref={hl1Ref} className="ao-hli block"><span className="text-primary">Next-Gen</span></span></span>
             <span className="block overflow-hidden"><span ref={hl2Ref} className="ao-hli block"><span className="text-[oklch(0.556_0_0)] dark:text-[oklch(0.708_0_0)] font-light">Security Platform</span></span></span>
           </h1>
 
           {/* ── Subtitle ── */}
-          <p ref={hsubRef} className="ao-sub text-[0.98rem] text-[oklch(0.556_0_0)] dark:text-[oklch(0.708_0_0)] leading-[1.8] max-w-[500px] mx-auto mb-[2.6rem]">
+          <p ref={hsubRef} className="ao-sub text-[0.98rem] text-[oklch(0.556_0_0)] dark:text-[oklch(0.708_0_0)] leading-[1.8] max-w-125 mx-auto mb-[2.6rem]">
             Auto-Offensive is a PaaS that automates web, network and code security scanning — powered by AI, with zero CLI setup required.
           </p>
 
           {/* ── Buttons ── */}
-          <div ref={hbtnsRef} className="ao-btns flex items-center justify-center gap-[10px] flex-wrap mb-[3.8rem]">
-            <button className="bg-[#00D0B2] text-white border-none px-[26px] py-[12px] rounded-[8px] text-[0.88rem] font-bold cursor-pointer font-[inherit] hover:bg-[#006C52] transition-colors duration-200">Our Story</button>
-            <button className="bg-transparent text-[oklch(0.145_0_0)] dark:text-[oklch(0.985_0_0)] border border-[color-mix(in_srgb,#00D0B2_18%,transparent)] px-[22px] py-[12px] rounded-[8px] text-[0.88rem] font-medium cursor-pointer font-[inherit] hover:border-[#00D0B2] transition-[border-color] duration-200">Meet the Team</button>
+          <div ref={hbtnsRef} className="ao-btns flex items-center justify-center gap-2.5 flex-wrap mb-[3.8rem]">
+            <button className="bg-primary text-white border-none px-6.5 py-3 rounded-[8px] text-[0.88rem] font-bold cursor-pointer font-[inherit] hover:bg-[#006C52] transition-colors duration-200">Our Story</button>
+            <button className="bg-transparent text-[oklch(0.145_0_0)] dark:text-[oklch(0.985_0_0)] border border-[color-mix(in_srgb,#00D0B2_18%,transparent)] px-5.5 py-3 rounded-[8px] text-[0.88rem] font-medium cursor-pointer font-[inherit] hover:border-primary transition-[border-color] duration-200">Meet the Team</button>
           </div>
 
           {/* ── Stats ── */}
           <div ref={hstatsRef} className="ao-stats flex items-stretch justify-center border border-[color-mix(in_srgb,#00D0B2_15%,transparent)] rounded-[14px] overflow-hidden">
-            <div className="px-[34px] py-[22px] text-center border-r border-[color-mix(in_srgb,#00D0B2_15%,transparent)]">
-              <div className="text-[1.6rem] font-bold tracking-[-0.04em] text-[oklch(0.145_0_0)] dark:text-[oklch(0.985_0_0)] leading-none mb-[0.3rem]"><span ref={counter1Ref}>0</span><span className="text-[#00D0B2]">+</span></div>
+            <div className="px-8.5 py-5.5. text-center border-r border-[color-mix(in_srgb,#00D0B2_15%,transparent)]">
+              <div className="text-[1.6rem] font-bold tracking-[-0.04em] text-[oklch(0.145_0_0)] dark:text-[oklch(0.985_0_0)] leading-none mb-[0.3rem]"><span ref={counter1Ref}>0</span><span className="text-primary">+</span></div>
               <div className="text-[0.64rem] font-medium tracking-[0.08em] uppercase text-[oklch(0.708_0_0)] dark:text-[oklch(0.556_0_0)]">Report Formats</div>
             </div>
-            <div className="px-[34px] py-[22px] text-center border-r border-[color-mix(in_srgb,#00D0B2_15%,transparent)]">
-              <div className="text-[1.6rem] font-bold tracking-[-0.04em] text-[oklch(0.145_0_0)] dark:text-[oklch(0.985_0_0)] leading-none mb-[0.3rem]"><span ref={counter2Ref}>0</span><span className="text-[#00D0B2]">x</span></div>
+            <div className="px-8.5 py-5.5 text-center border-r border-[color-mix(in_srgb,#00D0B2_15%,transparent)]">
+              <div className="text-[1.6rem] font-bold tracking-[-0.04em] text-[oklch(0.145_0_0)] dark:text-[oklch(0.985_0_0)] leading-none mb-[0.3rem]"><span ref={counter2Ref}>0</span><span className="text-primary">x</span></div>
               <div className="text-[0.64rem] font-medium tracking-[0.08em] uppercase text-[oklch(0.708_0_0)] dark:text-[oklch(0.556_0_0)]">Faster Scanning</div>
             </div>
-            <div className="px-[34px] py-[22px] text-center border-r border-[color-mix(in_srgb,#00D0B2_15%,transparent)]">
-              <div className="text-[1.6rem] font-bold tracking-[-0.04em] text-[oklch(0.145_0_0)] dark:text-[oklch(0.985_0_0)] leading-none mb-[0.3rem]">CI/<span className="text-[#00D0B2]">CD</span></div>
+            <div className="px-8.5 py-5.5 text-center border-r border-[color-mix(in_srgb,#00D0B2_15%,transparent)]">
+              <div className="text-[1.6rem] font-bold tracking-[-0.04em] text-[oklch(0.145_0_0)] dark:text-[oklch(0.985_0_0)] leading-none mb-[0.3rem]">CI/<span className="text-primary">CD</span></div>
               <div className="text-[0.64rem] font-medium tracking-[0.08em] uppercase text-[oklch(0.708_0_0)] dark:text-[oklch(0.556_0_0)]">API Ready</div>
             </div>
-            <div className="px-[34px] py-[22px] text-center">
-              <div className="text-[1.6rem] font-bold tracking-[-0.04em] text-[oklch(0.145_0_0)] dark:text-[oklch(0.985_0_0)] leading-none mb-[0.3rem]"><span className="text-[#00D0B2]">AI</span></div>
+            <div className="px-8.5 py-5.5 text-center">
+              <div className="text-[1.6rem] font-bold tracking-[-0.04em] text-[oklch(0.145_0_0)] dark:text-[oklch(0.985_0_0)] leading-none mb-[0.3rem]"><span className="text-primary">AI</span></div>
               <div className="text-[0.64rem] font-medium tracking-[0.08em] uppercase text-[oklch(0.708_0_0)] dark:text-[oklch(0.556_0_0)]">MCP + SonarQube</div>
             </div>
           </div>
@@ -271,9 +271,9 @@ export default function AboutHero() {
         </div>{/* end z-10 wrapper */}
 
         {/* ── Scroll indicator ── */}
-        <div className="ao-scroll flex flex-col items-center gap-[6px] pointer-events-none">
+        <div className="ao-scroll flex flex-col items-center gap-1.5 pointer-events-none">
           <span className="text-[0.58rem] font-semibold tracking-[0.16em] uppercase text-[oklch(0.708_0_0)] dark:text-[oklch(0.556_0_0)]">Scroll</span>
-          <div className="w-px h-[28px]" style={{ background: "linear-gradient(to bottom, color-mix(in srgb, #00D0B2 40%, transparent), transparent)" }} />
+          <div className="w-px h-7" style={{ background: "linear-gradient(to bottom, color-mix(in srgb, #00D0B2 40%, transparent), transparent)" }} />
         </div>
 
       </section>

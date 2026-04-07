@@ -80,7 +80,7 @@ const Card: React.FC<{ card: CardData }> = ({ card }) => {
 
       {/* White glass softening overlay */}
       <div
-        className="absolute inset-0 pointer-events-none z-[1]"
+        className="absolute inset-0 pointer-events-none z-1"
         style={{
           background:
             "linear-gradient(160deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.1) 100%)",
@@ -88,7 +88,7 @@ const Card: React.FC<{ card: CardData }> = ({ card }) => {
       />
 
       {/* Text content */}
-      <div className="relative z-[2] px-6 pt-8 pb-4">
+      <div className="relative z-2 px-6 pt-8 pb-4">
         <h3
           className="font-bold leading-tight mb-3 text-2xl tracking-[-0.01em]"
           style={{
@@ -143,7 +143,7 @@ const Card: React.FC<{ card: CardData }> = ({ card }) => {
       </div>
 
       {/* Character image */}
-      <div className="relative mt-auto mx-auto z-[2] w-[78%]">
+      <div className="relative mt-auto mx-auto z-2 w-[78%]">
         <Image
           src={card.image}
           alt={`${card.title} ${card.subtitle}`}
@@ -159,13 +159,13 @@ const Card: React.FC<{ card: CardData }> = ({ card }) => {
 const ThreeCards: React.FC = () => {
   return (
     <section
-      className="w-full flex flex-col items-center bg-[#F7F5F0] py-16 px-[120px]"
+      className="w-full flex flex-col items-center bg-[#F7F5F0] py-16 px-30"
       style={{
         fontFamily: "var(--font-google-sans), var(--font-noto-khmer), sans-serif",
       }}
     >
       {/* Inner wrapper */}
-      <div className="w-full max-w-screen-xl flex flex-col items-start">
+      <div className="w-full max-w-7xl flex flex-col items-start">
         <p
           className="text-sm font-semibold mb-8 tracking-widest uppercase text-slate-400"
           style={{

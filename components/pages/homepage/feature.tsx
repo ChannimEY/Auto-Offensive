@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -189,7 +190,7 @@ function DualSpine({
       {sides.map((s, i) => (
         <div
           key={i}
-          className="fixed top-0 h-screen w-px z-[90] pointer-events-none"
+          className="fixed top-0 h-screen w-px z-90 pointer-events-none"
           style={{ ...s.style, clipPath }}
         >
           <div
@@ -213,24 +214,24 @@ function DualSpine({
 // ─── Center Logo ──────────────────────────────────────────────────────────────
 
 function CenterLogo({
-  rotation,
   visible,
 }: {
-  rotation: number;
   visible: boolean;
 }) {
   return (
     <div
-      className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[200] pointer-events-none"
+      className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-200 pointer-events-none"
       style={{
         opacity:    visible ? 1 : 0,
         transition: "opacity 0.4s ease",
       }}
     >
-      <img
-        src="./Auto-Offensive.png"
+      <Image
+        src="/Auto-Offensive.png"
         alt="Logo"
-        className="w-[52px] h-[52px] object-contain"
+        className=" object-contain"
+        width={52}
+        height={52}
       />
     </div>
   );
@@ -238,10 +239,10 @@ function CenterLogo({
 
 // ─── Scroll Progress Bar ──────────────────────────────────────────────────────
 
-function ProgressBar({ pct }: { pct: number }) {
+function ProgressBar() {
   return (
     <div
-      className="fixed top-0 left-0 h-[200px] z-[200] transition-[width] duration-[100ms] linear"
+      className="fixed top-0 left-0 h-50 z-200 transition-[width] duration-100 linear"
     />
   );
 }
@@ -252,7 +253,7 @@ function Ticker() {
   const doubled = [...TICKER_ITEMS, ...TICKER_ITEMS];
   return (
     <div
-      className="overflow-hidden border-y py-[14px] my-0"
+      className="overflow-hidden border-y py-4 my-0"
       style={{
         borderColor: "rgba(0,0,0,0.08)",
         background:  "rgba(1,80,158,0.02)",
@@ -272,7 +273,7 @@ function Ticker() {
             }}
           >
             <span
-              className="w-1 h-1 rounded-full flex-shrink-0"
+              className="w-1 h-1 rounded-full shrink-0"
               style={{ background: "#01509e" }}
             />
             {item}
@@ -300,7 +301,7 @@ function CardRow({
 
   const contentBlock = (
     <div
-      className="relative flex flex-col justify-center py-[60px]"
+      className="relative  flex flex-col justify-center py-15"
       style={{
         paddingLeft:  gapLeft,
         paddingRight: gapRight,
@@ -326,7 +327,7 @@ function CardRow({
 
         {/* Tag */}
         <span
-          className="inline-flex items-center gap-1.5 text-[10px] tracking-[0.15em] uppercase px-3 py-[5px] mb-6"
+          className="inline-flex items-center gap-1.5 text-[10px] tracking-[0.15em] uppercase px-3 py-1.5 mb-6"
           style={{
             fontFamily:   "var(--font-hackdaddy), sans-serif",
             color:        "#01509e",
@@ -361,7 +362,7 @@ function CardRow({
 
         {/* Description */}
         <p
-          className="text-[14px] leading-[1.75] max-w-[400px] mb-9"
+          className="text-[14px] leading-[1.75] max-w-100 mb-9"
           style={{
             fontFamily: "var(--font-google-sans), var(--font-noto-khmer), sans-serif",
             color:      "#6b7a90",
@@ -389,7 +390,7 @@ function CardRow({
   const spineBlock = (
     <div className="relative flex items-center justify-center">
       <div
-        className="w-[10px] h-[10px] rounded-full"
+        className="w-3 h-3 rounded-full"
         style={{
           border:     "2px solid #01509e",
           background: "#F7F5F0",
@@ -447,7 +448,7 @@ function CardRow({
     <div
       ref={cardRef}
       id={isLast ? "lastCard" : undefined}
-      className="grid min-h-[480px] border-t"
+      className="grid min-h-120 border-t"
       style={{
         gridTemplateColumns: "1fr 80px 1fr",
         borderColor:         "rgba(0,0,0,0.08)",
@@ -477,11 +478,10 @@ function CardRow({
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 export default function Features() {
-  const [scrollPct,      setScrollPct]      = useState(0);
-  const [logoRotation,   setLogoRotation]   = useState(0);
+  const [,      setScrollPct]      = useState(0);
+  const [,     setLogoRotation]   = useState(0);
   const [spineFill,      setSpineFill]      = useState(0);
   const [spineClip,      setSpineClip]      = useState("inset(9999px 0 0 0)");
-  const [activeSection,  setActiveSection]  = useState(0);
   const [visibleCards,   setVisibleCards]   = useState<boolean[]>(CARDS.map(() => false));
   const [logoVisible,    setLogoVisible]    = useState(false);
 
@@ -544,7 +544,6 @@ export default function Features() {
               next[idx] = true;
               return next;
             });
-            setActiveSection(idx);
           }
         });
       },
@@ -567,13 +566,13 @@ export default function Features() {
         }
       `}</style>
 
-      <ProgressBar pct={scrollPct} />
+      <ProgressBar />
       <DualSpine fillPct={spineFill} clipPath={spineClip} />
-      <CenterLogo rotation={logoRotation} visible={logoVisible} />
+      <CenterLogo visible={logoVisible} />
 
       <section
         ref={featureSectionRef}
-        className="relative pt-[60px] pb-[5px]"
+        className="relative pt-12 pb-1.5"
         id="features"
       >
         {/* Section Header */}
@@ -587,7 +586,7 @@ export default function Features() {
         >
           <div>
             <p
-              className="text-[11px] tracking-[0.2em] uppercase mb-[10px]"
+              className="text-[11px] tracking-[0.2em] uppercase mb-2.5"
               style={{
                 fontFamily: "var(--font-hackdaddy), sans-serif",
                 color:      "#00d0b2",

@@ -4,7 +4,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme-provider";
-import { Navbar } from "@/components/layout/navbar";
+import { Header } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
@@ -32,10 +32,10 @@ const notoKhmer = Noto_Sans_Khmer({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://auto-offensive.com"),
   title: "Auto-Offensive | Next-Gen PaaS for Hackers",
   description: "Automated Security Workflows and Pentesting Platform",
 };
-
 
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -49,7 +49,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+         <Header />
+          <main>
+            {children}
+          </main>
+          <Footer />
           
         </ThemeProvider>
       </body>

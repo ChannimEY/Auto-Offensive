@@ -1,36 +1,254 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 Auto-Offensive
 
-## Getting Started
+<p align="center">
+  <img src="./public/Auto_Offensive_Light-mode.png" alt="Auto-Offensive Light Logo" width="200" style="margin: 10px;" />
+  <img src="./public/Auto_Offensive_Dark-mode.png" alt="Auto-Offensive Dark Logo" width="200" style="margin: 10px;" />
+</p>
 
-First, run the development server:
+<p align="center">
+  <strong>Automate the Attack. Secure the Stack.</strong><br/>
+  A modern PaaS platform for automated penetration testing & security workflows
+</p>
 
+<p align="center">
+  <a href="#"><img src="https://img.shields.io/badge/status-active-success" /></a>
+  <a href="#"><img src="https://img.shields.io/badge/version-1.0.0-blue" /></a>
+  <a href="#"><img src="https://img.shields.io/badge/license-MIT-black" /></a>
+  <a href="#"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen" /></a>
+</p>
+
+---
+
+## ✨ Overview
+
+`Auto-Offensive` is a **Platform as a Service (PaaS)** that enables **automated penetration testing** through:
+
+- 🖥️ Web Dashboard  
+- 💻 CLI Interface  
+- 🔗 API Integration  
+
+No local setup. No tool configuration. Just scan.
+
+> Designed for **security engineers, developers, and researchers** who want speed, automation, and scalability.
+
+---
+
+## 🖼️ Preview
+
+<p align="center">
+  <img src="./public/desktop-preview.png" width="360"/>
+  <img src="./public/tablet-preview.png" width="200"/>
+  <img src="./public/mobile-preview.png" width="100"/>
+</p>
+
+---
+
+## ✨ Key Features
+
+**Auto-Offensive delivers security automation across 4 core capabilities:**
+
+### 🖥️ Automated Penetration Testing (Web UI)
+- **🔍 One-Click Scanning** – Launch complex security scans directly from the dashboard with no manual configuration.
+- **⚙️ Dynamic Tool Management** – Admins can add new security tools through the UI without touching backend code.
+- **🔗 Tool Piping & Chaining** – Select multiple tools and pipe them together (e.g., use Nmap output as direct input for Nuclei).
+
+### 📄 Advanced Reporting System
+- **📦 Multi-Format Export** – Generate professional reports in JSON, DOCX, Excel, and PDF.
+- **🔌 Portable Raw Data** – JSON output allows seamless integration into external platforms and custom dashboards.
+- **🎨 Dynamic Customization** – Customize report templates and layouts directly from the UI (coming soon).
+
+### 💻 Remote CLI Execution
+- **🌐 Remote Execution** – Run scans from your local terminal without installing tools locally; the CLI calls our server-side API.
+- **🔐 Cloud Synct** – Full login and authentication support to sync your sessions and history across devices.
+- **⚡ Instant Results** – After a scan, the CLI returns a direct URL to view the web report or download it immediately.
+
+### 🔒 Source Code & CI/CD Security
+- **🧬 Git Integration** – Scan GitHub and GitLab repositories directly for code quality issues and hardcoded secrets.
+- **🚀 Pipeline Ready** – Dedicated API endpoints for CI/CD integration to receive automated security pass/fail results.
+
+
+## 🚀 Live Platform
+
+Access our production-ready platform:
+
+**🌐 [Auto-OffensivePlatform](https://auto-offensive.com/)**
+
+---
+
+## ⚙️ Getting Started
+
+### 📥 Installation
+
+**Clone the repository:**
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/ITProfessional-Gen01/auto-offensive-frontend.git
+cd auto-offensive-frontend
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**Install dependencies:**
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+**Run the development server:**
+```bash
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 🛠 Technology Stack
 
-To learn more about Next.js, take a look at the following resources:
+Auto-Offensive leverages a modern, high-performance stack designed for security, scalability, and real-time execution.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 🎨 Frontend Technologies
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+#### **🏗️ Core Framework & Libraries**
+- **⚡ Next.js (App Router)** - React-based full-stack framework with SSR, SSG, and performance optimization
+- **📘 TypeScript** - Strongly typed JavaScript for enhanced reliability and developer experience
 
-## Deploy on Vercel
+#### **🎭 Styling & UI Components**
+- **🌊 Tailwind CSS** - Utility-first CSS framework for rapid, responsive design
+- **🎨 CSS3** - Modern styling with animations, transitions, and responsive layouts
+- **📄 HTML5** - Semantic markup for accessibility and SEO optimization
+- **🧩 Shadcn/ui Components** - Modern, accessible, and customizable component library
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+#### **🔄 State Management & Logic**
+- **🗃️ Redux** - Predictable state container for complex application state management
+- **🚀 JavaScript (ES6+)** - Modern JavaScript features for enhanced functionality
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### ⚙️ Backend & Security
+
+#### **🏢 Core Framework**
+- **🚀 Go (Golang):** -  High-concurrency engine used for heavy-duty scanning tasks and tool orchestration.
+- **🐍 FastAPI:** - Modern, high-performance Python framework used for rapid API development and asynchronous task handling.
+- **🔐 Keycloak** - Open-source identity and access management for secure authentication
+
+
+### 💾 Database & Caching
+
+#### **🗄️ Primary Database**
+- **🐘 PostgreSQL** - Our primary relational database, ensuring ACID compliance and robust data integrity for user and scan records.
+
+
+
+### 🐳 DevOps & Deployment
+
+#### **📦 Containerization**
+- **🐋 Docker** - Containerization for:
+  - 📦 Application packaging and deployment
+  - 🔄 Environment consistency
+  - 🏗️ Microservices orchestration
+  - 📈 Simplified scaling
+
+#### **🌐 Web Server & Infrastructure**
+- **🚀 NGINX** - High-performance reverse proxy for load balancing and SSL termination
+- **☁️ Cloud Deployment** - Scalable cloud infrastructure
+- **🔄 CI/CD Pipeline** - Automated testing, building, and deployment
+
+---
+
+## 🗺️ Navigation Structure
+
+Clear and intuitive navigation across **public**, **user**, and **admin** areas ensures a seamless experience.
+
+---
+
+### 🌐 Public Navigation
+
+- 🏠 **Home**  
+  [https://auto-offensive.com/](#)  
+  → Platform overview and introduction  
+
+- 🛠️ **Tools**  
+  [https://auto-offensive.com/tools](#)  
+  → Explore automated security tools  
+
+- ✨ **Features**  
+  [https://auto-offensive.com/features](#)  
+  → Discover orchestration & automation capabilities  
+
+- 📚 **Resources**  
+  [https://auto-offensive.com/kb](#)  
+  → Knowledge base and security documentation  
+
+- 🔑 **Login**  
+  [https://auto-offensive.com/login](#)  
+  → Access your secure dashboard  
+
+- 📝 **Register**  
+  [https://auto-offensive.com/signup](#)  
+  → Create an account for full access  
+
+---
+
+### 🔐 Authenticated User Pages
+
+- 📊 **Dashboard**  
+  https://app.auto-offensive.com/dashboard  
+  → View scan history, recent results, and quick actions  
+
+- 🔍 **New Scan**  
+  https://app.auto-offensive.com/scan  
+  → Configure and launch automated security workflows  
+
+- 📄 **Reports**  
+  https://app.auto-offensive.com/reports  
+  → Manage, view, and export scan results  
+
+- ⚙️ **Profile Settings**  
+  https://app.auto-offensive.com/profile  
+  → Update account details and manage API keys  
+
+---
+
+### 🛡️ Admin Panel
+
+- 👥 **User Management**  
+  https://app.auto-offensive.com/admin/users  
+  → Monitor, manage, and control user accounts  
+
+- 🛠️ **Tool Management**  
+  https://app.auto-offensive.com/admin/tools  
+  → Add, update, or remove security tools dynamically  
+
+- 📖 **Documentation Editor**  
+  https://app.auto-offensive.com/admin/docs  
+  → Update and manage knowledge base content in real-time  
+
+- 📈 **Analytics Dashboard**  
+  https://app.auto-offensive.com/admin/analytics  
+  → Track usage metrics and platform performance  
+
+---
+
+
+## 🙏 Acknowledgments
+
+We would like to express our deepest gratitude to our mentors:
+
+**👨‍🏫 Mr. Kim Chansokpheng and 👨‍🏫 Mr. Sreng Chipor**
+
+Their technical expertise and strategic guidance were the cornerstones of **Auto-Offensive**. . Beyond providing solutions, they challenged us to think critically and architect with precision. We are profoundly grateful for their patience and for the professional standards they inspired us to uphold.
+
+
+**🌟 Thank you for empowering us to build with excellence.!**
+
+---
+
+## 💡 Our Mission
+
+### 🔐  **"Automate the Attack. Secure the Stack."**
+
+*Empowering security professionals, developers, and researchers with accessible, automated penetration testing tools — without the infrastructure complexity.*
+
+
+
+---
+
+<p align="center">
+<strong>🚀 Ready to automate your security workflow?</strong>
+
+
+<a href="#">🌐 Visit Auto-Offensive Today!</a>
+</p>

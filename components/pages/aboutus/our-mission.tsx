@@ -12,7 +12,7 @@ const SLIDES = [
     title: (
       <>
         Security testing<br />
-        for <span className="text-[#00D0B2]">every engineer</span>.
+        for <span className="text-primary">every engineer</span>.
       </>
     ),
     body: "Auto-Offensive is a PaaS that automates web, network & code security scanning — powered by AI via MCP Protocol, with zero CLI setup required.",
@@ -24,7 +24,7 @@ const SLIDES = [
     title: (
       <>
         Pen-testing was into
-        <span className="text-[#00D0B2]"> inaccessible</span>.
+        <span className="text-primary"> inaccessible</span>.
       </>
     ),
     body: "Traditional tools demand years of CLI expertise, locking out developers and students. We built a platform that removes every barrier — click Web UI, not command line.",
@@ -35,7 +35,7 @@ const SLIDES = [
     tag: "Who We Serve",
     title: (
       <>
-        Built for <span className="text-[#00D0B2]">real users</span>,
+        Built for <span className="text-primary">real users</span>,
         not just experts.
       </>
     ),
@@ -47,7 +47,7 @@ const SLIDES = [
     tag: "Our Vision",
     title: (
       <>
-        Shift security left into<span className="text-[#00D0B2]">  every pipeline. </span>
+        Shift security left into<span className="text-primary">  every pipeline. </span>
       </>
     ),
     body: "Auto-Offensive integrates into GitHub & GitLab repos and your CI/CD pipeline via API — scanning code quality & vulnerabilities on every push, automatically.",
@@ -62,10 +62,10 @@ const SLIDES = [
 function SlidePathPointer({ from, to }: { from: string; to: string }) {
   return (
     <div
-      className="ms-path-pointer w-[30vw] shrink-0 h-full flex flex-col items-center justify-center gap-[10px] pointer-events-none relative"
+      className="ms-path-pointer w-[30vw] shrink-0 h-full flex flex-col items-center justify-center gap-2.5 pointer-events-none relative"
       aria-hidden="true"
     >
-      <div className="flex items-center justify-between w-full px-[2px]">
+      <div className="flex items-center justify-between w-full px-0.5">
         <span
           className="text-[0.55rem] font-bold tracking-[0.18em] uppercase text-[rgba(0,208,178,.35)]"
           style={{ fontFamily: "var(--font-title, monospace)" }}
@@ -156,7 +156,7 @@ function SlidePathPointer({ from, to }: { from: string; to: string }) {
 ───────────────────────────────────────────── */
 function ShieldVisual() {
   return (
-    <div className="relative w-[160px] h-[180px] flex items-center justify-center">
+    <div className="relative w-40 h-45 flex items-center justify-center">
       <svg
         viewBox="0 0 120 140"
         fill="none"
@@ -195,12 +195,12 @@ function ShieldVisual() {
 function TerminalVisual() {
   return (
     <div className="w-[320px] bg-[rgba(10,31,26,.06)] border border-[rgba(0,208,178,.14)] rounded-[10px] overflow-hidden dark:bg-[rgba(0,0,0,.5)]">
-      <div className="px-[14px] py-2 bg-[rgba(0,208,178,.04)] border-b border-[rgba(0,208,178,.14)] flex items-center">
+      <div className="px-3.5 py-2 bg-[rgba(0,208,178,.04)] border-b border-[rgba(0,208,178,.14)] flex items-center">
         <span className="inline-block w-2 h-2 rounded-full bg-[#ff5f57]" />
         <span className="inline-block w-2 h-2 rounded-full bg-[#febc2e] mx-1" />
         <span className="inline-block w-2 h-2 rounded-full bg-[#28c840]" />
       </div>
-      <div className="p-[14px] flex flex-col gap-[5px]">
+      <div className="p-3.5 flex flex-col gap-1.25">
         {[
           { prompt: "$", content: "ao scan --target app.example.com", type: "cmd" },
           { prompt: " ", content: "↳ Running AI-powered CVSS checks...", type: "out" },
@@ -210,14 +210,14 @@ function TerminalVisual() {
         ].map((line, idx) => (
           <div
             key={idx}
-            className="text-[0.72rem] flex gap-2 leading-[1.5]"
+            className="text-[0.72rem] flex gap-2 leading-normal"
             style={{ fontFamily: "var(--font-hackdaddy, monospace)" }}
           >
             <span className="text-[rgba(0,208,178,.5)] shrink-0">{line.prompt}</span>
             <span
               className={
                 line.type === "ok"
-                  ? "text-[#00D0B2]"
+                  ? "text-primary"
                   : line.type === "out"
                   ? "italic"
                   : ""
@@ -229,7 +229,7 @@ function TerminalVisual() {
           </div>
         ))}
         <div
-          className="text-[0.72rem] flex gap-2 leading-[1.5]"
+          className="text-[0.72rem] flex gap-2 leading-normal"
           style={{ fontFamily: "var(--font-hackdaddy, monospace)" }}
         >
           <span className="text-[rgba(0,208,178,.5)] shrink-0">$</span>
@@ -290,7 +290,7 @@ function StatsVisual({ active }: { active: boolean }) {
   ];
 
   return (
-    <div className="ms-vis-stats w-full max-w-[300px] flex flex-col gap-[18px]">
+    <div className="ms-vis-stats w-full max-w-75 flex flex-col gap-4.5">
       {statItems.map((item, idx) => (
         <div key={idx}>
           <div
@@ -302,7 +302,7 @@ function StatsVisual({ active }: { active: boolean }) {
             ) : (
               <>
                 <span ref={item.countRef}>0</span>
-                <em className="text-[#00D0B2] not-italic">{item.suffix}</em>
+                <em className="text-primary not-italic">{item.suffix}</em>
               </>
             )}
           </div>
@@ -312,10 +312,10 @@ function StatsVisual({ active }: { active: boolean }) {
           >
             {item.label}
           </div>
-          <div className="h-[2px] bg-[rgba(0,208,178,.12)] rounded-[2px] overflow-hidden">
+          <div className="h-0.5 bg-[rgba(0,208,178,.12)] rounded-xs overflow-hidden">
             <div
               ref={item.barRef}
-              className="ms-vs-fill h-full bg-gradient-to-r from-[#00D0B2] to-[#00f5c8] rounded-[2px] w-0"
+              className="ms-vs-fill h-full bg-linear-to-r from-primary to-[#00f5c8] rounded-xs w-0"
             />
           </div>
         </div>
@@ -328,18 +328,18 @@ const PIPELINE_STEPS = ["Push Code", "Auto Scan", "AI Detect", "Report", "Fix"];
 
 function PipelineVisual() {
   return (
-    <div className="ms-vis-pipeline flex flex-col items-center w-[190px]">
+    <div className="ms-vis-pipeline flex flex-col items-center w-47.5">
       {PIPELINE_STEPS.map((s, i) => (
         <div key={s} className="w-full flex flex-col items-center">
           <div
-            className={`ms-vp-step flex items-center gap-[10px] px-[14px] py-2 w-full border rounded-[10px] text-[0.78rem] font-semibold transition-all duration-[400ms]${i < 3 ? " active" : ""}`}
+            className={`ms-vp-step flex items-center gap-2.5 px-3.5 py-2 w-full border rounded-[10px] text-[0.78rem] font-semibold transition-all duration-[400ms]${i < 3 ? " active" : ""}`}
             style={{ fontFamily: "var(--font-body, sans-serif)" }}
           >
             <div className="ms-vp-icon text-base">⬡</div>
             <span>{s}</span>
           </div>
           {i < PIPELINE_STEPS.length - 1 && (
-            <div className="ms-vp-line w-[1px] h-[14px] mx-auto" />
+            <div className="ms-vp-line w-px h-3.5 mx-auto" />
           )}
         </div>
       ))}
@@ -579,7 +579,7 @@ export default function OurMission() {
       `}</style>
 
       <div ref={outerRef} className="ms-outer ms-section relative h-[400vh]">
-        <div className="ms-sticky sticky top-0 h-screen overflow-hidden transition-[background] duration-[400ms]">
+        <div className="ms-sticky sticky top-0 h-screen overflow-hidden transition-[background] duration-400">
 
           {/* Decorative backgrounds */}
           <div className="ms-bg-grid absolute inset-0 pointer-events-none" />
@@ -587,11 +587,11 @@ export default function OurMission() {
 
           {/* Top strip */}
           <div
-            className="ms-top-strip absolute top-0 left-0 right-0 z-10 flex items-center justify-between px-[4%] py-[14px] border-b border-[rgba(0,208,178,.14)]"
+            className="ms-top-strip absolute top-0 left-0 right-0 z-10 flex items-center justify-between px-[4%] py-3.5 border-b border-[rgba(0,208,178,.14)]"
             style={{ fontFamily: "var(--font-body, sans-serif)" }}
           >
             <span className="text-[0.6rem] font-semibold tracking-[0.18em] uppercase text-[rgba(0,208,178,.5)]">
-              // Our Mission
+              {'// Our Mission'}
             </span>
             <span className="text-[0.6rem] font-semibold tracking-[0.18em] uppercase text-[rgba(0,208,178,.5)]">
               <span ref={counterRef}>01 — 04</span>
@@ -599,7 +599,7 @@ export default function OurMission() {
           </div>
 
           {/* Track wrapper */}
-          <div className="ms-track-wrap absolute inset-0 flex items-center pt-[44px] pb-[44px] overflow-hidden">
+          <div className="ms-track-wrap absolute inset-0 flex items-center pt-11 pb-11 overflow-hidden">
             <div
               ref={trackRef}
               className="ms-track flex items-center w-[400%] h-full will-change-transform"
@@ -614,7 +614,7 @@ export default function OurMission() {
                     ref={(el) => { slideRefs.current[i] = el; }}
                   >
                     <div
-                      className="ms-slide-inner grid items-center gap-9 w-full max-w-[1200px]"
+                      className="ms-slide-inner grid items-center gap-9 w-full max-w-300"
                       style={{ gridTemplateColumns: "auto 1fr 1fr" }}
                     >
 
@@ -635,7 +635,7 @@ export default function OurMission() {
                       {/* Text content */}
                       <div className="ms-slide-content">
                         <div
-                          className="ms-slide-tag text-[0.62rem] font-semibold tracking-[0.14em] uppercase text-[rgba(0,208,178,.6)] mb-4 flex items-center gap-[10px]"
+                          className="ms-slide-tag text-[0.62rem] font-semibold tracking-[0.14em] uppercase text-[rgba(0,208,178,.6)] mb-4 flex items-center gap-2.5"
                           style={{ fontFamily: "var(--font-body, sans-serif)" }}
                         >
                           {slide.tag}
@@ -647,17 +647,17 @@ export default function OurMission() {
                           {slide.title}
                         </h2>
                         <p
-                          className="ms-slide-body text-[0.88rem] leading-[1.75] max-w-[400px]"
+                          className="ms-slide-body text-[0.88rem] leading-[1.75] max-w-100"
                           style={{ color: "var(--muted)", fontFamily: "var(--font-body, sans-serif)" }}
                         >
                           {slide.body}
                         </p>
                         {slide.quote && (
                           <blockquote
-                            className="ms-bq mt-[1.4rem] pl-[1.2rem] relative text-[0.82rem] italic leading-[1.75] max-w-[360px]"
+                            className="ms-bq mt-[1.4rem] pl-[1.2rem] relative text-[0.82rem] italic leading-[1.75] max-w-90"
                             style={{ color: "var(--dim)", fontFamily: "var(--font-body, sans-serif)" }}
                           >
-                            <span className="ms-bq-bar absolute left-0 top-0 bottom-0 w-[2px] rounded-[2px]" />
+                            <span className="ms-bq-bar absolute left-0 top-0 bottom-0 w-0.5 rounded-xs" />
                             {slide.quote}
                           </blockquote>
                         )}
@@ -689,17 +689,17 @@ export default function OurMission() {
 
           {/* Progress bar */}
           <div className="ms-progress-wrap absolute bottom-0 left-0 right-0 z-10 px-[4%] py-3 flex items-center gap-5 border-t border-[rgba(0,208,178,.14)]">
-            <div className="ms-progress-track flex-1 h-[1px] rounded-[1px] overflow-hidden bg-[rgba(0,208,178,.1)]">
+            <div className="ms-progress-track flex-1 h-px rounded-[1px] overflow-hidden bg-[rgba(0,208,178,.1)]">
               <div
                 ref={progressRef}
-                className="ms-progress-fill h-full bg-[#00D0B2] w-0 rounded-[1px]"
+                className="ms-progress-fill h-full bg-primary w-0 rounded-[1px]"
               />
             </div>
             <div className="ms-progress-dots flex gap-2">
               {SLIDES.map((_, i) => (
                 <button
                   key={i}
-                  className={`ms-pd w-[6px] h-[6px] rounded-full cursor-pointer transition-all duration-300 border-0 p-0${i === 0 ? " active" : ""}`}
+                  className={`ms-pd w-1.5 h-1.5 rounded-full cursor-pointer transition-all duration-300 border-0 p-0${i === 0 ? " active" : ""}`}
                   ref={(el) => { dotsRef.current[i] = el; }}
                   aria-label={`Go to slide ${i + 1}`}
                 />

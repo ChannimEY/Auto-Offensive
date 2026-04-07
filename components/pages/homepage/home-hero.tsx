@@ -669,7 +669,7 @@ export default function HomeHero() {
         className="
           relative min-h-screen overflow-hidden
           flex flex-col items-center justify-center text-center
-          px-[6%] py-[100px]
+          px-[6%] py-25
           bg-white dark:bg-[oklch(0.145_0_0)]
           text-[oklch(0.145_0_0)] dark:text-[oklch(0.985_0_0)]
           font-[var(--font-google-sans),var(--font-noto-khmer),sans-serif]
@@ -784,11 +784,10 @@ export default function HomeHero() {
         <HexGrid hexes={RIGHT_HEXES} svgRef={hexRightRef} className="hex-grid-right" />
 
         {/* ── CONTENT ── */}
-        <div className="relative z-10 flex flex-col items-center max-w-[1025px] w-full">
+        <div className="relative z-10 flex flex-col items-center max-w-256.25 w-full">
 
           {/* Title */}
           <h1 className="
-            font-[var(--font-hackdaddy),var(--font-noto-khmer),monospace]
             text-[clamp(2.8rem,6vw,5rem)] font-bold
             leading-[1.08] tracking-[-0.02em]
             text-[oklch(0.145_0_0)] dark:text-[oklch(0.985_0_0)]
@@ -807,19 +806,19 @@ export default function HomeHero() {
           <p className="
             fade-up-3
             text-[1.05rem] text-[oklch(0.556_0_0)] dark:text-[oklch(0.708_0_0)]
-            max-w-[500px] mx-auto mb-[2.6rem]
+            max-w-125 mx-auto mb-[2.6rem]
             leading-[1.7] font-normal
           ">
             Continuously scan your infrastructure for vulnerabilities — faster, smarter, and at scale. No manual setup. Just results.
           </p>
 
           {/* Buttons */}
-          <div className="fade-up-4 flex items-center justify-center gap-[12px] flex-wrap">
+          <div className="fade-up-4 flex items-center justify-center gap-3 flex-wrap">
             <button className="
-              bg-[#00D0B2] text-white border-none
-              px-[30px] py-[14px] rounded-[10px]
+              bg-primary text-white border-none
+              px-7.5 py-3.5 rounded-[10px]
               text-[0.9rem] font-semibold font-[inherit]
-              flex items-center gap-[8px] cursor-pointer
+              flex items-center gap-2 cursor-pointer
               hover:bg-[#00b89c]
               transition-all duration-200
             ">
@@ -830,18 +829,18 @@ export default function HomeHero() {
             </button>
 
             <button className="
-              bg-white/100 dark:bg-[rgba(0,208,178,0.06)]
+              bg-white dark:bg-[rgba(0,208,178,0.06)]
               text-[oklch(0.145_0_0)] dark:text-[oklch(0.908_0_0)]
               border border-[rgba(0,208,178,0.28)] dark:border-[rgba(0,208,178,0.2)]
-              px-[26px] py-[14px] rounded-[10px]
+              px-6.5 py-3.5 rounded-[10px]
               text-[0.9rem] font-medium font-[inherit]
-              flex items-center gap-[8px] cursor-pointer
+              flex items-center gap-2 cursor-pointer
               backdrop-blur-sm
               hover:bg-white/90 dark:hover:bg-[rgba(0,208,178,0.12)]
               hover:border-[rgba(0,208,178,0.55)] dark:hover:border-[rgba(0,208,178,0.45)]
               duration-200
             ">
-              <svg className="text-[#00D0B2]" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg className="text-primary" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
               </svg>
               View Sample Report
@@ -851,32 +850,33 @@ export default function HomeHero() {
           {/* Stats */}
           <div className="
             fade-up-5
-            flex justify-center gap-[3rem]
-            mt-[4rem] pt-[2rem]
+            flex justify-center gap-12
+            mt-16 pt-8
             border-t border-[rgba(0,208,178,0.14)] dark:border-[rgba(0,208,178,0.1)]
             w-full
           ">
             <div className="text-center">
               <div className="text-[1.65rem] font-bold tracking-[-0.02em] text-[oklch(0.556_0_0)] dark:text-[oklch(0.985_0_0)] leading-none">
-                12<em className="text-[#00D0B2] not-italic">K+</em>
+                12<em className="text-primary not-italic">K+</em>
               </div>
-              <div className="text-[0.78rem] text-[oklch(0.556_0_0)] dark:text-[oklch(0.708_0_0)] mt-[3px]">
+              <div className="text-[0.78rem] text-[oklch(0.556_0_0)] dark:text-[oklch(0.708_0_0)] mt-0.75">
                 Scans completed
               </div>
             </div>
             <div className="text-center">
               <div className="text-[1.65rem] font-bold tracking-[-0.02em] text-[oklch(0.556_0_0)] dark:text-[oklch(0.985_0_0)] leading-none">
-                <em className="text-[#00D0B2] not-italic">99</em>.9%
+                <em className="text
+                -[#00D0B2] not-italic">99</em>.9%
               </div>
-              <div className="text-[0.78rem] text-[oklch(0.556_0_0)] dark:text-[oklch(0.708_0_0)] mt-[3px]">
+              <div className="text-[0.78rem] text-[oklch(0.556_0_0)] dark:text-[oklch(0.708_0_0)] mt-0.75">
                 Uptime SLA
               </div>
             </div>
             <div className="text-center">
               <div className="text-[1.65rem] font-bold tracking-[-0.02em] text-[oklch(0.556_0_0)] dark:text-[oklch(0.985_0_0)] leading-none">
-                3<em className="text-[#00D0B2] not-italic">x</em>
+                3<em className="text-primary not-italic">x</em>
               </div>
-              <div className="text-[0.78rem] text-[oklch(0.556_0_0)] dark:text-[oklch(0.708_0_0)] mt-[3px]">
+              <div className="text-[0.78rem] text-[oklch(0.556_0_0)] dark:text-[oklch(0.708_0_0)] mt-0.75">
                 Faster than manual
               </div>
             </div>
@@ -885,12 +885,12 @@ export default function HomeHero() {
         </div>{/* end content */}
 
         {/* ── SCROLL INDICATOR ── */}
-        <div className="scroll-indicator flex flex-col items-center gap-[6px] pointer-events-none">
+        <div className="scroll-indicator flex flex-col items-center gap-1.5 pointer-events-none">
           <span className="text-[0.58rem] font-semibold tracking-[0.16em] uppercase text-[oklch(0.708_0_0)] dark:text-[oklch(0.556_0_0)]">
             Scroll
           </span>
           <div
-            className="w-px h-[28px]"
+            className="w-px h-7"
             style={{ background: "linear-gradient(to bottom, color-mix(in srgb, #00D0B2 40%, transparent), transparent)" }}
           />
         </div>

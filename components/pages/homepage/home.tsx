@@ -1,7 +1,7 @@
 import HomeHero from "@/components/pages/homepage/home-hero";
 import Features from "@/components/pages/homepage/feature";
 import AIBanner from "@/components/pages/homepage/ai-banner";
-import { Footer } from "@/components/layout/footer";
+
 import ThreeCards, {  } from "@/components/pages/homepage/threecards";
 import TeamShowcase from "./teamshowcase";
 
@@ -13,7 +13,7 @@ export default function Home() {
       <AIBanner />
       <ThreeCards />
       <TeamShowcase />
-      <Footer />
+
     </main>
   );
 }
