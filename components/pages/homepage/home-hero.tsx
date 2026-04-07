@@ -257,6 +257,7 @@ export default function HomeHero() {
   return (
     <>
       <style>{`
+        /* ── Star dots ── */
         .ao-s1, .ao-s2, .ao-s3 {
           position: absolute;
           top: 0; left: 0;
@@ -287,6 +288,7 @@ export default function HomeHero() {
           50%      { filter: blur(0.6px); opacity: 1;    }
         }
 
+        /* ── Planet arc container ── */
         .ao-planet {
           position: absolute;
           left: 0; right: 0;
@@ -301,19 +303,9 @@ export default function HomeHero() {
           100% { opacity: 1; }
         }
 
-        /* ─────────────────────────────────────────────
-           SOFT BLOB PLANET SPHERE — AiBanner style
-           ─────────────────────────────────────────────
-           Layout mirrors the AiBanner blobs exactly:
-             Left  blob  → deep blue  #01509e  (small, top-left)
-             Right blob  → teal       #00d0b2  (small, top-right)
-             Center blob → white      F7F5F0  (large, centre-to-top)
-             Fourth blob → cyan       #0194c7  (bottom-right, small)
-           All blurred 70–80 px so they bleed softly
-           and never look harsh inside the sphere.
-           overflow:hidden on the container clips
-           everything to the circle.
-        ───────────────────────────────────────────── */
+        /* ════════════════════════════════════════════
+           LIGHT MODE sphere — original F7F5F0 palette
+           ════════════════════════════════════════════ */
         .ao-planet-sphere {
           opacity: 0;
           animation: planetReveal 0.9s ease-out 2.0s 1 forwards;
@@ -324,97 +316,71 @@ export default function HomeHero() {
           padding-top: 150%;
           border-radius: 50%;
           transform: translateX(-50%);
-          /* F7F5F0 base — sphere sits on white ground */
-          background: F7F5F0;
+          background: #F7F5F0;
           overflow: hidden;
         }
 
-        /* LEFT blob — deep blue, small, top-left corner */
+        /* LEFT blob — deep blue */
         .ao-planet-sphere::before {
           content: '';
           position: absolute;
           border-radius: 50%;
-          width: 46%;
-          height: 42%;
-          top: -8%;
-          left: -6%;
+          width: 46%; height: 42%;
+          top: -8%; left: -6%;
           background: #01509e;
           opacity: 0.95;
           filter: blur(80px);
         }
-
-        /* RIGHT blob — teal, small, top-right corner */
+        /* RIGHT blob — teal */
         .ao-planet-sphere::after {
           content: '';
           position: absolute;
           border-radius: 50%;
-          width: 38%;
-          height: 34%;
-          top: -5%;
-          right: -4%;
+          width: 38%; height: 34%;
+          top: -5%; right: -4%;
           background: #00d0b2;
           opacity: 0.50;
           filter: blur(70px);
         }
 
-        /* CENTER-TO-TOP blob — white, large, dominates centre */
         .ao-planet-blob-white {
           position: absolute;
           border-radius: 50%;
-          width: 72%;
-          height: 66%;
-          top: -55%;
-          left: 50%;
+          width: 72%; height: 66%;
+          top: -55%; left: 50%;
           transform: translateX(-50%);
-          background: F7F5F0;
+          background: #F7F5F0;
           opacity: 1;
           filter: blur(75px);
         }
-
-        /* BOTTOM-LEFT blob — cyan #0194c7 fills the free space,
-           mirrors AiBanner's bottom-right cyan accent.
-           Positioned at bottom-left where the sphere has open white space
-           so it bleeds into the blue blob and creates a blue→cyan gradient mix */
         .ao-planet-blob-cyan {
           position: absolute;
           border-radius: 50%;
-          width: 42%;
-          height: 38%;
-          bottom: -8%;
-          left: -4%;
+          width: 42%; height: 38%;
+          bottom: -8%; left: -4%;
           background: #0194c7;
           opacity: 0.75;
           filter: blur(72px);
         }
-
-        /* BOTTOM-RIGHT secondary cyan — smaller, echoes the left blob
-           to wrap the sphere bottom edge with colour like AiBanner */
         .ao-planet-blob-cyan2 {
           position: absolute;
           border-radius: 50%;
-          width: 30%;
-          height: 26%;
-          bottom: -6%;
-          right: -2%;
+          width: 30%; height: 26%;
+          bottom: -6%; right: -2%;
           background: #0194c7;
           opacity: 0.50;
           filter: blur(60px);
         }
-
-        /* Subtle teal mid-centre softener — same as AiBanner's 4th blob */
         .ao-planet-blob-mid {
           position: absolute;
           border-radius: 50%;
-          width: 30%;
-          height: 26%;
-          top: 22%;
-          left: 35%;
+          width: 30%; height: 26%;
+          top: 22%; left: 35%;
           background: #00d0b2;
           opacity: 0.18;
           filter: blur(55px);
         }
 
-        /* Vignette overlay — darkens edges so it reads as a sphere */
         .ao-planet-sphere-overlay {
           position: absolute;
           inset: 0;
@@ -430,8 +396,6 @@ export default function HomeHero() {
           );
           pointer-events: none;
         }
-
-        /* Top-centre gentle wash — keeps white centre luminous */
         .ao-planet-sphere-top {
           position: absolute;
           inset: 0;
@@ -444,7 +408,72 @@ export default function HomeHero() {
           pointer-events: none;
         }
 
-        /* ── glow, rim, fade, sweep — UNCHANGED ── */
+        /* ════════════════════════════════════════════
+           DARK MODE sphere overrides
+           bg: #09090B — deep space, vibrant teal/blue
+           ════════════════════════════════════════════ */
+        .dark .ao-planet-sphere {
+          background: #09090B;
+        }
+        /* LEFT blob — richer deep blue in dark */
+        .dark .ao-planet-sphere::before {
+          background: #0a3a7a;
+          opacity: 1;
+          filter: blur(70px);
+        }
+        /* RIGHT blob — vivid teal in dark */
+        .dark .ao-planet-sphere::after {
+          background: #00d0b2;
+          opacity: 0.70;
+          filter: blur(65px);
+        }
+        /* Centre blob — pure dark bg instead of off-white */
+        .dark .ao-planet-blob-white {
+          background: #09090B;
+          opacity: 1;
+          filter: blur(60px);
+        }
+        /* Bottom-left cyan — more vivid */
+        .dark .ao-planet-blob-cyan {
+          background: #00a8e8;
+          opacity: 0.85;
+          filter: blur(65px);
+        }
+        /* Bottom-right secondary cyan */
+        .dark .ao-planet-blob-cyan2 {
+          background: #00c4b4;
+          opacity: 0.65;
+          filter: blur(55px);
+        }
+        /* Mid teal softener — more visible in dark */
+        .dark .ao-planet-blob-mid {
+          background: #00d0b2;
+          opacity: 0.28;
+          filter: blur(50px);
+        }
+        /* Dark mode vignette — blend into #09090B at edges */
+        .dark .ao-planet-sphere-overlay {
+          background: radial-gradient(
+            ellipse at 50% 50%,
+            transparent 0%,
+            transparent 35%,
+            rgba(9,9,11,0.20) 52%,
+            rgba(9,9,11,0.55) 70%,
+            rgba(9,9,11,0.82) 86%,
+            rgba(9,9,11,0.95) 100%
+          );
+        }
+        /* Dark mode top wash — subtle teal luminance at crown */
+        .dark .ao-planet-sphere-top {
+          background: radial-gradient(
+            ellipse at 50% 0%,
+            rgba(0,208,178,0.18) 0%,
+            rgba(0,168,232,0.08) 30%,
+            transparent 55%
+          );
+        }
+
+        /* ── glow, rim, fade, sweep — same for both modes ── */
         .ao-planet-glow {
           position: absolute;
           top: -3%; left: 50%;
@@ -462,6 +491,15 @@ export default function HomeHero() {
           opacity: 0;
           animation: planetReveal 0.9s ease-out 1.0s 1 forwards;
         }
+        /* Dark mode glow — more intense teal/blue */
+        .dark .ao-planet-glow {
+          box-shadow:
+            0 0 0    2px rgba(0,208,178,0.6),
+            0 0 20px 8px rgba(0,168,232,0.5),
+            0 0 55px 22px rgba(0,208,178,0.28),
+            0 0 110px 45px rgba(1,80,158,0.18),
+            0 0 180px 80px rgba(0,208,178,0.1);
+        }
         .ao-planet-rim {
           position: absolute;
           top: -1%; left: 50%;
@@ -477,12 +515,24 @@ export default function HomeHero() {
           opacity: 0;
           animation: planetReveal 0.9s ease-out 2.0s 1 forwards;
         }
+        /* Dark mode rim — brighter teal */
+        .dark .ao-planet-rim {
+          border-color: rgba(0,208,178,0.9);
+          box-shadow:
+            0 0 20px 6px rgba(0,208,178,0.55),
+            0 0 50px 16px rgba(0,208,178,0.2),
+            inset 0 0 30px 8px rgba(0,208,178,0.15);
+        }
         .ao-planet-fade {
           position: absolute;
           bottom: 0; left: 0; right: 0;
           height: 35%;
           background: linear-gradient(to bottom, transparent, rgba(238,247,245,0.92));
           z-index: 5;
+        }
+        /* Dark mode fade — blend into #09090B */
+        .dark .ao-planet-fade {
+          background: linear-gradient(to bottom, transparent, rgba(9,9,11,0.96));
         }
 
         .ao-planet-sweep {
@@ -525,6 +575,7 @@ export default function HomeHero() {
           100%    { opacity: 0; r: 0; }
         }
 
+        /* ── Hex grids ── */
         .hx {
           fill: transparent;
           stroke: #00D0B2;
@@ -654,7 +705,6 @@ export default function HomeHero() {
           0%, 100% { transform: translateX(-50%) translateY(0); }
           50%       { transform: translateX(-50%) translateY(5px); }
         }
-
         .scroll-indicator {
           position: absolute;
           bottom: 28px;
@@ -663,6 +713,21 @@ export default function HomeHero() {
           animation: ao-bob 2.5s ease-in-out infinite;
           z-index: 20;
         }
+
+        /* ── Responsive description font sizes ── */
+        .hero-description {
+          font-size: 16px; /* mobile */
+        }
+        @media (min-width: 768px) {
+          .hero-description {
+            font-size: 18px; /* tablet */
+          }
+        }
+        @media (min-width: 1024px) {
+          .hero-description {
+            font-size: 20px; /* desktop */
+          }
+        }
       `}</style>
 
       <section
@@ -670,12 +735,12 @@ export default function HomeHero() {
           relative min-h-screen overflow-hidden
           flex flex-col items-center justify-center text-center
           px-[6%] py-25
-          bg-white dark:bg-[oklch(0.145_0_0)]
+          bg-white dark:bg-[#09090B]
           text-[oklch(0.145_0_0)] dark:text-[oklch(0.985_0_0)]
           font-[var(--font-google-sans),var(--font-noto-khmer),sans-serif]
           transition-[background] duration-400
         "
-        style={{ background: "F7F5F0" }}
+        style={{ background: "#fffff" }}
       >
 
         {/* ── STAR DOTS ── */}
@@ -685,16 +750,6 @@ export default function HomeHero() {
 
         {/* ── PLANET ARC ── */}
         <div className="ao-planet" aria-hidden="true">
-          {/*
-            Soft blob sphere — AiBanner style blobs:
-            ::before             = LEFT  blue blob  (#01509e, small, top-left)
-            ::after              = RIGHT teal blob  (#00d0b2, small, top-right)
-            .ao-planet-blob-white = CENTER white blob (large, centre-to-top)
-            .ao-planet-blob-cyan  = BOTTOM-RIGHT cyan accent (small)
-            .ao-planet-blob-mid   = subtle teal mid-centre softener
-            .ao-planet-sphere-overlay = vignette
-            .ao-planet-sphere-top     = top luminous wash
-          */}
           <div className="ao-planet-sphere">
             <div className="ao-planet-blob-white" />
             <div className="ao-planet-blob-cyan" />
@@ -716,13 +771,13 @@ export default function HomeHero() {
                   x1="0" y1="100" x2="200" y2="100">
                   <stop offset="0%"   stopColor="#00D0B2" stopOpacity="0" />
                   <stop offset="60%"  stopColor="#00D0B2" stopOpacity="0.55" />
-                  <stop offset="100%" stopColor="F7F5F0" stopOpacity="0.95" />
+                  <stop offset="100%" stopColor="#F7F5F0" stopOpacity="0.95" />
                 </linearGradient>
                 <linearGradient id="cometGradR" gradientUnits="userSpaceOnUse"
                   x1="200" y1="100" x2="0" y2="100">
                   <stop offset="0%"   stopColor="#00D0B2" stopOpacity="0" />
                   <stop offset="60%"  stopColor="#00D0B2" stopOpacity="0.55" />
-                  <stop offset="100%" stopColor="F7F5F0" stopOpacity="0.95" />
+                  <stop offset="100%" stopColor="#F7F5F0" stopOpacity="0.95" />
                 </linearGradient>
                 <filter id="cometGlow" x="-50%" y="-50%" width="200%" height="200%">
                   <feGaussianBlur stdDeviation="1.5" result="blur" />
@@ -797,15 +852,16 @@ export default function HomeHero() {
             <br />
             Platform As A Service
             <br />
-            <span className="text-[#00d0b2] dark:text-[oklch(0.708_0_0)] font-light">
+            <span className="text-[#00d0b2] dark:text-primary font-light">
               for hacker
             </span>
           </h1>
 
-          {/* Subtitle */}
+          {/* Subtitle — responsive 16px / 18px / 20px */}
           <p className="
+            hero-description
             fade-up-3
-            text-[1.05rem] text-[oklch(0.556_0_0)] dark:text-[oklch(0.708_0_0)]
+            text-[oklch(0.556_0_0)] dark:text-[oklch(0.708_0_0)]
             max-w-125 mx-auto mb-[2.6rem]
             leading-[1.7] font-normal
           ">
@@ -865,8 +921,7 @@ export default function HomeHero() {
             </div>
             <div className="text-center">
               <div className="text-[1.65rem] font-bold tracking-[-0.02em] text-[oklch(0.556_0_0)] dark:text-[oklch(0.985_0_0)] leading-none">
-                <em className="text
-                -[#00D0B2] not-italic">99</em>.9%
+                <em className="text-[#00D0B2] not-italic">99</em>.9%
               </div>
               <div className="text-[0.78rem] text-[oklch(0.556_0_0)] dark:text-[oklch(0.708_0_0)] mt-0.75">
                 Uptime SLA
