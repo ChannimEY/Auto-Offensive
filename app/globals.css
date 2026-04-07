@@ -59,24 +59,22 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
-  --font-serif: "Instrument Serif", Georgia, serif;
-  --radius: var(----radius);
-  --color-text-400: var(----text-400);
-  --color-text-300: var(----text-300);
-  --color-text-200: var(----text-200);
-  --color-text-100: var(----text-100);
-  --color-bg-300: var(----bg-300);
-  --color-bg-200: var(----bg-200);
-  --color-bg-100: var(----bg-100);
-  --color-bg-0: var(----bg-0);
-  @keyframes fadeSlideIn {
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+  @keyframes accordion-down {
   from {
-    opacity: 0;
-    transform: translateY(20px);
+    height: 0;
     }
   to {
-    opacity: 1;
-    transform: translateY(0);
+    height: var(--radix-accordion-content-height);
+    }
+  }
+  @keyframes accordion-up {
+  from {
+    height: var(--radix-accordion-content-height);
+    }
+  to {
+    height: 0;
     }
   }
 }
