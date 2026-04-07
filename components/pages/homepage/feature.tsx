@@ -3,6 +3,41 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
+// ─── CUSTOMIZATION CONSTANTS ──────────────────────────────────────────────────
+const CONFIG = {
+  SECTION_ALIGNMENT: "center",
+  MAX_WIDTH: "7xl",
+  DARK: {
+    bg: "#09090B",
+    border: "rgba(255,255,255,0.08)",
+    text: "#FFFFFF",
+    textMuted: "#A1A1A6",
+    accent1: "#01509e",
+    accent2: "#00d0b2",
+    cardBg: "#09090B",
+  },
+  LIGHT: {
+    bg: "#F7F5F0",
+    border: "rgba(0,0,0,0.08)",
+    text: "#0d1117",
+    textMuted: "#6b7a90",
+    accent1: "#01509e",
+    accent2: "#00d0b2",
+    cardBg: "#F7F5F0",
+  },
+};
+
+const FONT_SIZES = {
+  xs: { desktop: "11px", tablet: "10px", mobile: "9px" },
+  sm: { desktop: "20px", tablet: "13px", mobile: "12px" },
+  base: { desktop: "16px", tablet: "15px", mobile: "14px" },
+  lg: { desktop: "20px", tablet: "18px", mobile: "16px" },
+  xl: { desktop: "24px", tablet: "22px", mobile: "20px" },
+  "2xl": { desktop: "28px", tablet: "26px", mobile: "24px" },
+  "3xl": { desktop: "36px", tablet: "32px", mobile: "28px" },
+  "4xl": { desktop: "48px", tablet: "40px", mobile: "32px" },
+};
+
 // ─── Data ────────────────────────────────────────────────────────────────────
 
 const TICKER_ITEMS = [
@@ -13,16 +48,6 @@ const TICKER_ITEMS = [
   "Continuous Monitoring",
   "CI/CD Integration",
 ];
-
-// ─── CUSTOMIZE IMAGE SIZE, GAPS & IMAGE POSITION PER CARD HERE ──────────────
-// imageW / imageH   → exact pixel size of the image
-// gapLeft / gapRight → content-block padding (left and right sides)
-// imagePadding      → padding around the image inside its cell (e.g. "40px")
-// imageOffsetX      → horizontal nudge of the image (e.g. "20px" or "-10px")
-// imageOffsetY      → vertical nudge of the image (e.g. "10px" or "-20px")
-// imageAlign        → horizontal alignment: "center" | "flex-start" | "flex-end"
-// imageValign       → vertical alignment:   "center" | "flex-start" | "flex-end"
-// ─────────────────────────────────────────────────────────────────────────────
 
 const CARDS = [
   {
@@ -37,10 +62,9 @@ const CARDS = [
     reverse: false,
     imageW: "520px",
     imageH: "380px",
-    gapLeft: "300px",
+    gapLeft: "20px",
     gapRight: "52px",
-    // ↓ image position controls
-    imagePadding: "0px 250px 0px 0px", 
+    imagePadding: "0px 0px 0px 0px",
     imageOffsetX: "0px",
     imageOffsetY: "0px",
     imageAlign: "center",
@@ -58,9 +82,9 @@ const CARDS = [
     reverse: true,
     imageW: "480px",
     imageH: "320px",
-    gapLeft: "150px",
+    gapLeft: "50px",
     gapRight: "52px",
-    imagePadding: "20px 0px 0px 250px", 
+    imagePadding: "20px 0px 0px 20px",
     imageOffsetX: "0px",
     imageOffsetY: "0px",
     imageAlign: "center",
@@ -78,9 +102,9 @@ const CARDS = [
     reverse: false,
     imageW: "500px",
     imageH: "400px",
-    gapLeft: "300px",
+    gapLeft: "20px",
     gapRight: "52px",
-   imagePadding: "0px 250px 0px 0px", 
+    imagePadding: "0px 0px 0px 0px",
     imageOffsetX: "0px",
     imageOffsetY: "0px",
     imageAlign: "center",
@@ -98,9 +122,9 @@ const CARDS = [
     reverse: true,
     imageW: "460px",
     imageH: "340px",
-    gapLeft: "150px",
+    gapLeft: "50px",
     gapRight: "52px",
-    imagePadding: "20px 0px 0px 250px", 
+    imagePadding: "20px 0px 0px 20px",
     imageOffsetX: "0px",
     imageOffsetY: "0px",
     imageAlign: "center",
@@ -118,9 +142,9 @@ const CARDS = [
     reverse: false,
     imageW: "540px",
     imageH: "360px",
-    gapLeft: "300px",
+    gapLeft: "20px",
     gapRight: "52px",
-    imagePadding: "0px 250px 0px 0px", 
+    imagePadding: "0px 0px 0px 0px",
     imageOffsetX: "0px",
     imageOffsetY: "0px",
     imageAlign: "center",
@@ -138,9 +162,9 @@ const CARDS = [
     reverse: true,
     imageW: "500px",
     imageH: "420px",
-    gapLeft: "150px",
+    gapLeft: "50px",
     gapRight: "52px",
-    imagePadding: "20px 0px 0px 250px",  // top 20px, left 60px
+    imagePadding: "20px 0px 0px 20px",
     imageOffsetX: "0px",
     imageOffsetY: "0px",
     imageAlign: "center",
@@ -171,14 +195,80 @@ interface CardData {
   imageValign: string;
 }
 
-// ─── Dual Spine ───────────────────────────────────────────────────────────────
+// ─── Theme Hook ──────────────────────────────────────────────────────────────
+// FIX: Listen to BOTH prefers-color-scheme AND Tailwind's .dark class mutation
+// so the theme stays in sync regardless of which dark-mode strategy is used.
+
+function useTheme() {
+  const [isDark, setIsDark] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-color-scheme: dark)");
+
+    // Helper: check both the media query AND a .dark class on <html>
+    const check = () => {
+      const hasDarkClass = document.documentElement.classList.contains("dark");
+      setIsDark(mq.matches || hasDarkClass);
+    };
+
+    check();
+    mq.addEventListener("change", check);
+
+    // Watch for Tailwind toggling the .dark class on <html>
+    const observer = new MutationObserver(check);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+
+    return () => {
+      mq.removeEventListener("change", check);
+      observer.disconnect();
+    };
+  }, []);
+
+  return isDark ? CONFIG.DARK : CONFIG.LIGHT;
+}
+
+// ─── Responsive Font Size ────────────────────────────────────────────────────
+
+function getResponsiveFontSize(sizeKey: keyof typeof FONT_SIZES) {
+  return `clamp(${FONT_SIZES[sizeKey].mobile}, ${sizeKey === "4xl" ? "4vw" : "2vw"}, ${FONT_SIZES[sizeKey].desktop})`;
+}
+
+// ─── Max Width Wrapper ───────────────────────────────────────────────────────
+
+const MAX_WIDTH_CLASSES = {
+  none: "",
+  "2xl": "max-w-2xl",
+  "3xl": "max-w-3xl",
+  "4xl": "max-w-4xl",
+  "5xl": "max-w-5xl",
+  "6xl": "max-w-6xl",
+  "7xl": "max-w-7xl",
+} as const;
+
+function getAlignmentClass(alignment: string) {
+  switch (alignment) {
+    case "right":
+      return "mr-0 ml-auto";
+    case "center":
+      return "mx-auto";
+    default:
+      return "ml-0 mr-auto";
+  }
+}
+
+// ─── Dual Spine ──────────────────────────────────────────────────────────────
 
 function DualSpine({
   fillPct,
   clipPath,
+  colors,
 }: {
   fillPct: number;
   clipPath: string;
+  colors: typeof CONFIG.DARK;
 }) {
   const sides = [
     { style: { left: "calc(50% - 34px)" } },
@@ -195,12 +285,12 @@ function DualSpine({
         >
           <div
             className="absolute inset-0 w-px h-full"
-            style={{ background: "rgba(1,80,158,0.12)" }}
+            style={{ background: colors.border }}
           />
           <div
             className="absolute top-0 left-0 w-px"
             style={{
-              height:     `${fillPct}%`,
+              height: `${fillPct}%`,
               background: "linear-gradient(180deg, #01509e, #00d0b2)",
               transition: "height 0.08s linear",
             }}
@@ -213,23 +303,19 @@ function DualSpine({
 
 // ─── Center Logo ──────────────────────────────────────────────────────────────
 
-function CenterLogo({
-  visible,
-}: {
-  visible: boolean;
-}) {
+function CenterLogo({ visible }: { visible: boolean }) {
   return (
     <div
       className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-200 pointer-events-none"
       style={{
-        opacity:    visible ? 1 : 0,
+        opacity: visible ? 1 : 0,
         transition: "opacity 0.4s ease",
       }}
     >
       <Image
         src="/Auto-Offensive.png"
         alt="Logo"
-        className=" object-contain"
+        className="object-contain"
         width={52}
         height={52}
       />
@@ -238,25 +324,30 @@ function CenterLogo({
 }
 
 // ─── Scroll Progress Bar ──────────────────────────────────────────────────────
+// FIX: ProgressBar now actually tracks scroll width via state.
 
-function ProgressBar() {
+function ProgressBar({ widthPct }: { widthPct: number }) {
   return (
     <div
-      className="fixed top-0 left-0 h-50 z-200 transition-[width] duration-100 linear"
+      className="fixed top-0 left-0 h-0.5 z-200 transition-[width] duration-100"
+      style={{
+        width: `${widthPct}%`,
+        background: "linear-gradient(90deg, #01509e, #00d0b2)",
+      }}
     />
   );
 }
 
 // ─── Ticker ───────────────────────────────────────────────────────────────────
 
-function Ticker() {
+function Ticker({ colors }: { colors: typeof CONFIG.DARK }) {
   const doubled = [...TICKER_ITEMS, ...TICKER_ITEMS];
   return (
     <div
       className="overflow-hidden border-y py-4 my-0"
       style={{
-        borderColor: "rgba(0,0,0,0.08)",
-        background:  "rgba(1,80,158,0.02)",
+        borderColor: colors.border,
+        background: "rgba(1,80,158,0.02)",
       }}
     >
       <div
@@ -266,15 +357,18 @@ function Ticker() {
         {doubled.map((item, i) => (
           <div
             key={i}
-            className="flex items-center gap-5 px-8 whitespace-nowrap text-[11px] tracking-[0.15em] uppercase"
+            className="flex items-center gap-5 px-8 whitespace-nowrap"
             style={{
               fontFamily: "var(--font-hackdaddy), sans-serif",
-              color:      "#6b7a90",
+              color: colors.textMuted,
+              fontSize: FONT_SIZES.xs.desktop,
+              letterSpacing: "0.15em",
+              textTransform: "uppercase",
             }}
           >
             <span
               className="w-1 h-1 rounded-full shrink-0"
-              style={{ background: "#01509e" }}
+              style={{ background: colors.accent1 }}
             />
             {item}
           </div>
@@ -291,49 +385,61 @@ function CardRow({
   isLast,
   isVisible,
   cardRef,
+  colors,
 }: {
   card: CardData;
   isLast: boolean;
   isVisible: boolean;
   cardRef: (el: HTMLDivElement | null) => void;
+  colors: typeof CONFIG.DARK;
 }) {
   const { reverse, gapLeft, gapRight } = card;
 
   const contentBlock = (
     <div
-      className="relative  flex flex-col justify-center py-15"
+      className="relative flex flex-col justify-center py-15"
       style={{
-        paddingLeft:  gapLeft,
+        paddingLeft: gapLeft,
         paddingRight: gapRight,
-        background:  "#F7F5F0",
-        borderRight: !reverse ? "1px solid rgba(0,0,0,0.08)" : undefined,
-        borderLeft:  reverse  ? "1px solid rgba(0,0,0,0.08)" : undefined,
+        background: colors.cardBg,
+        borderRight: !reverse ? `1px solid ${colors.border}` : undefined,
+        borderLeft: reverse ? `1px solid ${colors.border}` : undefined,
       }}
     >
       <div
         style={{
-          transform:  isVisible ? "translateX(0)" : reverse ? "translateX(24px)" : "translateX(-24px)",
-          opacity:    isVisible ? 1 : 0,
+          transform: isVisible ? "translateX(0)" : reverse ? "translateX(24px)" : "translateX(-24px)",
+          opacity: isVisible ? 1 : 0,
           transition: "transform 0.85s 0.2s cubic-bezier(.16,1,.3,1), opacity 0.85s 0.2s",
         }}
       >
         {/* Number */}
         <p
-          className="text-[11px] tracking-[0.2em] uppercase mb-5"
-          style={{ fontFamily: "var(--font-hackdaddy), sans-serif", color: "#01509e", opacity: 0.6 }}
+          className="uppercase mb-5"
+          style={{
+            fontFamily: "var(--font-hackdaddy), sans-serif",
+            color: colors.accent1,
+            fontSize: FONT_SIZES.xs.desktop,
+            letterSpacing: "0.2em",
+            opacity: 0.6,
+          }}
         >
           {card.num}
         </p>
 
         {/* Tag */}
         <span
-          className="inline-flex items-center gap-1.5 text-[10px] tracking-[0.15em] uppercase px-3 py-1.5 mb-6"
+          className="inline-flex items-center gap-1.5 mb-6"
           style={{
-            fontFamily:   "var(--font-hackdaddy), sans-serif",
-            color:        "#01509e",
-            background:   "rgba(1,80,158,0.07)",
-            border:       "1px solid rgba(1,80,158,0.18)",
+            fontFamily: "var(--font-hackdaddy), sans-serif",
+            color: colors.accent1,
+            backgroundColor: `rgba(1,80,158,0.07)`,
+            border: `1px solid rgba(1,80,158,0.18)`,
             borderRadius: 1,
+            padding: "6px 12px",
+            fontSize: FONT_SIZES.xs.desktop,
+            letterSpacing: "0.15em",
+            textTransform: "uppercase",
           }}
         >
           {card.tag}
@@ -343,16 +449,16 @@ function CardRow({
         <h3
           className="font-bold leading-[1.15] mb-5"
           style={{
-            fontFamily:    "var(--font-hackdaddy), var(--font-noto-khmer), sans-serif",
-            fontSize:      "clamp(24px, 2.5vw, 36px)",
+            fontFamily: "var(--font-hackdaddy), var(--font-noto-khmer), sans-serif",
+            fontSize: getResponsiveFontSize("3xl"),
             letterSpacing: "-0.02em",
-            color:         "#0d1117",
+            color: colors.text,
           }}
         >
           {card.title.map((line, i) => (
             <span key={i} className="block">
               {i === card.hlLine ? (
-                <span style={{ color: "#00d0b2" }}>{line}</span>
+                <span style={{ color: colors.accent2 }}>{line}</span>
               ) : (
                 line
               )}
@@ -362,10 +468,11 @@ function CardRow({
 
         {/* Description */}
         <p
-          className="text-[14px] leading-[1.75] max-w-100 mb-9"
+          className="leading-[1.75] max-w-100 mb-9"
           style={{
             fontFamily: "var(--font-google-sans), var(--font-noto-khmer), sans-serif",
-            color:      "#6b7a90",
+            color: colors.textMuted,
+            fontSize: FONT_SIZES.sm.desktop,
           }}
         >
           {card.desc}
@@ -374,10 +481,13 @@ function CardRow({
         {/* Link */}
         <a
           href={card.link}
-          className="inline-flex items-center gap-2.5 text-[11px] tracking-[0.15em] uppercase no-underline group"
+          className="inline-flex items-center gap-2.5 no-underline group"
           style={{
             fontFamily: "var(--font-hackdaddy), sans-serif",
-            color:      "#01509e",
+            color: colors.accent1,
+            fontSize: FONT_SIZES.xs.desktop,
+            letterSpacing: "0.15em",
+            textTransform: "uppercase",
           }}
         >
           Explore capability
@@ -392,41 +502,35 @@ function CardRow({
       <div
         className="w-3 h-3 rounded-full"
         style={{
-          border:     "2px solid #01509e",
-          background: "#F7F5F0",
-          opacity:    isVisible ? 1 : 0,
-          transform:  isVisible ? "scale(1)" : "scale(0)",
+          border: `2px solid ${colors.accent1}`,
+          background: colors.cardBg,
+          opacity: isVisible ? 1 : 0,
+          transform: isVisible ? "scale(1)" : "scale(0)",
           transition: "opacity 0.4s 0.4s, transform 0.5s 0.4s cubic-bezier(.34,1.56,.64,1)",
         }}
       />
     </div>
   );
 
-  // ─── Image Block ─────────────────────────────────────────────────────────
-  // imagePadding  → inset padding around the image within its cell
-  // imageAlign    → horizontal alignment of the image (justify-content)
-  // imageValign   → vertical alignment of the image (align-items)
-  // imageOffsetX  → translate the image horizontally after alignment
-  // imageOffsetY  → translate the image vertically after alignment
   const imageBlock = (
     <div
       className="relative overflow-hidden group/img"
       style={{
-        borderRight: reverse ? "1px solid rgba(0,0,0,0.08)" : undefined,
-        padding:     card.imagePadding,
-        display:     "flex",
-        justifyContent: card.imageAlign  as React.CSSProperties["justifyContent"],
-        alignItems:     card.imageValign as React.CSSProperties["alignItems"],
+        borderRight: reverse ? `1px solid ${colors.border}` : undefined,
+        padding: card.imagePadding,
+        display: "flex",
+        justifyContent: card.imageAlign as React.CSSProperties["justifyContent"],
+        alignItems: card.imageValign as React.CSSProperties["alignItems"],
       }}
     >
       <div
         style={{
-          transform:  isVisible
+          transform: isVisible
             ? `translateX(${card.imageOffsetX}) translateY(${card.imageOffsetY}) scale(1)`
             : reverse
             ? `translateX(calc(-30px + ${card.imageOffsetX})) translateY(${card.imageOffsetY}) scale(0.97)`
-            : `translateX(calc(30px + ${card.imageOffsetX}))  translateY(${card.imageOffsetY}) scale(0.97)`,
-          opacity:    isVisible ? 1 : 0,
+            : `translateX(calc(30px + ${card.imageOffsetX})) translateY(${card.imageOffsetY}) scale(0.97)`,
+          opacity: isVisible ? 1 : 0,
           transition: "transform 0.9s 0.15s cubic-bezier(.16,1,.3,1), opacity 0.9s 0.15s",
         }}
       >
@@ -434,10 +538,10 @@ function CardRow({
           src={card.image}
           alt={card.imageAlt}
           style={{
-            width:     card.imageW,
-            height:    card.imageH,
+            width: card.imageW,
+            height: card.imageH,
             objectFit: "contain",
-            display:   "block",
+            display: "block",
           }}
         />
       </div>
@@ -445,19 +549,23 @@ function CardRow({
   );
 
   return (
-    <div
-      ref={cardRef}
-      id={isLast ? "lastCard" : undefined}
-      className="grid min-h-120 border-t"
-      style={{
-        gridTemplateColumns: "1fr 80px 1fr",
-        borderColor:         "rgba(0,0,0,0.08)",
-        borderBottom:        isLast ? "1px solid rgba(0,0,0,0.08)" : undefined,
-        opacity:             isVisible ? 1 : 0,
-        transform:           isVisible ? "translateY(0)" : "translateY(50px)",
-        transition:          "opacity 0.9s cubic-bezier(.16,1,.3,1), transform 0.9s cubic-bezier(.16,1,.3,1)",
-      }}
-    >
+  <div
+    ref={cardRef}
+    id={isLast ? "lastCard" : undefined}
+    className="grid min-h-120 border-t"
+    style={{
+      gridTemplateColumns: "1fr 80px 1fr",
+      borderColor: colors.border,
+      // FIX: Use longhand properties to avoid the shorthand/non-shorthand conflict
+      borderBottomWidth: isLast ? "1px" : "0px",
+      borderBottomStyle: isLast ? "solid" : "none",
+      // borderBottomColor is already handled by the 'borderColor' property above
+      
+      opacity: isVisible ? 1 : 0,
+      transform: isVisible ? "translateY(0)" : "translateY(50px)",
+      transition: "opacity 0.9s cubic-bezier(.16,1,.3,1), transform 0.9s cubic-bezier(.16,1,.3,1)",
+    }}
+  >
       {reverse ? (
         <>
           {imageBlock}
@@ -478,30 +586,32 @@ function CardRow({
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 export default function Features() {
-  const [,      setScrollPct]      = useState(0);
-  const [,     setLogoRotation]   = useState(0);
-  const [spineFill,      setSpineFill]      = useState(0);
-  const [spineClip,      setSpineClip]      = useState("inset(9999px 0 0 0)");
-  const [visibleCards,   setVisibleCards]   = useState<boolean[]>(CARDS.map(() => false));
-  const [logoVisible,    setLogoVisible]    = useState(false);
+  // FIX: scrollPct is now used by ProgressBar
+  const [scrollPct, setScrollPct] = useState(0);
+  const [spineFill, setSpineFill] = useState(0);
+  const [spineClip, setSpineClip] = useState("inset(9999px 0 0 0)");
+  const [visibleCards, setVisibleCards] = useState<boolean[]>(CARDS.map(() => false));
+  const [logoVisible, setLogoVisible] = useState(false);
 
-  const firstCardRef      = useRef<HTMLDivElement | null>(null);
-  const lastCardRef       = useRef<HTMLDivElement | null>(null);
-  const cardRefs          = useRef<(HTMLDivElement | null)[]>([]);
+  const colors = useTheme();
+
+  const firstCardRef = useRef<HTMLDivElement | null>(null);
+  const lastCardRef = useRef<HTMLDivElement | null>(null);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const featureSectionRef = useRef<HTMLElement | null>(null);
 
+  // ─── Scroll: progress bar + spine fill + spine clip ───────────────────────
   useEffect(() => {
     const onScroll = () => {
       const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
       setScrollPct(pct);
       setSpineFill(pct);
-      setLogoRotation(window.scrollY * 0.06);
 
       const vh = window.innerHeight;
       if (firstCardRef.current && lastCardRef.current) {
         const topR = firstCardRef.current.getBoundingClientRect();
         const botR = lastCardRef.current.getBoundingClientRect();
-        const clipTop    = Math.max(0, topR.top);
+        const clipTop = Math.max(0, topR.top);
         const clipBottom = Math.max(0, vh - botR.bottom);
         setSpineClip(`inset(${clipTop}px 0 ${clipBottom}px 0)`);
       }
@@ -512,27 +622,28 @@ export default function Features() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // ─── Center logo visibility ───────────────────────────────────────────────
+  // FIX: Use a scroll listener instead of IntersectionObserver on the section,
+  //      so we have direct access to first/lastCardRef bounding rects.
   useEffect(() => {
-    const first = firstCardRef.current;
-    const last  = lastCardRef.current;
-    if (!first || !last) return;
+    const checkLogo = () => {
+      if (!firstCardRef.current || !lastCardRef.current) return;
+      const vh = window.innerHeight;
+      const topR = firstCardRef.current.getBoundingClientRect();
+      const botR = lastCardRef.current.getBoundingClientRect();
+      const centerY = vh / 2;
+      setLogoVisible(topR.top <= centerY && botR.bottom >= centerY);
+    };
 
-    const observer = new IntersectionObserver(
-      () => {
-        if (!first || !last) return;
-        const vh      = window.innerHeight;
-        const topR    = first.getBoundingClientRect();
-        const botR    = last.getBoundingClientRect();
-        const centerY = vh / 2;
-        setLogoVisible(topR.top <= centerY && botR.bottom >= centerY);
-      },
-      { threshold: Array.from({ length: 101 }, (_, i) => i / 100) }
-    );
-
-    observer.observe(featureSectionRef.current!);
-    return () => observer.disconnect();
+    window.addEventListener("scroll", checkLogo, { passive: true });
+    checkLogo();
+    return () => window.removeEventListener("scroll", checkLogo);
   }, []);
 
+  // ─── Card entrance animations ─────────────────────────────────────────────
+  // FIX: Set up the IntersectionObserver in a separate effect that runs AFTER
+  //      refs are populated, and re-runs if refs change. We use a slight delay
+  //      to ensure the DOM has fully rendered before observing.
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -540,6 +651,7 @@ export default function Features() {
           const idx = cardRefs.current.indexOf(e.target as HTMLDivElement);
           if (e.isIntersecting && idx !== -1) {
             setVisibleCards((prev) => {
+              if (prev[idx]) return prev; // already visible, skip re-render
               const next = [...prev];
               next[idx] = true;
               return next;
@@ -547,17 +659,26 @@ export default function Features() {
           }
         });
       },
-      { threshold: 0.2 }
+      { threshold: 0.15 }
     );
 
-    cardRefs.current.forEach((el) => { if (el) observer.observe(el); });
-    return () => observer.disconnect();
-  }, []);
+    // Small timeout ensures refs are all assigned after first render
+    const timer = setTimeout(() => {
+      cardRefs.current.forEach((el) => {
+        if (el) observer.observe(el);
+      });
+    }, 50);
+
+    return () => {
+      clearTimeout(timer);
+      observer.disconnect();
+    };
+  }, []); // runs once after mount; refs are stable
 
   return (
     <div
       className="relative overflow-x-hidden"
-      style={{ background: "#F7F5F0", color: "#0d1117" }}
+      style={{ background: colors.bg, color: colors.text }}
     >
       <style>{`
         @keyframes ticker-scroll {
@@ -566,30 +687,33 @@ export default function Features() {
         }
       `}</style>
 
-      <ProgressBar />
-      <DualSpine fillPct={spineFill} clipPath={spineClip} />
+      {/* FIX: Pass scrollPct so the bar actually fills */}
+      <ProgressBar widthPct={scrollPct} />
+      <DualSpine fillPct={spineFill} clipPath={spineClip} colors={colors} />
       <CenterLogo visible={logoVisible} />
 
       <section
         ref={featureSectionRef}
-        className="relative pt-12 pb-1.5"
+        className={`relative pt-12 pb-1.5 ${MAX_WIDTH_CLASSES[CONFIG.MAX_WIDTH as keyof typeof MAX_WIDTH_CLASSES]} ${getAlignmentClass(CONFIG.SECTION_ALIGNMENT)}`}
         id="features"
       >
         {/* Section Header */}
         <div
           className="flex items-center justify-between py-12 border-b"
           style={{
-            paddingLeft:  "52px",
+            paddingLeft: "52px",
             paddingRight: "52px",
-            borderColor:  "rgba(0,0,0,0.08)",
+            borderColor: colors.border,
           }}
         >
           <div>
             <p
-              className="text-[11px] tracking-[0.2em] uppercase mb-2.5"
+              className="uppercase mb-2.5"
               style={{
                 fontFamily: "var(--font-hackdaddy), sans-serif",
-                color:      "#00d0b2",
+                color: colors.accent2,
+                fontSize: FONT_SIZES.xs.desktop,
+                letterSpacing: "0.2em",
               }}
             >
               Platform Capabilities
@@ -597,10 +721,10 @@ export default function Features() {
             <h2
               className="font-bold leading-[1.1]"
               style={{
-                fontFamily:    "var(--font-hackdaddy), var(--font-noto-khmer), sans-serif",
-                fontSize:      "clamp(28px, 4vw, 48px)",
+                fontFamily: "var(--font-hackdaddy), var(--font-noto-khmer), sans-serif",
+                fontSize: getResponsiveFontSize("4xl"),
                 letterSpacing: "-0.02em",
-                color:         "#0d1117",
+                color: colors.text,
               }}
             >
               What You Can Do
@@ -608,7 +732,6 @@ export default function Features() {
               with Auto Offensive
             </h2>
           </div>
-          
         </div>
 
         {/* Card Rows */}
@@ -623,11 +746,12 @@ export default function Features() {
               if (i === 0) firstCardRef.current = el;
               if (i === CARDS.length - 1) lastCardRef.current = el;
             }}
+            colors={colors}
           />
         ))}
       </section>
 
-      <Ticker />
+      <Ticker colors={colors} />
     </div>
   );
 }

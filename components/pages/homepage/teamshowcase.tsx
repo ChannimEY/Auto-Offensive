@@ -7,173 +7,106 @@ export default function TeamShowcase() {
 
   return (
     <section
-      className="bg-[#F7F5F0] pb-20 px-10 overflow-hidden"
+      className="bg-[#F7F5F0] dark:bg-[#09090B] pb-20 pt-10 px-6 md:px-10 overflow-hidden transition-colors duration-300"
       style={{ fontFamily: "var(--font-google-sans), var(--font-noto-khmer), sans-serif" }}
     >
-      <div className="max-w-300 mx-auto grid grid-cols-[1fr_1.6fr] gap-16 items-center">
+      <div className="max-w-300 mx-auto grid grid-cols-1 lg:grid-cols-[1.2fr_1.6fr] gap-12 lg:gap-20 items-center">
 
         {/* ── Left: Text Content ── */}
-        <div>
+        <div className="relative z-10">
           {/* Label */}
-          <p className="text-xs font-semibold tracking-[3px] uppercase text-[#00BCA1] mb-4">
+          <p className="text-xs font-bold tracking-[3px] uppercase text-[#00BCA1] mb-6">
             Our company
           </p>
 
-          {/* Heading */}
-          <h2
-            className="font-bold leading-[1.18] text-[#01509e] mb-2"
+          {/* Heading - Realigned to 3 Lines to match image */}
+          <h3
+            className="font-bold leading-[1.1] text-[#01509e] dark:text-white mb-2 uppercase"
             style={{
               fontFamily: "var(--font-hackdaddy), var(--font-noto-khmer), sans-serif",
-              fontSize: "clamp(28px, 3.5vw, 44px)",
+              fontSize: "clamp(32px, 4.5vw, 56px)", // Slightly larger to match the 3-line impact
             }}
           >
-            In our company,{" "}
-            <span className="text-[#00BCA1]">we build</span>{" "}
-            what we use
-          </h2>
+            <span className="block whitespace-nowrap">In our company,</span>
+            <span className="block whitespace-nowrap text-[#00BCA1]">we build</span>
+            <span className="block whitespace-nowrap">what we use</span>
+          </h3>
 
           {/* Accent bar */}
           <div
-            className="w-13 h-1 rounded-sm my-5"
+            className="w-24 h-1.5 rounded-full my-8"
             style={{ background: "linear-gradient(90deg, #00BCA1, #01509e)" }}
           />
 
-          {/* Paragraphs */}
-          <p className="text-[15px] leading-[1.8] text-[#4a4a4a] mb-4.5">
-            We launched as a team of passionate professionals — and we've kept
-            that mindset ever since. Our experts still drive product development
-            today, focusing relentlessly on accuracy, speed, and control.
-          </p>
+          {/* Paragraphs - Responsive sizes: 16px -> 18px -> 20px */}
+          <div className="space-y-6 text-base md:text-[18px] lg:text-[20px] leading-relaxed text-[#4a4a4a] dark:text-gray-400 mb-10">
+            <p>
+              We launched as a team of passionate professionals — and we've kept
+              that mindset ever since. Our experts still drive product development
+              today, focusing relentlessly on accuracy, speed, and control.
+            </p>
 
-          <p className="text-[15px] leading-[1.8] text-[#4a4a4a] mb-9">
-            Every new feature comes from real-world experience. We constantly
-            improve our work with updated techniques, smarter processes, and
-            validation that reflects how things actually operate — so your team
-            can deliver work that's faster, more visible, and built on proof.
-          </p>
+            <p>
+              Every new feature comes from real-world experience. We constantly
+              improve our work with updated techniques, smarter processes, and
+              validation that reflects how things actually operate.
+            </p>
+          </div>
 
           {/* CTA Button */}
           <a
             href="about-us"
-            className="inline-block px-7 py-3 rounded-lg border-2 border-[#01509e] text-[#01509e] text-sm font-semibold tracking-wide no-underline transition-all duration-200 hover:bg-[#01509e] hover:text-white"
+            className="inline-block px-8 py-3.5 rounded-xl border-2 border-[#01509e] dark:border-[#00BCA1] text-[#01509e] dark:text-[#00BCA1] text-base font-bold tracking-wide transition-all duration-300 hover:bg-[#01509e] dark:hover:bg-[#00BCA1] hover:text-white dark:hover:text-[#09090B]"
           >
             Read our story →
           </a>
         </div>
 
-        {/* ── Right: Big Image Card ── */}
-        <div className="relative">
-
-          {/* Decorative background blob */}
+        {/* ── Right: Image Card (Remains the same) ── */}
+        <div className="relative group">
           <div
-            className="absolute rounded-3xl z-0"
+            className="absolute rounded-[2.5rem] z-0"
             style={{
-              inset: "-18px",
-              background:
-                "linear-gradient(135deg, rgba(0,188,161,0.18) 0%, rgba(1,80,158,0.14) 100%)",
+              inset: "-20px",
+              background: "linear-gradient(135deg, rgba(0,188,161,0.2) 0%, rgba(1,80,158,0.15) 100%)",
             }}
           />
 
-          {/* Image wrapper */}
           <div
             ref={imageRef}
-            className="relative z-1 rounded-[18px] overflow-hidden"
+            className="relative z-10 rounded-[24px] overflow-hidden border border-white/10"
             style={{
-              boxShadow:
-                "0 20px 60px rgba(1,80,158,0.13), 0 4px 16px rgba(0,0,0,0.06)",
-              background: "linear-gradient(145deg, #dbeeff, #e8f6f4)",
+              boxShadow: "0 30px 70px rgba(1,80,158,0.15)",
+              background: "linear-gradient(145deg, #f0f9ff, #e6fcf9)",
             }}
           >
-            {/*
-              ──────────────────────────────────────────────────────
-              REPLACE THIS <div> WITH YOUR <img> TAG:
-
-              <img
-                src="/images/your-team-photo.jpg"
-                alt="The team at our summer outing"
-                className="w-full h-auto block"
-              />
-              ──────────────────────────────────────────────────────
-            */}
             <div
-              className="w-full flex flex-col items-center justify-center gap-3"
+              className="w-full flex flex-col items-center justify-center gap-4 dark:bg-[#121214]"
               style={{ aspectRatio: "16 / 10" }}
             >
-              <svg
-                width="64"
-                height="64"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="#00BCA1"
-                strokeWidth="1.4"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
+              <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#00BCA1" strokeWidth="1.2">
                 <rect x="3" y="3" width="18" height="18" rx="3" />
-                <circle cx="8.5" cy="8.5" r="1.5" />
                 <polyline points="21 15 16 10 5 21" />
               </svg>
-              <p className="text-[13px] text-[#00BCA1] font-semibold tracking-wide m-0">
-                Replace with your team photo
-              </p>
-              <p className="text-xs text-[#888] m-0">
-                Recommended: 1200 × 750 px
-              </p>
+              <p className="text-sm text-[#00BCA1] font-bold">Team Photo Placeholder</p>
             </div>
           </div>
 
-          {/* Caption bar */}
-          <div className="relative z-1 mt-4 flex items-center justify-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-[#00BCA1] inline-block" />
-            <p className="text-[13px] text-[#888] m-0 italic">
-              The team at our summer outing
-            </p>
+          {/* Floating Badge - Team Size */}
+          <div className="absolute -top-6 -left-4 z-20 bg-white dark:bg-[#1c1c1e] rounded-2xl px-5 py-3 flex items-center gap-3 border border-gray-100 dark:border-white/5 shadow-xl">
+             <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-linear-to-br from-[#00BCA1] to-[#01509e]">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /></svg>
+             </div>
+             <div>
+                <p className="text-[10px] text-gray-400 font-bold uppercase m-0">Team size</p>
+                <p className="text-lg font-black text-[#01509e] dark:text-white m-0">12+ Experts</p>
+             </div>
           </div>
 
-          {/* Floating stat badge — top-left */}
-          <div
-            className="absolute top-4 -left-5 z-2 bg-white rounded-xl px-4.5 py-3 flex items-center gap-2.5 border border-[rgba(0,188,161,0.2)]"
-            style={{ boxShadow: "0 8px 24px rgba(1,80,158,0.12)" }}
-          >
-            <div
-              className="w-9 h-9 rounded-[10px] flex items-center justify-center shrink-0"
-              style={{ background: "linear-gradient(135deg, #00BCA1, #01509e)" }}
-            >
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="white"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                <circle cx="9" cy="7" r="4" />
-                <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-              </svg>
-            </div>
-            <div>
-              <p className="text-[11px] text-[#999] font-medium m-0 mb-0.5">
-                Team size
-              </p>
-              <p className="text-lg font-bold text-[#01509e] m-0">
-                12+ Experts
-              </p>
-            </div>
-          </div>
-
-          {/* Floating year badge — bottom-right */}
-          <div
-            className="absolute bottom-12 -right-4 z-2 bg-[#01509e] rounded-xl px-4.5 py-2.5"
-            style={{ boxShadow: "0 8px 24px rgba(1,80,158,0.25)" }}
-          >
-            <p className="text-[11px] text-white/70 font-medium m-0 mb-0.5">
-              Est.
-            </p>
-            <p className="text-xl font-bold text-white m-0">2026</p>
+          {/* Floating Badge - Year */}
+          <div className="absolute bottom-10 -right-4 z-20 bg-[#01509e] dark:bg-[#00BCA1] rounded-2xl px-6 py-3 shadow-xl">
+            <p className="text-[10px] text-white/70 dark:text-black/70 font-bold uppercase m-0">Est.</p>
+            <p className="text-xl font-black text-white dark:text-[#09090B] m-0">2026</p>
           </div>
         </div>
       </div>

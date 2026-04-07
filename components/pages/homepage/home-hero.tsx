@@ -921,7 +921,7 @@ export default function HomeHero() {
             </div>
             <div className="text-center">
               <div className="text-[1.65rem] font-bold tracking-[-0.02em] text-[oklch(0.556_0_0)] dark:text-[oklch(0.985_0_0)] leading-none">
-                <em className="text-[#00D0B2] not-italic">99</em>.9%
+                <em className="text-primary not-italic">99</em>.9%
               </div>
               <div className="text-[0.78rem] text-[oklch(0.556_0_0)] dark:text-[oklch(0.708_0_0)] mt-0.75">
                 Uptime SLA

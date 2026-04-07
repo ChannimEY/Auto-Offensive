@@ -197,7 +197,7 @@ const heroStyles = `
 export default function PrivacyHero() {
   return (
     <section
-      className="relative overflow-hidden border-b border-black/9 dark:border-white/9 bg-white dark:bg-[#111113] min-h-screen flex items-start"
+      className="relative overflow-hidden border-b border-black/9 dark:border-white/9 bg-white dark:bg-[#111113] min-h-screen flex items-center justify-center"
       style={{ padding: "clamp(100px,14vw,160px) clamp(24px,6vw,80px) clamp(60px,8vw,96px)" }}
     >
       <style>{heroStyles}</style>

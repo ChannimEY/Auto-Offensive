@@ -134,15 +134,15 @@ function CardInner({ member: m, index }: CardInnerProps) {
             alt={m.name}
             width={200}
             height={200}
-            className="w-50 h-50 rounded-full object-cover object-top border-[3px] border-white/90 shadow-[0_4px_32px_rgba(0,0,0,0.15)] block"
+            className="w-50 h-50 rounded-full object-cover object-top border-[3px] border-[#F7F5F0] shadow-[0_4px_32px_rgba(0,0,0,0.15)] block"
           />
           <span className="tf-status-dot" />
         </div>
       </div>
 
       {/* Body */}
-      <div className="relative z-2">
-        <div className="text-[1.18rem] font-bold text-[#0a1f1a] tracking-[-0.01em] mb-1">{m.name}</div>
+      <div className="relative z-2  ">
+        <div className="text-[1.18rem] font-bold text-[#0a1f1a] dark:text-white tracking-[-0.01em] mb-1">{m.name}</div>
         <div className="text-[0.78rem] font-semibold text-primary tracking-widest uppercase mb-3">{m.role}</div>
         <div className="w-7 h-px  bg-linear-to-r from-primary to-[#00cfff] mx-auto mb-3 rounded-sm opacity-45" />
         <div className="text-[0.84rem] text-[#8aada6] leading-[1.9] tracking-[0.03em] mb-4 min-h-9 italic">
@@ -233,7 +233,8 @@ export default function TeamAndFooter() {
   }, []);
 
   return (
-    <>
+    /* ↓↓↓ THIS IS THE ONLY CHANGE: outer full-width wrapper with bg-[#F7F5F0] ↓↓↓ */
+    <div className="w-full bg-[#F7F5F0] dark:bg-[#09090B]">
       <style>{`
         @keyframes tf-spin  { to { transform: rotate(360deg); } }
         @keyframes tf-blink { 0%,100% { opacity:1; } 50% { opacity:.4; } }
@@ -454,6 +455,9 @@ export default function TeamAndFooter() {
           color: rgba(0,208,178,.7);
           font-family: monospace;
         }
+        .dark .tf-path-node {
+          background: #09090B;
+        }
         .tf-path-node--mentor {
           border-color: rgba(200,80,30,.35);
           color: rgba(200,80,30,.7);
@@ -515,6 +519,9 @@ export default function TeamAndFooter() {
           letter-spacing: .06em;
           margin-top: -13px;
         }
+        .dark .tf-footer-path-node {
+          background: #09090B;
+        }
         .tf-footer-path-label {
           display: flex;
           justify-content: space-between;
@@ -554,14 +561,28 @@ export default function TeamAndFooter() {
           height: 120%;
           will-change: transform;
         }
+
+        .tf-body-text {
+          font-size: 16px;
+        }
+        @media (min-width: 768px) {
+          .tf-body-text {
+            font-size: 18px;
+          }
+        }
+        @media (min-width: 1024px) {
+          .tf-body-text {
+            font-size: 20px;
+          }
+        }
       `}</style>
 
       <div
-        className="relative bg-[#F7F5F0] text-[#0a1f1a] overflow-hidden"
+        className="relative mx-auto w-full max-w-7xl bg-[#F7F5F0] dark:bg-[#09090B] text-[#0a1f1a] dark:text-[#e6f5f2] overflow-hidden"
         style={{ fontFamily: "var(--font-google-sans), var(--font-noto-khmer), sans-serif" }}
       >
         {/* ── LOCKED PARALLAX Background ── */}
-        <div className="tf-gradient-wrapper">
+        <div className="tf-gradient-wrapper ">
           <div ref={bgRef} className="tf-gradient-bg">
             <svg
               width="100%" height="100%"
@@ -632,12 +653,12 @@ export default function TeamAndFooter() {
             Auto-Offensive
           </div>
           <h2
-            className="text-[clamp(2rem,3.6vw,3.2rem)] font-bold leading-[1.08] tracking-[-0.035em] text-[#0a1f1a] mb-[0.9rem]"
+            className="text-[clamp(2rem,3.6vw,3.2rem)] font-bold leading-[1.08] tracking-[-0.035em] text-[#0a1f1a] dark:text-white mb-[0.9rem]"
             style={{ fontFamily: "var(--font-hackdaddy), var(--font-noto-khmer), monospace" }}
           >
-            The People Behind<br />the <em className="text-primary not-italic">Platform</em>
+            ThePeople Behind<br />the <em className="text-primary not-italic">Platform</em>
           </h2>
-          <p className="text-[0.92rem] text-[#4a6e65] max-w-115 mx-auto leading-[1.8]">
+          <p className="tf-body-text text-[#4a6e65] dark:text-[#9cb8b1] max-w-115 mx-auto leading-[1.8]">
             Security researchers, engineers and builders — united by one mission:
             make offensive security accessible to everyone.
           </p>
@@ -652,12 +673,12 @@ export default function TeamAndFooter() {
               Section 01
             </div>
             <h2
-              className="text-[clamp(1.5rem,2.4vw,2.1rem)] font-bold tracking-[-0.03em] text-[#0a1f1a] mb-[0.35rem]"
+              className="text-[clamp(1.5rem,2.4vw,2.1rem)] font-bold tracking-[-0.03em] text-[#0a1f1a] dark:text-white mb-[0.35rem]"
               style={{ fontFamily: "var(--font-hackdaddy), var(--font-noto-khmer), monospace" }}
             >
               Our <em className="text-primary not-italic">Mentors</em>
             </h2>
-            <p className="text-[0.86rem] text-[#4a6e65] leading-[1.7]">Leading the way with expertise and guidance</p>
+            <p className="tf-body-text text-[#4a6e65] dark:text-[#9cb8b1] leading-[1.7]">Leading the way with expertise and guidance</p>
           </div>
 
           {/* Mentor path connector */}
@@ -678,7 +699,7 @@ export default function TeamAndFooter() {
             {MENTORS.map((m, i) => (
               <div
                 key={m.name}
-                className="tf-card tf-card--mentor ao-card relative bg-[rgba(255,252,246,0.42)] backdrop-blur-2 border border-[rgba(200,134,10,0.12)] rounded-2xl text-center overflow-hidden"
+                className="tf-card tf-card--mentor ao-card relative bg-[rgba(247,245,240,0.42)] dark:bg-[#09090B] backdrop-blur-2 border border-[rgba(200,134,10,0.12)] rounded-2xl text-center overflow-hidden"
                 ref={(el) => { cardRefs.current[i] = el; }}
                 style={{ transitionDelay: `${i * 80}ms` }}
               >
@@ -700,12 +721,12 @@ export default function TeamAndFooter() {
               Section 02
             </div>
             <h2
-              className="text-[clamp(1.5rem,2.4vw,2.1rem)] font-bold tracking-[-0.03em] text-[#0a1f1a] mb-[0.35rem]"
+              className="text-[clamp(1.5rem,2.4vw,2.1rem)] font-bold tracking-[-0.03em] text-[#0a1f1a] dark:text-white mb-[0.35rem]"
               style={{ fontFamily: "var(--font-hackdaddy), var(--font-noto-khmer), monospace" }}
             >
               Core <em className="text-primary not-italic">Team</em>
             </h2>
-            <p className="text-[0.86rem] text-[#4a6e65] leading-[1.7]">Dedicated professionals building the platform</p>
+            <p className="tf-body-text text-[#4a6e65] dark:text-[#9cb8b1] leading-[1.7]">Dedicated professionals building the platform</p>
           </div>
 
           {/* Team path connector — 01 through 09 */}
@@ -741,7 +762,7 @@ export default function TeamAndFooter() {
         {/* ══════════════════════════════════════
             FOOTER
         ══════════════════════════════════════ */}
-        <footer className="relative z-10 tf-footer flex flex-col items-center justify-center text-center px-[6%] pt-23 pb-16 bg-[#F7F5F0] overflow-hidden">
+        <footer className="relative z-10 tf-footer flex flex-col items-center justify-center text-center px-[6%] pt-23 pb-16 bg-[#F7F5F0] dark:bg-[#09090B] overflow-hidden">
           <div className="tf-footer-grid" />
 
           <div className="relative z-1 w-full flex flex-col items-center">
@@ -769,12 +790,12 @@ export default function TeamAndFooter() {
             </div>
 
             <h2
-              className="text-[clamp(1.9rem,3.6vw,3.2rem)] font-bold tracking-[-0.03em] text-[#0a1f1a] mb-[0.9rem] leading-[1.1]"
+              className="text-[clamp(1.9rem,3.6vw,3.2rem)] font-bold tracking-[-0.03em] text-[#0a1f1a] dark:text-white mb-[0.9rem] leading-[1.1]"
               style={{ fontFamily: "var(--font-hackdaddy), var(--font-noto-khmer), monospace" }}
             >
               Ready to automate your<br /><em className="text-primary not-italic">security testing</em>?
             </h2>
-            <p className="text-[0.92rem] text-[#4a6e65] mb-8 max-w-105 leading-[1.78] mx-auto">
+            <p className="tf-body-text text-[#4a6e65] dark:text-[#9cb8b1] mb-8 max-w-105 leading-[1.78] mx-auto">
               Join thousands of engineers who scan smarter — not harder.
               No CLI. No complexity. Just results.
             </p>
@@ -794,6 +815,7 @@ export default function TeamAndFooter() {
           </div>
         </footer>
       </div>
-    </>
+    </div>
+    /* ↑↑↑ END of outer wrapper ↑↑↑ */
   );
 }

@@ -50,7 +50,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           disableTransitionOnChange
         >
          <Header />
-          <main>
+          <main className="-mt-14">
             {children}
           </main>
           <Footer />
