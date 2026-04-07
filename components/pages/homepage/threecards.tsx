@@ -19,16 +19,6 @@ interface CardData {
   titleColor: string;
 }
 
-// ── CUSTOMIZE CARDS HERE ─────────────────────────────────────────────────────
-const CARD_WIDTH = "100%";
-const CARD_MIN_HEIGHT = "480px";
-const IMAGE_MAX_HEIGHT = "460px";
-const IMAGE_WIDTH = "78%";
-const CARD_BG = "#F7F5F0";
-const SECTION_BG = "#F7F5F0";
-const SECTION_PADDING_X = "120px"; // left and right padding
-// ─────────────────────────────────────────────────────────────────────────────
-
 const cards: CardData[] = [
   {
     title: "Security",
@@ -70,59 +60,50 @@ const Card: React.FC<{ card: CardData }> = ({ card }) => {
 
   return (
     <div
-      className="relative flex flex-col rounded-2xl overflow-hidden"
+      className="relative flex flex-col rounded-2xl overflow-hidden flex-1 min-w-0 cursor-pointer transition-[border-color] duration-300"
       style={{
         background: "#F7F5F0",
         border: `1.5px solid ${hovered ? card.accentColor + "55" : card.borderColor}`,
-        width: CARD_WIDTH,
-        minHeight: CARD_MIN_HEIGHT,
-        transition: "border-color 0.3s ease",
-        cursor: "pointer",
-        flex: "1 1 0",
-        minWidth: 0,
+        minHeight: "480px",
       }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
       {/* Soft blob backgrounds */}
       <div
-        className="absolute inset-0 pointer-events-none"
+        className="absolute inset-0 pointer-events-none z-0 transition-opacity duration-400"
         style={{
           background: `${card.blobLeft}, ${card.blobRight}`,
           opacity: hovered ? 1 : 0.75,
-          transition: "opacity 0.4s ease",
-          zIndex: 0,
         }}
       />
 
       {/* White glass softening overlay */}
       <div
-        className="absolute inset-0 pointer-events-none"
+        className="absolute inset-0 pointer-events-none z-[1]"
         style={{
-          background: "linear-gradient(160deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.1) 100%)",
-          zIndex: 1,
+          background:
+            "linear-gradient(160deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.1) 100%)",
         }}
       />
 
       {/* Text content */}
-      <div className="relative px-6 pt-8 pb-4" style={{ zIndex: 2 }}>
+      <div className="relative z-[2] px-6 pt-8 pb-4">
         <h3
-          className="font-bold leading-tight mb-3"
+          className="font-bold leading-tight mb-3 text-2xl tracking-[-0.01em]"
           style={{
             color: card.titleColor,
             fontFamily: "var(--font-hackdaddy), var(--font-noto-khmer), sans-serif",
-            fontSize: "1.5rem",
-            letterSpacing: "-0.01em",
           }}
         >
           {card.title}
           <br />
           {card.subtitle}
         </h3>
+
         <p
-          className="text-sm leading-relaxed mb-6"
+          className="text-sm leading-relaxed mb-6 text-slate-500"
           style={{
-            color: "#64748b",
             fontFamily: "var(--font-google-sans), var(--font-noto-khmer), sans-serif",
           }}
         >
@@ -130,13 +111,12 @@ const Card: React.FC<{ card: CardData }> = ({ card }) => {
         </p>
 
         <button
-          className="inline-flex items-center gap-2 text-sm font-semibold px-5 py-2.5 rounded-full"
+          className="inline-flex items-center gap-2 text-sm font-semibold px-5 py-2.5 rounded-full transition-[background,color] duration-200"
           style={{
             background: "transparent",
             border: `1.5px solid ${card.accentColor}`,
             color: card.accentColor,
             fontFamily: "var(--font-google-sans), var(--font-noto-khmer), sans-serif",
-            transition: "background 0.2s ease, color 0.2s ease",
           }}
           onMouseEnter={(e) => {
             const btn = e.currentTarget as HTMLButtonElement;
@@ -163,15 +143,12 @@ const Card: React.FC<{ card: CardData }> = ({ card }) => {
       </div>
 
       {/* Character image */}
-      <div
-        className="relative mt-auto mx-auto"
-        style={{ width: IMAGE_WIDTH, zIndex: 2 }}
-      >
+      <div className="relative mt-auto mx-auto z-[2] w-[78%]">
         <Image
           src={card.image}
           alt={`${card.title} ${card.subtitle}`}
-          className="w-full object-contain object-bottom"
-          style={{ display: "block", maxHeight: IMAGE_MAX_HEIGHT }}
+          className="w-full object-contain object-bottom block"
+          style={{ maxHeight: "460px" }}
           draggable={false}
         />
       </div>
@@ -182,23 +159,16 @@ const Card: React.FC<{ card: CardData }> = ({ card }) => {
 const ThreeCards: React.FC = () => {
   return (
     <section
-      className="w-full flex flex-col items-center"
+      className="w-full flex flex-col items-center bg-[#F7F5F0] py-16 px-[120px]"
       style={{
-        background: SECTION_BG,
-        minHeight: "100vh",
-        paddingTop: "64px",
-        paddingBottom: "64px",
-        paddingLeft: SECTION_PADDING_X,
-        paddingRight: SECTION_PADDING_X,
         fontFamily: "var(--font-google-sans), var(--font-noto-khmer), sans-serif",
       }}
     >
-      {/* Inner wrapper — aligns heading left, keeps content centered */}
+      {/* Inner wrapper */}
       <div className="w-full max-w-screen-xl flex flex-col items-start">
         <p
-          className="text-sm font-semibold mb-8 tracking-widest uppercase"
+          className="text-sm font-semibold mb-8 tracking-widest uppercase text-slate-400"
           style={{
-            color: "#94a3b8",
             fontFamily: "var(--font-google-sans), var(--font-noto-khmer), sans-serif",
           }}
         >
@@ -213,10 +183,7 @@ const ThreeCards: React.FC = () => {
               "linear-gradient(135deg, rgba(0,208,178,0.4) 0%, rgba(1,80,158,0.25) 50%, rgba(0,208,178,0.35) 100%)",
           }}
         >
-          <div
-            className="w-full rounded-[22px] p-2 flex gap-3"
-            style={{ background: SECTION_BG }}
-          >
+          <div className="w-full rounded-[22px] p-2 flex gap-3 bg-[#F7F5F0]">
             {cards.map((card, i) => (
               <Card key={i} card={card} />
             ))}
