@@ -6,7 +6,10 @@ export default function TeamShowcase() {
   const imageRef = useRef<HTMLDivElement>(null);
 
   return (
-    <section className="bg-[#F7F5F0] pb-20 px-10 overflow-hidden font-sans">
+    <section
+      className="bg-[#F7F5F0] pb-20 px-10 overflow-hidden"
+      style={{ fontFamily: "var(--font-google-sans), var(--font-noto-khmer), sans-serif" }}
+    >
       <div className="max-w-[1200px] mx-auto grid grid-cols-[1fr_1.6fr] gap-16 items-center">
 
         {/* ── Left: Text Content ── */}
@@ -18,8 +21,11 @@ export default function TeamShowcase() {
 
           {/* Heading */}
           <h2
-            className="font-heading font-bold leading-[1.18] text-[#01509e] mb-2"
-            style={{ fontSize: "clamp(28px, 3.5vw, 44px)" }}
+            className="font-bold leading-[1.18] text-[#01509e] mb-2"
+            style={{
+              fontFamily: "var(--font-hackdaddy), var(--font-noto-khmer), sans-serif",
+              fontSize: "clamp(28px, 3.5vw, 44px)",
+            }}
           >
             In our company,{" "}
             <span className="text-[#00BCA1]">we build</span>{" "}
@@ -33,7 +39,7 @@ export default function TeamShowcase() {
           />
 
           {/* Paragraphs */}
-          <p className="text-[15px] leading-[1.8] text-[#4a4a4a] mb-[18px]">
+          <p className="text-[15px] leading-[1.8] text-[#4a4a4a] mb-4.5">
             We launched as a team of passionate professionals — and we've kept
             that mindset ever since. Our experts still drive product development
             today, focusing relentlessly on accuracy, speed, and control.
@@ -167,7 +173,7 @@ export default function TeamShowcase() {
             <p className="text-[11px] text-white/70 font-medium m-0 mb-[2px]">
               Est.
             </p>
-            <p className="text-xl font-bold text-white m-0">2017</p>
+            <p className="text-xl font-bold text-white m-0">2026</p>
           </div>
         </div>
       </div>
