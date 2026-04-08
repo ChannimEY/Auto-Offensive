@@ -84,9 +84,9 @@ function Callout({
   };
   return (
     <div
-      className={`flex gap-3 px-4 py-3 rounded-lg border border-[#E2DDD5] dark:border-white/10 border-l-[3px] my-3.5 dark:bg-white/[0.03] ${styles[type]}`}
+      className={`flex gap-3 px-4 py-3 rounded-lg border border-[#E2DDD5] dark:border-white/10 border-l-[3px] my-3.5 dark:bg-white/3 ${styles[type]}`}
     >
-      <span className="text-[14px] flex-shrink-0 mt-0.5">{icon}</span>
+      <span className="text-[14px] shrink-0 mt-0.5">{icon}</span>
       <div className="flex-1">
         <div
           className={`text-[11px] font-bold tracking-[0.07em] uppercase mb-1 ${titleColors[type]}`}
@@ -125,11 +125,11 @@ function CodeBlock({
 
   return (
     <div className="rounded-xl overflow-hidden my-3.5 border border-white/5 shadow-[0_4px_24px_rgba(0,0,0,0.14),0_1px_4px_rgba(0,0,0,0.1)]">
-      <div className="flex items-center justify-between px-4 py-2 border-b border-white/[0.06] bg-white/[0.025] bg-[#16181F]">
-        <div className="flex gap-[5px]">
-          <div className="w-[9px] h-[9px] rounded-full bg-[#FF5F57]" />
-          <div className="w-[9px] h-[9px] rounded-full bg-[#FFBD2E]" />
-          <div className="w-[9px] h-[9px] rounded-full bg-[#28CA41]" />
+      <div className="flex items-center justify-between px-4 py-2 border-b border-white/6 bg-[#16181F]">
+        <div className="flex gap-1.25">
+          <div className="w-2.25 h-2.25 rounded-full bg-[#FF5F57]" />
+          <div className="w-2.25 h-2.25 rounded-full bg-[#FFBD2E]" />
+          <div className="w-2.25 h-2.25 rounded-full bg-[#28CA41]" />
         </div>
         <span className="font-mono text-[11px] text-white/25 tracking-[0.05em]">{title}</span>
         <button
@@ -139,7 +139,7 @@ function CodeBlock({
           {copied ? "Copied!" : "Copy"}
         </button>
       </div>
-      <div className="bg-[#16181F] px-5 py-[18px] overflow-x-auto">
+      <div className="bg-[#16181F] px-5 py-4.5 overflow-x-auto">
         <code
           ref={codeRef}
           className="font-mono text-[12px] leading-[1.92] text-white/55"
@@ -196,12 +196,12 @@ function FeatureItem({
 }) {
   return (
     <div className="flex items-start border-b border-[#E2DDD5] dark:border-white/10 last:border-b-0 hover:bg-[#F0EDE6] dark:hover:bg-white/5 transition-colors duration-150">
-      <div className="w-12 flex-shrink-0 flex items-center justify-center py-[15px] text-base">
+      <div className="w-12 shrink-0 flex items-center justify-center py-3.75 text-base">
         {icon}
       </div>
-      <div className="flex-1 py-[13px] pr-4">
+      <div className="flex-1 py-3.25 pr-4">
         <div
-          className="text-base md:text-[18px] lg:text-[20px] font-semibold text-[#1A1714] dark:text-white mb-[3px] tracking-[-0.01em]"
+          className="text-base md:text-[18px] lg:text-[20px] font-semibold text-[#1A1714] dark:text-white mb-0.75 tracking-[-0.01em]"
           style={{ fontFamily: "var(--font-google-sans), var(--font-noto-khmer), sans-serif" }}
         >
           {title}
@@ -214,7 +214,7 @@ function FeatureItem({
         </div>
       </div>
       {tag && (
-        <div className="py-[13px] pr-4 flex items-center flex-shrink-0">{tag}</div>
+        <div className="py-3.25 pr-4 flex items-center shrink-0">{tag}</div>
       )}
     </div>
   );
@@ -236,9 +236,9 @@ function Step({
   last?: boolean;
 }) {
   return (
-    <div className={`flex gap-3.5 relative ${last ? "" : "pb-[22px]"}`}>
-      <div className="flex flex-col items-center flex-shrink-0">
-        <div className="w-[26px] h-[26px] rounded-full bg-white dark:bg-[#18181B] border-[1.5px] border-[#CEC9BF] dark:border-white/10 flex items-center justify-center font-mono text-[11px] font-semibold text-[#1A1714] dark:text-white">
+    <div className={`flex gap-3.5 relative ${last ? "" : "pb-5.5"}`}>
+      <div className="flex flex-col items-center shrink-0">
+        <div className="w-6.5 h-6.5 rounded-full bg-white dark:bg-[#18181B] border-[1.5px] border-[#CEC9BF] dark:border-white/10 flex items-center justify-center font-mono text-[11px] font-semibold text-[#1A1714] dark:text-white">
           {num}
         </div>
         {!last && <div className="flex-1 w-px bg-[#E2DDD5] dark:bg-white/10 mt-1.5" />}
@@ -329,9 +329,10 @@ function SecItem({
   title: string;
   desc: string;
 }) {
+  const newLocal = "text-[15px] flex-shrink-0 mt-px";
   return (
     <div className="flex items-start gap-3 px-3.5 py-3 rounded-lg border border-[#E2DDD5] dark:border-white/10 bg-white dark:bg-[#121214] hover:bg-[#F0EDE6] dark:hover:bg-white/5 hover:border-[#CEC9BF] transition-all duration-150">
-      <span className="text-[15px] flex-shrink-0 mt-px">{icon}</span>
+      <span className={newLocal}>{icon}</span>
       <div>
         <div
           className="text-base md:text-[18px] lg:text-[20px] font-semibold text-[#1A1714] dark:text-white mb-0.5"
@@ -401,7 +402,7 @@ function NotList() {
           key={item.tool}
           className="flex items-center gap-3 px-4 py-2.5 border-b border-[#E2DDD5] dark:border-white/10 last:border-b-0 hover:bg-[#F0EDE6] dark:hover:bg-white/5 transition-colors duration-150"
         >
-          <span className="font-mono text-[12.5px] text-[#B5B0A8] line-through decoration-[#C42828] flex-shrink-0">
+          <span className="font-mono text-[12.5px] text-[#B5B0A8] line-through decoration-[#C42828] shrink-0">
             {item.tool}
           </span>
           <span className="text-[#00BCA1] font-mono text-[12.5px]">→</span>
@@ -446,7 +447,7 @@ function TOC({ activeId }: { activeId: string }) {
 
   return (
     <aside
-      className="w-[252px] flex-shrink-0 sticky top-22 self-start max-h-[calc(100vh-5.5rem)] overflow-y-auto px-6 py-7 border-l border-[#E2DDD5] dark:border-white/10 hidden xl:block bg-[#F7F5F0] dark:bg-[#09090B]"
+      className="w-63 shrink-0 sticky top-22 self-start max-h-[calc(100vh-5.5rem)] overflow-y-auto px-6 py-7 border-l border-[#E2DDD5] dark:border-white/10 hidden xl:block bg-[#F7F5F0] dark:bg-[#09090B]"
       style={{ scrollbarWidth: "thin", scrollbarColor: "#E2DDD5 transparent" }}
     >
       <div className="mb-5">
@@ -454,7 +455,7 @@ function TOC({ activeId }: { activeId: string }) {
           Search content
         </label>
         <div className="flex items-center gap-2 px-3 py-2 rounded-lg border border-[#E2DDD5] dark:border-white/10 bg-white dark:bg-[#121214]">
-          <svg className="w-[13px] h-[13px] stroke-[#88837B] fill-none flex-shrink-0" viewBox="0 0 24 24" strokeWidth={2}>
+          <svg className="w-3.25 h-3.25 stroke-[#88837B] fill-none shrink-0" viewBox="0 0 24 24" strokeWidth={2}>
             <circle cx="11" cy="11" r="8" />
             <path d="m21 21-4.35-4.35" />
           </svg>
@@ -468,25 +469,25 @@ function TOC({ activeId }: { activeId: string }) {
             className="w-full bg-transparent outline-none text-base md:text-[18px] lg:text-[20px] text-[#4A4540] dark:text-[#E5E7EB] placeholder:text-[#88837B] dark:placeholder:text-[#9CA3AF]"
             style={{ fontFamily: "var(--font-google-sans), var(--font-noto-khmer), sans-serif" }}
           />
-          <kbd className="font-mono text-[11px] px-[5px] py-px rounded border border-[#E2DDD5] bg-[#F0EDE6] text-[#88837B]">
+          <kbd className="font-mono text-[11px] px-1.25 py-px rounded border border-[#E2DDD5] bg-[#F0EDE6] text-[#88837B]">
             Ctrl K
           </kbd>
         </div>
       </div>
-      <div className="text-[10px] font-semibold tracking-[0.1em] uppercase text-[#B5B0A8] dark:text-[#9CA3AF] mb-2.5">
+      <div className="text-[10px] font-semibold tracking-widest uppercase text-[#B5B0A8] dark:text-[#9CA3AF] mb-2.5">
         On this page
       </div>
       <div className="flex flex-col gap-px">
         {links.map((link, i) => {
           const id = link.href.replace("#", "");
-          const isActive = activeId === id && !link.sub;
+          const isActive = activeId === id && !("sub" in link);
           return (
             <a
               key={i}
               href={link.href}
               onClick={(e) => smoothScroll(e, link.href)}
-              className={`text-base md:text-[18px] lg:text-[20px] font-normal py-[3px] rounded border-l-2 transition-all duration-150 leading-[1.55] cursor-pointer ${
-                link.sub ? "pl-[18px]" : "pl-2"
+              className={`text-base md:text-[18px] lg:text-[20px] font-normal py-0.75 rounded border-l-2 transition-all duration-150 leading-[1.55] cursor-pointer ${
+                "sub" in link && link.sub ? "pl-4.5" : "pl-2"
               } ${
                 isActive
                   ? "text-[#00BCA1] border-l-[#00BCA1] font-medium"
@@ -525,21 +526,21 @@ export default function Content() {
     <div className="flex-1 min-w-0 flex items-start">
       {/* Main article */}
       <main
-        className="flex-1 min-w-0 px-[72px] pt-12 pb-32 max-[960px]:px-8 max-[640px]:px-5"
+        className="flex-1 min-w-0 px-18 pt-12 pb-32 max-[960px]:px-8 max-[640px]:px-5"
         style={{ fontFamily: "var(--font-google-sans), var(--font-noto-khmer), sans-serif" }}
       >
         {/* ── Page Header ── */}
         <div className="mb-2">
-          <div className="flex items-center gap-1.5 text-base md:text-[18px] lg:text-[20px] text-[#88837B] dark:text-[#A1A1AA] mb-[18px]">
+          <div className="flex items-center gap-1.5 text-base md:text-[18px] lg:text-[20px] text-[#88837B] dark:text-[#A1A1AA] mb-4.5">
             <a href="#" className="hover:text-[#1A1714] dark:hover:text-white transition-colors duration-150">Docs</a>
-            <svg className="w-[11px] h-[11px] stroke-[#B5B0A8] fill-none" viewBox="0 0 24 24" strokeWidth={2}><polyline points="9 18 15 12 9 6" /></svg>
+            <svg className="w-2.75 h-2.75 stroke-[#B5B0A8] fill-none" viewBox="0 0 24 24" strokeWidth={2}><polyline points="9 18 15 12 9 6" /></svg>
             <a href="#" className="hover:text-[#1A1714] dark:hover:text-white transition-colors duration-150">Automation Tools</a>
-            <svg className="w-[11px] h-[11px] stroke-[#B5B0A8] fill-none" viewBox="0 0 24 24" strokeWidth={2}><polyline points="9 18 15 12 9 6" /></svg>
+            <svg className="w-2.75 h-2.75 stroke-[#B5B0A8] fill-none" viewBox="0 0 24 24" strokeWidth={2}><polyline points="9 18 15 12 9 6" /></svg>
             <span>CLI</span>
           </div>
 
-          <div className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-[0.1em] uppercase text-[#00BCA1] bg-[rgba(0,188,161,0.07)] border border-[rgba(0,188,161,0.2)] px-2.5 py-[3px] rounded-full mb-3.5">
-            <span className="w-[5px] h-[5px] rounded-full bg-[#00BCA1] animate-pulse" />
+          <div className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-widest uppercase text-[#00BCA1] bg-[rgba(0,188,161,0.07)] border border-[rgba(0,188,161,0.2)] px-2.5 py-0.75 rounded-full mb-3.5">
+            <span className="w-1.25 h-1.25 rounded-full bg-[#00BCA1] animate-pulse" />
             Feature Documentation · v2.0
           </div>
 
@@ -550,7 +551,7 @@ export default function Content() {
             CLI
           </h1>
           <p
-            className="text-base md:text-[18px] lg:text-[20px] text-[#4A4540] dark:text-[#C9CDD4] leading-[1.82] mb-7 max-w-[580px] font-normal"
+            className="text-base md:text-[18px] lg:text-[20px] text-[#4A4540] dark:text-[#C9CDD4] leading-[1.82] mb-7 max-w-145 font-normal"
             style={{ fontFamily: "var(--font-google-sans), var(--font-noto-khmer), sans-serif" }}
           >
             A standalone command-line client that lets you run supported security tools from your terminal — powered entirely by the backend. No local tool installation required.
@@ -868,19 +869,19 @@ export default function Content() {
 
         {/* Prev / Next */}
           <div className="flex justify-between gap-4 pt-9 mt-10 border-t border-[#E2DDD5] dark:border-white/10 max-[640px]:flex-col">
-          <div className="flex items-center gap-2.5 px-4 py-3 rounded-xl border border-[#E2DDD5] dark:border-white/10 max-w-[230px] flex-1 bg-white dark:bg-[#121214] hover:border-[#CEC9BF] hover:bg-[#F0EDE6] dark:hover:bg-white/5 hover:shadow-[0_2px_8px_rgba(0,0,0,0.06)] transition-all duration-150 cursor-pointer">
-            <svg className="w-[15px] h-[15px] stroke-[#88837B] fill-none flex-shrink-0" viewBox="0 0 24 24" strokeWidth={2}><polyline points="15 18 9 12 15 6" /></svg>
+          <div className="flex items-center gap-2.5 px-4 py-3 rounded-xl border border-[#E2DDD5] dark:border-white/10 max-w-57.5 flex-1 bg-white dark:bg-[#121214] hover:border-[#CEC9BF] hover:bg-[#F0EDE6] dark:hover:bg-white/5 hover:shadow-[0_2px_8px_rgba(0,0,0,0.06)] transition-all duration-150 cursor-pointer">
+            <svg className="w-3.75 h-3.75 stroke-[#88837B] fill-none shrink-0" viewBox="0 0 24 24" strokeWidth={2}><polyline points="15 18 9 12 15 6" /></svg>
             <div>
               <div className="text-[11px] text-[#88837B] dark:text-[#9CA3AF] mb-0.5">Previous</div>
               <div className="text-base md:text-[18px] lg:text-[20px] font-semibold text-[#1A1714] dark:text-white">Multi-Tool Pipeline</div>
             </div>
           </div>
-          <div className="flex items-center justify-end gap-2.5 px-4 py-3 rounded-xl border border-[#E2DDD5] dark:border-white/10 max-w-[230px] flex-1 bg-white dark:bg-[#121214] hover:border-[#CEC9BF] hover:bg-[#F0EDE6] dark:hover:bg-white/5 hover:shadow-[0_2px_8px_rgba(0,0,0,0.06)] transition-all duration-150 cursor-pointer text-right">
+          <div className="flex items-center justify-end gap-2.5 px-4 py-3 rounded-xl border border-[#E2DDD5] dark:border-white/10 max-w-57.5 flex-1 bg-white dark:bg-[#121214] hover:border-[#CEC9BF] hover:bg-[#F0EDE6] dark:hover:bg-white/5 hover:shadow-[0_2px_8px_rgba(0,0,0,0.06)] transition-all duration-150 cursor-pointer text-right">
             <div>
               <div className="text-[11px] text-[#88837B] dark:text-[#9CA3AF] mb-0.5">Next</div>
               <div className="text-base md:text-[18px] lg:text-[20px] font-semibold text-[#1A1714] dark:text-white">Report Generation</div>
             </div>
-            <svg className="w-[15px] h-[15px] stroke-[#88837B] fill-none flex-shrink-0" viewBox="0 0 24 24" strokeWidth={2}><polyline points="9 18 15 12 9 6" /></svg>
+            <svg className="w-3.75 h-3.75 stroke-[#88837B] fill-none shrink-0" viewBox="0 0 24 24" strokeWidth={2}><polyline points="9 18 15 12 9 6" /></svg>
           </div>
         </div>
       </main>
