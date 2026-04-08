@@ -60,7 +60,7 @@ function SidebarItem({
     <a
       href={href}
       onClick={onClick}
-      className={`flex items-center gap-2 text-base md:text-[18px] lg:text-[20px] font-normal px-2 py-1.25 rounded-md transition-all duration-150 cursor-pointer ${
+      className={`flex items-center gap-2 text-[18px] font-normal px-2 py-1.25 rounded-md transition-all duration-150 cursor-pointer ${
         active
           ? "text-[#00BCA1] bg-[rgba(0,188,161,0.07)] dark:bg-[rgba(0,188,161,0.12)] font-semibold"
           : "text-[#4A4540] dark:text-[#C9CDD4] hover:text-[#1A1714] dark:hover:text-white hover:bg-[#EAE6DE] dark:hover:bg-white/5"
@@ -105,7 +105,7 @@ export default function Sidebar() {
 
   return (
     <aside
-      className="w-63 shrink-0 sticky top-22 self-start h-[calc(100vh-5.5rem)] overflow-y-auto py-5.5 border-r border-[#E2DDD5] dark:border-white/10 bg-[#F7F5F0] dark:bg-[#09090B] hidden lg:block"
+      className="w-72 shrink-0 sticky top-22 self-start h-[calc(100vh-5.5rem)] overflow-y-auto py-5.5 border-r border-[#E2DDD5] dark:border-white/10 bg-[#F7F5F0] dark:bg-[#09090B] hidden lg:block"
       style={{ scrollbarWidth: "thin", scrollbarColor: "#E2DDD5 transparent" }}
     >
       {/* CLI Reference */}

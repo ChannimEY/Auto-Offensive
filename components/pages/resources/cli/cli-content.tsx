@@ -22,6 +22,10 @@ const TOC_LINKS = [
   { href: "#concept", label: "How It Works" },
 ] as const;
 
+const monoFontStyle = {
+  fontFamily: "var(--font-jetbrains-mono), var(--font-google-sans), var(--font-noto-khmer), monospace",
+} as const;
+
 /* ── Small reusable primitives ─────────────────────────────── */
 
 function Tag({
@@ -51,7 +55,10 @@ function Tag({
 
 function InlineCode({ children }: { children: React.ReactNode }) {
   return (
-    <code className="font-mono text-[12px] bg-[#F0EDE6] dark:bg-white/5 text-[#00BCA1] px-1.5 py-px rounded border border-[#E2DDD5] dark:border-white/10">
+    <code
+      className="text-[16px] md:text-[18px] lg:text-[20px] bg-[#F0EDE6] dark:bg-white/5 text-[#00BCA1] px-1.5 py-px rounded border border-[#E2DDD5] dark:border-white/10"
+      style={monoFontStyle}
+    >
       {children}
     </code>
   );
@@ -142,7 +149,8 @@ function CodeBlock({
       <div className="bg-[#16181F] px-5 py-4.5 overflow-x-auto">
         <code
           ref={codeRef}
-          className="font-mono text-[12px] leading-[1.92] text-white/55"
+          className="text-[16px] md:text-[18px] lg:text-[20px] leading-[1.92] text-white/55"
+          style={monoFontStyle}
         >
           {children}
         </code>
@@ -402,10 +410,18 @@ function NotList() {
           key={item.tool}
           className="flex items-center gap-3 px-4 py-2.5 border-b border-[#E2DDD5] dark:border-white/10 last:border-b-0 hover:bg-[#F0EDE6] dark:hover:bg-white/5 transition-colors duration-150"
         >
-          <span className="font-mono text-[12.5px] text-[#B5B0A8] line-through decoration-[#C42828] shrink-0">
+          <span
+            className="text-[16px] md:text-[18px] lg:text-[20px] text-[#B5B0A8] line-through decoration-[#C42828] shrink-0"
+            style={monoFontStyle}
+          >
             {item.tool}
           </span>
-          <span className="text-[#00BCA1] font-mono text-[12.5px]">→</span>
+          <span
+            className="text-[16px] md:text-[18px] lg:text-[20px] text-[#00BCA1]"
+            style={monoFontStyle}
+          >
+            →
+          </span>
           <span
             className="text-base md:text-[18px] lg:text-[20px] font-medium text-[#4A4540] dark:text-[#C9CDD4] flex-1"
             style={{ fontFamily: "var(--font-google-sans), var(--font-noto-khmer), sans-serif" }}
@@ -447,15 +463,15 @@ function TOC({ activeId }: { activeId: string }) {
 
   return (
     <aside
-      className="w-63 shrink-0 sticky top-22 self-start max-h-[calc(100vh-5.5rem)] overflow-y-auto px-6 py-7 border-l border-[#E2DDD5] dark:border-white/10 hidden xl:block bg-[#F7F5F0] dark:bg-[#09090B]"
+      className="w-72 shrink-0 sticky top-22 self-start max-h-[calc(100vh-5.5rem)] overflow-y-auto px-6 py-7 border-l border-[#E2DDD5] dark:border-white/10 hidden xl:block bg-[#F7F5F0] dark:bg-[#09090B]"
       style={{ scrollbarWidth: "thin", scrollbarColor: "#E2DDD5 transparent" }}
     >
-      <div className="mb-5">
-        <label htmlFor="cli-doc-search" className="sr-only">
-          Search content
-        </label>
-        <div className="flex items-center gap-2 px-3 py-2 rounded-lg border border-[#E2DDD5] dark:border-white/10 bg-white dark:bg-[#121214]">
-          <svg className="w-3.25 h-3.25 stroke-[#88837B] fill-none shrink-0" viewBox="0 0 24 24" strokeWidth={2}>
+        <div className="mb-5">
+          <label htmlFor="cli-doc-search" className="sr-only">
+            Search content
+          </label>
+        <div className="group flex items-center gap-3 px-4 py-3 rounded-xl border border-[#DDD6CA] dark:border-white/10 bg-white/95 dark:bg-[#121214] shadow-[0_10px_30px_rgba(26,23,20,0.05)] dark:shadow-[0_10px_30px_rgba(0,0,0,0.22)] transition-all duration-200 hover:border-[#CFC6B7] dark:hover:border-white/15 focus-within:border-[#00BCA1]/45 focus-within:shadow-[0_14px_34px_rgba(0,188,161,0.10)] dark:focus-within:shadow-[0_14px_34px_rgba(0,188,161,0.12)]">
+          <svg className="w-4 h-4 stroke-[#9A9287] dark:stroke-[#8F96A3] fill-none shrink-0 transition-colors duration-200 group-focus-within:stroke-[#00BCA1]" viewBox="0 0 24 24" strokeWidth={2}>
             <circle cx="11" cy="11" r="8" />
             <path d="m21 21-4.35-4.35" />
           </svg>
@@ -466,10 +482,10 @@ function TOC({ activeId }: { activeId: string }) {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search content..."
-            className="w-full bg-transparent outline-none text-base md:text-[18px] lg:text-[20px] text-[#4A4540] dark:text-[#E5E7EB] placeholder:text-[#88837B] dark:placeholder:text-[#9CA3AF]"
+            className="w-full bg-transparent outline-none text-[18px] text-[#4A4540] dark:text-[#E5E7EB] placeholder:text-[#9A9287] dark:placeholder:text-[#8F96A3]"
             style={{ fontFamily: "var(--font-google-sans), var(--font-noto-khmer), sans-serif" }}
           />
-          <kbd className="font-mono text-[11px] px-1.25 py-px rounded border border-[#E2DDD5] bg-[#F0EDE6] text-[#88837B]">
+          <kbd className="shrink-0 font-mono text-[11px] px-2 py-1 rounded-lg border border-[#E2DDD5] dark:border-white/10 bg-[#F6F2EA] dark:bg-white/5 text-[#8B8378] dark:text-[#A1A1AA] shadow-sm">
             Ctrl K
           </kbd>
         </div>
@@ -486,7 +502,7 @@ function TOC({ activeId }: { activeId: string }) {
               key={i}
               href={link.href}
               onClick={(e) => smoothScroll(e, link.href)}
-              className={`text-base md:text-[18px] lg:text-[20px] font-normal py-0.75 rounded border-l-2 transition-all duration-150 leading-[1.55] cursor-pointer ${
+              className={`text-[18px] font-normal py-0.75 rounded border-l-2 transition-all duration-150 leading-[1.55] cursor-pointer ${
                 "sub" in link && link.sub ? "pl-4.5" : "pl-2"
               } ${
                 isActive
@@ -526,7 +542,7 @@ export default function Content() {
     <div className="flex-1 min-w-0 flex items-start">
       {/* Main article */}
       <main
-        className="flex-1 min-w-0 px-18 pt-12 pb-32 max-[960px]:px-8 max-[640px]:px-5"
+        className="flex-1 min-w-0 px-12 xl:px-14 pt-12 pb-32 max-[960px]:px-8 max-[640px]:px-5"
         style={{ fontFamily: "var(--font-google-sans), var(--font-noto-khmer), sans-serif" }}
       >
         {/* ── Page Header ── */}
@@ -731,8 +747,18 @@ export default function Content() {
                   { cmd: "pentest nuclei", tool: "nuclei", cat: <Tag variant="web">Web</Tag>, desc: "Template-based vulnerability and misconfiguration scanner" },
                 ].map((row, i) => (
                   <tr key={i} className="hover:bg-[#F0EDE6] dark:hover:bg-white/5 transition-colors duration-150">
-                    <td className="px-3.5 py-2.5 border-b border-[#E2DDD5] dark:border-white/10 last:border-b-0 font-mono text-[12.5px] text-[#00BCA1] font-medium">{row.cmd}</td>
-                    <td className="px-3.5 py-2.5 border-b border-[#E2DDD5] dark:border-white/10 font-mono text-[12.5px] text-[#00BCA1] font-medium">{row.tool}</td>
+                    <td
+                      className="px-3.5 py-2.5 border-b border-[#E2DDD5] dark:border-white/10 last:border-b-0 text-[16px] md:text-[18px] lg:text-[20px] text-[#00BCA1] font-medium"
+                      style={monoFontStyle}
+                    >
+                      {row.cmd}
+                    </td>
+                    <td
+                      className="px-3.5 py-2.5 border-b border-[#E2DDD5] dark:border-white/10 text-[16px] md:text-[18px] lg:text-[20px] text-[#00BCA1] font-medium"
+                      style={monoFontStyle}
+                    >
+                      {row.tool}
+                    </td>
                     <td className="px-3.5 py-2.5 border-b border-[#E2DDD5] dark:border-white/10">{row.cat}</td>
                     <td
                       className="px-3.5 py-2.5 border-b border-[#E2DDD5] dark:border-white/10 text-base md:text-[18px] lg:text-[20px] text-[#4A4540] dark:text-[#C9CDD4]"

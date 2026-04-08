@@ -281,7 +281,6 @@
       }, 4000);
     }
 
-    const newLocal = "w-10 h-10 min-w-10 text-[#00BCA1] flex-shrink-0";
     return (
       <>
         <style>{`
@@ -664,7 +663,7 @@
                 {INFO_ITEMS.map((item) => (
                   <div key={item.title} className="info-card">
                     <div className="flex gap-4 items-start">
-                      <div className={newLocal}>
+                      <div className="w-10 h-10 min-w-10 text-[#00BCA1] shrink-0">
                         {item.icon}
                       </div>
                       <div>
