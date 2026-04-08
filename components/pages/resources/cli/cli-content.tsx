@@ -1,0 +1,892 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+
+const TOC_LINKS = [
+  { href: "#installation", label: "Installation & Setup" },
+  { href: "#installation", label: "Download & install", sub: true },
+  { href: "#installation", label: "Verify & first run", sub: true },
+  { href: "#auth", label: "Authentication" },
+  { href: "#auth", label: "Login command", sub: true },
+  { href: "#auth", label: "CI / non-interactive", sub: true },
+  { href: "#commands", label: "Command Execution" },
+  { href: "#commands", label: "Example commands", sub: true },
+  { href: "#commands", label: "Parameter validation", sub: true },
+  { href: "#tools", label: "Supported Tools" },
+  { href: "#execution", label: "Remote Execution Model" },
+  { href: "#streaming", label: "Output Streaming" },
+  { href: "#results", label: "Result Handling" },
+  { href: "#jobs", label: "Job Lifecycle" },
+  { href: "#jobs", label: "Job commands", sub: true },
+  { href: "#security", label: "Security & Access Control" },
+  { href: "#concept", label: "How It Works" },
+] as const;
+
+/* ── Small reusable primitives ─────────────────────────────── */
+
+function Tag({
+  children,
+  variant = "muted",
+}: {
+  children: React.ReactNode;
+  variant?: "web" | "net" | "recon" | "ai" | "green" | "muted" | "acc";
+}) {
+  const styles: Record<string, string> = {
+    web: "text-[#1D57C8] bg-[rgba(29,87,200,0.06)] border-[rgba(29,87,200,0.2)]",
+    net: "text-[#6B35C0] bg-[rgba(107,53,192,0.06)] border-[rgba(107,53,192,0.2)]",
+    recon: "text-[#B86800] bg-[rgba(184,104,0,0.06)] border-[rgba(184,104,0,0.2)]",
+    ai: "text-[#6B35C0] bg-[rgba(107,53,192,0.06)] border-[rgba(107,53,192,0.2)]",
+    green: "text-[#1A7A4A] bg-[rgba(26,122,74,0.06)] border-[rgba(26,122,74,0.2)]",
+    muted: "text-[#88837B] bg-[#F0EDE6] border-[#CEC9BF]",
+    acc: "text-[#00BCA1] bg-[rgba(0,188,161,0.07)] border-[rgba(0,188,161,0.2)]",
+  };
+  return (
+    <span
+      className={`inline-flex items-center font-mono text-[10px] font-medium px-1.5 py-px rounded border whitespace-nowrap tracking-[0.02em] dark:bg-white/5 ${styles[variant]}`}
+    >
+      {children}
+    </span>
+  );
+}
+
+function InlineCode({ children }: { children: React.ReactNode }) {
+  return (
+    <code className="font-mono text-[12px] bg-[#F0EDE6] dark:bg-white/5 text-[#00BCA1] px-1.5 py-px rounded border border-[#E2DDD5] dark:border-white/10">
+      {children}
+    </code>
+  );
+}
+
+function Callout({
+  type = "info",
+  icon,
+  title,
+  children,
+}: {
+  type?: "tip" | "info" | "warn" | "ai" | "brand";
+  icon: string;
+  title: string;
+  children: React.ReactNode;
+}) {
+  const styles: Record<string, string> = {
+    tip: "border-l-[#1A7A4A] bg-[rgba(26,122,74,0.03)]",
+    info: "border-l-[#1D57C8] bg-[rgba(29,87,200,0.03)]",
+    warn: "border-l-[#B86800] bg-[rgba(184,104,0,0.03)]",
+    ai: "border-l-[#6B35C0] bg-[rgba(107,53,192,0.03)]",
+    brand: "border-l-[#00BCA1] bg-[rgba(0,188,161,0.05)]",
+  };
+  const titleColors: Record<string, string> = {
+    tip: "text-[#1A7A4A]",
+    info: "text-[#1D57C8]",
+    warn: "text-[#B86800]",
+    ai: "text-[#6B35C0]",
+    brand: "text-[#00BCA1]",
+  };
+  return (
+    <div
+      className={`flex gap-3 px-4 py-3 rounded-lg border border-[#E2DDD5] dark:border-white/10 border-l-[3px] my-3.5 dark:bg-white/[0.03] ${styles[type]}`}
+    >
+      <span className="text-[14px] flex-shrink-0 mt-0.5">{icon}</span>
+      <div className="flex-1">
+        <div
+          className={`text-[11px] font-bold tracking-[0.07em] uppercase mb-1 ${titleColors[type]}`}
+        >
+          {title}
+        </div>
+        <div
+          className="text-base md:text-[18px] lg:text-[20px] text-[#4A4540] dark:text-[#C9CDD4] leading-[1.72]"
+          style={{ fontFamily: "var(--font-google-sans), var(--font-noto-khmer), sans-serif" }}
+        >
+          {children}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function CodeBlock({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
+  const [copied, setCopied] = useState(false);
+  const codeRef = useRef<HTMLElement>(null);
+
+  const handleCopy = () => {
+    if (codeRef.current) {
+      navigator.clipboard.writeText(codeRef.current.innerText).then(() => {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 1600);
+      });
+    }
+  };
+
+  return (
+    <div className="rounded-xl overflow-hidden my-3.5 border border-white/5 shadow-[0_4px_24px_rgba(0,0,0,0.14),0_1px_4px_rgba(0,0,0,0.1)]">
+      <div className="flex items-center justify-between px-4 py-2 border-b border-white/[0.06] bg-white/[0.025] bg-[#16181F]">
+        <div className="flex gap-[5px]">
+          <div className="w-[9px] h-[9px] rounded-full bg-[#FF5F57]" />
+          <div className="w-[9px] h-[9px] rounded-full bg-[#FFBD2E]" />
+          <div className="w-[9px] h-[9px] rounded-full bg-[#28CA41]" />
+        </div>
+        <span className="font-mono text-[11px] text-white/25 tracking-[0.05em]">{title}</span>
+        <button
+          onClick={handleCopy}
+          className="font-mono text-[10px] text-white/30 bg-transparent border-none cursor-pointer hover:text-white/75 hover:bg-white/[0.07] px-2 py-0.5 rounded transition-all duration-150"
+        >
+          {copied ? "Copied!" : "Copy"}
+        </button>
+      </div>
+      <div className="bg-[#16181F] px-5 py-[18px] overflow-x-auto">
+        <code
+          ref={codeRef}
+          className="font-mono text-[12px] leading-[1.92] text-white/55"
+        >
+          {children}
+        </code>
+      </div>
+    </div>
+  );
+}
+
+/* Syntax token helpers */
+const Prompt = ({ children }: { children?: React.ReactNode }) => (
+  <span className="text-white/25 select-none">{children ?? "$ "}</span>
+);
+const Cmd = ({ children }: { children: React.ReactNode }) => (
+  <span className="text-[#7DD3C8] font-medium">{children}</span>
+);
+const Flag = ({ children }: { children: React.ReactNode }) => (
+  <span className="text-[#F9C860]">{children}</span>
+);
+const Val = ({ children }: { children: React.ReactNode }) => (
+  <span className="text-[#A8D8A8]">{children}</span>
+);
+const Cm = ({ children }: { children: React.ReactNode }) => (
+  <span className="text-white/22 italic">{children}</span>
+);
+const Ok = () => <span className="text-[#6EE7B7]">✓</span>;
+const Dim = ({ children }: { children: React.ReactNode }) => (
+  <span className="text-white/30">{children}</span>
+);
+const Acc = ({ children }: { children: React.ReactNode }) => (
+  <span className="text-[#5FD4C8]">{children}</span>
+);
+
+function FeatureList({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="border border-[#E2DDD5] dark:border-white/10 rounded-xl overflow-hidden my-3.5 bg-white dark:bg-[#121214]">
+      {children}
+    </div>
+  );
+}
+
+function FeatureItem({
+  icon,
+  title,
+  desc,
+  tag,
+}: {
+  icon: string;
+  title: string;
+  desc: React.ReactNode;
+  tag?: React.ReactNode;
+}) {
+  return (
+    <div className="flex items-start border-b border-[#E2DDD5] dark:border-white/10 last:border-b-0 hover:bg-[#F0EDE6] dark:hover:bg-white/5 transition-colors duration-150">
+      <div className="w-12 flex-shrink-0 flex items-center justify-center py-[15px] text-base">
+        {icon}
+      </div>
+      <div className="flex-1 py-[13px] pr-4">
+        <div
+          className="text-base md:text-[18px] lg:text-[20px] font-semibold text-[#1A1714] dark:text-white mb-[3px] tracking-[-0.01em]"
+          style={{ fontFamily: "var(--font-google-sans), var(--font-noto-khmer), sans-serif" }}
+        >
+          {title}
+        </div>
+        <div
+          className="text-base md:text-[18px] lg:text-[20px] text-[#4A4540] dark:text-[#C9CDD4] leading-[1.72]"
+          style={{ fontFamily: "var(--font-google-sans), var(--font-noto-khmer), sans-serif" }}
+        >
+          {desc}
+        </div>
+      </div>
+      {tag && (
+        <div className="py-[13px] pr-4 flex items-center flex-shrink-0">{tag}</div>
+      )}
+    </div>
+  );
+}
+
+function StepList({ children }: { children: React.ReactNode }) {
+  return <div className="my-4 flex flex-col">{children}</div>;
+}
+
+function Step({
+  num,
+  title,
+  desc,
+  last,
+}: {
+  num: number;
+  title: string;
+  desc: React.ReactNode;
+  last?: boolean;
+}) {
+  return (
+    <div className={`flex gap-3.5 relative ${last ? "" : "pb-[22px]"}`}>
+      <div className="flex flex-col items-center flex-shrink-0">
+        <div className="w-[26px] h-[26px] rounded-full bg-white dark:bg-[#18181B] border-[1.5px] border-[#CEC9BF] dark:border-white/10 flex items-center justify-center font-mono text-[11px] font-semibold text-[#1A1714] dark:text-white">
+          {num}
+        </div>
+        {!last && <div className="flex-1 w-px bg-[#E2DDD5] dark:bg-white/10 mt-1.5" />}
+      </div>
+      <div className="flex-1 pt-0.5">
+        <div
+          className="text-base md:text-[18px] lg:text-[20px] font-semibold text-[#1A1714] dark:text-white mb-1"
+          style={{ fontFamily: "var(--font-google-sans), var(--font-noto-khmer), sans-serif" }}
+        >
+          {title}
+        </div>
+        <div
+          className="text-base md:text-[18px] lg:text-[20px] text-[#4A4540] dark:text-[#C9CDD4] leading-[1.72]"
+          style={{ fontFamily: "var(--font-google-sans), var(--font-noto-khmer), sans-serif" }}
+        >
+          {desc}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function SectionHeading({
+  id,
+  badge,
+  children,
+}: {
+  id: string;
+  badge?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <h2
+      id={id}
+      className="doc-section text-[1.8rem] font-bold tracking-[-0.03em] text-[#1A1714] dark:text-white mb-3 pt-11 scroll-mt-6 flex items-center gap-2.5"
+      style={{ fontFamily: "var(--font-google-sans), var(--font-noto-khmer), sans-serif" }}
+    >
+      {children}
+      {badge && (
+        <span className="font-mono text-[9.5px] font-normal text-[#B5B0A8] dark:text-[#9CA3AF] bg-[#F0EDE6] dark:bg-white/5 px-1.5 py-0.5 rounded border border-[#E2DDD5] dark:border-white/10 tracking-[0.04em]">
+          {badge}
+        </span>
+      )}
+    </h2>
+  );
+}
+
+function SubHeading({ children }: { children: React.ReactNode }) {
+  return (
+    <h3
+      className="text-[1.2rem] font-semibold tracking-[-0.02em] text-[#1A1714] dark:text-white mt-7 mb-2 scroll-mt-6"
+      style={{ fontFamily: "var(--font-google-sans), var(--font-noto-khmer), sans-serif" }}
+    >
+      {children}
+    </h3>
+  );
+}
+
+function Para({ children }: { children: React.ReactNode }) {
+  return (
+    <p
+      className="text-base md:text-[18px] lg:text-[20px] text-[#4A4540] dark:text-[#C9CDD4] leading-[1.82] mb-3"
+      style={{ fontFamily: "var(--font-google-sans), var(--font-noto-khmer), sans-serif" }}
+    >
+      {children}
+    </p>
+  );
+}
+
+function Divider() {
+  return <div className="h-px bg-[#E2DDD5] my-7" />;
+}
+
+function SecGrid({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="grid grid-cols-2 gap-2.5 my-3.5 max-[640px]:grid-cols-1">
+      {children}
+    </div>
+  );
+}
+
+function SecItem({
+  icon,
+  title,
+  desc,
+}: {
+  icon: string;
+  title: string;
+  desc: string;
+}) {
+  return (
+    <div className="flex items-start gap-3 px-3.5 py-3 rounded-lg border border-[#E2DDD5] dark:border-white/10 bg-white dark:bg-[#121214] hover:bg-[#F0EDE6] dark:hover:bg-white/5 hover:border-[#CEC9BF] transition-all duration-150">
+      <span className="text-[15px] flex-shrink-0 mt-px">{icon}</span>
+      <div>
+        <div
+          className="text-base md:text-[18px] lg:text-[20px] font-semibold text-[#1A1714] dark:text-white mb-0.5"
+          style={{ fontFamily: "var(--font-google-sans), var(--font-noto-khmer), sans-serif" }}
+        >
+          {title}
+        </div>
+        <div
+          className="text-base md:text-[18px] lg:text-[20px] text-[#4A4540] dark:text-[#C9CDD4] leading-[1.65]"
+          style={{ fontFamily: "var(--font-google-sans), var(--font-noto-khmer), sans-serif" }}
+        >
+          {desc}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Lifecycle() {
+  return (
+    <div className="flex border border-[#E2DDD5] dark:border-white/10 rounded-xl overflow-hidden my-3.5 bg-white dark:bg-[#121214]">
+      {[
+        { label: "Pending", dotClass: "bg-[#B5B0A8]", shadow: "shadow-[0_0_0_3px_rgba(180,176,168,0.18)]" },
+        { label: "Running", dotClass: "bg-[#1D57C8] animate-pulse", shadow: "shadow-[0_0_0_3px_rgba(29,87,200,0.14)]" },
+        { label: "Completed", dotClass: "bg-[#1A7A4A]", shadow: "shadow-[0_0_0_3px_rgba(26,122,74,0.14)]" },
+        { label: "Failed", dotClass: "bg-[#C42828]", shadow: "shadow-[0_0_0_3px_rgba(196,40,40,0.14)]" },
+      ].map((lc, i) => (
+        <div
+          key={lc.label}
+          className={`flex-1 py-3.5 px-2 text-center border-r border-[#E2DDD5] dark:border-white/10 last:border-r-0 hover:bg-[#F0EDE6] dark:hover:bg-white/5 transition-colors duration-150`}
+        >
+          <div
+            className={`w-2 h-2 rounded-full mx-auto mb-2 ${lc.dotClass} ${lc.shadow}`}
+          />
+          <div className="font-mono text-[10px] tracking-[0.07em] uppercase text-[#88837B]">
+            {lc.label}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function NotList() {
+  const items = [
+    { tool: "subfinder", cmd: "pentest subfinder" },
+    { tool: "httpx", cmd: "pentest httpx" },
+    { tool: "naabu", cmd: "pentest naabu" },
+    { tool: "nuclei", cmd: "pentest nuclei" },
+  ];
+  return (
+    <div className="border border-[#E2DDD5] dark:border-white/10 rounded-xl overflow-hidden my-3.5 bg-white dark:bg-[#121214]">
+      <div className="flex items-center gap-2 px-4 py-2.5 bg-[#F0EDE6] dark:bg-white/5 border-b border-[#E2DDD5] dark:border-white/10 text-[12px] font-semibold text-[#88837B] dark:text-[#9CA3AF] tracking-[0.04em]">
+        <svg
+          className="w-3.5 h-3.5 stroke-current fill-none"
+          viewBox="0 0 24 24"
+          strokeWidth={2}
+        >
+          <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
+          <line x1="12" y1="9" x2="12" y2="13" />
+          <line x1="12" y1="17" x2="12.01" y2="17" />
+        </svg>
+        You do not install these tools locally
+      </div>
+      {items.map((item) => (
+        <div
+          key={item.tool}
+          className="flex items-center gap-3 px-4 py-2.5 border-b border-[#E2DDD5] dark:border-white/10 last:border-b-0 hover:bg-[#F0EDE6] dark:hover:bg-white/5 transition-colors duration-150"
+        >
+          <span className="font-mono text-[12.5px] text-[#B5B0A8] line-through decoration-[#C42828] flex-shrink-0">
+            {item.tool}
+          </span>
+          <span className="text-[#00BCA1] font-mono text-[12.5px]">→</span>
+          <span
+            className="text-base md:text-[18px] lg:text-[20px] font-medium text-[#4A4540] dark:text-[#C9CDD4] flex-1"
+            style={{ fontFamily: "var(--font-google-sans), var(--font-noto-khmer), sans-serif" }}
+          >
+            Provided as a managed backend service via{" "}
+            <InlineCode>{item.cmd}</InlineCode>
+          </span>
+          <Tag variant="acc">Managed</Tag>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/* ── TOC ──────────────────────────────────────────────────── */
+function TOC({ activeId }: { activeId: string }) {
+  const [query, setQuery] = useState("");
+  const searchRef = useRef<HTMLInputElement>(null);
+  const links = TOC_LINKS.filter((link) =>
+    link.label.toLowerCase().includes(query.trim().toLowerCase())
+  );
+  const smoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    const el = document.querySelector(href);
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        searchRef.current?.focus();
+        searchRef.current?.select();
+      }
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, []);
+
+  return (
+    <aside
+      className="w-[252px] flex-shrink-0 sticky top-22 self-start max-h-[calc(100vh-5.5rem)] overflow-y-auto px-6 py-7 border-l border-[#E2DDD5] dark:border-white/10 hidden xl:block bg-[#F7F5F0] dark:bg-[#09090B]"
+      style={{ scrollbarWidth: "thin", scrollbarColor: "#E2DDD5 transparent" }}
+    >
+      <div className="mb-5">
+        <label htmlFor="cli-doc-search" className="sr-only">
+          Search content
+        </label>
+        <div className="flex items-center gap-2 px-3 py-2 rounded-lg border border-[#E2DDD5] dark:border-white/10 bg-white dark:bg-[#121214]">
+          <svg className="w-[13px] h-[13px] stroke-[#88837B] fill-none flex-shrink-0" viewBox="0 0 24 24" strokeWidth={2}>
+            <circle cx="11" cy="11" r="8" />
+            <path d="m21 21-4.35-4.35" />
+          </svg>
+          <input
+            id="cli-doc-search"
+            ref={searchRef}
+            type="text"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Search content..."
+            className="w-full bg-transparent outline-none text-base md:text-[18px] lg:text-[20px] text-[#4A4540] dark:text-[#E5E7EB] placeholder:text-[#88837B] dark:placeholder:text-[#9CA3AF]"
+            style={{ fontFamily: "var(--font-google-sans), var(--font-noto-khmer), sans-serif" }}
+          />
+          <kbd className="font-mono text-[11px] px-[5px] py-px rounded border border-[#E2DDD5] bg-[#F0EDE6] text-[#88837B]">
+            Ctrl K
+          </kbd>
+        </div>
+      </div>
+      <div className="text-[10px] font-semibold tracking-[0.1em] uppercase text-[#B5B0A8] dark:text-[#9CA3AF] mb-2.5">
+        On this page
+      </div>
+      <div className="flex flex-col gap-px">
+        {links.map((link, i) => {
+          const id = link.href.replace("#", "");
+          const isActive = activeId === id && !link.sub;
+          return (
+            <a
+              key={i}
+              href={link.href}
+              onClick={(e) => smoothScroll(e, link.href)}
+              className={`text-base md:text-[18px] lg:text-[20px] font-normal py-[3px] rounded border-l-2 transition-all duration-150 leading-[1.55] cursor-pointer ${
+                link.sub ? "pl-[18px]" : "pl-2"
+              } ${
+                isActive
+                  ? "text-[#00BCA1] border-l-[#00BCA1] font-medium"
+                  : "text-[#88837B] dark:text-[#A1A1AA] border-l-transparent hover:text-[#1A1714] dark:hover:text-white"
+              }`}
+              style={{ fontFamily: "var(--font-google-sans), var(--font-noto-khmer), sans-serif" }}
+            >
+              {link.label}
+            </a>
+          );
+        })}
+      </div>
+    </aside>
+  );
+}
+
+/* ── Main Content ─────────────────────────────────────────── */
+export default function Content() {
+  const [activeId, setActiveId] = useState("installation");
+
+  useEffect(() => {
+    const sections = document.querySelectorAll(".doc-section[id]");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) setActiveId(e.target.id);
+        });
+      },
+      { threshold: 0.18, rootMargin: "-58px 0px -54% 0px" }
+    );
+    sections.forEach((s) => observer.observe(s));
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div className="flex-1 min-w-0 flex items-start">
+      {/* Main article */}
+      <main
+        className="flex-1 min-w-0 px-[72px] pt-12 pb-32 max-[960px]:px-8 max-[640px]:px-5"
+        style={{ fontFamily: "var(--font-google-sans), var(--font-noto-khmer), sans-serif" }}
+      >
+        {/* ── Page Header ── */}
+        <div className="mb-2">
+          <div className="flex items-center gap-1.5 text-base md:text-[18px] lg:text-[20px] text-[#88837B] dark:text-[#A1A1AA] mb-[18px]">
+            <a href="#" className="hover:text-[#1A1714] dark:hover:text-white transition-colors duration-150">Docs</a>
+            <svg className="w-[11px] h-[11px] stroke-[#B5B0A8] fill-none" viewBox="0 0 24 24" strokeWidth={2}><polyline points="9 18 15 12 9 6" /></svg>
+            <a href="#" className="hover:text-[#1A1714] dark:hover:text-white transition-colors duration-150">Automation Tools</a>
+            <svg className="w-[11px] h-[11px] stroke-[#B5B0A8] fill-none" viewBox="0 0 24 24" strokeWidth={2}><polyline points="9 18 15 12 9 6" /></svg>
+            <span>CLI</span>
+          </div>
+
+          <div className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-[0.1em] uppercase text-[#00BCA1] bg-[rgba(0,188,161,0.07)] border border-[rgba(0,188,161,0.2)] px-2.5 py-[3px] rounded-full mb-3.5">
+            <span className="w-[5px] h-[5px] rounded-full bg-[#00BCA1] animate-pulse" />
+            Feature Documentation · v2.0
+          </div>
+
+          <h1
+            className="text-[2.4rem] font-bold tracking-[-0.035em] leading-[1.14] text-[#1A1714] dark:text-white mb-3"
+            style={{ fontFamily: "var(--font-google-sans), var(--font-noto-khmer), sans-serif" }}
+          >
+            CLI
+          </h1>
+          <p
+            className="text-base md:text-[18px] lg:text-[20px] text-[#4A4540] dark:text-[#C9CDD4] leading-[1.82] mb-7 max-w-[580px] font-normal"
+            style={{ fontFamily: "var(--font-google-sans), var(--font-noto-khmer), sans-serif" }}
+          >
+            A standalone command-line client that lets you run supported security tools from your terminal — powered entirely by the backend. No local tool installation required.
+          </p>
+
+          <div className="flex flex-wrap gap-4 mb-7 pb-7 border-b border-[#E2DDD5]">
+            {[
+              { icon: "🖥️", label: "Cross-platform binary" },
+              { icon: "🔐", label: "Token-based auth" },
+              { icon: "📡", label: "Real-time streaming" },
+            ].map((pill) => (
+              <div
+                key={pill.label}
+                className="flex items-center gap-1.5 text-base md:text-[18px] lg:text-[20px] font-medium text-[#88837B] dark:text-[#A1A1AA] bg-white dark:bg-[#121214] border border-[#E2DDD5] dark:border-white/10 px-3 py-1 rounded-full"
+              >
+                <span>{pill.icon}</span>
+                {pill.label}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* ── Installation ── */}
+        <section className="doc-section mb-12" id="installation">
+          <SectionHeading id="installation" badge="one-time">Installation &amp; Setup</SectionHeading>
+          <Para>Install the Auto Offensive CLI with a single command. The CLI is distributed as a standalone binary — no dependencies, no package manager required.</Para>
+
+          <StepList>
+            <Step num={1} title="Download the binary" desc={<>Install the CLI directly using the install script, or download the binary for your platform from the releases page.</>} />
+            <Step num={2} title="Make it executable (Linux / macOS)" desc={<>Run <InlineCode>chmod +x pentest</InlineCode> then move it to a directory in your <InlineCode>$PATH</InlineCode> such as <InlineCode>/usr/local/bin</InlineCode>.</>} />
+            <Step num={3} title="Authenticate" desc={<>Run <InlineCode>pentest login</InlineCode> and follow the prompt, or set your API token directly with <InlineCode>pentest login --token &lt;your-token&gt;</InlineCode>.</>} />
+            <Step num={4} title="Run your first scan" desc={<>You're ready. Use any supported command like <InlineCode>pentest subfinder -d example.com</InlineCode> — results stream back in real time.</>} last />
+          </StepList>
+
+          <Callout type="brand" icon="📦" title="No third-party tools required">
+            You do <strong className="text-[#1A1714] font-semibold">not</strong> need to install <InlineCode>subfinder</InlineCode>, <InlineCode>httpx</InlineCode>, <InlineCode>naabu</InlineCode>, or any other scanning tool locally. The CLI communicates with the backend — all execution happens there.
+          </Callout>
+
+          <CodeBlock title="bash — install & verify">
+            <Cm># Download and install (Linux / macOS){"\n"}</Cm>
+            <Prompt />
+            <Cmd>curl</Cmd>
+            {" "}
+            <Flag>-sSL</Flag>
+            {" https://get.autooffensive.io/cli "}
+            <Dim>|</Dim>
+            {" bash\n\n"}
+            <Cm># Verify installation{"\n"}</Cm>
+            <Prompt />
+            <Cmd>pentest</Cmd>
+            {" "}
+            <Flag>--version</Flag>
+            {"\n"}
+            <Ok /> pentest CLI v2.0.1{"\n\n"}
+            <Cm># Authenticate with your account{"\n"}</Cm>
+            <Prompt />
+            <Cmd>pentest</Cmd>
+            {" login\n"}
+            <Ok /> Logged in as user@example.com
+          </CodeBlock>
+        </section>
+
+        {/* ── Authentication ── */}
+        <section className="doc-section mb-12" id="auth">
+          <SectionHeading id="auth">Authentication</SectionHeading>
+          <Para>The CLI uses token-based authentication. Credentials are securely stored in your local config directory. All CLI requests to the backend require a valid session.</Para>
+
+          <FeatureList>
+            <FeatureItem icon="🔑" title="Login command" desc={<>Run <InlineCode>pentest login</InlineCode> to authenticate interactively, or pass <InlineCode>--token &lt;api-token&gt;</InlineCode> for non-interactive use in CI environments.</>} tag={<Tag variant="muted">Interactive</Tag>} />
+            <FeatureItem icon="🗃️" title="Stored credentials" desc="Authentication credentials are stored locally in your config file. They are never transmitted except as bearer tokens on each API request." tag={<Tag variant="green">Secure</Tag>} />
+            <FeatureItem icon="🚪" title="Logout" desc={<>Run <InlineCode>pentest logout</InlineCode> to revoke the local session. Your token remains valid on other devices until manually revoked from the dashboard.</>} />
+          </FeatureList>
+
+          <CodeBlock title="bash — authentication">
+            <Cm># Interactive login{"\n"}</Cm>
+            <Prompt />
+            <Cmd>pentest</Cmd>
+            {" login\n  Email: user@example.com\n  Password: ••••••••\n"}
+            <Ok /> Authenticated. Token saved to ~/.pentest/config{"\n\n"}
+            <Cm># Non-interactive (CI / scripted){"\n"}</Cm>
+            <Prompt />
+            <Cmd>pentest</Cmd>
+            {" login "}
+            <Flag>--token</Flag>
+            {" "}
+            <Val>pt_live_xxxxxxxxxxxx</Val>
+            {"\n"}
+            <Ok /> Token accepted{"\n\n"}
+            <Cm># View current session{"\n"}</Cm>
+            <Prompt />
+            <Cmd>pentest</Cmd>
+            {" whoami\n"}
+            <Dim>user@example.com  ·  Free plan  ·  48 scans remaining today</Dim>
+          </CodeBlock>
+        </section>
+
+        {/* ── Commands ── */}
+        <section className="doc-section mb-12" id="commands">
+          <SectionHeading id="commands">Command Execution</SectionHeading>
+          <Para>Each CLI command maps directly to a supported backend tool. The CLI validates all input parameters before sending the request — invalid or unsupported parameters are rejected locally before any network call is made.</Para>
+
+          <Callout type="info" icon="ℹ️" title="Command format">
+            Commands follow the pattern <InlineCode>pentest &lt;tool&gt; [flags]</InlineCode>. Each tool exposes only its supported flags — no arbitrary shell arguments are passed through.
+          </Callout>
+
+          <SubHeading>Example commands</SubHeading>
+          <CodeBlock title="bash — example commands">
+            <Cm># Subdomain enumeration{"\n"}</Cm>
+            <Prompt />
+            <Cmd>pentest</Cmd>
+            {" subfinder "}
+            <Flag>-d</Flag>
+            {" "}
+            <Val>example.com</Val>
+            {"\n\n"}
+            <Cm># HTTP probing from a domain list file{"\n"}</Cm>
+            <Prompt />
+            <Cmd>pentest</Cmd>
+            {" httpx "}
+            <Flag>-l</Flag>
+            {" "}
+            <Val>domains.txt</Val>
+            {"\n\n"}
+            <Cm># Port scanning on specific ports{"\n"}</Cm>
+            <Prompt />
+            <Cmd>pentest</Cmd>
+            {" naabu "}
+            <Flag>-host</Flag>
+            {" "}
+            <Val>example.com</Val>
+            {" "}
+            <Flag>-p</Flag>
+            {" "}
+            <Val>80,443,8080</Val>
+            {"\n\n"}
+            <Cm># Vulnerability scan with nuclei templates{"\n"}</Cm>
+            <Prompt />
+            <Cmd>pentest</Cmd>
+            {" nuclei "}
+            <Flag>-u</Flag>
+            {" "}
+            <Val>https://example.com</Val>
+            {" "}
+            <Flag>-t</Flag>
+            {" "}
+            <Val>cves</Val>
+          </CodeBlock>
+
+          <SubHeading>Parameter validation</SubHeading>
+          <FeatureList>
+            <FeatureItem icon="✅" title="Local validation" desc="The CLI checks all flags and values locally before sending. Missing required flags, invalid formats, or unsupported parameters are caught immediately with a helpful error message." />
+            <FeatureItem icon="🚫" title="Unsupported flags are rejected" desc="Only predefined flags for each tool are accepted. Passing arbitrary shell arguments or attempting to chain commands is not supported and will be refused." />
+          </FeatureList>
+        </section>
+
+        {/* ── Supported Tools ── */}
+        <section className="doc-section mb-12" id="tools">
+          <SectionHeading id="tools">Supported Tools</SectionHeading>
+          <Para>The following tools are available through the CLI. Each is exposed through predefined commands with a fixed set of supported parameters.</Para>
+
+          <div className="overflow-x-auto my-3.5 rounded-xl border border-[#E2DDD5] dark:border-white/10 bg-white dark:bg-[#121214]">
+            <table className="w-full border-collapse">
+              <thead className="bg-[#F0EDE6] dark:bg-white/5">
+                <tr>
+                  {["Command", "Tool", "Category", "Description"].map((h) => (
+                    <th key={h} className="text-[11px] font-bold tracking-[0.08em] uppercase text-[#88837B] dark:text-[#9CA3AF] px-3.5 py-2.5 text-left border-b border-[#E2DDD5] dark:border-white/10 whitespace-nowrap">
+                      {h}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  { cmd: "pentest subfinder", tool: "subfinder", cat: <Tag variant="recon">Recon</Tag>, desc: "Subdomain enumeration from passive sources and DNS brute-force" },
+                  { cmd: "pentest httpx", tool: "httpx", cat: <Tag variant="web">Web</Tag>, desc: "HTTP probing — status codes, titles, server technologies, response headers" },
+                  { cmd: "pentest naabu", tool: "naabu", cat: <Tag variant="net">Network</Tag>, desc: "Fast TCP port scanning with built-in service detection" },
+                  { cmd: "pentest nuclei", tool: "nuclei", cat: <Tag variant="web">Web</Tag>, desc: "Template-based vulnerability and misconfiguration scanner" },
+                ].map((row, i) => (
+                  <tr key={i} className="hover:bg-[#F0EDE6] dark:hover:bg-white/5 transition-colors duration-150">
+                    <td className="px-3.5 py-2.5 border-b border-[#E2DDD5] dark:border-white/10 last:border-b-0 font-mono text-[12.5px] text-[#00BCA1] font-medium">{row.cmd}</td>
+                    <td className="px-3.5 py-2.5 border-b border-[#E2DDD5] dark:border-white/10 font-mono text-[12.5px] text-[#00BCA1] font-medium">{row.tool}</td>
+                    <td className="px-3.5 py-2.5 border-b border-[#E2DDD5] dark:border-white/10">{row.cat}</td>
+                    <td
+                      className="px-3.5 py-2.5 border-b border-[#E2DDD5] dark:border-white/10 text-base md:text-[18px] lg:text-[20px] text-[#4A4540] dark:text-[#C9CDD4]"
+                      style={{ fontFamily: "var(--font-google-sans), var(--font-noto-khmer), sans-serif" }}
+                    >
+                      {row.desc}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        {/* ── Remote Execution ── */}
+        <section className="doc-section mb-12" id="execution">
+          <SectionHeading id="execution">Remote Execution Model</SectionHeading>
+          <Para>The CLI never executes tools locally. It acts purely as a client — validating input, sending a structured request to the backend, and streaming back the results.</Para>
+
+          <FeatureList>
+            <FeatureItem icon="📤" title="Structured request" desc="The CLI serialises your command and flags into a structured JSON request and sends it to the Auto Offensive backend over an authenticated HTTPS connection." />
+            <FeatureItem icon="🏗️" title="Scan job creation" desc="The backend receives the request, validates it against the allowed parameter schema, and creates a new scan job with a unique job ID." />
+            <FeatureItem icon="🔒" title="Isolated environment" desc="The job executes in a sandboxed, isolated container managed by backend workers. Each execution is ephemeral and independent — no state bleeds between jobs." />
+            <FeatureItem icon="📡" title="Results streamed back" desc="As the tool runs, stdout and stderr are streamed in real time back to your terminal via a persistent connection — so it feels like a local execution." />
+          </FeatureList>
+        </section>
+
+        {/* ── Streaming ── */}
+        <section className="doc-section mb-12" id="streaming">
+          <SectionHeading id="streaming">Real-Time Output Streaming</SectionHeading>
+          <Para>The CLI maintains a streaming connection with the backend throughout job execution. Live logs appear in your terminal exactly as they would if you ran the tool locally.</Para>
+
+          <CodeBlock title="live output — pentest subfinder -d example.com">
+            <Prompt />
+            <Cmd>pentest</Cmd>
+            {" subfinder "}
+            <Flag>-d</Flag>
+            {" "}
+            <Val>example.com</Val>
+            {"\n\n"}
+            <Dim>  Job ID  :  job_01HXYZ9KM3...{"\n"}</Dim>
+            <Dim>  Status  :  Running{"\n"}</Dim>
+            <Dim>  Tool    :  subfinder  ·  Remote execution{"\n\n"}</Dim>
+            <Ok /> api.example.com{"\n"}
+            <Ok /> dev.example.com{"\n"}
+            <Ok /> staging.example.com{"\n"}
+            <Ok /> mail.example.com{"\n"}
+            <Ok /> vpn.example.com{"\n\n"}
+            <Acc>──────────────────────────────────{"\n"}</Acc>
+            <Dim>  Found   :  5 subdomains{"\n"}</Dim>
+            <Dim>  Elapsed :  3.4s{"\n"}</Dim>
+            <Ok /> Results saved  ·  View: https://app.autooffensive.io/jobs/job_01HXYZ9KM3
+          </CodeBlock>
+        </section>
+
+        {/* ── Results ── */}
+        <section className="doc-section mb-12" id="results">
+          <SectionHeading id="results">Result Handling</SectionHeading>
+          <Para>Results are both displayed in your terminal and automatically stored in the backend system. You can access them again later without re-running the scan.</Para>
+
+          <FeatureList>
+            <FeatureItem icon="🖥️" title="Terminal display" desc="All output is printed live to your terminal as the job runs — including final summary counts and a direct link to the job result page." />
+            <FeatureItem icon="💾" title="Automatic backend storage" desc="Every result is automatically saved to your account. Results are attached to the corresponding scan job and project in the web UI." />
+            <FeatureItem icon="🌐" title="View via web UI" desc="Access any past job result from the Auto Offensive web dashboard — with full AI analysis, severity scoring, and report generation available." />
+            <FeatureItem icon="📋" title="Included in reports" desc="CLI job results can be included in generated security reports just like results from web UI scans — PDF, DOCX, Excel, and JSON all supported." />
+          </FeatureList>
+        </section>
+
+        {/* ── Job Lifecycle ── */}
+        <section className="doc-section mb-12" id="jobs">
+          <SectionHeading id="jobs">Job Lifecycle Management</SectionHeading>
+          <Para>Every CLI execution creates a backend job. Jobs move through defined states and can be queried at any time.</Para>
+
+          <Lifecycle />
+
+          <SubHeading>Job management commands</SubHeading>
+          <CodeBlock title="bash — job management">
+            <Cm># List recent jobs{"\n"}</Cm>
+            <Prompt />
+            <Cmd>pentest</Cmd>
+            {" jobs list\n"}
+            <Dim>  job_01HXYZ9KM3  subfinder  example.com    completed  3.4s ago{"\n"}</Dim>
+            <Dim>  job_01HXYZ7AB1  naabu      192.168.1.0/24  running   12s{"\n"}</Dim>
+            <Dim>  job_01HXYZ5CD2  httpx      domains.txt    failed    1m ago{"\n\n"}</Dim>
+            <Cm># Check status of a specific job{"\n"}</Cm>
+            <Prompt />
+            <Cmd>pentest</Cmd>
+            {" jobs status "}
+            <Val>job_01HXYZ9KM3</Val>
+            {"\n"}
+            <Ok /> Status: completed  ·  5 results  ·  Elapsed: 3.4s{"\n\n"}
+            <Cm># Retrieve results of a past job{"\n"}</Cm>
+            <Prompt />
+            <Cmd>pentest</Cmd>
+            {" jobs results "}
+            <Val>job_01HXYZ9KM3</Val>
+            {"\n"}
+            <Ok /> api.example.com{"\n"}
+            <Ok /> dev.example.com{"\n"}
+            <Dim>  ...</Dim>
+          </CodeBlock>
+        </section>
+
+        {/* ── Security ── */}
+        <section className="doc-section mb-12" id="security">
+          <SectionHeading id="security">Security &amp; Access Control</SectionHeading>
+          <Para>The CLI enforces strict controls on what can be executed. No arbitrary commands or shell access are provided — execution is fully managed and sandboxed by the backend.</Para>
+
+          <SecGrid>
+            <SecItem icon="🚫" title="Predefined tools only" desc="Only the supported tool set is accessible. Requests for unlisted tools or custom binaries are rejected before execution." />
+            <SecItem icon="🔍" title="Parameter validation" desc="Every request is validated against the allowed parameter schema on both the CLI and the backend. Injection attempts are blocked." />
+            <SecItem icon="📦" title="Isolated execution" desc="Each job runs in its own isolated container. There is no shared state, no persistent filesystem access, and no system-level exposure." />
+            <SecItem icon="🔐" title="Authenticated requests" desc="All CLI requests require a valid API token. Unauthenticated or expired sessions are rejected immediately with a clear error." />
+            <SecItem icon="📝" title="Audit log" desc="Every command, job, and result is logged against your account. Full audit history is available from the web dashboard." />
+            <SecItem icon="⛔" title="No arbitrary execution" desc="The CLI does not support shell pass-through, piping, or arbitrary command injection. The execution surface is completely controlled." />
+          </SecGrid>
+        </section>
+
+        {/* ── Concept ── */}
+        <section className="doc-section mb-12" id="concept">
+          <SectionHeading id="concept">How It Works</SectionHeading>
+          <Para>Users never install individual security tools. The platform provides all tools as a managed service, accessible through a single CLI binary. Execution is always handled by the backend.</Para>
+
+          <NotList />
+
+          <Callout type="tip" icon="✅" title="Benefits of managed execution">
+            <strong className="text-[#1A1714] font-semibold">Consistent environments</strong> — every scan runs on the same controlled infrastructure, regardless of your local OS.
+            <br /><br />
+            <strong className="text-[#1A1714] font-semibold">Centralised updates</strong> — tools are kept up to date by the platform. You always run the latest version without any action on your side.
+            <br /><br />
+            <strong className="text-[#1A1714] font-semibold">Controlled usage</strong> — execution limits, rate controls, and audit logging are enforced uniformly across all users.
+          </Callout>
+        </section>
+
+        {/* Prev / Next */}
+          <div className="flex justify-between gap-4 pt-9 mt-10 border-t border-[#E2DDD5] dark:border-white/10 max-[640px]:flex-col">
+          <div className="flex items-center gap-2.5 px-4 py-3 rounded-xl border border-[#E2DDD5] dark:border-white/10 max-w-[230px] flex-1 bg-white dark:bg-[#121214] hover:border-[#CEC9BF] hover:bg-[#F0EDE6] dark:hover:bg-white/5 hover:shadow-[0_2px_8px_rgba(0,0,0,0.06)] transition-all duration-150 cursor-pointer">
+            <svg className="w-[15px] h-[15px] stroke-[#88837B] fill-none flex-shrink-0" viewBox="0 0 24 24" strokeWidth={2}><polyline points="15 18 9 12 15 6" /></svg>
+            <div>
+              <div className="text-[11px] text-[#88837B] dark:text-[#9CA3AF] mb-0.5">Previous</div>
+              <div className="text-base md:text-[18px] lg:text-[20px] font-semibold text-[#1A1714] dark:text-white">Multi-Tool Pipeline</div>
+            </div>
+          </div>
+          <div className="flex items-center justify-end gap-2.5 px-4 py-3 rounded-xl border border-[#E2DDD5] dark:border-white/10 max-w-[230px] flex-1 bg-white dark:bg-[#121214] hover:border-[#CEC9BF] hover:bg-[#F0EDE6] dark:hover:bg-white/5 hover:shadow-[0_2px_8px_rgba(0,0,0,0.06)] transition-all duration-150 cursor-pointer text-right">
+            <div>
+              <div className="text-[11px] text-[#88837B] dark:text-[#9CA3AF] mb-0.5">Next</div>
+              <div className="text-base md:text-[18px] lg:text-[20px] font-semibold text-[#1A1714] dark:text-white">Report Generation</div>
+            </div>
+            <svg className="w-[15px] h-[15px] stroke-[#88837B] fill-none flex-shrink-0" viewBox="0 0 24 24" strokeWidth={2}><polyline points="9 18 15 12 9 6" /></svg>
+          </div>
+        </div>
+      </main>
+
+      {/* Right TOC */}
+      <TOC activeId={activeId} />
+    </div>
+  );
+}

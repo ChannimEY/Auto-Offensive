@@ -312,13 +312,46 @@ function CenterLogo({ visible }: { visible: boolean }) {
         transition: "opacity 0.4s ease",
       }}
     >
+      <div
+        className="absolute left-1/2 top-1/2 h-12 w-12 -translate-x-1/2 -translate-y-1/2 rounded-full"
+        style={{
+          background: "radial-gradient(circle, rgba(0,188,161,0.28) 0%, rgba(0,188,161,0.12) 42%, rgba(247,245,240,0.1) 62%, transparent 76%)",
+          zIndex: 0,
+        }}
+      />
+      <div className="ft-logo-gooey-wrap absolute inset-0 flex items-center justify-center">
+        <div className="ft-logo-gooey" aria-hidden="true">
+          <div className="ft-logo-liquid" />
+          <div className="ft-logo-liquid" />
+          <div className="ft-logo-liquid" />
+          <div className="ft-logo-liquid" />
+        </div>
+      </div>
       <Image
         src="/Auto-Offensive.png"
         alt="Logo"
-        className="object-contain"
+        className="relative z-10 object-contain"
+        style={{ filter: "drop-shadow(0 0 10px rgba(0,188,161,0.18))" }}
         width={52}
         height={52}
       />
+      <svg
+        className="absolute w-0 h-0"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <filter id="ft-logo-gooey-filter">
+          <feGaussianBlur stdDeviation="6" in="SourceGraphic" />
+          <feColorMatrix
+            values="
+              1 0 0 0 0
+              0 1 0 0 0
+              0 0 1 0 0
+              0 0 0 18 -8
+            "
+          />
+        </filter>
+      </svg>
     </div>
   );
 }
@@ -684,6 +717,68 @@ export default function Features() {
         @keyframes ticker-scroll {
           from { transform: translateX(0); }
           to   { transform: translateX(-50%); }
+        }
+        @keyframes ft-logo-gooey-rotate {
+          0% { transform: rotate(360deg); }
+          50% { transform: rotate(360deg); }
+          100% { transform: rotate(0deg); }
+        }
+        @keyframes ft-logo-liquid-1 {
+          0% { top: 0; }
+          50% { top: 100%; }
+          100% { top: 100%; }
+        }
+        @keyframes ft-logo-liquid-2 {
+          0% { left: 0; }
+          50% { left: 100%; }
+          100% { left: 100%; }
+        }
+        @keyframes ft-logo-liquid-3 {
+          0% { left: 100%; }
+          50% { left: 0; }
+          100% { left: 0; }
+        }
+        @keyframes ft-logo-liquid-4 {
+          0% { top: 100%; }
+          50% { top: 0; }
+          100% { top: 0; }
+        }
+        .ft-logo-gooey-wrap {
+          z-index: 0;
+        }
+        .ft-logo-gooey {
+          position: relative;
+          width: 68px;
+          height: 68px;
+          animation: ft-logo-gooey-rotate 4s ease-in-out infinite;
+          filter: url("#ft-logo-gooey-filter");
+          opacity: 0.55;
+        }
+        .ft-logo-liquid {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 18px;
+          height: 18px;
+          border-radius: 9999px;
+          transform: translate(-50%, -50%);
+          background: linear-gradient(135deg, rgba(247,245,240,0.75) 0%, #00BCA1 38%, #00BCA1 100%);
+        }
+        .ft-logo-liquid:nth-child(1) {
+          top: 0;
+          animation: ft-logo-liquid-1 4s ease-in-out infinite;
+        }
+        .ft-logo-liquid:nth-child(2) {
+          left: 0;
+          animation: ft-logo-liquid-2 4s ease-in-out infinite;
+        }
+        .ft-logo-liquid:nth-child(3) {
+          left: 100%;
+          animation: ft-logo-liquid-3 4s ease-in-out infinite;
+        }
+        .ft-logo-liquid:nth-child(4) {
+          top: 100%;
+          animation: ft-logo-liquid-4 4s ease-in-out infinite;
         }
       `}</style>
 
