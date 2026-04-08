@@ -156,7 +156,7 @@ function Table({
 }) {
   return (
     <div className="overflow-x-auto rounded-xl border border-[#E2DDD5] dark:border-white/10 my-4 bg-white dark:bg-[#121214]">
-      <table className="w-full border-collapse text-left">
+      <table className="w-max min-w-full border-collapse text-left">
         <thead className="bg-[#F0EDE6] dark:bg-white/5">
           <tr>
             {headers.map((header) => (
@@ -179,7 +179,7 @@ function Table({
               {row.map((cell, cellIndex) => (
                 <td
                   key={`cell-${rowIndex}-${cellIndex}`}
-                  className="px-4 py-3 text-base md:text-[18px] lg:text-[20px] text-[#4A4540] dark:text-[#C9CDD4] leading-[1.72] align-top"
+                  className="px-4 py-3 text-base md:text-[18px] lg:text-[20px] text-[#4A4540] dark:text-[#C9CDD4] leading-[1.72] align-top whitespace-nowrap"
                   style={sansFontStyle}
                 >
                   {cell}
@@ -273,11 +273,11 @@ export default function CICDContent() {
           especially useful for gated environments where releases depend on security outcomes.
         </Para>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 my-4">
+        <div className="flex flex-col gap-4 my-4">
           {capabilityCards.map((card) => (
             <div
               key={card.title}
-              className="rounded-xl border border-[#E2DDD5] dark:border-white/10 bg-white dark:bg-[#121214] p-4 hover:bg-[#F0EDE6] dark:hover:bg-white/5 transition-colors duration-150"
+              className="rounded-xl border border-[#E2DDD5] dark:border-white/10 bg-white dark:bg-[#121214] p-5 hover:bg-[#F0EDE6] dark:hover:bg-white/5 transition-colors duration-150"
             >
               <div className="mb-3">
                 <Tag variant={card.variant}>{card.title}</Tag>
@@ -313,11 +313,11 @@ export default function CICDContent() {
           GitLab CI, Jenkins, Bitbucket Pipelines, or any custom runner that can call HTTPS APIs.
         </Para>
 
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-3 my-4">
+        <div className="flex flex-col gap-4 my-4">
           {workflowSteps.map((step) => (
             <div
               key={step.num}
-              className="rounded-xl border border-[#E2DDD5] dark:border-white/10 bg-white dark:bg-[#121214] p-4"
+              className="rounded-xl border border-[#E2DDD5] dark:border-white/10 bg-white dark:bg-[#121214] p-5"
             >
               <div className="font-mono text-[11px] text-[#00BCA1] mb-2" style={monoFontStyle}>
                 {step.num}
