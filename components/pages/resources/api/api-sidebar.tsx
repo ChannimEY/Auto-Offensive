@@ -45,6 +45,23 @@ function MethodPill({ method }: { method: string }) {
   );
 }
 
+function SidebarGroup({
+  label,
+  children,
+}: {
+  label: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="px-3 mb-1">
+      <div className="text-[10px] font-semibold tracking-widest uppercase text-[#B5B0A8] dark:text-[#9CA3AF] px-2 pt-2.5 pb-1.5">
+        {label}
+      </div>
+      <div className="flex flex-col gap-px">{children}</div>
+    </div>
+  );
+}
+
 interface LeftSidebarProps {
   sections: SidebarSection[];
   activeId: string;
@@ -58,14 +75,9 @@ export function LeftSidebar({
 }: LeftSidebarProps) {
   return (
     <aside className="hidden lg:block w-72 shrink-0 sticky top-22 self-start h-[calc(100vh-5.5rem)] overflow-y-auto py-5.5 border-r border-[#E2DDD5] dark:border-white/10 bg-[#F7F5F0] dark:bg-[#09090B]">
-      <div className="px-5">
+      <div>
         {sections.map((sec) => (
-          <div key={sec.label} className="mb-7">
-            <p className="px-2 mb-2 font-mono text-[11px] font-semibold tracking-[0.18em] uppercase text-[#B5B0A8] dark:text-[#9CA3AF]">
-              {sec.label}
-            </p>
-
-            <div className="flex flex-col gap-0.5">
+          <SidebarGroup key={sec.label} label={sec.label}>
               {sec.items.map((item) => {
                 const active = item.id === activeId;
 
@@ -73,16 +85,16 @@ export function LeftSidebar({
                   <button
                     key={item.id}
                     onClick={() => onNavigate(item.id)}
-                    className={`flex items-center gap-2 text-left w-full px-3 py-2 rounded-lg border transition-all duration-150 ${
+                    className={`flex items-center gap-2 text-left w-full px-2 py-1.5 rounded-md transition-all duration-150 ${
                       active
-                        ? "bg-[#00BCA1]/10 text-[#00BCA1] border-[#00BCA1]/25 font-medium"
-                        : "text-[#4A4540] dark:text-[#C9CDD4] border-transparent hover:bg-[#EEEAE2] dark:hover:bg-white/5 hover:text-[#1A1714] dark:hover:text-white"
+                        ? "text-[#00BCA1] bg-[rgba(0,188,161,0.07)] dark:bg-[rgba(0,188,161,0.12)] font-semibold"
+                        : "text-[#4A4540] dark:text-[#C9CDD4] hover:text-[#1A1714] dark:hover:text-white hover:bg-[#EAE6DE] dark:hover:bg-white/5"
                     }`}
-                    style={{ ...sansFontStyle, fontSize: "18px", lineHeight: "1.5" }}
+                    style={{ ...sansFontStyle, fontSize: "18px", lineHeight: "1.45" }}
                   >
                     {!item.method && (
                       <span
-                        className={`w-1.25 h-1.25 rounded-full shrink-0 ${
+                        className={`w-0.75 h-0.75 rounded-full shrink-0 ${
                           active ? "bg-[#00BCA1]" : "bg-current opacity-40"
                         }`}
                       />
@@ -92,8 +104,7 @@ export function LeftSidebar({
                   </button>
                 );
               })}
-            </div>
-          </div>
+          </SidebarGroup>
         ))}
       </div>
     </aside>
