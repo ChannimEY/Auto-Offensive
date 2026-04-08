@@ -4,45 +4,37 @@ import Image from "next/image";
 
 export default function AiBanner() {
   return (
-    <div className="w-full px-6 pb-8 bg-[#F7F5F0] dark:bg-[#09090B] transition-colors duration-300">
+    <div className="w-full bg-[#F7F5F0] px-4 pb-8 transition-colors duration-300 dark:bg-[#09090B] sm:px-5 md:px-6">
       <div
-        className="relative pt-12"
+        className="relative pt-8 md:pt-10 lg:pt-12"
         style={{ fontFamily: "var(--font-hackdaddy), var(--font-noto-khmer), sans-serif" }}
       >
-        {/* ── Card ── */}
-        {/* Added dark:bg-[#111113] to give the card a slight lift from the pure black background */}
-        <div className="relative rounded-3xl bg-[#F7F5F0] dark:bg-[#111113] overflow-hidden min-h-80 px-16 py-12 flex items-center justify-center gap-64 max-[900px]:flex-col max-[900px]:gap-0 max-[900px]:px-8 max-[900px]:pt-10 max-[900px]:pb-56 border border-transparent dark:border-white/5">
+        <div className="relative flex min-h-80 items-center justify-center gap-64 overflow-hidden rounded-3xl border border-transparent bg-[#F7F5F0] px-16 py-12 dark:border-white/5 dark:bg-[#111113] max-[900px]:flex-col max-[900px]:gap-0 max-[900px]:px-8 max-[900px]:pt-10 max-[900px]:pb-56 max-[767px]:rounded-[24px] max-[767px]:px-5 max-[767px]:pt-8 max-[767px]:pb-64">
+          <div className="absolute pointer-events-none -left-24 -top-32 h-96 w-md rounded-full bg-[#01509e] opacity-95 blur-3xl dark:opacity-40 max-[767px]:-left-16 max-[767px]:-top-24 max-[767px]:h-72 max-[767px]:w-72" />
+          <div className="absolute pointer-events-none right-14 -top-20 h-80 w-80 rounded-full bg-[#00d0b2] opacity-50 blur-3xl dark:opacity-20 max-[767px]:right-0 max-[767px]:-top-12 max-[767px]:h-56 max-[767px]:w-56" />
+          <div className="absolute pointer-events-none -bottom-32 -right-10 h-80 w-96 rounded-full bg-[#0194c7] opacity-70 blur-3xl dark:opacity-30 max-[767px]:-bottom-24 max-[767px]:-right-12 max-[767px]:h-64 max-[767px]:w-72" />
+          <div className="absolute pointer-events-none left-[42%] top-[20%] h-52 w-64 rounded-full bg-[#00d0b2] opacity-20 blur-3xl dark:opacity-10 max-[900px]:left-1/2 max-[900px]:top-auto max-[900px]:bottom-24 max-[900px]:-translate-x-1/2 max-[767px]:h-40 max-[767px]:w-48" />
 
-          {/* Blobs - Opacity and blur adjusted for Dark Mode depth */}
-          <div className="absolute pointer-events-none rounded-full blur-3xl w-md h-96 -top-32 -left-24 bg-[#01509e] opacity-95 dark:opacity-40" />
-          <div className="absolute pointer-events-none rounded-full blur-3xl w-80 h-80 -top-20 right-14 bg-[#00d0b2] opacity-50 dark:opacity-20" />
-          <div className="absolute pointer-events-none rounded-full blur-3xl w-96 h-80 -bottom-32 -right-10 bg-[#0194c7] opacity-70 dark:opacity-30" />
-          <div className="absolute pointer-events-none rounded-full blur-3xl w-64 h-52 top-[20%] left-[42%] bg-[#00d0b2] opacity-20 dark:opacity-10" />
-
-          {/* Content */}
-          <div className="relative z-10 shrink-0 max-w-xl">
-            {/* Eyebrow */}
+          <div className="relative z-10 shrink-0 max-w-xl max-[900px]:max-w-[34rem] max-[900px]:text-center">
             <div
-              className="inline-flex items-center gap-2 text-[11px] md:text-xs tracking-widest uppercase text-black/60 dark:text-white/50 mb-4"
+              className="mb-4 inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.24em] text-black/60 dark:text-white/50 md:text-xs max-[900px]:justify-center"
               style={{ fontFamily: "monospace" }}
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-black/85 dark:bg-[#00d0b2]" />
+              <span className="h-1.5 w-1.5 rounded-full bg-black/85 dark:bg-[#00d0b2]" />
               Auto Offensive · AI-Powered Security
             </div>
 
-            {/* Title */}
             <h2
-              className="text-[2.15rem] md:text-[2.9rem] lg:text-[3.45rem] font-extrabold leading-tight tracking-tighter text-[oklch(0.145_0_0)] dark:text-white mb-5"
+              className="mb-5 text-[1.9rem] font-extrabold leading-[1.02] tracking-[-0.04em] text-[oklch(0.145_0_0)] dark:text-white md:text-[2.6rem] lg:text-[3.45rem]"
               style={{ fontFamily: "var(--font-hackdaddy), var(--font-noto-khmer), sans-serif" }}
             >
-              <span className="block whitespace-nowrap">AI amplifies your</span>
-              <span className="block whitespace-nowrap font-extrabold text-primary dark:text-[#00BCA1]">expertise,</span>
-              <span className="block whitespace-nowrap font-extrabold text-primary dark:text-[#00BCA1]">not replace it</span>
+              <span className="block">AI amplifies your</span>
+              <span className="block font-extrabold text-primary dark:text-[#00BCA1]">expertise,</span>
+              <span className="block font-extrabold text-primary dark:text-[#00BCA1]">not replace it</span>
             </h2>
 
-            {/* Description */}
             <p
-              className="text-base md:text-[18px] lg:text-[20px] leading-relaxed text-[oklch(0.556_0_0)] dark:text-white/60 font-normal max-w-lg"
+              className="max-w-lg text-[16px] font-normal leading-[1.75] text-[oklch(0.556_0_0)] dark:text-white/60 md:text-[18px] lg:text-[20px] max-[900px]:mx-auto"
               style={{ fontFamily: "var(--font-google-sans), var(--font-noto-khmer), sans-serif" }}
             >
               Auto Offensive doesn&apos;t replace skilled security professionals.
@@ -53,16 +45,26 @@ export default function AiBanner() {
             </p>
           </div>
 
-          {/* Invisible placeholder */}
           <div
             className="shrink-0 self-stretch pointer-events-none max-[900px]:hidden"
             style={{ width: "min(26rem, 34vw)" }}
           />
+
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 hidden justify-center max-[900px]:flex">
+            <div className="w-72 max-[767px]:w-60">
+              <Image
+                src="/fox.png"
+                alt="Auto Offensive mascot"
+                width={960}
+                height={960}
+                className="w-full h-auto object-contain object-bottom drop-shadow-2xl brightness-110 dark:brightness-100"
+              />
+            </div>
+          </div>
         </div>
 
-        {/* Real image — outside card */}
         <div
-          className="absolute -top-10 bottom-0 z-20 pointer-events-none flex items-end justify-center max-[900px]:right-1/2 max-[900px]:translate-x-1/2 max-[900px]:w-64 max-[900px]:top-auto max-[900px]:bottom-0"
+          className="absolute -top-10 bottom-0 z-20 flex items-end justify-center pointer-events-none max-[900px]:hidden"
           style={{
             right: "calc(50% - min(14rem, 18vw) - 26rem)",
             width: "min(39rem, 51vw)",
@@ -73,7 +75,7 @@ export default function AiBanner() {
             alt="Auto Offensive mascot"
             width={960}
             height={960}
-            className="w-full h-full object-contain object-bottom drop-shadow-2xl brightness-110 dark:brightness-100"
+            className="w-full h-auto object-contain object-bottom drop-shadow-2xl brightness-110 dark:brightness-100"
           />
         </div>
       </div>
