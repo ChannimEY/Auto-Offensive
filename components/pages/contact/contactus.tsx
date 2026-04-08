@@ -185,29 +185,29 @@ export default function ContactUs() {
         .contact-input:focus {
           outline: none;
           border-color: #00BCA1;
-          box-shadow: inset 0 0 0 1px #00BCA1, 0 0 0 3px rgba(0,188,161,0.10);
+          
         }
 
         /* ── Submit button shimmer ── */
         .btn-submit-shimmer {
           position: relative;
-          transition: box-shadow 0.3s cubic-bezier(0.4,0,0.2,1);
+   
         }
         .btn-submit-shimmer:hover {
-          box-shadow: 0 8px 24px rgba(0,188,161,0.28);
+ 
         }
 
         /* ── Info card hover ── */
         .info-card {
           transition: border-color 0.35s cubic-bezier(0.4,0,0.2,1),
-                      box-shadow 0.35s cubic-bezier(0.4,0,0.2,1);
+                      
         }
         .info-card:hover {
           border-color: rgba(0,188,161,0.35);
-          box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+          
         }
         .dark .info-card:hover {
-          box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+          
         }
         .info-icon-wrap {
           transition: background 0.3s;
@@ -216,23 +216,23 @@ export default function ContactUs() {
         /* ── Social link hover ── */
         .social-btn {
           transition: background 0.25s, border-color 0.25s,
-                      box-shadow 0.25s;
+                    //   box-shadow 0.25s;
         }
         .social-btn:hover {
-          box-shadow: 0 4px 12px rgba(0,188,161,0.18);
+        //   box-shadow: 0 4px 12px rgba(0,188,161,0.18);
         }
 
         /* ── Form wrapper hover ── */
         .form-card {
           transition: border-color 0.35s cubic-bezier(0.4,0,0.2,1),
-                      box-shadow 0.35s cubic-bezier(0.4,0,0.2,1);
+                     
         }
         .form-card:hover {
           border-color: rgba(0,188,161,0.25);
-          box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        //   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
         }
         .dark .form-card:hover {
-          box-shadow: 0 4px 12px rgba(0,0,0,0.35);
+        //   box-shadow: 0 4px 12px rgba(0,0,0,0.35);
         }
 
         /* ── Info link hover ── */
@@ -307,7 +307,7 @@ export default function ContactUs() {
           <div className="contact-grid-anim grid grid-cols-1 lg:grid-cols-[1.15fr_1fr] gap-10 lg:gap-12">
 
             {/* ── Form Card ── */}
-            <div className="form-card bg-[#F0EDE7] dark:bg-[#0f1714] border border-[#E5E1D8] dark:border-[#1a2622] rounded-2xl p-8 lg:p-12 shadow-sm">
+            <div className="form-card bg-[#F0EDE7] dark:bg-[#0f1714] border border-[#E5E1D8] dark:border-[#1a2622] rounded-2xl p-8 lg:p-12 ">
               {/* Success message */}
               {submitted && (
                 <div className="status-msg description-text mb-6 p-4 rounded-xl font-semibold bg-[rgba(0,188,161,0.10)] text-[#00BCA1] border border-[rgba(0,188,161,0.20)]">
@@ -425,7 +425,7 @@ export default function ContactUs() {
                 <button
                   type="submit"
                   disabled={disabled}
-                  className="btn-submit-shimmer description-text w-full mt-6 bg-[#00BCA1] hover:bg-[#009f88] disabled:opacity-60 disabled:cursor-not-allowed text-white border-none py-[13px] px-7 rounded-xl font-bold font-[inherit] cursor-pointer shadow-sm tracking-[0.01em] transition-colors duration-200"
+                  className="btn-submit-shimmer description-text w-full mt-6 bg-[#00BCA1] hover:bg-[#009f88] disabled:opacity-60 disabled:cursor-not-allowed text-white border-none py-[13px] px-7 rounded-xl font-bold font-[inherit] cursor-pointer  tracking-[0.01em] transition-colors duration-200"
                 >
                   Send Message
                 </button>
