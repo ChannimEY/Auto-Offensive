@@ -19,16 +19,6 @@ interface CardData {
   titleColor: string;
 }
 
-// ── CUSTOMIZE CARDS HERE ─────────────────────────────────────────────────────
-const CARD_WIDTH = "100%";
-const CARD_MIN_HEIGHT = "480px";
-const IMAGE_MAX_HEIGHT = "460px";
-const IMAGE_WIDTH = "78%";
-const CARD_BG = "#F7F5F0";
-const SECTION_BG = "#F7F5F0";
-const SECTION_PADDING_X = "120px"; // left and right padding
-// ─────────────────────────────────────────────────────────────────────────────
-
 const cards: CardData[] = [
   {
     title: "Security",
@@ -70,59 +60,49 @@ const Card: React.FC<{ card: CardData }> = ({ card }) => {
 
   return (
     <div
-      className="relative flex flex-col rounded-2xl overflow-hidden"
+      className="relative flex min-w-0 flex-1 cursor-pointer flex-col overflow-hidden rounded-2xl transition-[border-color] duration-300 [--card-bg:#F7F5F0] dark:[--card-bg:#111114]"
       style={{
-        background: "#F7F5F0",
+        background: "var(--card-bg)",
         border: `1.5px solid ${hovered ? card.accentColor + "55" : card.borderColor}`,
-        width: CARD_WIDTH,
-        minHeight: CARD_MIN_HEIGHT,
-        transition: "border-color 0.3s ease",
-        cursor: "pointer",
-        flex: "1 1 0",
-        minWidth: 0,
+        minHeight: "clamp(380px, 55vw, 480px)",
       }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
       {/* Soft blob backgrounds */}
       <div
-        className="absolute inset-0 pointer-events-none"
+        className="absolute inset-0 pointer-events-none z-0 transition-opacity duration-400"
         style={{
           background: `${card.blobLeft}, ${card.blobRight}`,
           opacity: hovered ? 1 : 0.75,
-          transition: "opacity 0.4s ease",
-          zIndex: 0,
         }}
       />
 
       {/* White glass softening overlay */}
       <div
-        className="absolute inset-0 pointer-events-none"
+        className="absolute inset-0 pointer-events-none z-1 [--glass-overlay:linear-gradient(160deg,rgba(255,255,255,0.6)_0%,rgba(255,255,255,0.1)_100%)] dark:[--glass-overlay:linear-gradient(160deg,rgba(255,255,255,0.08)_0%,rgba(255,255,255,0.02)_100%)]"
         style={{
-          background: "linear-gradient(160deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.1) 100%)",
-          zIndex: 1,
+          background: "var(--glass-overlay)",
         }}
       />
 
       {/* Text content */}
-      <div className="relative px-6 pt-8 pb-4" style={{ zIndex: 2 }}>
+      <div className="relative z-2 px-5 pb-4 pt-7 md:px-6 md:pt-8">
         <h3
-          className="font-bold leading-tight mb-3"
+          className="mb-3 text-[1.75rem] font-bold leading-tight tracking-[-0.01em] md:text-[1.9rem] lg:text-2xl"
           style={{
             color: card.titleColor,
             fontFamily: "var(--font-hackdaddy), var(--font-noto-khmer), sans-serif",
-            fontSize: "1.5rem",
-            letterSpacing: "-0.01em",
           }}
         >
           {card.title}
           <br />
           {card.subtitle}
         </h3>
+
         <p
-          className="text-sm leading-relaxed mb-6"
+          className="mb-6 min-h-[3.6em] text-[16px] leading-relaxed text-slate-500 dark:text-slate-300 md:text-[18px] lg:text-[20px]"
           style={{
-            color: "#64748b",
             fontFamily: "var(--font-google-sans), var(--font-noto-khmer), sans-serif",
           }}
         >
@@ -130,13 +110,12 @@ const Card: React.FC<{ card: CardData }> = ({ card }) => {
         </p>
 
         <button
-          className="inline-flex items-center gap-2 text-sm font-semibold px-5 py-2.5 rounded-full"
+          className="inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-[16px] font-semibold transition-[background,color] duration-200 md:px-5 md:text-[18px] lg:text-[20px]"
           style={{
             background: "transparent",
             border: `1.5px solid ${card.accentColor}`,
             color: card.accentColor,
             fontFamily: "var(--font-google-sans), var(--font-noto-khmer), sans-serif",
-            transition: "background 0.2s ease, color 0.2s ease",
           }}
           onMouseEnter={(e) => {
             const btn = e.currentTarget as HTMLButtonElement;
@@ -163,15 +142,12 @@ const Card: React.FC<{ card: CardData }> = ({ card }) => {
       </div>
 
       {/* Character image */}
-      <div
-        className="relative mt-auto mx-auto"
-        style={{ width: IMAGE_WIDTH, zIndex: 2 }}
-      >
+      <div className="relative z-2 mx-auto mt-auto w-[72%] max-[1023px]:w-[62%] max-[767px]:w-[68%]">
         <Image
           src={card.image}
           alt={`${card.title} ${card.subtitle}`}
-          className="w-full object-contain object-bottom"
-          style={{ display: "block", maxHeight: IMAGE_MAX_HEIGHT }}
+          className="block w-full object-contain object-bottom"
+          style={{ maxHeight: "min(460px, 42vh)" }}
           draggable={false}
         />
       </div>
@@ -182,23 +158,16 @@ const Card: React.FC<{ card: CardData }> = ({ card }) => {
 const ThreeCards: React.FC = () => {
   return (
     <section
-      className="w-full flex flex-col items-center"
+      className="flex w-full flex-col items-center bg-[#F7F5F0] px-4 py-12 dark:bg-[#09090B] sm:px-5 md:px-8 md:py-14 lg:px-16 lg:py-16 xl:px-30"
       style={{
-        background: SECTION_BG,
-        minHeight: "100vh",
-        paddingTop: "64px",
-        paddingBottom: "64px",
-        paddingLeft: SECTION_PADDING_X,
-        paddingRight: SECTION_PADDING_X,
         fontFamily: "var(--font-google-sans), var(--font-noto-khmer), sans-serif",
       }}
     >
-      {/* Inner wrapper — aligns heading left, keeps content centered */}
-      <div className="w-full max-w-screen-xl flex flex-col items-start">
+      {/* Inner wrapper */}
+      <div className="w-full max-w-7xl flex flex-col items-start">
         <p
-          className="text-sm font-semibold mb-8 tracking-widest uppercase"
+          className="mb-6 text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-400 dark:text-slate-500 md:mb-8 md:text-sm"
           style={{
-            color: "#94a3b8",
             fontFamily: "var(--font-google-sans), var(--font-noto-khmer), sans-serif",
           }}
         >
@@ -207,16 +176,13 @@ const ThreeCards: React.FC = () => {
 
         {/* Outer gradient border frame */}
         <div
-          className="w-full rounded-3xl p-[1.5px]"
+          className="w-full rounded-[26px] p-[1.5px] md:rounded-3xl"
           style={{
             background:
               "linear-gradient(135deg, rgba(0,208,178,0.4) 0%, rgba(1,80,158,0.25) 50%, rgba(0,208,178,0.35) 100%)",
           }}
         >
-          <div
-            className="w-full rounded-[22px] p-2 flex gap-3"
-            style={{ background: SECTION_BG }}
-          >
+          <div className="flex w-full flex-col gap-3 rounded-[20px] bg-[#F7F5F0] p-2 dark:bg-[#09090B] md:rounded-[22px] lg:flex-row">
             {cards.map((card, i) => (
               <Card key={i} card={card} />
             ))}
