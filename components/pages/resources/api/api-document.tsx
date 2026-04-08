@@ -152,7 +152,7 @@ export default function ApiDocument() {
 
   return (
     <div className="min-h-screen bg-[#F7F5F0] dark:bg-[#09090B] transition-colors duration-300">
-      <div className="mx-auto flex w-full max-w-7xl items-start pt-22">
+      <div className="mx-auto flex w-full max-w-7xl items-start pt-18 md:pt-20 lg:pt-22">
         <LeftSidebar
           sections={SIDEBAR_SECTIONS}
           activeId={activeId}

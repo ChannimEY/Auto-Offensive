@@ -21,6 +21,12 @@ const monoFontStyle = {
   fontFamily: "var(--font-jetbrains-mono), var(--font-google-sans), var(--font-noto-khmer), monospace",
 } as const;
 
+const bodyTextClass =
+  "text-[16px] md:text-[18px] lg:text-[20px] text-[#4A4540] dark:text-[#C9CDD4]";
+
+const headingTextClass =
+  "text-[22px] md:text-[24px] lg:text-[26px] text-[#17130E] dark:text-[#EDF2FF]";
+
 // ── Tiny helpers ──────────────────────────────────────────────
 function cx(...cls: (string | false | undefined | null)[]) {
   return cls.filter(Boolean).join(" ");
@@ -133,7 +139,7 @@ function Note({ type, icon, title, children }: { type: NoteType; icon: string; t
         <span className="text-[14px]">{icon}</span>
         <span className={cx("font-mono text-[10px] font-semibold uppercase tracking-[0.14em]", s.label)} style={monoFontStyle}>{title}</span>
       </div>
-      <div className="text-[20px] text-[#4A4540] dark:text-[#C9CDD4] leading-[1.72]" style={sansFontStyle}>{children}</div>
+      <div className={cx(bodyTextClass, "leading-[1.72]")} style={sansFontStyle}>{children}</div>
     </div>
   );
 }
@@ -183,7 +189,7 @@ function ParamTable({ params, label = "Body Parameters" }: { params: Param[]; la
                     </span>
                   )}
                 </td>
-                <td className="px-4 py-3 text-[20px] text-[#4A4540] dark:text-[#C9CDD4] leading-[1.72]" style={sansFontStyle}>{p.desc}</td>
+                <td className={cx("px-4 py-3 leading-[1.72]", bodyTextClass)} style={sansFontStyle}>{p.desc}</td>
               </tr>
             ))}
           </tbody>
@@ -213,21 +219,21 @@ function Endpoint({ id, method, path, badges, desc, bodyParams, queryParams, cod
       className="rounded-xl border border-[#E4DFD5] dark:border-white/8 overflow-hidden mb-5 shadow-sm bg-white dark:bg-[#131820] scroll-mt-20"
     >
       {/* header row */}
-      <div className="flex flex-wrap items-center gap-2 px-5 py-4 border-b border-[#E4DFD5] dark:border-white/[0.07] bg-[#F7F5F0] dark:bg-[#161C2A]">
+      <div className="flex flex-wrap items-center gap-2 px-4 py-4 md:px-5 border-b border-[#E4DFD5] dark:border-white/[0.07] bg-[#F7F5F0] dark:bg-[#161C2A]">
         <MethodBadge method={method} />
-        <code className="font-mono text-[14px] font-semibold text-[#17130E] dark:text-[#EDF2FF] flex-1 min-w-0 break-all" style={monoFontStyle}>
+        <code className="font-mono text-[13px] md:text-[14px] font-semibold text-[#17130E] dark:text-[#EDF2FF] flex-1 min-w-0 break-all" style={monoFontStyle}>
           {path}
         </code>
         <div className="flex flex-wrap gap-2">{badges}</div>
       </div>
 
       {/* description */}
-      <div className="px-5 py-4 border-b border-[#E4DFD5] dark:border-white/[0.07] text-[20px] text-[#4A4540] dark:text-[#C9CDD4] leading-[1.72]" style={sansFontStyle}>
+      <div className={cx("px-4 py-4 md:px-5 border-b border-[#E4DFD5] dark:border-white/[0.07] leading-[1.72]", bodyTextClass)} style={sansFontStyle}>
         {desc}
       </div>
 
       {/* body */}
-      <div className="px-5 py-4">
+      <div className="px-4 py-4 md:px-5">
         {bodyParams  && <ParamTable params={bodyParams}  label="Body Parameters"  />}
         {queryParams && <ParamTable params={queryParams} label="Query Parameters" />}
         {code        && <CodeBlock lang={code.lang} code={code.body} />}
@@ -242,7 +248,7 @@ function H2({ id, title, tag }: { id: string; title: string; tag?: string }) {
   return (
     <div id={id} className="flex items-center gap-3 pt-14 mb-3 scroll-mt-20">
       <h2
-        className="text-[26px] font-extrabold tracking-tight text-[#17130E] dark:text-[#EDF2FF]"
+        className={cx("font-extrabold tracking-tight", headingTextClass)}
         style={{ ...sansFontStyle, letterSpacing: "-0.03em" }}
       >
         {title}
@@ -259,7 +265,7 @@ function H2({ id, title, tag }: { id: string; title: string; tag?: string }) {
 function Para({ children }: { children: React.ReactNode }) {
   return (
     <p
-      className="text-[20px] text-[#4A4540] dark:text-[#C9CDD4] leading-[1.82] mb-3"
+      className={cx("leading-[1.82] mb-3", bodyTextClass)}
       style={sansFontStyle}
     >
       {children}
@@ -284,7 +290,7 @@ function Param({ children }: { children: string }) {
 // ══════════════════════════════════════════════════════════════
 export default function ApiContent() {
   return (
-    <article className="w-full min-w-0 max-w-200 px-12 xl:px-14 pt-12 pb-32 max-[960px]:px-8 max-[640px]:px-5" style={sansFontStyle}>
+    <article className="w-full min-w-0 max-w-200 px-5 pt-10 pb-24 sm:px-6 md:px-8 lg:px-10 xl:px-14 xl:pt-12 xl:pb-32" style={sansFontStyle}>
 
       {/* ─── PAGE HEADER ──────────────────────────────────── */}
       <div id="overview" className="pb-10 mb-12 border-b border-[#E4DFD5] dark:border-white/[0.07] scroll-mt-20">
@@ -306,10 +312,7 @@ export default function ApiContent() {
           API <span className="text-[#00BCA1]">Reference</span>
         </h1>
 
-        <p
-          className="text-[20px] text-[#4A4540] dark:text-[#C9CDD4] leading-[1.82] max-w-140"
-          style={sansFontStyle}
-        >
+        <p className={cx("leading-[1.82] max-w-140", bodyTextClass)} style={sansFontStyle}>
           The Auto Offensive REST API lets you programmatically manage projects, trigger scan
           jobs, retrieve results, and generate reports. Integrate security scanning into your
           CI/CD pipeline or internal tooling.
@@ -355,14 +358,14 @@ export default function ApiContent() {
             key={c.title}
             className="bg-white dark:bg-[#131820] border border-[#E4DFD5] dark:border-white/8 rounded-xl p-4 shadow-sm hover:border-[#00BCA1]/30 hover:-translate-y-0.5 transition-all duration-200 cursor-default"
           >
-            <div className="text-[20px] mb-2">{c.icon}</div>
+            <div className="mb-2 text-[18px] md:text-[20px]">{c.icon}</div>
             <div
-              className="font-semibold text-[20px] text-[#17130E] dark:text-[#EDF2FF] mb-1"
+              className="mb-1 text-[18px] md:text-[20px] font-semibold text-[#17130E] dark:text-[#EDF2FF]"
               style={sansFontStyle}
             >
               {c.title}
             </div>
-            <div className="text-[20px] text-[#4A4540] dark:text-[#C9CDD4] leading-[1.72]" style={sansFontStyle}>{c.desc}</div>
+            <div className={cx("leading-[1.72]", bodyTextClass)} style={sansFontStyle}>{c.desc}</div>
           </div>
         ))}
       </div>
@@ -465,7 +468,7 @@ Content-Type: application/json`}
               <tr key={r.code} className={i < arr.length - 1 ? "border-b border-[#F0EDE7] dark:border-white/5" : ""}>
                 <td className={`px-4 py-3 font-mono text-[13px] font-semibold ${r.sc}`}>{r.s}</td>
                 <td className="px-4 py-3 font-mono text-[13px] text-[#00BCA1]">{r.code}</td>
-                <td className="px-4 py-3 text-[20px] text-[#4A4540] dark:text-[#C9CDD4]" style={sansFontStyle}>{r.m}</td>
+                <td className={cx("px-4 py-3", bodyTextClass)} style={sansFontStyle}>{r.m}</td>
               </tr>
             ))}
           </tbody>
