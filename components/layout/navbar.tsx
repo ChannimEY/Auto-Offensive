@@ -383,7 +383,7 @@ export function Header() {
               {/* ── Tools ── */}
               <NavigationMenuItem>
                 <NavigationMenuTrigger className="bg-transparent hover:bg-transparent focus:bg-transparent data-[state=active]:bg-transparent data-[state=open]:bg-transparent text-primary font-semibold">
-                <Link href="/page/tools">  Tools</Link>
+                <Link href="/tools">  Tools</Link>
                 </NavigationMenuTrigger>
                 <NavigationMenuContent className="bg-background">
                   <div className="w-120 rounded-xl border border-border bg-popover shadow-xl p-3">
@@ -419,7 +419,7 @@ export function Header() {
               {/* ── Resources ── */}
               <NavigationMenuItem>
                 <NavigationMenuTrigger className="bg-transparent hover:bg-transparent focus:bg-transparent data-[state=active]:bg-transparent data-[state=open]:bg-transparent">
-                  <Link href="/page/resource">  Resources</Link>
+                  <Link href="/resource">  Resources</Link>
                 </NavigationMenuTrigger>
                 <NavigationMenuContent className="bg-background">
                   <div className="w-120 rounded-xl border border-border bg-popover shadow-xl p-3">
@@ -460,9 +460,9 @@ export function Header() {
           <ThemeToggle />
 
           {/* Login / Register */}
-          <button className="px-4 py-1.5 rounded-md text-sm font-semibold text-primary  bg-transparent cursor-pointer hover:bg-primary/10 transition-colors">
+          <Link href="/register"><button className="px-4 py-1.5 rounded-md text-sm font-semibold text-primary  bg-transparent cursor-pointer hover:bg-primary/10 transition-colors">
             Login / Register
-          </button>
+          </button></Link>
         </div>
 
         {/* Mobile controls */}

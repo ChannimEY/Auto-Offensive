@@ -21,7 +21,7 @@ export function LanguageSwitcher() {
           <span className="font-medium uppercase">{lang}</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-[150px] dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 font-sans">
+      <DropdownMenuContent align="end" className="w-38 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 font-sans">
         <DropdownMenuItem onClick={() => setLang("en")} className="flex justify-between items-center">
           English
           {lang === "en" && <Check className="h-4 w-4 text-primary" />}

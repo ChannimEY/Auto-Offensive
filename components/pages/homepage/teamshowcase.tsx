@@ -15,7 +15,7 @@ export default function TeamShowcase() {
         {/* ── Left: Text Content ── */}
         <div className="relative z-10">
           {/* Label */}
-          <p className="text-xs font-bold tracking-[3px] uppercase text-[#00BCA1] mb-6">
+          <p className="text-xs font-bold tracking-[3px] uppercase text-primary mb-6">
             Our company
           </p>
 
@@ -28,7 +28,7 @@ export default function TeamShowcase() {
             }}
           >
             <span className="block whitespace-nowrap">In our company,</span>
-            <span className="block whitespace-nowrap text-[#00BCA1]">we build</span>
+            <span className="block whitespace-nowrap text-primary">we build</span>
             <span className="block whitespace-nowrap">what we use</span>
           </h3>
 
@@ -41,7 +41,7 @@ export default function TeamShowcase() {
           {/* Paragraphs - Responsive sizes: 16px -> 18px -> 20px */}
           <div className="space-y-6 text-base md:text-[18px] lg:text-[20px] leading-relaxed text-[#4a4a4a] dark:text-gray-400 mb-10">
             <p>
-              We launched as a team of passionate professionals — and we've kept
+              We launched as a team of passionate professionals — and we&rsquo;ve kept
               that mindset ever since. Our experts still drive product development
               today, focusing relentlessly on accuracy, speed, and control.
             </p>
@@ -56,7 +56,7 @@ export default function TeamShowcase() {
           {/* CTA Button */}
           <a
             href="about-us"
-            className="inline-block px-8 py-3.5 rounded-xl border-2 border-[#01509e] dark:border-[#00BCA1] text-[#01509e] dark:text-[#00BCA1] text-base font-bold tracking-wide transition-all duration-300 hover:bg-[#01509e] dark:hover:bg-[#00BCA1] hover:text-white dark:hover:text-[#09090B]"
+            className="inline-block px-8 py-3.5 rounded-xl border-2 border-[#01509e] dark:border-primary text-[#01509e] dark:text-primary text-base font-bold tracking-wide transition-all duration-300 hover:bg-[#01509e] dark:hover:bg-primary hover:text-white dark:hover:text-[#09090B]"
           >
             Read our story →
           </a>
@@ -88,13 +88,13 @@ export default function TeamShowcase() {
                 <rect x="3" y="3" width="18" height="18" rx="3" />
                 <polyline points="21 15 16 10 5 21" />
               </svg>
-              <p className="text-sm text-[#00BCA1] font-bold">Team Photo Placeholder</p>
+              <p className="text-sm text-primary font-bold">Team Photo Placeholder</p>
             </div>
           </div>
 
           {/* Floating Badge - Team Size */}
           <div className="absolute -top-6 -left-4 z-20 bg-white dark:bg-[#1c1c1e] rounded-2xl px-5 py-3 flex items-center gap-3 border border-gray-100 dark:border-white/5 shadow-xl">
-             <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-linear-to-br from-[#00BCA1] to-[#01509e]">
+             <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-linear-to-br from-primary to-[#01509e]">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /></svg>
              </div>
              <div>
@@ -104,7 +104,7 @@ export default function TeamShowcase() {
           </div>
 
           {/* Floating Badge - Year */}
-          <div className="absolute bottom-10 -right-4 z-20 bg-[#01509e] dark:bg-[#00BCA1] rounded-2xl px-6 py-3 shadow-xl">
+          <div className="absolute bottom-10 -right-4 z-20 bg-[#01509e] dark:bg-primary rounded-2xl px-6 py-3 shadow-xl">
             <p className="text-[10px] text-white/70 dark:text-black/70 font-bold uppercase m-0">Est.</p>
             <p className="text-xl font-black text-white dark:text-[#09090B] m-0">2026</p>
           </div>

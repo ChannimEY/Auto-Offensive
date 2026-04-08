@@ -260,7 +260,7 @@ export default function PrivacyHero() {
             className="ph-sub leading-[1.85] text-[#5C5C5C] dark:text-[#9A9A9A] max-w-104"
             style={{ fontSize: "20px" }}
           >
-            We built Auto Offensive to make penetration testing accessible — not to monetize your data. Here's the plain-language version of what we collect and why.
+            We built Auto Offensive to make penetration testing accessible — not to monetize your data. Here&rsquo;s the plain-language version of what we collect and why.
           </p>
           <div className="ph-tags flex gap-2 flex-wrap justify-center">
             <span className="text-[11px] tracking-[0.08em] uppercase px-3.5 py-1.5 border border-[#00BCA1] rounded text-white bg-[#00BCA1]">

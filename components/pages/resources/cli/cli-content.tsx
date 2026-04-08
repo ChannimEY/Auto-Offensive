@@ -316,10 +316,6 @@ function Para({ children }: { children: React.ReactNode }) {
   );
 }
 
-function Divider() {
-  return <div className="h-px bg-[#E2DDD5] my-7" />;
-}
-
 function SecGrid({ children }: { children: React.ReactNode }) {
   return (
     <div className="grid grid-cols-2 gap-2.5 my-3.5 max-[640px]:grid-cols-1">
@@ -367,7 +363,7 @@ function Lifecycle() {
         { label: "Running", dotClass: "bg-[#1D57C8] animate-pulse", shadow: "shadow-[0_0_0_3px_rgba(29,87,200,0.14)]" },
         { label: "Completed", dotClass: "bg-[#1A7A4A]", shadow: "shadow-[0_0_0_3px_rgba(26,122,74,0.14)]" },
         { label: "Failed", dotClass: "bg-[#C42828]", shadow: "shadow-[0_0_0_3px_rgba(196,40,40,0.14)]" },
-      ].map((lc, i) => (
+      ].map((lc) => (
         <div
           key={lc.label}
           className={`flex-1 py-3.5 px-2 text-center border-r border-[#E2DDD5] dark:border-white/10 last:border-r-0 hover:bg-[#F0EDE6] dark:hover:bg-white/5 transition-colors duration-150`}
@@ -599,7 +595,7 @@ export default function Content() {
             <Step num={1} title="Download the binary" desc={<>Install the CLI directly using the install script, or download the binary for your platform from the releases page.</>} />
             <Step num={2} title="Make it executable (Linux / macOS)" desc={<>Run <InlineCode>chmod +x pentest</InlineCode> then move it to a directory in your <InlineCode>$PATH</InlineCode> such as <InlineCode>/usr/local/bin</InlineCode>.</>} />
             <Step num={3} title="Authenticate" desc={<>Run <InlineCode>pentest login</InlineCode> and follow the prompt, or set your API token directly with <InlineCode>pentest login --token &lt;your-token&gt;</InlineCode>.</>} />
-            <Step num={4} title="Run your first scan" desc={<>You're ready. Use any supported command like <InlineCode>pentest subfinder -d example.com</InlineCode> — results stream back in real time.</>} last />
+            <Step num={4} title="Run your first scan" desc={<>You&rsquo;re ready. Use any supported command like <InlineCode>pentest subfinder -d example.com</InlineCode> — results stream back in real time.</>} last />
           </StepList>
 
           <Callout type="brand" icon="📦" title="No third-party tools required">

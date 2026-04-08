@@ -143,7 +143,7 @@ const accordionItems: AccordionItem[] = [
     title: "What We Collect",
     content: (
       <>
-        <BodyP>We only collect what's needed to run the platform and keep your account secure.</BodyP>
+        <BodyP>We only collect what&rsquo;s needed to run the platform and keep your account secure.</BodyP>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 my-5">
           <ItemCard label="Account" val="Email, username, bcrypt-hashed password, encrypted API tokens" />
           <ItemCard label="Scan Data" val="Targets, findings, logs, metadata — isolated to your account" />
@@ -206,7 +206,7 @@ const accordionItems: AccordionItem[] = [
         <DataRow label="Storage" val="100 GB scan history" />
         <DataRow label="Tools available" val="All 14+ tools" last />
         <Notice>
-          Accounts that abuse free resources (e.g. mass automated scanning of targets you don't own) may be suspended. Legitimate learning and testing is always welcome.
+          Accounts that abuse free resources (e.g. mass automated scanning of targets you don&rsquo;t own) may be suspended. Legitimate learning and testing is always welcome.
         </Notice>
       </>
     ),
@@ -224,7 +224,7 @@ const accordionItems: AccordionItem[] = [
           ))}
         </div>
         <BodyP>
-          All providers are contractually required to protect your data and use it only for the specified purpose. We may disclose data to authorities when required by law — and we'll notify you when legally permitted to do so.
+          All providers are contractually required to protect your data and use it only for the specified purpose. We may disclose data to authorities when required by law — and we&rsquo;ll notify you when legally permitted to do so.
         </BodyP>
       </>
     ),

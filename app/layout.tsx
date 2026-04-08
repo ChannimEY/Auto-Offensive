@@ -1,34 +1,31 @@
 import type { Metadata } from "next";
-import { Noto_Sans_Khmer, Geist, JetBrains_Mono } from "next/font/google"; 
+import { Noto_Sans_Khmer, Geist, JetBrains_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme-provider";
-import { Header } from "@/components/layout/navbar";
-import { Footer } from "@/components/layout/footer";
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+import LayoutWrapper from "@/components/layout/LayoutWrapper";
+
+const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
+
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-jetbrains-mono",
   display: "swap",
 });
 
-
-// Font english (Google Sans)
 const googleSans = localFont({
   src: "./fonts/GoogleSans-VariableFont_GRAD,opsz,wght.ttf",
   variable: "--font-google-sans",
   display: "swap",
 });
 
-// Font Hacker (Hackdaddy)
 const hackdaddy = localFont({
   src: "./fonts/Hackdaddy.otf",
   variable: "--font-hackdaddy",
   display: "swap",
 });
 
-// Font khmer (Noto Sans Khmer)
 const notoKhmer = Noto_Sans_Khmer({
   subsets: ["khmer"],
   variable: "--font-noto-khmer",
@@ -42,11 +39,26 @@ export const metadata: Metadata = {
   description: "Automated Security Workflows and Pentesting Platform",
 };
 
-
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <html lang="en" suppressHydrationWarning    className={cn("h-full", "antialiased", googleSans.variable, hackdaddy.variable, notoKhmer.variable, jetbrainsMono.variable, "font-sans", geist.variable)}
->
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={cn(
+        "h-full",
+        "antialiased",
+        googleSans.variable,
+        hackdaddy.variable,
+        notoKhmer.variable,
+        jetbrainsMono.variable,
+        "font-sans",
+        geist.variable
+      )}
+    >
       <body>
         <ThemeProvider
           attribute="class"
@@ -54,14 +66,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           enableSystem
           disableTransitionOnChange
         >
-         <Header />
-          <main className="-mt-14">
-            {children}
-          </main>
-          <Footer />
-          
+          <LayoutWrapper>{children}</LayoutWrapper>
         </ThemeProvider>
       </body>
     </html>
-  )
+  );
 }
