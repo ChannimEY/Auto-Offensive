@@ -732,7 +732,7 @@ export default function HomeHero() {
 
       <section
         className="
-          relative min-h-screen overflow-hidden
+          relative min-h-screen overflow-hidden mx-auto max-w-8xl
           flex flex-col items-center justify-center text-center
           px-[6%] py-25
           bg-white dark:bg-[#09090B]

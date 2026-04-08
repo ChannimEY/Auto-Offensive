@@ -75,7 +75,7 @@ const resourceDocLinks: ResourceItem[] = [
 
 const resourceMiscLinks: ResourceItem[] = [
   { title: 'About Us',    href: '/about-us', icon: '/icons/about_us_icon.png'   },
-  { title: 'Contact Us',  href: '#',          icon: '/icons/contact_us_icon.png' },
+  { title: 'Contact Us',  href: '/contact-us',          icon: '/icons/contact_us_icon.png' },
   { title: 'FAQ',         href: '#',          icon: '/icons/faq_icon.png'     },
 ];
 
@@ -214,9 +214,9 @@ function ToolItem({ title, href, icon }: ToolItem) {
           <Image
             src={icon}
             alt={title}
-            width={24}
-            height={24}
-            className="object-contain"
+            width={74}
+            height={74}
+            className="object-cover"
           />
         </div>
         <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">

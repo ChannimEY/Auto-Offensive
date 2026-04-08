@@ -4,14 +4,14 @@ import Image from "next/image";
 
 export default function AiBanner() {
   return (
-    <div className="w-full px-6 pb-8 bg-[#F7F5F0] dark:bg-[#09090B] transition-colors duration-300">
+    <div className="w-full   px-6 pb-8 bg-[#F7F5F0] dark:bg-[#09090B] transition-colors duration-300">
       <div
         className="relative pt-12"
         style={{ fontFamily: "var(--font-hackdaddy), var(--font-noto-khmer), sans-serif" }}
       >
         {/* ── Card ── */}
         {/* Added dark:bg-[#111113] to give the card a slight lift from the pure black background */}
-        <div className="relative rounded-3xl bg-[#F7F5F0] dark:bg-[#111113] overflow-hidden min-h-80 px-16 py-12 flex items-center justify-center gap-64 max-[900px]:flex-col max-[900px]:gap-0 max-[900px]:px-8 max-[900px]:pt-10 max-[900px]:pb-56 border border-transparent dark:border-white/5">
+        <div className="relative rounded-3xl bg-[#F7F5F0] dark:bg-[#111113] overflow-hidden min-h-80 px-16 py-12 flex items-center  justify-center gap-50 max-[900px]:flex-col max-[900px]:gap-0 max-[900px]:px-8 max-[900px]:pt-10 max-[900px]:pb-56 border border-transparent dark:border-white/5">
 
           {/* Blobs - Opacity and blur adjusted for Dark Mode depth */}
           <div className="absolute pointer-events-none rounded-full blur-3xl w-md h-96 -top-32 -left-24 bg-[#01509e] opacity-95 dark:opacity-40" />
@@ -20,7 +20,7 @@ export default function AiBanner() {
           <div className="absolute pointer-events-none rounded-full blur-3xl w-64 h-52 top-[20%] left-[42%] bg-[#00d0b2] opacity-20 dark:opacity-10" />
 
           {/* Content */}
-          <div className="relative z-10 shrink-0 max-w-xl">
+          <div className="relative z-10 shrink-0 max-w-xl ps-4 ">
             {/* Eyebrow */}
             <div
               className="inline-flex items-center gap-2 text-[11px] md:text-xs tracking-widest uppercase text-black/60 dark:text-white/50 mb-4"
@@ -42,7 +42,7 @@ export default function AiBanner() {
 
             {/* Description */}
             <p
-              className="text-base md:text-[18px] lg:text-[20px] leading-relaxed text-[oklch(0.556_0_0)] dark:text-white/60 font-normal max-w-lg"
+              className="text-base md:text-[18px] lg:text-[20px] leading-relaxed text-[oklch(0.556_0_0)] dark:text-white/60 font-normal max-w-lg "
               style={{ fontFamily: "var(--font-google-sans), var(--font-noto-khmer), sans-serif" }}
             >
               Auto Offensive doesn&apos;t replace skilled security professionals.
