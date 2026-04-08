@@ -1,94 +1,98 @@
 "use client";
+
 import { useState } from "react";
 
-interface Tool {
-  id: number;
-  name: string;
-  category: string;
-}
+const CheckCircle = () => (
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+    <circle cx="8" cy="8" r="7.5" fill="#14b8a6" />
+    <path
+      d="M5 8L7 10L11 6"
+      stroke="white"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
 
-const TOOLS: Tool[] = [
-  { id: 1, name: "Subfinder", category: "Recon" },
-  { id: 2, name: "Burp API", category: "Proxy" },
-  { id: 3, name: "Burp API", category: "Proxy" },
-  { id: 4, name: "Burp API", category: "Proxy" },
-  { id: 5, name: "Nuclei", category: "Vuln Scan" },
-  { id: 6, name: "Nuclei", category: "Vuln Scan" },
-  { id: 7, name: "Nuclei", category: "Vuln Scan" },
-  { id: 8, name: "Nuclei", category: "Vuln Scan" },
-  { id: 9, name: "Nuclei", category: "Vuln Scan" },
-  { id: 10, name: "Burp API", category: "Proxy" },
-  { id: 11, name: "Burp API", category: "Proxy" },
-  { id: 12, name: "Burp API", category: "Proxy" },
-  { id: 13, name: "Burp API", category: "Proxy" },
-  { id: 14, name: "Burp API", category: "Proxy" },
+const Circle = () => (
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+    <circle
+      cx="8"
+      cy="8"
+      r="7.5"
+      stroke="#d1d5db"
+      strokeWidth="1.2"
+      fill="white"
+    />
+  </svg>
+);
+
+type Tool = {
+  name: string;
+  type: string;
+  active: boolean;
+};
+
+const tools: Tool[] = [
+  { name: "Subfinder", type: "Recon", active: true },
+  { name: "Burp API", type: "Proxy", active: false },
+  { name: "Burp API", type: "Proxy", active: false },
+  { name: "Burp API", type: "Proxy", active: false },
+  { name: "Nuclei", type: "Vuln Scan", active: false },
+  { name: "Nuclei", type: "Vuln Scan", active: false },
+  { name: "Nuclei", type: "Vuln Scan", active: false },
+  { name: "Nuclei", type: "Vuln Scan", active: false },
+  { name: "Nuclei", type: "Vuln Scan", active: false },
+  { name: "Burp API", type: "Proxy", active: false },
+  { name: "Burp API", type: "Proxy", active: false },
+  { name: "Burp API", type: "Proxy", active: false },
+  { name: "Burp API", type: "Proxy", active: false },
+  { name: "Burp API", type: "Proxy", active: false },
 ];
 
 export default function ToolLibrary() {
-  const [selected, setSelected] = useState<number>(1);
+  const [selectedTools, setSelectedTools] = useState<number[]>([0]);
+
+  const toggleTool = (idx: number) => {
+    setSelectedTools((prev) =>
+      prev.includes(idx) ? prev.filter((i) => i !== idx) : [...prev, idx],
+    );
+  };
 
   return (
-    <section
-      className="bg-[var(--surface)] border border-[var(--border)] rounded-2xl p-6 animate-fade-up"
-      style={{ animationDelay: "0.05s" }}
-    >
-      {/* header */}
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="text-[13px] font-semibold text-[var(--text)]">
-          Tool Library
-        </h3>
-        <span className="bg-[#0f1a14] text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-[5px] rounded-full">
-          1 Active
+    <div className="mb-6">
+      <div className="flex items-center justify-between mb-3">
+        <h3 className="text-sm font-semibold text-gray-700">Tool Library</h3>
+        <span className="text-xs bg-gray-800 text-white px-2.5 py-0.5 rounded-full font-medium">
+          {selectedTools.length} ACTIVE
         </span>
       </div>
 
-      {/* grid */}
       <div className="grid grid-cols-3 gap-2">
-        {TOOLS.map((tool) => {
-          const isActive = tool.id === selected;
+        {tools.map((tool, idx) => {
+          const isSelected = selectedTools.includes(idx);
           return (
             <button
-              key={tool.id}
-              onClick={() => setSelected(tool.id)}
-              className={`flex items-center justify-between p-3 rounded-xl border text-left transition-all ${
-                isActive
-                  ? "border-[var(--accent)] bg-[#edf7f2]"
-                  : "border-[var(--border)] bg-[#fafaf8] hover:border-[#c8c8c0]"
+              key={idx}
+              onClick={() => toggleTool(idx)}
+              className={`flex items-center justify-between px-4 py-3 rounded-xl border text-left transition-colors ${
+                isSelected
+                  ? "border-teal-400 bg-white shadow-sm"
+                  : "border-gray-200 bg-white hover:border-gray-300"
               }`}
             >
               <div>
-                <p className="text-[12px] font-semibold text-[var(--text)] leading-tight">
+                <div className="text-sm font-semibold text-gray-800">
                   {tool.name}
-                </p>
-                <p className="text-[10px] text-[var(--muted)] mt-0.5">
-                  {tool.category}
-                </p>
+                </div>
+                <div className="text-xs text-gray-400">{tool.type}</div>
               </div>
-
-              {/* radio */}
-              <div
-                className={`w-4 h-4 rounded-full border-2 flex items-center justify-center shrink-0 transition-all ${
-                  isActive
-                    ? "border-[var(--accent)] bg-[var(--accent)]"
-                    : "border-[#c8c8c0]"
-                }`}
-              >
-                {isActive && (
-                  <svg width="8" height="8" fill="none" viewBox="0 0 24 24">
-                    <path
-                      d="M20 6L9 17l-5-5"
-                      stroke="white"
-                      strokeWidth="3"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                )}
-              </div>
+              {isSelected ? <CheckCircle /> : <Circle />}
             </button>
           );
         })}
       </div>
-    </section>
+    </div>
   );
 }
