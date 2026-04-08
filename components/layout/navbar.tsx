@@ -6,6 +6,9 @@ import { createPortal } from 'react-dom';
 import Image from 'next/image';
 import { useTheme } from 'next-themes';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
+import { useLocale } from 'next-intl';
+import { useRouter } from 'next/navigation';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -67,16 +70,16 @@ const featureLinks: FeatureItem[] = [
 ];
 
 const resourceDocLinks: ResourceItem[] = [
-  { title: 'CLI Documents',   description: 'Guides for using tools via command line',      href: '#', icon: '/icons/res-cli.png'   },
-  { title: 'API Documents',   description: 'Accelerate testing with intelligent automation', href: '#', icon: '/icons/res-api.png'   },
-  { title: 'Tools Documents', description: 'Instructions for using security tools',        href: '#', icon: '/icons/res-tools.png' },
-  { title: 'CI/CD Documents', description: 'Setup guides for pipeline integration',        href: '#', icon: '/icons/res-cicd.png'  },
+  { title: 'CLI Documents',   description: 'Guides for using tools via command line',      href: '/resources/cli-document', icon: '/icons/res-cli.png'   },
+  { title: 'API Documents',   description: 'Accelerate testing with intelligent automation', href: '/resources/api-document', icon: '/icons/res-api.png'   },
+  { title: 'Tools Documents', description: 'Instructions for using security tools',        href: '/resources/tools-document', icon: '/icons/res-tools.png' },
+  { title: 'CI/CD Documents', description: 'Setup guides for pipeline integration',        href: '/resources/integration-ci-cd', icon: '/icons/res-cicd.png'  },
 ];
 
 const resourceMiscLinks: ResourceItem[] = [
   { title: 'About Us',    href: '/about-us', icon: '/icons/about_us_icon.png'   },
   { title: 'Contact Us',  href: '/contact-us',          icon: '/icons/contact_us_icon.png' },
-  { title: 'FAQ',         href: '#',          icon: '/icons/faq_icon.png'     },
+  { title: 'FAQ',         href: '/help-center',          icon: '/icons/faq_icon.png'     },
 ];
 
 // ── Logo ─────────────────────────────────────────────────────────────────────
@@ -133,12 +136,16 @@ function ThemeToggle() {
 }
 
 // ── Language Toggle ───────────────────────────────────────────────────────────
-type Lang = 'EN' | 'KH';
+type Lang = 'en' | 'km';
 
 function LanguageToggle() {
-  const [lang, setLang] = React.useState<Lang>('EN');
+  const [mounted, setMounted] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const ref = React.useRef<HTMLDivElement>(null);
+  const router = useRouter();
+  const currentLocale = useLocale();
+
+  React.useEffect(() => setMounted(true), []);
 
   React.useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
@@ -150,49 +157,45 @@ function LanguageToggle() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  const handleLocaleChange = (newLocale: Lang) => {
+    // eslint-disable-next-line react-hooks/immutability
+    window.document.cookie = `locale=${newLocale};path=/;max-age=31536000;SameSite=Lax`;
+    router.refresh();
+    setOpen(false);
+  };
+
   const options: { value: Lang; label: string; flagSrc: string }[] = [
-    { value: 'EN', label: 'English',  flagSrc: '/flags/en.png' },
-    { value: 'KH', label: 'ខ្មែរ',     flagSrc: '/flags/kh.png' },
+    { value: 'en', label: 'English',  flagSrc: '/flags/en.png' },
+    { value: 'km', label: 'ខ្មែរ',     flagSrc: '/flags/kh.png' },
   ];
 
-  const current = options.find(o => o.value === lang)!;
+  if (!mounted) return <div className="w-14 h-7" />;
+
+  const current = options.find(o => o.value === currentLocale) || options[0];
 
   return (
     <div ref={ref} className="relative shrink-0">
       <button
         onClick={() => setOpen(v => !v)}
-        className="flex items-center gap-1.5 px-2.5 py-1.5   bg-transparent text-sm font-medium cursor-pointer hover:bg-primary/10 transition-colors"
+        className="flex items-center gap-1.5 px-2.5 py-1.5 bg-transparent text-sm font-medium cursor-pointer hover:bg-primary/10 transition-colors"
       >
-        {/* Flag image */}
-        <Image
-          src={current.flagSrc}
-          alt={current.value}
-          width={20}
-          height={14}
-          className=" object-cover"
-        />
-        <span>{current.value}</span>
+        <Image src={current.flagSrc} alt={current.value} width={20} height={14} className="object-cover" />
+        <span>{current.value.toUpperCase()}</span>
         <ChevronDownIcon className={cn('size-3.5 transition-transform', open && 'rotate-180')} />
       </button>
 
       {open && (
-        <div className="absolute right-0 mt-1 w-36   bg-popover shadow-lg z-50 overflow-hidden">
+        <div className="absolute right-0 mt-1 w-36 bg-popover shadow-lg z-50 overflow-hidden">
           {options.map(opt => (
             <button
               key={opt.value}
-              onClick={() => { setLang(opt.value); setOpen(false); }}
+              onClick={() => handleLocaleChange(opt.value)}
               className={cn(
                 'w-full flex items-center gap-2.5 px-3 py-2 text-sm hover:bg-primary/10 transition-colors cursor-pointer',
-                lang === opt.value && 'bg-pr font-semibold',
+                currentLocale === opt.value && 'bg-primary/10 font-semibold',
               )}
             >
-              <Image
-                src={opt.flagSrc}
-                alt={opt.value}
-                width={20}
-                height={14}
-                className=" object-cover"
-              />
+              <Image src={opt.flagSrc} alt={opt.value} width={20} height={14} className="object-cover" />
               <span>{opt.label}</span>
             </button>
           ))}
@@ -353,6 +356,7 @@ function MobileMenu({ open, children, className, ...props }: MobileMenuProps) {
 
 // ── Header ────────────────────────────────────────────────────────────────────
 export function Header() {
+  const t = useTranslations('nav');
   const [open, setOpen] = React.useState(false);
   const scrolled = useScroll(10);
 
@@ -383,7 +387,7 @@ export function Header() {
               {/* ── Tools ── */}
               <NavigationMenuItem>
                 <NavigationMenuTrigger className="bg-transparent hover:bg-transparent focus:bg-transparent data-[state=active]:bg-transparent data-[state=open]:bg-transparent text-primary font-semibold">
-                <Link href="/tools">  Tools</Link>
+                <Link href="/tools">  {t('tools')}</Link>
                 </NavigationMenuTrigger>
                 <NavigationMenuContent className="bg-background">
                   <div className="w-120 rounded-xl border border-border bg-popover shadow-xl p-3">
@@ -401,7 +405,7 @@ export function Header() {
               {/* ── Features ── */}
               <NavigationMenuItem>
                 <NavigationMenuTrigger className="bg-transparent hover:bg-transparent focus:bg-transparent data-[state=active]:bg-transparent data-[state=open]:bg-transparent">
-                <Link href="/feature">  Features</Link>
+                <Link href="/feature">  {t('features')}</Link>
                 </NavigationMenuTrigger>
                 <NavigationMenuContent className="bg-background">
                   <div className="w-120 rounded-xl border border-border bg-popover shadow-xl p-3">
@@ -419,7 +423,7 @@ export function Header() {
               {/* ── Resources ── */}
               <NavigationMenuItem>
                 <NavigationMenuTrigger className="bg-transparent hover:bg-transparent focus:bg-transparent data-[state=active]:bg-transparent data-[state=open]:bg-transparent">
-                  <Link href="/resource">  Resources</Link>
+                  <Link href="/resource">  {t('resources')}</Link>
                 </NavigationMenuTrigger>
                 <NavigationMenuContent className="bg-background">
                   <div className="w-120 rounded-xl border border-border bg-popover shadow-xl p-3">
@@ -461,7 +465,7 @@ export function Header() {
 
           {/* Login / Register */}
           <Link href="/register"><button className="px-4 py-1.5 rounded-md text-sm font-semibold text-primary  bg-transparent cursor-pointer hover:bg-primary/10 transition-colors">
-            Login / Register
+            {t('loginRegister')}
           </button></Link>
         </div>
 
@@ -511,7 +515,7 @@ export function Header() {
 
         <div className="flex flex-col gap-2 pt-2 border-t border-border">
           <button className="w-full py-2 rounded-md border border-primary text-primary text-sm font-semibold bg-transparent cursor-pointer hover:bg-primary/10 transition-colors">
-            Login / Register
+            {t('loginRegister')}
           </button>
         </div>
       </MobileMenu>

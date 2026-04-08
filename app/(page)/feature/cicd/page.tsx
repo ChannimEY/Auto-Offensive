@@ -1,7 +1,8 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
-import { useRef, useState } from "react";
+import { motion } from "framer-motion";
+import { useState } from "react";
+import { ExternalLink, GitBranch, CheckCircle, AlertTriangle, Shield } from "lucide-react";
 
 const pipelineSteps = [
   {
@@ -42,188 +43,132 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Guardian AI Scan
-        uses: guardian/scan.action@v1
+      - name: Auto-Offensive Scan
+        uses: auto-offensive/scan@v1
         with:
-          api_key: \${{ secrets.GUARDIAN_API_KEY }}`;
+          api_key: \${{ secrets.AUTO_OFFENSIVE_API_KEY }}`;
 
-const gitlabYaml = `guardian-security-scan:
-  stage: test
-  image: guardian/scanner:latest
+const gitlabYaml = `auto-offensive-scan:
+  stage: security
+  image: auto-offensive/scanner:latest
   script:
-    - guardian scan --full-depth
-    - guardian report --format sarif
+    - ao scan --full-depth
+    - ao report --format sarif
   artifacts:
     reports:
-      sast: guardian-report.json
+      sast: ao-report.json
   only:
     - merge_requests
     - main`;
 
+const fadeUp = (delay = 0) => ({
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.5, delay, ease: [0.25, 0.46, 0.45, 0.94] as const },
+});
+
 export default function CICDFeature() {
-  const pipelineRef = useRef(null);
-  const vulnRef = useRef(null);
-  const cicdRef = useRef(null);
-  const secretRef = useRef(null);
-  const devExpRef = useRef(null);
-
-  const pipelineInView = useInView(pipelineRef, { once: true });
-  const vulnInView = useInView(vulnRef, { once: true });
-  const cicdInView = useInView(cicdRef, { once: true });
-  const secretInView = useInView(secretRef, { once: true });
-  const devExpInView = useInView(devExpRef, { once: true });
-
   const [activeTab, setActiveTab] = useState<"github" | "gitlab">("github");
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white font-sans">
+    <div className="min-h-screen bg-[#F7F5F0] dark:bg-[#09090B] font-sans">
       {/* ── Hero ── */}
-      <section className="relative py-20 overflow-hidden">
-        {/* bg grid */}
-        <div className="absolute inset-0 bg-[radial-gradient(rgba(16,185,129,0.04)_1px,transparent_1px)] bg-size:[28px_28px] pointer-events-none" />
+      <section className="relative overflow-hidden bg-white dark:bg-[#111113] border-b border-black/9 dark:border-white/9">
+        <div className="absolute inset-0 pointer-events-none" style={{
+          backgroundImage: "radial-gradient(rgba(0,188,161,0.04) 1px, transparent 1px)",
+          backgroundSize: "28px 28px",
+        }} />
+        <div className="absolute top-0 left-1/4 w-96 h-96 rounded-full bg-[#00BCA1]/5 blur-3xl pointer-events-none" />
 
-        <div className="max-w-5xl mx-auto px-6 grid grid-cols-2 gap-60 items-center relative">
-          <div>
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-1.5 bg-emerald-500/10 border border-emerald-500/30 rounded-full px-3 py-1 mb-6"
-            >
-              <span className="text-xs font-bold text-emerald-500 tracking-widest uppercase">
-                ↔ SAST Module
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <motion.div {...fadeUp(0)}>
+              <span className="inline-flex items-center gap-2 text-[11px] font-bold tracking-widest uppercase bg-[#00BCA1]/10 text-[#00BCA1] border border-[#00BCA1]/20 rounded-full px-3 py-1.5 mb-6">
+                <GitBranch className="w-3.5 h-3.5" />
+                CI/CD Integration
               </span>
+
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-[#1A1A1A] dark:text-[#EDEDED] leading-tight mb-5">
+                Repository<br />
+                <span className="text-[#00BCA1]">Scanning.</span>
+              </h1>
+
+              <p className="text-[#5C5C5C] dark:text-[#9A9A9A] text-base sm:text-lg leading-relaxed mb-8 max-w-md">
+                Integrate deep-code analysis directly into your SDLC. Detect vulnerabilities before they reach production.
+              </p>
+
+              <div className="flex flex-wrap gap-3">
+                <button className="inline-flex items-center gap-2 px-5 py-3 bg-[#00BCA1] hover:bg-[#00A390] text-white rounded-xl text-sm font-bold transition-colors">
+                  <GitBranch className="w-4 h-4" />
+                  Connect Repository
+                </button>
+                <button className="inline-flex items-center gap-2 px-5 py-3 bg-white dark:bg-[#111113] border border-black/9 dark:border-white/9 text-[#1A1A1A] dark:text-[#EDEDED] rounded-xl text-sm font-semibold hover:border-[#00BCA1] transition-colors">
+                  View Docs <ExternalLink className="w-4 h-4" />
+                </button>
+              </div>
             </motion.div>
 
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-5xl font-black leading-tight mb-5"
-            >
-              Repository<br />
-              <span className="text-emerald-500">Scanning.</span>
-            </motion.h1>
-
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.25 }}
-              className="text-sm text-slate-400 leading-relaxed mb-9 max-w-sm"
-            >
-              Guardian AI integrates directly into your SDLC, providing deep-code analysis and instant vulnerability identification before your code even reaches production.
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.35 }}
-            >
-              <div className="inline-flex items-center gap-2.5 bg-slate-900 border border-white/8 rounded px-4.5 py-2.5">
-                <span className="text-sm">📦</span>
-                <code className="text-sm text-emerald-500 font-mono">
-                  npm install @guardian/sast
-                </code>
+            {/* Hero Visual */}
+            <motion.div {...fadeUp(0.2)} className="relative">
+              <div className="bg-white dark:bg-[#111113] rounded-2xl border border-black/9 dark:border-white/9 p-6 shadow-xl">
+                <div className="flex items-center gap-2 mb-4">
+                  <GitBranch className="w-5 h-5 text-[#1A1A1A] dark:text-[#EDEDED]" />
+                  <span className="text-sm font-semibold text-[#1A1A1A] dark:text-[#EDEDED]">auto-offensive/target-repo</span>
+                  <span className="ml-auto text-xs px-2 py-1 rounded-full bg-[#00BCA1]/10 text-[#00BCA1]">Active</span>
+                </div>
+                <div className="space-y-3">
+                  {[1,2,3].map((i) => (
+                    <div key={i} className="flex items-center gap-3 p-3 rounded-lg bg-[#F7F5F0] dark:bg-[#1A1A1A]">
+                      <div className={`w-8 h-8 rounded-full flex items-center justify-center ${i === 2 ? 'bg-amber-500/20' : 'bg-[#00BCA1]/10'}`}>
+                        {i === 2 ? <AlertTriangle className="w-4 h-4 text-amber-500" /> : <CheckCircle className="w-4 h-4 text-[#00BCA1]" />}
+                      </div>
+                      <div className="flex-1">
+                        <div className="text-sm font-medium text-[#1A1A1A] dark:text-[#EDEDED]">Security Scan</div>
+                        <div className="text-xs text-[#9A9A9A]">{i === 2 ? '1 vulnerability found' : 'Passed'}</div>
+                      </div>
+                      <span className="text-xs text-[#9A9A9A]">{i === 1 ? '2m ago' : i === 2 ? 'Just now' : '5m ago'}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
             </motion.div>
           </div>
-
-          {/* Isometric illustration placeholder */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="bg-linear-to-b from-blue-900/30 to-slate-900 rounded-2xl h-72 flex items-center justify-center relative overflow-hidden border border-emerald-500/15 shadow-[0_0_60px_rgba(16,185,129,0.1)]"
-          >
-            {/* Stacked blocks visual */}
-            <div className="relative">
-              {[0, 1, 2, 3].map((i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 5 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4 + i * 0.1 }}
-                  className="mx-auto mb-1 rounded shadow-lg"
-                  style={{
-                    width: 120 - i * 10,
-                    height: 16,
-                    background: `rgba(16,185,129,${0.6 - i * 0.12})`,
-                    boxShadow: `0 2px 8px rgba(16,185,129,${0.4 - i * 0.08})`,
-                  }}
-                />
-              ))}
-              <div className="flex gap-3 mt-5 justify-center">
-                {["🐙", "🦊", "🪣"].map((icon, i) => (
-                  <motion.div
-                    key={i}
-                    animate={{ y: [0, -1.5, 0] }}
-                    transition={{ duration: 2 + i * 0.5, repeat: Infinity, delay: i * 0.3 }}
-                    className="w-10 h-10 rounded border border-white/10 bg-white/8 flex items-center justify-center text-xl"
-                  >
-                    {icon}
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-          </motion.div>
         </div>
       </section>
 
-      {/* ── Analysis Pipeline ── */}
-      <section ref={pipelineRef} className="py-16 border-t border-white/5">
-        <div className="max-w-5xl mx-auto px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 5 }}
-            animate={pipelineInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6 }}
-            className="mb-10"
-          >
-            <div className="flex items-center gap-2.5 mb-1.5">
-              <div className="w-8 h-0.5 bg-emerald-500" />
-              <span className="text-xs text-slate-500 tracking-wider uppercase">
-                The Analysis Pipeline
-              </span>
-            </div>
+      {/* ── Pipeline Steps ── */}
+      <section className="py-16 border-t border-black/9 dark:border-white/9">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div {...fadeUp(0)} className="mb-10">
+            <h2 className="text-2xl sm:text-3xl font-bold text-[#1A1A1A] dark:text-[#EDEDED] mb-3">
+              The Analysis Pipeline
+            </h2>
+            <p className="text-[#5C5C5C] dark:text-[#9A9A9A]">
+              Four steps from code commit to security intelligence
+            </p>
           </motion.div>
 
-          <div className="grid grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             {pipelineSteps.map((step, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, y: 7.5 }}
-                animate={pipelineInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.55, delay: i * 0.12 }}
-                whileHover={{ y: -1 }}
-                className={`rounded-xl p-6 relative overflow-hidden transition-all ${
+                {...fadeUp(0.1 + i * 0.1)}
+                whileHover={{ y: -4 }}
+                className={`rounded-xl p-5 transition-all ${
                   step.active
-                    ? "bg-linear-to-br from-blue-500 to-indigo-500 shadow-[0_8px_32px_rgba(99,102,241,0.3)]"
-                    : "bg-slate-900 border border-white/6"
+                    ? "bg-gradient-to-br from-[#3B82F6] to-indigo-600 shadow-lg shadow-blue-500/20"
+                    : "bg-white dark:bg-[#111113] border border-black/9 dark:border-white/9"
                 }`}
               >
-                {step.active && (
-                  <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.06)_1px,transparent_1px)] bg-size:[16px_16px]" />
-                )}
-                <div
-                  className={`w-8 h-8 rounded flex items-center justify-center text-base mb-3.5 relative ${
-                    step.active
-                      ? "bg-white/15"
-                      : "bg-emerald-500/10"
-                  }`}
-                >
+                <div className={`w-10 h-10 rounded-lg flex items-center justify-center text-xl mb-4 ${
+                  step.active ? "bg-white/15" : "bg-[#00BCA1]/10"
+                }`}>
                   {step.icon}
                 </div>
-                <h3
-                  className={`text-sm font-bold mb-2 relative ${
-                    step.active ? "text-white" : "text-slate-200"
-                  }`}
-                >
+                <h3 className={`text-sm font-bold mb-2 ${step.active ? "text-white" : "text-[#1A1A1A] dark:text-[#EDEDED]"}`}>
                   {step.num}. {step.title}
                 </h3>
-                <p
-                  className={`text-xs leading-relaxed relative ${
-                    step.active ? "text-white/70" : "text-slate-500"
-                  }`}
-                >
+                <p className={`text-xs leading-relaxed ${step.active ? "text-white/70" : "text-[#5C5C5C] dark:text-[#9A9A9A]"}`}>
                   {step.desc}
                 </p>
               </motion.div>
@@ -232,188 +177,89 @@ export default function CICDFeature() {
         </div>
       </section>
 
-      {/* ── SQL Injection Finding ── */}
-      <section ref={vulnRef} className="py-16">
-        <div className="max-w-5xl mx-auto px-6 grid grid-cols-2 gap-6">
-          {/* Code panel */}
-          <motion.div
-            initial={{ opacity: 0, x: -7.5 }}
-            animate={vulnInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.7 }}
-            className="bg-slate-900 rounded-xl border border-white/6 overflow-hidden font-mono text-xs"
-          >
-            {/* Title bar */}
-            <div className="bg-slate-800 px-4 py-2.5 border-b border-white/5 flex justify-between items-center">
-              <div className="flex items-center gap-2">
+      {/* ── Vulnerability Finding ── */}
+      <section className="py-16 bg-white dark:bg-[#111113]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* Code Panel */}
+            <motion.div {...fadeUp(0)} className="bg-[#0D1117] rounded-xl border border-white/10 overflow-hidden font-mono text-xs">
+              <div className="bg-[#161B22] px-4 py-2.5 border-b border-white/5 flex items-center gap-2">
                 <div className="w-2.5 h-2.5 rounded-full bg-red-500" />
                 <div className="w-2.5 h-2.5 rounded-full bg-amber-500" />
-                <div className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
-                <span className="ml-2 text-slate-500 text-xs">
-                  AUTH_SERVICE.PY — VULNERABLE
-                </span>
+                <div className="w-2.5 h-2.5 rounded-full bg-[#00BCA1]" />
+                <span className="ml-2 text-slate-500 text-xs">AUTH_SERVICE.PY</span>
+                <span className="ml-auto text-red-500 text-xs font-bold">SQL INJECTION</span>
               </div>
-              <span className="text-red-500 text-xs font-bold">LINE 143/356</span>
-            </div>
-
-            <div className="p-5">
-              <div className="text-slate-500 mb-1">
-                def validate_user(username, password):
-              </div>
-              <div className="text-slate-500 mb-1 pl-4">
-                # Establish database connection
-              </div>
-              <div className="text-slate-300 mb-1 pl-4">
-                <span className="text-cyan-400">sql</span> ={" "}
-                <span className="bg-red-500/10 text-red-500 px-1 rounded text-xs">
-                  f&quot;SELECT * FROM users WHERE user =
-                </span>
-              </div>
-              <div className="text-slate-300 mb-1 pl-8 flex justify-between items-center">
-                <span>cursor.execute(query)</span>
-                <span className="bg-red-500 text-white text-xs px-1.5 rounded font-bold">
-                  SQL INJECTION
-                </span>
-              </div>
-              <div className="text-slate-500 mb-4 pl-8">
-                result = cursor.fetchone()
-              </div>
-
-              {/* Remediation snippet */}
-              <div className="bg-slate-950 rounded px-3.5 py-3.5 border border-emerald-500/15">
-                <div className="text-xs text-emerald-500 font-bold tracking-widest mb-2.5">
-                  REMEDIATION SNIPPET
+              <div className="p-5">
+                <div className="text-slate-500 mb-1">def validate_user(user_input, password):</div>
+                <div className="text-slate-300 mb-1 pl-4 text-cyan-400">
+                  sql = &quot;SELECT * FROM users WHERE user = &apos;...&apos;&quot; [SQL INJECTION]
                 </div>
-                <div className="text-slate-300">
-                  <span className="text-slate-600"># Use parameterized queries to prevent injection</span>
-                </div>
-                <div className="text-cyan-400">
-                  query ={" "}
-                  <span className="text-emerald-500">
-                    &quot;SELECT * FROM users WHERE user = %s&quot;
-                  </span>
-                </div>
-                <div className="text-slate-300">
-                  cursor.execute(query, (username,))
+                <div className="text-slate-300 mb-4 pl-4">cursor.execute(query)</div>
+                <div className="text-slate-300 mb-4 pl-4">cursor.execute(query)</div>
+                <div className="bg-[#00BCA1]/10 rounded px-3 py-3 border border-[#00BCA1]/20">
+                  <div className="text-[10px] text-[#00BCA1] font-bold tracking-widest mb-2">REMEDIATION</div>
+                  <div className="text-slate-300">query = &quot;SELECT * FROM users WHERE user = %s&quot;</div>
+                  <div className="text-slate-300">cursor.execute(query, (user_input,))</div>
                 </div>
               </div>
-            </div>
-          </motion.div>
-
-          {/* Critical flaw card */}
-          <motion.div
-            initial={{ opacity: 0, x: 7.5 }}
-            animate={vulnInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.7, delay: 0.15 }}
-          >
-            <div className="bg-white rounded-xl p-6 border border-slate-200 mb-4">
-              <div className="flex items-center gap-1.5 mb-3">
-                <span>🔴</span>
-                <span className="text-xs font-black text-red-500 tracking-widest uppercase">
-                  Critical Flaw
-                </span>
-              </div>
-              <p className="text-sm text-slate-700 leading-relaxed mb-5">
-                SQL Injection Vulnerability: The application is concatenating untrusted user input directly into a SQL query string. An attacker could bypass authentication by providing a malicious payload like{" "}
-                <code className="bg-red-50 text-red-500 px-1.5 rounded text-xs">
-                  &apos; OR     &apos;1    &apos;=    &apos;1
-                </code>
-                .
-              </p>
-
-              {[
-                {
-                  label: "Confidence Score",
-                  value: "98% (High)",
-                  color: "text-emerald-500",
-                },
-                { label: "CVE Reference", value: "CWE-89", color: "text-blue-500" },
-                {
-                  label: "Estimated Fix Time",
-                  value: "5 Minutes",
-                  color: "text-slate-900",
-                },
-              ].map((row, i) => (
-                <div
-                  key={i}
-                  className="flex justify-between py-2.5 border-b border-slate-100"
-                >
-                  <span className="text-sm text-slate-500">{row.label}</span>
-                  <span className={`text-sm font-semibold ${row.color}`}>
-                    {row.value}
-                  </span>
-                </div>
-              ))}
-
-              <motion.button
-                whileHover={{
-                  scale: 1.02,
-                  boxShadow: "0 0 20px rgba(16,185,129,0.3)",
-                }}
-                whileTap={{ scale: 0.97 }}
-                className="w-full mt-5 py-3 bg-emerald-500 text-white rounded font-bold text-sm hover:bg-emerald-600 transition"
-              >
-                🔧 Create Fix Pull Request
-              </motion.button>
-            </div>
-
-            {/* Pre-Active Detection */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={vulnInView ? { opacity: 1 } : {}}
-              transition={{ delay: 0.5 }}
-              className="bg-linear-to-br from-blue-900/40 to-blue-950/40 rounded-lg p-5 border border-blue-500/20"
-            >
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-blue-500" />
-                <span className="text-sm text-blue-300 font-semibold">
-                  Pre-Active Detection
-                </span>
-              </div>
-              <p className="text-xs text-slate-500 mt-2 leading-relaxed">
-                This vulnerability was caught before reaching staging. Guardian AI blocked the PR automatically.
-              </p>
             </motion.div>
-          </motion.div>
+
+            {/* Finding Card */}
+            <motion.div {...fadeUp(0.1)} className="bg-white dark:bg-[#111113] border border-black/9 dark:border-white/9 rounded-xl p-6">
+              <div className="flex items-center gap-2 mb-4">
+                <span className="text-lg">🔴</span>
+                <span className="text-xs font-black text-red-500 tracking-widest uppercase">Critical Flaw</span>
+              </div>
+              <p className="text-[#5C5C5C] dark:text-[#9A9A9A] text-sm leading-relaxed mb-5">
+                SQL Injection: User input concatenated directly into SQL query. An attacker could bypass authentication.
+              </p>
+              <div className="space-y-3 mb-5">
+                <div className="flex justify-between py-2 border-b border-black/9 dark:border-white/9">
+                  <span className="text-sm text-[#9A9A9A]">Confidence</span>
+                  <span className="text-sm font-semibold text-[#00BCA1]">98% (High)</span>
+                </div>
+                <div className="flex justify-between py-2 border-b border-black/9 dark:border-white/9">
+                  <span className="text-sm text-[#9A9A9A]">CWE</span>
+                  <span className="text-sm font-semibold text-blue-500">CWE-89</span>
+                </div>
+                <div className="flex justify-between py-2">
+                  <span className="text-sm text-[#9A9A9A]">Fix Time</span>
+                  <span className="text-sm font-semibold text-[#1A1A1A] dark:text-[#EDEDED]">5 Minutes</span>
+                </div>
+              </div>
+              <button className="w-full py-3 bg-[#00BCA1] hover:bg-[#00A390] text-white rounded-lg text-sm font-bold transition-colors flex items-center justify-center gap-2">
+                <Shield className="w-4 h-4" />
+                Create Fix PR
+              </button>
+            </motion.div>
+          </div>
         </div>
       </section>
 
       {/* ── CI/CD Integration ── */}
-      <section
-        ref={cicdRef}
-        className="py-16 border-t border-white/5"
-      >
-        <div className="max-w-5xl mx-auto px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 5 }}
-            animate={cicdInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6 }}
-            className="mb-2"
-          >
-            <h2 className="text-2xl font-black text-white mb-2">
+      <section className="py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div {...fadeUp(0)} className="mb-8">
+            <h2 className="text-2xl sm:text-3xl font-bold text-[#1A1A1A] dark:text-[#EDEDED] mb-3">
               CI/CD Integration Guide
             </h2>
-            <p className="text-sm text-slate-500 max-w-xs">
-              Deploy Guardian AI into your existing workflow in seconds. Copy these pre-written YAML snippets to start blocking insecure commits today.
+            <p className="text-[#5C5C5C] dark:text-[#9A9A9A]">
+              Deploy security scanning in seconds
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-2 gap-6 mt-8">
-            {/* YAML panel */}
-            <motion.div
-              initial={{ opacity: 0, x: -5 }}
-              animate={cicdInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="bg-slate-900 rounded-xl border border-white/6 overflow-hidden"
-            >
-              {/* Tab bar */}
-              <div className="flex border-b border-white/6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* YAML Panel */}
+            <motion.div {...fadeUp(0)} className="bg-[#0D1117] rounded-xl border border-white/10 overflow-hidden">
+              <div className="flex border-b border-white/10">
                 {(["github", "gitlab"] as const).map((tab) => (
                   <button
                     key={tab}
                     onClick={() => setActiveTab(tab)}
                     className={`px-5 py-2.5 text-xs font-semibold border-b-2 transition ${
                       activeTab === tab
-                        ? "bg-slate-800 text-white border-emerald-500"
+                        ? "bg-[#161B22] text-white border-[#00BCA1]"
                         : "text-slate-500 border-transparent hover:text-slate-300"
                     }`}
                   >
@@ -421,246 +267,56 @@ export default function CICDFeature() {
                   </button>
                 ))}
               </div>
-              <pre className="p-6 m-0 text-xs text-slate-300 leading-relaxed overflow-x-auto font-mono">
+              <pre className="p-5 m-0 text-xs text-slate-300 leading-relaxed overflow-x-auto font-mono">
                 <code>{activeTab === "github" ? githubYaml : gitlabYaml}</code>
               </pre>
             </motion.div>
 
-            {/* Feature list */}
-            <motion.div
-              initial={{ opacity: 0, x: 5 }}
-              animate={cicdInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="flex flex-col gap-5 pt-2"
-            >
+            {/* Features */}
+            <motion.div {...fadeUp(0.1)} className="flex flex-col gap-5">
               {[
-                {
-                  icon: "⬅️",
-                  title: "Shift Left Security",
-                  desc: "Prevent vulnerabilities from reaching the main branch with automated PR checks.",
-                },
-                {
-                  icon: "🤖",
-                  title: "Native CI Tooling",
-                  desc: "Prefer a custom script? Our CLI supports exit codes for automated build failures.",
-                },
-                {
-                  icon: "📋",
-                  title: "Full Audit Trail",
-                  desc: "Every scan result is logged with detailed history for compliance reporting.",
-                },
+                { icon: "🛡️", title: "Shift Left Security", desc: "Block vulnerabilities before main branch" },
+                { icon: "⚡", title: "Native Integration", desc: "Pre-configured YAML, copy-paste deploy" },
+                { icon: "📋", title: "Full Audit Trail", desc: "Compliance-ready scan history" },
               ].map((item, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 2.5 }}
-                  animate={cicdInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ delay: 0.4 + i * 0.12 }}
-                  className="flex gap-3.5 items-start"
-                >
-                  <div className="w-9 h-9 rounded border border-emerald-500/20 bg-emerald-500/10 flex items-center justify-center text-base shrink-0">
+                <div key={i} className="flex gap-4 p-4 bg-white dark:bg-[#111113] border border-black/9 dark:border-white/9 rounded-xl">
+                  <div className="w-10 h-10 rounded-lg bg-[#00BCA1]/10 flex items-center justify-center text-lg shrink-0">
                     {item.icon}
                   </div>
                   <div>
-                    <h3 className="text-sm font-bold text-slate-200 mb-1">
-                      {item.title}
-                    </h3>
-                    <p className="text-xs text-slate-500 leading-relaxed">
-                      {item.desc}
-                    </p>
+                    <h3 className="text-sm font-bold text-[#1A1A1A] dark:text-[#EDEDED] mb-1">{item.title}</h3>
+                    <p className="text-xs text-[#5C5C5C] dark:text-[#9A9A9A] leading-relaxed">{item.desc}</p>
                   </div>
-                </motion.div>
+                </div>
               ))}
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* ── Secret Exposure ── */}
-      <section ref={secretRef} className="py-16">
-        <div className="max-w-5xl mx-auto px-6 grid grid-cols-2 gap-6">
-          {/* Config code panel */}
-          <motion.div
-            initial={{ opacity: 0, x: -7.5 }}
-            animate={secretInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.7 }}
-            className="bg-slate-900 rounded-xl border border-white/6 overflow-hidden font-mono text-xs"
-          >
-            <div className="bg-slate-800 px-4 py-2.5 border-b border-white/5 flex justify-between items-center">
-              <div className="flex items-center gap-2">
-                <div className="w-2.5 h-2.5 rounded-full bg-red-500" />
-                <div className="w-2.5 h-2.5 rounded-full bg-amber-500" />
-                <div className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
-                <span className="ml-2 text-slate-500 text-xs">
-                  CONFIG/SETTINGS.YAML — LEAKED SECRET
-                </span>
-              </div>
-              <span className="text-amber-500 text-xs font-semibold">LINE 81</span>
-            </div>
-
-            <div className="p-5">
-              <div className="text-slate-500 mb-1">production:</div>
-              <div className="text-slate-300 mb-1 pl-4">
-                database_url:{" "}
-                <span className="text-cyan-400">
-                  &quot;postgres://db-internal:5432&quot;
-                </span>
-              </div>
-              <div className="text-slate-300 mb-1 pl-4 flex justify-between items-center">
-                <span>
-                  aws_secret_key:{" "}
-                  <span className="bg-red-500/15 text-red-500 px-1 rounded text-xs">
-                    AKIAIOSFODNN7EXAMPLE...
-                  </span>
-                </span>
-                <span className="bg-red-500 text-white text-xs px-1.5 rounded font-bold">
-                  ⚠ HARDCODED SECRET
-                </span>
-              </div>
-              <div className="text-slate-500 pl-4 mb-4">
-                ms_endpoint:{" "}
-                <span className="text-cyan-400">
-                  &quot;https://api.guardian.ai&quot;
-                </span>
-              </div>
-
-              <div className="bg-slate-950 rounded px-3.5 py-3.5 border border-red-500/15">
-                <div className="text-xs text-amber-500 font-bold tracking-widest mb-2.5">
-                  RECOMMENDED ACTION
-                </div>
-                <p className="text-xs text-slate-300 leading-relaxed">
-                  This AWS Access Key was detected in plain text. We recommend revoking the key immediately and moving it to a secure Secret Manager (e.g., AWS Secrets Manager or Vault).
-                </p>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Secret Exposure card */}
-          <motion.div
-            initial={{ opacity: 0, x: 7.5 }}
-            animate={secretInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.7, delay: 0.15 }}
-          >
-            <div className="bg-white rounded-xl p-6 border border-slate-200">
-              <div className="flex items-center gap-1.5 mb-3">
-                <span>🔴</span>
-                <span className="text-xs font-black text-red-500 tracking-widest uppercase">
-                  Secret Exposure
-                </span>
-              </div>
-              <p className="text-sm text-slate-700 leading-relaxed mb-5">
-                <strong>Leaked Credentials:</strong> Guardian AI identified an active AWS Access Key embedded in your configuration. This poses a critical risk of unauthorized infrastructure access.
+      {/* ── CTA ── */}
+      <section className="py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div {...fadeUp(0)} className="relative rounded-2xl px-6 py-12 overflow-hidden" style={{ background: "linear-gradient(135deg, #0D1B2A 0%, #0f2940 100%)" }}>
+            <div className="absolute -top-16 -left-16 w-48 h-48 rounded-full bg-[#00BCA1]/10 blur-3xl" />
+            <div className="absolute -bottom-16 -right-16 w-48 h-48 rounded-full bg-[#0077B6]/10 blur-3xl" />
+            
+            <div className="relative z-10 text-center">
+              <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3">
+                Ready to secure your pipeline?
+              </h2>
+              <p className="text-[#9A9A9A] mb-8 max-w-md mx-auto">
+                Start scanning your repositories in minutes.
               </p>
-
-              {[
-                {
-                  label: "Detection Type",
-                  value: "Entropy & Pattern Match",
-                  color: "text-emerald-500",
-                },
-                {
-                  label: "Secret Validity",
-                  value: "Verified Active",
-                  color: "text-emerald-500",
-                },
-                {
-                  label: "Exposure Range",
-                  value: "Public & Private Repos",
-                  color: "text-red-500",
-                },
-              ].map((row, i) => (
-                <div
-                  key={i}
-                  className="flex justify-between py-2.5 border-b border-slate-100"
-                >
-                  <span className="text-sm text-slate-500">{row.label}</span>
-                  <span className={`text-sm font-semibold ${row.color}`}>
-                    {row.value}
-                  </span>
-                </div>
-              ))}
-
-              <motion.button
-                whileHover={{
-                  scale: 1.02,
-                  boxShadow: "0 0 20px rgba(239,68,68,0.3)",
-                }}
-                whileTap={{ scale: 0.97 }}
-                className="w-full mt-5 py-3 bg-red-500 text-white rounded font-bold text-sm hover:bg-red-600 transition"
-              >
-                🔄 Revoke & Rotate Secret
-              </motion.button>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ── Developer Experience ── */}
-      <section ref={devExpRef} className="py-20">
-        <div className="max-w-5xl mx-auto px-6 grid grid-cols-2 gap-5">
-          {/* Stats */}
-          <motion.div
-            initial={{ opacity: 0, y: 7.5 }}
-            animate={devExpInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6 }}
-            className="bg-slate-100 rounded-2xl p-9 border border-slate-200"
-          >
-            <h2 className="text-2xl font-black text-slate-950 mb-3">
-              Developer Experience First.
-            </h2>
-            <p className="text-sm text-slate-500 leading-relaxed mb-8">
-              Security shouldn&apos;t be a bottleneck. Guardian AI provides clear, actionable feedback directly in your developers &apos; preferred environment.
-            </p>
-            <div className="grid grid-cols-2 gap-6">
-              <div>
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={devExpInView ? { opacity: 1 } : {}}
-                  transition={{ delay: 0.4 }}
-                  className="text-4xl font-black text-emerald-500"
-                >
-                  99.8%
-                </motion.div>
-                <div className="text-xs text-slate-400 uppercase tracking-widest mt-1">
-                  Scan Uptime
-                </div>
-              </div>
-              <div>
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={devExpInView ? { opacity: 1 } : {}}
-                  transition={{ delay: 0.5 }}
-                  className="text-4xl font-black text-slate-950"
-                >
-                  &lt; 3s
-                </motion.div>
-                <div className="text-xs text-slate-400 uppercase tracking-widest mt-1">
-                  PR Feedback Loop
-                </div>
+              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                <button className="bg-[#00BCA1] hover:bg-[#00A390] text-white px-6 py-3 rounded-xl text-sm font-bold transition-colors">
+                  Get Started Free
+                </button>
+                <button className="border border-white/20 text-white px-6 py-3 rounded-xl text-sm font-semibold hover:bg-white/5 transition-colors">
+                  Schedule Demo
+                </button>
               </div>
             </div>
-          </motion.div>
-
-          {/* Cloud Native */}
-          <motion.div
-            initial={{ opacity: 0, y: 7.5 }}
-            animate={devExpInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.15 }}
-            className="bg-linear-to-br from-emerald-500 to-emerald-600 rounded-2xl p-9 relative overflow-hidden"
-          >
-            <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.06)_1px,transparent_1px)] bg-size:[20px_20px]" />
-            <motion.div
-              animate={{ y: [0, -1.5, 0] }}
-              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-              className="w-16 h-16 rounded-lg bg-white/15 flex items-center justify-center text-2xl mb-5 relative"
-            >
-              ☁️
-            </motion.div>
-            <h3 className="text-xl font-black text-white mb-3 relative">
-              Cloud Native
-            </h3>
-            <p className="text-sm text-white/75 leading-relaxed relative">
-              Support for GitHub, GitLab, Bitbucket, and self-hosted instances. Zero infrastructure maintenance required.
-            </p>
           </motion.div>
         </div>
       </section>

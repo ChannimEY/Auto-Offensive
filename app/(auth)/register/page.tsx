@@ -1,5 +1,6 @@
 import Image from "next/image";
 import RegisterForm from "@/components/auth/RegisterForm";
+import { Link } from "@/i18n/routing";
 
 export default function RegisterPage() {
   return (
@@ -9,23 +10,23 @@ export default function RegisterPage() {
         {/* Left Side */}
         <div className="hidden md:flex flex-col items-start justify-center gap-6">
           
-          {/* Light Logo */}
+        <Link href="/">  {/* Light Logo */}
           <Image
             src="/Auto_offensive_Light-mode.png"
             alt="Auto Offensive Logo"
             width={208}
             height={208}
             className="w-52 object-contain dark:hidden"
-          />
+          /></Link>
 
-          {/* Dark Logo */}
+          <Link href="/">  {/* Dark Logo */}
           <Image
             src="/Auto_offensive_Dark-mode.png"
             alt="Auto Offensive Logo"
             width={208}
             height={208}
             className="w-52 object-contain hidden dark:block"
-          />
+          /></Link>
 
           <Image
             src="/fox.png"

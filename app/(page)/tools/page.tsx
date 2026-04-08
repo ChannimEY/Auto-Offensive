@@ -1,6 +1,6 @@
-'use client'
+'use client';
 
-import { JSX, useState } from 'react'
+import { JSX, useState } from 'react';
 
 // ── Icons ──────────────────────────────────────────────────────────────
 const SearchIcon = () => (
@@ -121,9 +121,9 @@ const tools = [
 const categories = ['All', 'Recon', 'Vuln', 'Fuzzing']
 
 const categoryColors: Record<string, string> = {
-  Recon:   'bg-blue-50 text-blue-600 border-blue-100',
-  Vuln:    'bg-red-50 text-red-600 border-red-100',
-  Fuzzing: 'bg-purple-50 text-purple-600 border-purple-100',
+  Recon:   'bg-blue-50 dark:bg-blue-950/30 text-blue-600 dark:text-blue-400 border-blue-100 dark:border-blue-800',
+  Vuln:    'bg-red-50 dark:bg-red-950/30 text-red-600 dark:text-red-400 border-red-100 dark:border-red-800',
+  Fuzzing: 'bg-purple-50 dark:bg-purple-950/30 text-purple-600 dark:text-purple-400 border-purple-100 dark:border-purple-800',
 }
 
 const categoryDot: Record<string, string> = {
@@ -153,25 +153,20 @@ export default function ToolsPage() {
   }
 
   return (
-    // Uses --font-google-sans CSS variable already set in layout.tsx
-    <div className="min-h-screen bg-[#f8fafc]" style={{ fontFamily: 'var(--font-google-sans), sans-serif' }}>
-
-      {/* Page Header */}
-      <div className="bg-white border-b border-gray-100">
+    <div className="min-h-screen bg-[#F7F5F0] dark:bg-[#09090B]" style={{ fontFamily: 'var(--font-google-sans), sans-serif' }}>
+      <div className="bg-white dark:bg-[#111113] border-b border-black/9 dark:border-white/9">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6">
             <div>
-              <h1 className="text-7xl font-bold text-primary mt-1 text-center">The Auto-Offensive ToolKit</h1>
-              <p className="mt-2 text-gray-500 text-xl max-w-xl ">
+              <h1 className="text-7xl font-bold text-[#1A1A1A] dark:text-[#EDEDED] mt-1 text-center">The Auto-Offensive ToolKit</h1>
+              <p className="mt-2 text-[#5C5C5C] dark:text-[#9A9A9A] text-xl max-w-xl">
                 Browse and launch industry-standard scanning engines from a single unified interface.
               </p>
             </div>
           </div>
-
-          {/* Search + Filter */}
           <div className="mt-8 flex flex-col sm:flex-row gap-4">
             <div className="relative flex-1 max-w-md">
-              <div className="absolute inset-y-0 left-3 flex items-center text-gray-400 pointer-events-none">
+              <div className="absolute inset-y-0 left-3 flex items-center text-[#9A9A9A] pointer-events-none">
                 <SearchIcon />
               </div>
               <input
@@ -179,10 +174,9 @@ export default function ToolsPage() {
                 placeholder="Search tools, tags..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-[#00C896] focus:ring-1 focus:ring-[#00C896] transition"
+                className="w-full pl-10 pr-4 py-2.5 bg-[#F7F5F0] dark:bg-[#111113] border border-black/9 dark:border-white/9 rounded-xl text-sm text-[#1A1A1A] dark:text-[#EDEDED] placeholder-[#9A9A9A] focus:border-[#00BCA1] focus:ring-1 focus:ring-[#00BCA1] transition"
               />
             </div>
-
             <div className="flex items-center gap-2 flex-wrap">
               {categories.map((cat) => (
                 <button
@@ -190,13 +184,13 @@ export default function ToolsPage() {
                   onClick={() => setActiveCategory(cat)}
                   className={`px-4 py-2 rounded-xl text-sm font-medium border transition-all ${
                     activeCategory === cat
-                      ? 'bg-[#00C896] text-white border-[#00C896] shadow-sm'
-                      : 'bg-white text-gray-600 border-gray-200 hover:border-[#00C896] hover:text-[#00C896]'
+                      ? 'bg-[#00BCA1] text-white border-[#00BCA1] shadow-sm'
+                      : 'bg-white dark:bg-[#111113] text-[#5C5C5C] dark:text-[#9A9A9A] border-black/9 dark:border-white/9 hover:border-[#00BCA1] hover:text-[#00BCA1]'
                   }`}
                 >
                   {cat}
                   {cat !== 'All' && (
-                    <span className={`ml-1.5 text-xs ${activeCategory === cat ? 'opacity-70' : 'text-gray-400'}`}>
+                    <span className={`ml-1.5 text-xs ${activeCategory === cat ? 'opacity-70' : 'text-[#9A9A9A]'}`}>
                       ({tools.filter((t) => t.category === cat).length})
                     </span>
                   )}
@@ -206,16 +200,14 @@ export default function ToolsPage() {
           </div>
         </div>
       </div>
-
-      {/* Tools Grid */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         {filtered.length === 0 ? (
-          <div className="text-center py-24 text-gray-400">
+          <div className="text-center py-24 text-[#9A9A9A]">
             <svg className="mx-auto mb-4" width="48" height="48" viewBox="0 0 48 48" fill="none">
-              <circle cx="22" cy="22" r="14" stroke="#cbd5e1" strokeWidth="2"/>
-              <path d="M32 32L44 44" stroke="#cbd5e1" strokeWidth="2" strokeLinecap="round"/>
+              <circle cx="22" cy="22" r="14" stroke="#9A9A9A" strokeWidth="2"/>
+              <path d="M32 32L44 44" stroke="#9A9A9A" strokeWidth="2" strokeLinecap="round"/>
             </svg>
-            <p className="text-lg font-medium">No tools found</p>
+            <p className="text-lg font-medium text-[#1A1A1A] dark:text-[#EDEDED]">No tools found</p>
             <p className="text-sm mt-1">Try a different search or category</p>
           </div>
         ) : (
@@ -223,15 +215,15 @@ export default function ToolsPage() {
             {filtered.map((tool) => (
               <div
                 key={tool.id}
-                className="group bg-white border border-gray-100 rounded-2xl p-6 flex flex-col gap-4 shadow-sm hover:shadow-lg hover:border-[#00C896]/40 hover:-translate-y-1 transition-all duration-200 cursor-pointer"
+                className="group bg-white dark:bg-[#111113] border border-black/9 dark:border-white/9 rounded-2xl p-6 flex flex-col gap-4 shadow-sm hover:shadow-lg hover:border-[#00BCA1]/40 hover:-translate-y-1 transition-all duration-200 cursor-pointer"
               >
                 <div className="flex items-start justify-between">
-                  <div className="w-11 h-11 rounded-xl bg-linear-to-r from-[#f0fdf8] to-[#e6fff7] border border-[#00C896]/20 flex items-center justify-center text-[#00C896] group-hover:scale-105 transition-transform">
+                  <div className="w-11 h-11 rounded-xl bg-[#F7F5F0] dark:bg-[#111113] border border-[#00BCA1]/20 flex items-center justify-center text-[#00BCA1] group-hover:scale-105 transition-transform">
                     <Icon id={tool.id} />
                   </div>
                   <div className="flex items-center gap-2">
                     {tool.badge && (
-                      <span className="text-[10px] font-bold uppercase tracking-wider bg-linear-to-r from-[#00C896] to-[#00B386] text-white px-2.5 py-1 rounded-md">
+                      <span className="text-[10px] font-bold uppercase tracking-wider bg-[#00BCA1] text-white px-2.5 py-1 rounded-md">
                         {tool.badge}
                       </span>
                     )}
@@ -241,24 +233,21 @@ export default function ToolsPage() {
                     </span>
                   </div>
                 </div>
-
                 <div>
-                  <h3 className="font-bold text-gray-900 mb-1.5">{tool.name}</h3>
-                  <p className="text-gray-500 text-sm leading-relaxed">{tool.description}</p>
+                  <h3 className="font-bold text-[#1A1A1A] dark:text-[#EDEDED] mb-1.5">{tool.name}</h3>
+                  <p className="text-[#5C5C5C] dark:text-[#9A9A9A] text-sm leading-relaxed">{tool.description}</p>
                 </div>
-
                 <div className="flex flex-wrap gap-1.5 mt-auto">
                   {tool.tags.map((tag) => (
-                    <span key={tag} className="text-[11px] bg-gray-50 border border-gray-100 text-gray-500 px-2 py-0.5 rounded-md font-mono">
+                    <span key={tag} className="text-[11px] bg-[#F7F5F0] dark:bg-[#111113] border border-black/9 dark:border-white/9 text-[#5C5C5C] dark:text-[#9A9A9A] px-2 py-0.5 rounded-md font-mono">
                       #{tag}
                     </span>
                   ))}
                 </div>
-
-                <div className="pt-3 border-t border-gray-50">
+                <div className="pt-3 border-t border-black/9 dark:border-white/9">
                   <a
                     href="#"
-                    className="text-primary text-sm font-semibold inline-flex items-center gap-1.5 group-hover:gap-3 transition-all"
+                    className="text-[#00BCA1] text-sm font-semibold inline-flex items-center gap-1.5 group-hover:gap-3 transition-all"
                   >
                     Try for Free
                     <svg width="14" height="14" viewBox="0 0 14 14" fill="none">

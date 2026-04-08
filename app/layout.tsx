@@ -5,6 +5,9 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme-provider";
 import LayoutWrapper from "@/components/layout/LayoutWrapper";
+import { NextIntlClientProvider } from "next-intl";
+import { getMessages, getLocale } from "next-intl/server";
+import { OfflineProvider } from "@/components/providers/offline-provider";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -39,14 +42,17 @@ export const metadata: Metadata = {
   description: "Automated Security Workflows and Pentesting Platform",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const locale = await getLocale();
+  const messages = await getMessages();
+
   return (
     <html
-      lang="en"
+      lang={locale}
       suppressHydrationWarning
       className={cn(
         "h-full",
@@ -66,7 +72,11 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <LayoutWrapper>{children}</LayoutWrapper>
+          <NextIntlClientProvider messages={messages}>
+            <OfflineProvider>
+              <LayoutWrapper>{children}</LayoutWrapper>
+            </OfflineProvider>
+          </NextIntlClientProvider>
         </ThemeProvider>
       </body>
     </html>

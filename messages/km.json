@@ -1,0 +1,169 @@
+{
+  "common": {
+    "home": "ទំព័រដើម",
+    "about": "អំពីយើង",
+    "contact": "ទំនាក់ទំនង",
+    "login": "ចូល",
+    "register": "ចុះឈ្មោះ",
+    "logout": "ចេញ",
+    "search": "ស្វែងរក",
+    "language": "ភាសា",
+    "documentation": "ឯកសារ",
+    "gettingStarted": "ចាប់ផ្តើម",
+    "learnMore": "ស្វែងយល់ប្ថែម",
+    "viewAll": "មើលទាំងអស់",
+    "tryForFree": "សាកល្បងឥតគិតថ្លៃ",
+    "getStarted": "ចាប់ផ្តើម",
+    "learn": "រៀន",
+    "reference": "ឯកសារ",
+    "execute": "ប្រតិបត្តិ"
+  },
+  "nav": {
+    "features": "មុខងារ",
+    "tools": "ឧបករណ៍",
+    "resources": "ធនធាន",
+    "pricing": "តម្លៃ",
+    "documentation": "ឯកសារ",
+    "loginRegister": "ចូល / ចុះឈ្មោះ"
+  },
+  "footer": {
+    "product": "ផលិតផល",
+    "features": "មុខងារ",
+    "tools": "ឧបករណ៍",
+    "pricing": "តម្លៃ",
+    "integrations": "ការប្រើប្រាស់",
+    "resources": "ធនធាន",
+    "documentation": "ឯកសារ",
+    "apiReference": "ឯកសារ API",
+    "cliGuide": " មគីងស មេបា",
+    "blog": "ប្លក",
+    "company": "ក្រុមហ៊ុន",
+    "aboutUs": "អំពីយើង",
+    "careers": "ឱកាសការងារ",
+    "contactUs": "ទំនាក់ទំនងយើង",
+    "legal": "ច្បាប់",
+    "privacyPolicy": "គោលការណ៍ភាពឯកជន",
+    "termsOfService": "លក្ខណៈសេវកថា",
+    "security": "សុវត្ថិភាព",
+    "community": "សហគមន៍",
+    "discord": "Discord",
+    "twitter": "Twitter",
+    "github": "GitHub",
+    "allRightsReserved": "រក្សាសិទ្ធិគ្រប់យ៉ាង",
+    "builtWith": "បានបង្កើតជាមួយ"
+  },
+  "hero": {
+    "title": "PaaS ជំនាន់ថ្មីសម្រាប់ Hacker",
+    "subtitle": "ប្រព័ន្ធ ស្វែងរក និង pentesting ដោយស្វ័យប្រវត្តិ"
+  },
+  "tools": {
+    "title": "The Auto-Offensive ToolKit",
+    "subtitle": "រកមើល និង ចងើបឧបករណ៍ scanning ពី ចំណុចប្រមូលផ្តុំតែមួយ",
+    "searchPlaceholder": "ស្វែងរក tools, tags...",
+    "noResults": "រកមិនឃើញ tools",
+    "tryDifferentSearch": "ព្យាយាម ស្វែងរក ផ្សេង ទៀត"
+  },
+  "resource": {
+    "title": "រៀន ឯកសារ ប្រតិបត្តិ",
+    "subtitle": "មេការ, ឯកសារ API, និង tutorials ដើម្បីជំនួយអ្នក ក្នុងការ ប្រើ ប្រាស់ Auto-Offensive toolkit",
+    "documentationHub": "មជ្ឈមណ្ឌលឯកសារ",
+    "documentationCategories": "ប្រភេទ នៃ ឯកសារ",
+    "quickLinks": "តំណភ្ជាប់ ឆ្ងាយ",
+    "featuredResources": "ធនធាន ពិសេស",
+    "quickStartGuide": " មេការ ចាប់ផ្តើម រហ័ស",
+    "quickStartDesc": "ចាប់ផ្តើម ក្នុង 5 នាទី",
+    "apiAuthentication": "API Authentication",
+    "apiAuthDesc": "បង្កើត API keys",
+    "exampleScripts": "Scripts ឧទាហរណ៍",
+    "exampleScriptsDesc": "Copy-paste automation",
+    "videoTutorials": "Video Tutorials",
+    "videoTutorialsDesc": "រៀន តាម video",
+    "newsletterTitle": "ទទួល ធនធាន ថ្មី ក្នុង inbox អ្នក",
+    "newsletterSubtitle": "មេការ និង updates ថ្មី រាល់ សប្តាហ៍",
+    "subscribe": "Subscribe",
+    "emailPlaceholder": "email របស់អ្នក"
+  },
+  "features": {
+    "title": "សមត្ថភាព នៃ ប្រព័ន្ធ",
+    "subtitle": "អ្វីៗ ទាំងអស់ ដែល អ្នក ត្រូវការ ដើម្បី ធានា សុវត្ថិភាព ហេដ្ឋារន្ទី"
+  },
+  "feature": {
+    "cli": {
+      "title": "Command ដោយ គ្មាន កម្រិត",
+      "subtitle": "ប្រើ 20+ ឧបករណ៍ security ពី terminal របស់អ្នក ដោយ គ្មាន ការ ដំឡើង",
+      "installCta": "ដំឡើង CLI",
+      "viewDocs": "មើល ឯកសារ",
+      "engineeringPrecision": "ភាព ច្បាស់ នៃ វិស្វកម្ម",
+      "executionWorkflow": "Workflow នៃ ការ ប្រតិបត្តិ",
+      "readyUpgrade": "ត្រៀម ធ្វើ បច្ចេកវិទ្យា របស់អ្នក ឱ្យ ប្រសើរ?"
+    },
+    "ai": {
+      "title": "AI-Assisted របាយកល្ប",
+      "subtitle": "បម្លែង data ចុះឈ្មោះ ទៅ ជា intelligence សម្រាប់ ក្រុមប្រឹក្សា",
+      "generateReport": "បង្កើត របាយកល",
+      "viewDemo": "មើល Demo",
+      "workflowTitle": "Workflow នៃ ការ របាយកល",
+      "workflowSubtitle": "បី ជំហ៊ាន ពី raw data ទៅ ឯកសារ ពេញ លេង",
+      "liveDashboard": "Dashboard ផ្ទាល់",
+      "aiEdge": "AI Edge",
+      "stopWriting": "ឈប់ សរសេរ របាយកល ចាប់ផ្តើម ធានា សុវត្ថិភាព"
+    },
+    "cicd": {
+      "title": "Repository Scanning",
+      "subtitle": "បញ្ចូល analysis ក្នុង SDLC របស់អ្នក",
+      "connectRepo": "ភ្ជាប់ Repository",
+      "viewDocs": "មើល ឯកសារ",
+      "analysisPipeline": "Pipeline នៃ ការ វិភាគ",
+      "ciCdIntegration": "មេការ ប្រើប្រាស់ CI/CD",
+      "readySecure": "ត្រៀម ធានា សុវត្ថិភាព pipeline របស់អ្នក?"
+    },
+    "webui": {
+      "title": "Orchestrate Scans ដោយ គ្មាន CLI",
+      "subtitle": "Auto-Offensive ភ្ជាប់ ឧបករណ៍ open-source និង enterprise-grade usability",
+      "launchScan": "ចងើប Scanầu tiên",
+      "watchDemo": "មើល Demo",
+      "engineeredForEnterprise": "បាន រចនា សម្រាប់ Enterprise ROI"
+    }
+  },
+  "privacy": {
+    "title": "គោលការណ៍ ភាព ឯកជន",
+    "lastUpdated": "បាន ធ្វើបច្ចុប្បន្ន"
+  },
+  "terms": {
+    "title": "លក្ខណៈ សេវកថា",
+    "legal": "ច្បាប់"
+  },
+  "help": {
+    "title": "មជ្ឈមណ្ឌល ជំនួយ",
+    "support": "Support",
+    "searchPlaceholder": "ស្វែងរក ជំនួយ...",
+    "frequentlyAsked": " សំណួរ គេ សួរ ញឹកញាប់",
+    "cantFind": "រក មិន ឃើញ អ្វី ដែល អ្នក កំពុង រក?",
+    "contactUs": "ទំនាក់ទំនង យើង",
+    "viewDocumentation": "មើល ឯកសារ"
+  },
+  "docs": {
+    "title": "ឯកសារ",
+    "searchPlaceholder": "ស្វែងរក ឯកសារ...",
+    "onThisPage": "នៅ ទំព័រ នេះ",
+    "previous": "មុន",
+    "next": "បន្ទាប់",
+    "gettingStarted": "ចាប់ផ្តើម",
+    "introduction": "ការ ណែនាំ",
+    "quickStart": " មេការ រហ័ស",
+    "installation": "ការ ដំឡើង"
+  },
+  "error": {
+    "notFound": {
+      "title": "ទំព័រ មិន ត្រូវបាន រកឃើញ",
+      "description": "ទំព័រ ដែល អ្នក កំពុង ស្វែងរក មិន មាន ទេ ឬ ត្រូវ បាន ផ្លាស់ទី",
+      "goHome": "ទៅ ទំព័រ ដើម",
+      "goBack": "ត្រលប់"
+    },
+    "offline": {
+      "title": "អ្នក កំពុង ត្រូវ បាន កាត់ ផ្តាច់",
+      "description": "សូម ពិនិត្យ ការ តភ្ជាប់ អ៊ីនធឺណេត របស់អ្នក ហើយ ព្យាយាម ម្តង ទៀត",
+      "tryAgain": "ព្យាយាម ម្តង ទៀត"
+    }
+  }
+}

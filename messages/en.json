@@ -1,0 +1,169 @@
+{
+  "common": {
+    "home": "Home",
+    "about": "About",
+    "contact": "Contact",
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout",
+    "search": "Search",
+    "language": "Language",
+    "documentation": "Documentation",
+    "gettingStarted": "Getting Started",
+    "learnMore": "Learn More",
+    "viewAll": "View All",
+    "tryForFree": "Try for Free",
+    "getStarted": "Get Started",
+    "learn": "Learn",
+    "reference": "Reference",
+    "execute": "Execute"
+  },
+  "nav": {
+    "features": "Features",
+    "tools": "Tools",
+    "resources": "Resources",
+    "pricing": "Pricing",
+    "documentation": "Documentation",
+    "loginRegister": "Login / Register"
+  },
+  "footer": {
+    "product": "Product",
+    "features": "Features",
+    "tools": "Tools",
+    "pricing": "Pricing",
+    "integrations": "Integrations",
+    "resources": "Resources",
+    "documentation": "Documentation",
+    "apiReference": "API Reference",
+    "cliGuide": "CLI Guide",
+    "blog": "Blog",
+    "company": "Company",
+    "aboutUs": "About Us",
+    "careers": "Careers",
+    "contactUs": "Contact Us",
+    "legal": "Legal",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
+    "security": "Security",
+    "community": "Community",
+    "discord": "Discord",
+    "twitter": "Twitter",
+    "github": "GitHub",
+    "allRightsReserved": "All rights reserved.",
+    "builtWith": "Built with"
+  },
+  "hero": {
+    "title": "Next-Gen PaaS for Hackers",
+    "subtitle": "Automated Security Workflows and Pentesting Platform"
+  },
+  "tools": {
+    "title": "The Auto-Offensive ToolKit",
+    "subtitle": "Browse and launch industry-standard scanning engines from a single unified interface.",
+    "searchPlaceholder": "Search tools, tags...",
+    "noResults": "No tools found",
+    "tryDifferentSearch": "Try a different search or category"
+  },
+  "resource": {
+    "title": "Learn. Reference. Execute.",
+    "subtitle": "Comprehensive guides, API references, and tutorials to help you master the Auto-Offensive toolkit.",
+    "documentationHub": "Documentation Hub",
+    "documentationCategories": "Documentation Categories",
+    "quickLinks": "Quick Links",
+    "featuredResources": "Featured Resources",
+    "quickStartGuide": "Quick Start Guide",
+    "quickStartDesc": "Get running in 5 minutes",
+    "apiAuthentication": "API Authentication",
+    "apiAuthDesc": "Generate API keys",
+    "exampleScripts": "Example Scripts",
+    "exampleScriptsDesc": "Copy-paste automation",
+    "videoTutorials": "Video Tutorials",
+    "videoTutorialsDesc": "Visual learning",
+    "newsletterTitle": "Get new resources in your inbox",
+    "newsletterSubtitle": "New guides, tutorials, and updates dropped every week.",
+    "subscribe": "Subscribe",
+    "emailPlaceholder": "your@email.com"
+  },
+  "features": {
+    "title": "Platform Capabilities",
+    "subtitle": "Everything you need to secure your infrastructure"
+  },
+  "feature": {
+    "cli": {
+      "title": "Command Without Limits",
+      "subtitle": "Run 20+ professional security tools from your terminal with zero installation.",
+      "installCta": "Install the CLI",
+      "viewDocs": "View Docs",
+      "engineeringPrecision": "Engineering Precision",
+      "executionWorkflow": "Execution Workflow",
+      "readyUpgrade": "Ready to upgrade your workflow?"
+    },
+    "ai": {
+      "title": "AI-Assisted Reporting",
+      "subtitle": "Transform raw vulnerability data into boardroom-ready intelligence.",
+      "generateReport": "Generate Report",
+      "viewDemo": "View Demo",
+      "workflowTitle": "The Reporting Workflow",
+      "workflowSubtitle": "Three steps from raw data to comprehensive documentation",
+      "liveDashboard": "Live Result Dashboard",
+      "aiEdge": "The AI Edge",
+      "stopWriting": "Stop writing reports. Start securing."
+    },
+    "cicd": {
+      "title": "Repository Scanning",
+      "subtitle": "Integrate deep-code analysis directly into your SDLC.",
+      "connectRepo": "Connect Repository",
+      "viewDocs": "View Docs",
+      "analysisPipeline": "The Analysis Pipeline",
+      "ciCdIntegration": "CI/CD Integration Guide",
+      "readySecure": "Ready to secure your pipeline?"
+    },
+    "webui": {
+      "title": "Orchestrate Scans Without the CLI",
+      "subtitle": "Guardian AI bridges the gap between powerful open-source security tools and enterprise-grade usability.",
+      "launchScan": "Launch First Scan",
+      "watchDemo": "Watch Demo",
+      "engineeredForEnterprise": "Engineered for Enterprise ROI"
+    }
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "lastUpdated": "Last updated"
+  },
+  "terms": {
+    "title": "Terms of Service",
+    "legal": "Legal"
+  },
+  "help": {
+    "title": "Help Center",
+    "support": "Support",
+    "searchPlaceholder": "Search for help...",
+    "frequentlyAsked": "Frequently Asked Questions",
+    "cantFind": "Can't find what you're looking for?",
+    "contactUs": "Contact Us",
+    "viewDocumentation": "View Documentation"
+  },
+  "docs": {
+    "title": "Documentation",
+    "searchPlaceholder": "Search documentation...",
+    "onThisPage": "On This Page",
+    "previous": "Previous",
+    "next": "Next",
+    "gettingStarted": "Getting Started",
+    "introduction": "Introduction",
+    "quickStart": "Quick Start",
+    "installation": "Installation"
+  },
+  "error": {
+    "notFound": {
+      "title": "Page Not Found",
+      "description": "The page you're looking for doesn't exist or has been moved.",
+      "goHome": "Go Home",
+      "goBack": "Go Back"
+    },
+    "offline": {
+      "title": "You're Offline",
+      "description": "Please check your internet connection and try again.",
+      "tryAgain": "Try Again"
+    }
+  }
+}

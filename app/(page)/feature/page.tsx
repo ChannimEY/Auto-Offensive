@@ -2,6 +2,7 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+
 import {
   Monitor,
   Brain,
@@ -34,7 +35,7 @@ interface WorkflowStep {
 const workflowSteps: WorkflowStep[] = [
   {
     icon: <Search className="w-5 h-5" />,
-    color: "text-primary",
+    color: "text-#00BCA1",
     bgLight: "bg-emerald-50 border-emerald-200",
     bgDark: "dark:bg-emerald-950/40 dark:border-emerald-800",
     title: "Enumerate",
@@ -98,7 +99,7 @@ function TerminalPreview() {
       <div className="flex items-center gap-1.5 px-4 py-3 bg-slate-800/80 border-b border-slate-700/40">
         <span className="w-2.5 h-2.5 rounded-full bg-red-500/70" />
         <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/70" />
-        <span className="w-2.5 h-2.5 rounded-full bg-primary/70" />
+        <span className="w-2.5 h-2.5 rounded-full bg-#00BCA1/70" />
         <span className="ml-3 text-xs text-slate-400 font-mono">pentest-cli v2.4.1</span>
       </div>
       <div className="p-4 font-mono text-xs space-y-1.5">
@@ -109,7 +110,7 @@ function TerminalPreview() {
         <div className="text-slate-400">80/tcp  open  http nginx 1.24</div>
         <div className="text-yellow-400">443/tcp open  https</div>
         <div className="flex items-center gap-1 mt-1">
-          <span className="text-primary">▮</span>
+          <span className="text-#00BCA1">▮</span>
           <span className="text-slate-500">_</span>
         </div>
       </div>
@@ -120,9 +121,9 @@ function TerminalPreview() {
 function AiBadge({ text }: { text: string }) {
   return (
     <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold tracking-widest uppercase
-      bg-primary/10 text-primary dark:bg-emerald-400/10 dark:text-emerald-400
-      border border-primary/20 dark:border-emerald-400/20 rounded-full px-3 py-1">
-      <span className="w-1.5 h-1.5 rounded-full bg-primary dark:bg-emerald-400 animate-pulse" />
+      bg-#00BCA1/10 text-#00BCA1 dark:bg-emerald-400/10 dark:text-emerald-400
+      border border-#00BCA1/20 dark:border-emerald-400/20 rounded-full px-3 py-1">
+      <span className="w-1.5 h-1.5 rounded-full bg-#00BCA1 dark:bg-emerald-400 animate-pulse" />
       {text}
     </span>
   );
@@ -152,9 +153,8 @@ export default function PlatformCapabilities() {
   const workflowInView = useInView(workflowRef, { once: true, margin: "-80px" });
 
   return (
-   
-      <div className="min-h-screen  bg-white dark:bg-[#030712] font-sans text-slate-900 dark:text-white transition-colors duration-300">
-
+    
+      <div className="min-h-screen bg-white dark:bg-[#030712] font-sans text-slate-900 dark:text-white transition-colors duration-300">
 
         {/* ── Hero ── */}
         <section
@@ -165,14 +165,14 @@ export default function PlatformCapabilities() {
           <div
             className="pointer-events-none absolute inset-0"
             style={{
-              backgroundImage: `radial-gradient(rgba(16,185,129,0.05) 1px, transparent 1px)`,
+              backgroundImage: `radial-gradient(rgba(0,188,161,0.05) 1px, transparent 1px)`,
               backgroundSize: "28px 28px",
             }}
           />
           {/* Glow */}
           <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
             w-7xl h-80 rounded-full
-            bg-primary/5 dark:bg-emerald-400/5 blur-3xl" />
+            bg-[#00BCA1]/5 dark:bg-emerald-400/5 blur-3xl" />
 
           <div className="relative max-w-3xl mx-auto">
             <motion.div
@@ -194,7 +194,7 @@ export default function PlatformCapabilities() {
                 text-slate-900 dark:text-white"
             >
               Platform<br />
-              <span className="text-primary dark:text-emerald-400">Capabilities</span>
+              <span className="text-[#00BCA1] dark:text-emerald-400">Capabilities</span>
             </motion.h1>
 
             <motion.p
@@ -219,7 +219,7 @@ export default function PlatformCapabilities() {
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold
-                  bg-primary hover:bg-emerald-400 text-white transition-colors shadow-lg shadow-primary/20"
+                  bg-#00BCA1 hover:bg-emerald-400 text-white transition-colors shadow-lg shadow-#00BCA1/20"
               >
                 Get Started <ArrowRight className="w-4 h-4" />
               </motion.button>
@@ -258,7 +258,7 @@ export default function PlatformCapabilities() {
               <div className="flex items-center gap-2 mb-5">
                 <div className="w-9 h-9 rounded-xl bg-emerald-50 dark:bg-emerald-950/50
                   border border-emerald-200 dark:border-emerald-800
-                  flex items-center justify-center text-primary">
+                  flex items-center justify-center text-#00BCA1">
                   <Monitor className="w-4 h-4" />
                 </div>
                 <span className="text-[11px] font-bold tracking-widest uppercase
@@ -463,7 +463,7 @@ export default function PlatformCapabilities() {
                   whileHover={{ scale: 1.03, boxShadow: "0 0 28px rgba(16,185,129,0.3)" }}
                   whileTap={{ scale: 0.97 }}
                   className="inline-flex items-center gap-2.5 px-6 py-3 rounded-xl text-sm font-bold
-                    bg-primary hover:bg-emerald-400 text-white transition-colors shadow-lg shadow-primary/20"
+                    bg-#00BCA1 hover:bg-emerald-400 text-white transition-colors shadow-lg shadow-#00BCA1/20"
                 >
                   <FileText className="w-4 h-4" /> View Documentation
                 </motion.button>
@@ -538,8 +538,8 @@ export default function PlatformCapabilities() {
                     animate={{ scale: [1, 1.1, 1] }}
                     transition={{ duration: 2, repeat: Infinity }}
                     className="absolute -bottom-3 -right-3 w-11 h-11 rounded-full
-                      bg-primary flex items-center justify-center
-                      shadow-lg shadow-primary/40"
+                      bg-#00BCA1 flex items-center justify-center
+                      shadow-lg shadow-#00BCA1/40"
                   >
                     <Sparkles className="w-5 h-5 text-white" />
                   </motion.div>
@@ -573,7 +573,7 @@ export default function PlatformCapabilities() {
             animate={workflowInView ? "visible" : "hidden"}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl sm:text-4xl font-black text-primary dark:text-emerald-400 mb-3">
+            <h2 className="text-3xl sm:text-4xl font-black text-#00BCA1 dark:text-emerald-400 mb-3">
               Integrated Attack Workflow
             </h2>
             <p className="text-sm sm:text-base text-slate-500 dark:text-slate-400">
@@ -584,7 +584,7 @@ export default function PlatformCapabilities() {
           <div className="relative">
             {/* Connector line — hidden on mobile */}
             <div className="hidden lg:block absolute top-7 left-[12.5%] right-[12.5%] h-px
-              bg-linear-to-r from-transparent via-primary/30 to-transparent z-0" />
+              bg-linear-to-r from-transparent via-#00BCA1/30 to-transparent z-0" />
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 relative z-10">
               {workflowSteps.map((step, i) => (
@@ -633,8 +633,8 @@ export default function PlatformCapabilities() {
               whileHover={{ scale: 1.04, boxShadow: "0 0 32px rgba(16,185,129,0.3)" }}
               whileTap={{ scale: 0.96 }}
               className="inline-flex items-center gap-2.5 px-8 py-3.5 rounded-xl text-sm font-bold
-                bg-primary hover:bg-emerald-400 text-white transition-colors
-                shadow-xl shadow-primary/20"
+                bg-#00BCA1 hover:bg-emerald-400 text-white transition-colors
+                shadow-xl shadow-#00BCA1/20"
             >
               Start Scanning <ArrowRight className="w-4 h-4" />
             </motion.button>
