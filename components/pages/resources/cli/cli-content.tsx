@@ -149,7 +149,7 @@ function CodeBlock({
       <div className="bg-[#16181F] px-5 py-4.5 overflow-x-auto">
         <code
           ref={codeRef}
-          className="text-[16px] md:text-[18px] lg:text-[20px] leading-[1.92] text-white/55"
+          className="text-[16px] md:text-[18px] lg:text-[20px] leading-[1.92] text-white/55 whitespace-pre"
           style={monoFontStyle}
         >
           {children}
@@ -437,6 +437,132 @@ function NotList() {
 }
 
 /* ── TOC ──────────────────────────────────────────────────── */
+function ManagedExecutionList() {
+  const items = [
+    { tool: "subfinder", cmd: "pentest subfinder" },
+    { tool: "httpx", cmd: "pentest httpx" },
+    { tool: "naabu", cmd: "pentest naabu" },
+    { tool: "nuclei", cmd: "pentest nuclei" },
+  ];
+
+  return (
+    <div className="border border-[#E2DDD5] dark:border-white/10 rounded-xl overflow-hidden my-3.5 bg-white dark:bg-[#121214]">
+      <div className="flex items-center gap-2 px-4 py-2.5 bg-[#F0EDE6] dark:bg-white/5 border-b border-[#E2DDD5] dark:border-white/10 text-[12px] font-semibold text-[#88837B] dark:text-[#9CA3AF] tracking-[0.04em]">
+        <svg
+          className="w-3.5 h-3.5 stroke-current fill-none"
+          viewBox="0 0 24 24"
+          strokeWidth={2}
+        >
+          <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
+          <line x1="12" y1="9" x2="12" y2="13" />
+          <line x1="12" y1="17" x2="12.01" y2="17" />
+        </svg>
+        You do not install these tools locally
+      </div>
+      <div className="overflow-x-auto">
+        <table className="w-max min-w-full border-collapse">
+          <tbody>
+            {items.map((item, index) => (
+              <tr
+                key={item.tool}
+                className="border-b border-[#E2DDD5] dark:border-white/10 last:border-b-0 hover:bg-[#F0EDE6] dark:hover:bg-white/5 transition-colors duration-150"
+              >
+                <td className="px-4 py-3 whitespace-nowrap align-middle">
+                  <div className="w-7 h-7 rounded-full border border-[#CEC9BF] dark:border-white/10 bg-[#F7F5F0] dark:bg-[#18181B] flex items-center justify-center font-mono text-[11px] font-semibold text-[#88837B] dark:text-[#9CA3AF]">
+                    {index + 1}
+                  </div>
+                </td>
+                <td
+                  className="px-2 py-3 text-[16px] md:text-[18px] lg:text-[20px] text-[#B5B0A8] line-through decoration-[#C42828] whitespace-nowrap align-middle"
+                  style={monoFontStyle}
+                >
+                  {item.tool}
+                </td>
+                <td
+                  className="px-2 py-3 text-[16px] md:text-[18px] lg:text-[20px] text-[#00BCA1] whitespace-nowrap align-middle"
+                  style={monoFontStyle}
+                >
+                  -&gt;
+                </td>
+                <td
+                  className="px-2 py-3 text-base md:text-[18px] lg:text-[20px] font-medium text-[#4A4540] dark:text-[#C9CDD4] whitespace-nowrap align-middle"
+                  style={{ fontFamily: "var(--font-google-sans), var(--font-noto-khmer), sans-serif" }}
+                >
+                  Provided as a managed backend service via{" "}
+                  <span className="inline-block whitespace-nowrap">
+                    <InlineCode>{item.cmd}</InlineCode>
+                  </span>
+                </td>
+                <td className="px-4 py-3 whitespace-nowrap align-middle">
+                  <Tag variant="acc">Managed</Tag>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+function SecurityList() {
+  const items = [
+    {
+      title: "Predefined tools only",
+      desc: "Only the supported tool set is accessible. Requests for unlisted tools or custom binaries are rejected before execution.",
+    },
+    {
+      title: "Parameter validation",
+      desc: "Every request is validated against the allowed parameter schema on both the CLI and the backend. Injection attempts are blocked.",
+    },
+    {
+      title: "Isolated execution",
+      desc: "Each job runs in its own isolated container. There is no shared state, no persistent filesystem access, and no system-level exposure.",
+    },
+    {
+      title: "Authenticated requests",
+      desc: "All CLI requests require a valid API token. Unauthenticated or expired sessions are rejected immediately with a clear error.",
+    },
+    {
+      title: "Audit log",
+      desc: "Every command, job, and result is logged against your account. Full audit history is available from the web dashboard.",
+    },
+    {
+      title: "No arbitrary execution",
+      desc: "The CLI does not support shell pass-through, piping, or arbitrary command injection. The execution surface is completely controlled.",
+    },
+  ];
+
+  return (
+    <div className="my-4 flex flex-col gap-4">
+      {items.map((item, index) => (
+        <div
+          key={item.title}
+          className="flex gap-3.5 rounded-xl border border-[#E2DDD5] dark:border-white/10 bg-white dark:bg-[#121214] px-4 py-4 hover:bg-[#F0EDE6] dark:hover:bg-white/5 transition-colors duration-150"
+        >
+          <div className="w-7 h-7 rounded-full bg-white dark:bg-[#18181B] border-[1.5px] border-[#CEC9BF] dark:border-white/10 flex items-center justify-center font-mono text-[11px] font-semibold text-[#1A1714] dark:text-white shrink-0">
+            {index + 1}
+          </div>
+          <div className="flex-1">
+            <div
+              className="text-base md:text-[18px] lg:text-[20px] font-semibold text-[#1A1714] dark:text-white mb-1"
+              style={{ fontFamily: "var(--font-google-sans), var(--font-noto-khmer), sans-serif" }}
+            >
+              {item.title}
+            </div>
+            <div
+              className="text-base md:text-[18px] lg:text-[20px] text-[#4A4540] dark:text-[#C9CDD4] leading-[1.7]"
+              style={{ fontFamily: "var(--font-google-sans), var(--font-noto-khmer), sans-serif" }}
+            >
+              {item.desc}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function TOC({ activeId }: { activeId: string }) {
   const [query, setQuery] = useState("");
   const searchRef = useRef<HTMLInputElement>(null);
@@ -599,11 +725,11 @@ export default function Content() {
             <Step num={1} title="Download the binary" desc={<>Install the CLI directly using the install script, or download the binary for your platform from the releases page.</>} />
             <Step num={2} title="Make it executable (Linux / macOS)" desc={<>Run <InlineCode>chmod +x pentest</InlineCode> then move it to a directory in your <InlineCode>$PATH</InlineCode> such as <InlineCode>/usr/local/bin</InlineCode>.</>} />
             <Step num={3} title="Authenticate" desc={<>Run <InlineCode>pentest login</InlineCode> and follow the prompt, or set your API token directly with <InlineCode>pentest login --token &lt;your-token&gt;</InlineCode>.</>} />
-            <Step num={4} title="Run your first scan" desc={<>You're ready. Use any supported command like <InlineCode>pentest subfinder -d example.com</InlineCode> — results stream back in real time.</>} last />
+            <Step num={4} title="Run your first scan" desc={<>You&apos;re ready. Use any supported command like <InlineCode>pentest subfinder -d example.com</InlineCode> — results stream back in real time.</>} last />
           </StepList>
 
           <Callout type="brand" icon="📦" title="No third-party tools required">
-            You do <strong className="text-[#1A1714] font-semibold">not</strong> need to install <InlineCode>subfinder</InlineCode>, <InlineCode>httpx</InlineCode>, <InlineCode>naabu</InlineCode>, or any other scanning tool locally. The CLI communicates with the backend — all execution happens there.
+            You do <strong className="text-[#1A1714] dark:text-white font-semibold">not</strong> need to install <InlineCode>subfinder</InlineCode>, <InlineCode>httpx</InlineCode>, <InlineCode>naabu</InlineCode>, or any other scanning tool locally. The CLI communicates with the backend — all execution happens there.
           </Callout>
 
           <CodeBlock title="bash — install & verify">
@@ -729,7 +855,7 @@ export default function Content() {
           <Para>The following tools are available through the CLI. Each is exposed through predefined commands with a fixed set of supported parameters.</Para>
 
           <div className="overflow-x-auto my-3.5 rounded-xl border border-[#E2DDD5] dark:border-white/10 bg-white dark:bg-[#121214]">
-            <table className="w-full border-collapse">
+            <table className="w-max min-w-full border-collapse">
               <thead className="bg-[#F0EDE6] dark:bg-white/5">
                 <tr>
                   {["Command", "Tool", "Category", "Description"].map((h) => (
@@ -748,20 +874,20 @@ export default function Content() {
                 ].map((row, i) => (
                   <tr key={i} className="hover:bg-[#F0EDE6] dark:hover:bg-white/5 transition-colors duration-150">
                     <td
-                      className="px-3.5 py-2.5 border-b border-[#E2DDD5] dark:border-white/10 last:border-b-0 text-[16px] md:text-[18px] lg:text-[20px] text-[#00BCA1] font-medium"
+                      className="px-3.5 py-2.5 border-b border-[#E2DDD5] dark:border-white/10 last:border-b-0 text-[16px] md:text-[18px] lg:text-[20px] text-[#00BCA1] font-medium whitespace-nowrap"
                       style={monoFontStyle}
                     >
                       {row.cmd}
                     </td>
                     <td
-                      className="px-3.5 py-2.5 border-b border-[#E2DDD5] dark:border-white/10 text-[16px] md:text-[18px] lg:text-[20px] text-[#00BCA1] font-medium"
+                      className="px-3.5 py-2.5 border-b border-[#E2DDD5] dark:border-white/10 text-[16px] md:text-[18px] lg:text-[20px] text-[#00BCA1] font-medium whitespace-nowrap"
                       style={monoFontStyle}
                     >
                       {row.tool}
                     </td>
-                    <td className="px-3.5 py-2.5 border-b border-[#E2DDD5] dark:border-white/10">{row.cat}</td>
+                    <td className="px-3.5 py-2.5 border-b border-[#E2DDD5] dark:border-white/10 whitespace-nowrap">{row.cat}</td>
                     <td
-                      className="px-3.5 py-2.5 border-b border-[#E2DDD5] dark:border-white/10 text-base md:text-[18px] lg:text-[20px] text-[#4A4540] dark:text-[#C9CDD4]"
+                      className="px-3.5 py-2.5 border-b border-[#E2DDD5] dark:border-white/10 text-base md:text-[18px] lg:text-[20px] text-[#4A4540] dark:text-[#C9CDD4] whitespace-nowrap"
                       style={{ fontFamily: "var(--font-google-sans), var(--font-noto-khmer), sans-serif" }}
                     >
                       {row.desc}
@@ -867,6 +993,7 @@ export default function Content() {
           <SectionHeading id="security">Security &amp; Access Control</SectionHeading>
           <Para>The CLI enforces strict controls on what can be executed. No arbitrary commands or shell access are provided — execution is fully managed and sandboxed by the backend.</Para>
 
+          <div className="hidden">
           <SecGrid>
             <SecItem icon="🚫" title="Predefined tools only" desc="Only the supported tool set is accessible. Requests for unlisted tools or custom binaries are rejected before execution." />
             <SecItem icon="🔍" title="Parameter validation" desc="Every request is validated against the allowed parameter schema on both the CLI and the backend. Injection attempts are blocked." />
@@ -875,6 +1002,8 @@ export default function Content() {
             <SecItem icon="📝" title="Audit log" desc="Every command, job, and result is logged against your account. Full audit history is available from the web dashboard." />
             <SecItem icon="⛔" title="No arbitrary execution" desc="The CLI does not support shell pass-through, piping, or arbitrary command injection. The execution surface is completely controlled." />
           </SecGrid>
+          </div>
+          <SecurityList />
         </section>
 
         {/* ── Concept ── */}
@@ -882,14 +1011,17 @@ export default function Content() {
           <SectionHeading id="concept">How It Works</SectionHeading>
           <Para>Users never install individual security tools. The platform provides all tools as a managed service, accessible through a single CLI binary. Execution is always handled by the backend.</Para>
 
-          <NotList />
+          <ManagedExecutionList />
+          <div className="hidden">
+            <NotList />
+          </div>
 
           <Callout type="tip" icon="✅" title="Benefits of managed execution">
-            <strong className="text-[#1A1714] font-semibold">Consistent environments</strong> — every scan runs on the same controlled infrastructure, regardless of your local OS.
+            <strong className="text-[#1A1714] dark:text-white font-semibold">Consistent environments</strong> — every scan runs on the same controlled infrastructure, regardless of your local OS.
             <br /><br />
-            <strong className="text-[#1A1714] font-semibold">Centralised updates</strong> — tools are kept up to date by the platform. You always run the latest version without any action on your side.
+            <strong className="text-[#1A1714] dark:text-white font-semibold">Centralised updates</strong> — tools are kept up to date by the platform. You always run the latest version without any action on your side.
             <br /><br />
-            <strong className="text-[#1A1714] font-semibold">Controlled usage</strong> — execution limits, rate controls, and audit logging are enforced uniformly across all users.
+            <strong className="text-[#1A1714] dark:text-white font-semibold">Controlled usage</strong> — execution limits, rate controls, and audit logging are enforced uniformly across all users.
           </Callout>
         </section>
 
@@ -917,3 +1049,4 @@ export default function Content() {
     </div>
   );
 }
+

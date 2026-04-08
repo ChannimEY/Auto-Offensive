@@ -3,17 +3,26 @@
 import React, { useState } from 'react';
 import {
   Wrench,
-  AlertCircle,
-  Info,
-  AlertTriangle,
-  Zap,
   Shield,
   CheckCircle,
-  Copy,
 } from 'lucide-react';
 
 interface ToolContentProps {
   isDark?: boolean;
+}
+
+interface ToolParam {
+  flag: string;
+  type: string;
+  req: boolean;
+  desc: string;
+}
+
+interface ToolDefinition {
+  badge: string;
+  desc: string;
+  params: ToolParam[];
+  examples: string[];
 }
 
 export const ToolContent: React.FC<ToolContentProps> = ({ isDark = false }) => {
@@ -34,10 +43,8 @@ export const ToolContent: React.FC<ToolContentProps> = ({ isDark = false }) => {
   const secondaryText = isDark ? 'text-[#C9CDD4]' : 'text-[#4A4540]';
   const mutedText = isDark ? 'text-[#A1A1AA]' : 'text-[#88837B]';
   const bgColor = isDark ? 'bg-[#09090B]' : 'bg-[#F7F5F0]';
-  const cardBg = isDark ? 'bg-[#121214]' : 'bg-white';
   const borderColor = isDark ? 'border-white/10' : 'border-[#E2DDD5]';
   const hoverBg = isDark ? 'hover:bg-white/5' : 'hover:bg-[#EAE6DE]';
-  const accentColor = '#00BCA1';
   const codeBg = isDark ? 'bg-[#16181F]' : 'bg-[#F0EDE6]';
 
   return (
@@ -124,11 +131,10 @@ export const ToolContent: React.FC<ToolContentProps> = ({ isDark = false }) => {
           through a unified interface — either via the Web UI, CLI, or API.
         </p>
 
-        {/* Tool Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+        {/* Tool Cards List */}
+        <div className="flex flex-col gap-4 mb-8">
           {[
             {
-              icon: '🔍',
               name: 'subfinder',
               fullname: 'Subdomain Enumeration',
               desc: 'Discovers subdomains using passive DNS sources, certificate transparency logs, and brute-force dictionary methods.',
@@ -137,7 +143,6 @@ export const ToolContent: React.FC<ToolContentProps> = ({ isDark = false }) => {
               status: 'Live',
             },
             {
-              icon: '🌐',
               name: 'httpx',
               fullname: 'HTTP Probing & Fingerprinting',
               desc: 'Probes HTTP/HTTPS endpoints to gather status codes, titles, server headers, TLS details, and technology fingerprints.',
@@ -146,7 +151,6 @@ export const ToolContent: React.FC<ToolContentProps> = ({ isDark = false }) => {
               status: 'Live',
             },
             {
-              icon: '📡',
               name: 'naabu',
               fullname: 'Port Scanner',
               desc: 'Fast TCP/UDP port scanner with SYN, CONNECT, and UDP scan modes. Supports CIDR ranges and service banner grabbing.',
@@ -155,7 +159,6 @@ export const ToolContent: React.FC<ToolContentProps> = ({ isDark = false }) => {
               status: 'Live',
             },
             {
-              icon: '⚡',
               name: 'nuclei',
               fullname: 'Vulnerability Scanner',
               desc: 'Template-driven scanner for detecting CVEs, misconfigurations, exposed panels, and custom security checks across web targets.',
@@ -166,35 +169,41 @@ export const ToolContent: React.FC<ToolContentProps> = ({ isDark = false }) => {
           ].map((tool, idx) => (
             <div
               key={idx}
-              className={`border ${borderColor} rounded-xl p-6 transition-all ${
+              className={`border ${borderColor} rounded-xl p-5 transition-all ${
                 isDark
                   ? 'bg-[#121214] hover:bg-white/5 hover:border-[#00BCA1]'
                   : 'bg-white hover:bg-[#EAE6DE] hover:border-[#00BCA1]'
               }`}
             >
-              <div className="text-3xl mb-2">{tool.icon}</div>
-              <div className={`${monoTextClass} font-bold ${textColor} mb-1`} style={monoFontStyle}>{tool.name}</div>
-              <div className={`${bodyTextClass} ${mutedText} mb-3`}>{tool.fullname}</div>
-              <p className={`${bodyTextClass} ${secondaryText} mb-4 leading-relaxed`}>{tool.desc}</p>
+              <div className="flex items-start gap-4">
+                <div className="w-8 h-8 shrink-0 rounded-full border border-[#CEC9BF] dark:border-white/10 bg-[#F7F5F0] dark:bg-[#18181B] flex items-center justify-center font-mono text-[11px] font-semibold text-[#88837B] dark:text-[#9CA3AF]">
+                  {idx + 1}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className={`${monoTextClass} font-bold ${textColor} mb-1`} style={monoFontStyle}>{tool.name}</div>
+                  <div className={`${bodyTextClass} ${mutedText} mb-3`}>{tool.fullname}</div>
+                  <p className={`${bodyTextClass} ${secondaryText} mb-4 leading-relaxed`}>{tool.desc}</p>
 
-              <div className="flex flex-wrap gap-2 mb-4">
-                {tool.tags.map((tag, tagIdx) => (
-                  <span
-                    key={tagIdx}
-                    className={`text-xs px-2 py-1 rounded font-medium ${
-                      isDark ? 'bg-white/5 text-[#A1A1AA]' : 'bg-[#F0EDE6] text-[#88837B]'
-                    }`}
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {tool.tags.map((tag, tagIdx) => (
+                      <span
+                        key={tagIdx}
+                        className={`text-xs px-2 py-1 rounded font-medium ${
+                          isDark ? 'bg-white/5 text-[#A1A1AA]' : 'bg-[#F0EDE6] text-[#88837B]'
+                        }`}
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
 
-              <div className={`flex items-center justify-between pt-3 border-t ${borderColor}`}>
-                <span className={`${monoTextClass} ${mutedText}`} style={monoFontStyle}>{tool.version}</span>
-                <span className="text-xs font-medium text-[#00BCA1] bg-[rgba(0,188,161,0.1)] px-2 py-1 rounded">
-                  {tool.status}
-                </span>
+                  <div className={`flex items-center justify-between pt-3 border-t ${borderColor}`}>
+                    <span className={`${monoTextClass} ${mutedText}`} style={monoFontStyle}>{tool.version}</span>
+                    <span className="text-xs font-medium text-[#00BCA1] bg-[rgba(0,188,161,0.1)] px-2 py-1 rounded">
+                      {tool.status}
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
           ))}
@@ -315,7 +324,7 @@ export const ToolContent: React.FC<ToolContentProps> = ({ isDark = false }) => {
       </section>
 
       {/* ─── Error Reference ─── */}
-      <ErrorReference isDark={isDark} textColor={textColor} secondaryText={secondaryText} mutedText={mutedText} borderColor={borderColor} cardBg={cardBg} codeBg={codeBg} />
+      <ErrorReference isDark={isDark} textColor={textColor} secondaryText={secondaryText} mutedText={mutedText} borderColor={borderColor} />
 
       {/* Navigation */}
       <div className={`mt-16 pt-8 border-t ${borderColor} flex justify-between gap-4`}>
@@ -358,16 +367,14 @@ const ToolSection: React.FC<ToolSectionProps> = ({ toolName, isDark, onCopy, cop
   const secondaryText = isDark ? 'text-[#C9CDD4]' : 'text-[#4A4540]';
   const mutedText = isDark ? 'text-[#A1A1AA]' : 'text-[#88837B]';
   const borderColor = isDark ? 'border-white/10' : 'border-[#E2DDD5]';
-  const cardBg = isDark ? 'bg-[#121214]' : 'bg-white';
   const codeBg = isDark ? 'bg-white/5' : 'bg-[#F0EDE6]';
-  const accentColor = '#00BCA1';
   const bodyTextClass = 'text-[16px] md:text-[18px] lg:text-[20px]';
   const monoTextClass = 'text-[16px] md:text-[18px] lg:text-[20px]';
   const monoFontStyle = {
     fontFamily: 'var(--font-jetbrains-mono), var(--font-google-sans), var(--font-noto-khmer), monospace',
   } as const;
 
-  const toolData: Record<string, any> = {
+  const toolData: Record<string, ToolDefinition> = {
     subfinder: {
       badge: 'recon',
       desc: 'Passive subdomain enumeration tool that queries public sources including DNS resolvers, certificate transparency logs, and third-party APIs to discover subdomains without directly interacting with the target.',
@@ -472,7 +479,7 @@ const ToolSection: React.FC<ToolSectionProps> = ({ toolName, isDark, onCopy, cop
         </div>
 
         <div className="overflow-x-auto">
-          <table className={`w-full ${bodyTextClass}`}>
+          <table className={`w-max min-w-full ${bodyTextClass}`}>
             <thead className={`${isDark ? 'bg-white/5' : 'bg-[#F0EDE6]'}`}>
               <tr>
                 <th className={`px-4 py-2 text-left font-bold text-xs uppercase tracking-wider ${mutedText}`}>
@@ -490,19 +497,19 @@ const ToolSection: React.FC<ToolSectionProps> = ({ toolName, isDark, onCopy, cop
               </tr>
             </thead>
             <tbody>
-              {data.params.map((param: any, idx: number) => (
+              {data.params.map((param: ToolParam, idx: number) => (
                 <tr
                   key={idx}
                   className={`border-t ${borderColor} ${
                     isDark ? 'hover:bg-white/5' : 'hover:bg-[#EAE6DE]'
                   } transition-colors`}
                 >
-                  <td className={`px-4 py-3 ${monoTextClass} ${textColor}`} style={monoFontStyle}>{param.flag}</td>
-                  <td className={`px-4 py-3 ${monoTextClass} ${mutedText}`} style={monoFontStyle}>{param.type}</td>
-                  <td className={`px-4 py-3 ${monoTextClass} ${param.req ? 'text-red-500' : mutedText}`} style={monoFontStyle}>
+                  <td className={`px-4 py-3 ${monoTextClass} ${textColor} whitespace-nowrap`} style={monoFontStyle}>{param.flag}</td>
+                  <td className={`px-4 py-3 ${monoTextClass} ${mutedText} whitespace-nowrap`} style={monoFontStyle}>{param.type}</td>
+                  <td className={`px-4 py-3 ${monoTextClass} ${param.req ? 'text-red-500' : mutedText} whitespace-nowrap`} style={monoFontStyle}>
                     {param.req ? 'required' : 'optional'}
                   </td>
-                  <td className={`px-4 py-3 ${bodyTextClass} ${secondaryText}`}>{param.desc}</td>
+                  <td className={`px-4 py-3 ${bodyTextClass} ${secondaryText} whitespace-nowrap`}>{param.desc}</td>
                 </tr>
               ))}
             </tbody>
@@ -554,7 +561,7 @@ const ToolSection: React.FC<ToolSectionProps> = ({ toolName, isDark, onCopy, cop
             </div>
             <p className={`${bodyTextClass} ${secondaryText}`}>
               subfinder uses <strong>passive sources only</strong> by default. It does not send DNS queries
-              directly to the target's authoritative nameservers.
+              directly to the target&apos;s authoritative nameservers.
             </p>
           </div>
         </div>
@@ -587,9 +594,7 @@ const ErrorReference: React.FC<{
   secondaryText: string;
   mutedText: string;
   borderColor: string;
-  cardBg: string;
-  codeBg: string;
-}> = ({ isDark, textColor, secondaryText, mutedText, borderColor, cardBg, codeBg }) => {
+}> = ({ isDark, textColor, secondaryText, mutedText, borderColor }) => {
   const bodyTextClass = 'text-[16px] md:text-[18px] lg:text-[20px]';
   const monoTextClass = 'text-[16px] md:text-[18px] lg:text-[20px]';
   const monoFontStyle = {
@@ -605,7 +610,7 @@ const ErrorReference: React.FC<{
 
       <div className={`border ${borderColor} rounded-lg overflow-hidden mb-8`}>
         <div className="overflow-x-auto">
-          <table className={`w-full ${bodyTextClass}`}>
+          <table className={`w-max min-w-full ${bodyTextClass}`}>
             <thead className={`${isDark ? 'bg-white/5' : 'bg-[#F0EDE6]'}`}>
               <tr>
                 <th className={`px-4 py-2 text-left font-bold text-xs uppercase tracking-wider ${mutedText}`}>
@@ -661,10 +666,10 @@ const ErrorReference: React.FC<{
                     isDark ? 'hover:bg-white/5' : 'hover:bg-[#EAE6DE]'
                   } transition-colors`}
                 >
-                  <td className={`px-4 py-3 ${monoTextClass} ${textColor}`} style={monoFontStyle}>{err.code}</td>
-                  <td className={`px-4 py-3 ${monoTextClass} ${mutedText}`} style={monoFontStyle}>{err.http}</td>
-                  <td className={`px-4 py-3 ${bodyTextClass} ${secondaryText}`}>{err.meaning}</td>
-                  <td className={`px-4 py-3 ${bodyTextClass} ${secondaryText}`}>{err.resolution}</td>
+                  <td className={`px-4 py-3 ${monoTextClass} ${textColor} whitespace-nowrap`} style={monoFontStyle}>{err.code}</td>
+                  <td className={`px-4 py-3 ${monoTextClass} ${mutedText} whitespace-nowrap`} style={monoFontStyle}>{err.http}</td>
+                  <td className={`px-4 py-3 ${bodyTextClass} ${secondaryText} whitespace-nowrap`}>{err.meaning}</td>
+                  <td className={`px-4 py-3 ${bodyTextClass} ${secondaryText} whitespace-nowrap`}>{err.resolution}</td>
                 </tr>
               ))}
             </tbody>
@@ -674,3 +679,4 @@ const ErrorReference: React.FC<{
     </section>
   );
 };
+

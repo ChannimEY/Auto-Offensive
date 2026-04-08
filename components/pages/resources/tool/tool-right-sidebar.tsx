@@ -68,7 +68,6 @@ export const ToolRightSidebar: React.FC<ToolRightSidebarProps> = ({
   }, []);
 
   const bgColor = isDark ? 'bg-[#09090B]' : 'bg-[#F7F5F0]';
-  const textColor = isDark ? 'text-[#C9CDD4]' : 'text-[#4A4540]';
   const labelColor = isDark ? 'text-[#9CA3AF]' : 'text-[#B5B0A8]';
   const borderColor = isDark ? 'border-white/10' : 'border-[#E2DDD5]';
   const hoverBg = isDark ? 'hover:bg-white/5' : 'hover:bg-[#EAE6DE]';
