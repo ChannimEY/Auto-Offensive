@@ -221,6 +221,10 @@ export default function HomeHero() {
   const t = useTranslations("homepage.hero");
   const locale = useLocale();
   const isKhmer = locale === "kh";
+  const titleLine3 = t("titleLine3");
+  const khmerTitleLine3Match = isKhmer
+    ? titleLine3.match(/^([\u1780-\u17FF\u200B-\u200D\s]+)(.*)$/u)
+    : null;
   const hexLeftRef  = useRef<SVGSVGElement>(null);
   const hexRightRef = useRef<SVGSVGElement>(null);
   const s1Ref       = useRef<HTMLDivElement>(null);
@@ -861,7 +865,14 @@ export default function HomeHero() {
             {t("titleLine2")}
             <br />
             <span className="text-[#00d0b2] dark:text-primary font-light">
-              {t("titleLine3")}
+              {khmerTitleLine3Match ? (
+                <>
+                  <span className="font-khmer">{khmerTitleLine3Match[1]}</span>
+                  {khmerTitleLine3Match[2]}
+                </>
+              ) : (
+                titleLine3
+              )}
             </span>
           </h1>
 
