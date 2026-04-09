@@ -11,11 +11,11 @@ export default function ScanBox() {
 
   const handleStartScan = () => {
     if (scanType === "Medium") {
-      router.push("/medium-scan"); // ✅ route here
+      router.push("/live-scan-medium"); // ✅ your route
     } else if (scanType === "Basic") {
-      router.push("/basic-scan"); // optional
+      router.push("/live-scan-basic"); // optional
     } else if (scanType === "Advance") {
-      router.push("/advance-scan"); // optional
+      router.push("/live-scan-advance"); // optional
     }
   };
 
@@ -47,7 +47,7 @@ export default function ScanBox() {
         />
 
         <button
-          onClick={handleStartScan} // ✅ click triggers routing
+          onClick={handleStartScan} // ✅ trigger routing
           className="
             bg-gradient-to-r from-blue-500 to-teal-500 
             text-white px-6 py-3 rounded-lg 
