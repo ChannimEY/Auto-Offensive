@@ -54,7 +54,7 @@ export default function RootLayout({
         geist.variable,
         googleSans.variable,
         hackdaddy.variable,
-        notoKhmer.variable
+        notoKhmer.variable,
       )}
     >
       <body>

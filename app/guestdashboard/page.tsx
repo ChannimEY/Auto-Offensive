@@ -1,6 +1,6 @@
 "use client";
 
-import Sidebar from "@/components/guestdashboard/Sidebar";
+import Sidebar from "@/components/Sidebar";
 import MainContent from "@/components/guestdashboard/MainContent";
 
 export default function Home() {
