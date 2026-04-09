@@ -521,7 +521,7 @@
               </div>
 
               <h1 className="contact-title text-[clamp(2.2rem,5vw,3.8rem)] font-bold leading-[1.08] tracking-[-0.02em] text-[oklch(0.145_0_0)] dark:text-[oklch(0.985_0_0)] mb-5">
-                Let's Build Something Secure
+                Let&apos;s Build Something Secure
               </h1>
 
               <p className="contact-desc text-responsive text-[oklch(0.556_0_0)] dark:text-[oklch(0.708_0_0)] max-w-155 mx-auto leading-[1.7] font-normal">
@@ -537,7 +537,7 @@
                 {/* Success message */}
                 {submitted && (
                   <div className="status-msg text-responsive mb-8 p-4 rounded-xl font-semibold bg-[rgba(0,188,161,0.10)] dark:bg-[rgba(0,188,161,0.08)] text-[#00BCA1] border border-[rgba(0,188,161,0.24)] dark:border-[rgba(0,188,161,0.16)]">
-                    ✓ Message sent successfully! We'll be in touch soon.
+                    ✓ Message sent successfully! We&apos;ll be in touch soon.
                   </div>
                 )}
 

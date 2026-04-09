@@ -6,7 +6,6 @@ export const metadata = generateMetadata({
   image: "/og-contact.png",
   url: "/contact-us",
 });
-
 import ContactUs from "@/components/pages/contact/contactus";
 
 export default function ContactUsPage() {

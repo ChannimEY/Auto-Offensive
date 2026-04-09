@@ -93,7 +93,7 @@ function Logo() {
     : '/Auto_Offensive_Light-mode.png';
   return (
     <Link href="/" className="cursor-pointer shrink-0">
-      <Image src={src} alt="Auto-Offensive" width={100} height={40} priority />
+      <Image src={src} alt="Auto-Offensive" width={100} height={40} priority style={{ width: 'auto', height: 'auto' }} />
     </Link>
   );
 }
@@ -208,53 +208,51 @@ function LanguageToggle() {
 // ── Tool List Item (image icon, 2-col grid) ───────────────────────────────────
 function ToolItem({ title, href, icon }: ToolItem) {
   return (
-    <NavigationMenuLink asChild>
-      <a
-        href={href}
-        className="flex items-center gap-2.5 rounded-md px-2 py-2 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group"
-      >
-        <div className="shrink-0 w-8 h-8 rounded-md border border-border bg-background flex items-center justify-center overflow-hidden shadow-sm">
-          <Image
-            src={icon}
-            alt={title}
-            width={74}
-            height={74}
-            className="object-cover"
-          />
-        </div>
-        <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">
-          {title}
-        </span>
-      </a>
-    </NavigationMenuLink>
+    <Link
+      href={href}
+      className="flex items-center gap-2.5 rounded-md px-2 py-2 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group"
+    >
+      <div className="shrink-0 w-8 h-8 rounded-md border border-border bg-background flex items-center justify-center overflow-hidden shadow-sm">
+        <Image
+          src={icon}
+          alt={title}
+          width={74}
+          height={74}
+          style={{ width: 'auto', height: 'auto' }}
+          className="object-cover"
+        />
+      </div>
+      <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">
+        {title}
+      </span>
+    </Link>
   );
 }
 
 // ── Feature List Item (image icon + description) ──────────────────────────────
 function FeatureItem({ title, description, href, icon }: FeatureItem) {
   return (
-    <NavigationMenuLink asChild>
-      <a
-        href={href}
-        className="flex items-start gap-3 rounded-md p-2.5 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group"
-      >
-        <div className="shrink-0 w-10 h-10  bg-background flex items-center justify-center overflow-hidden shadow-sm">
-          <Image
-            src={icon}
-            alt={title}
-            width={28}
-            height={28}
-            className="object-contain"
-          />
-        </div>
-        <div>
-          <p className="text-sm font-semibold text-foreground">
-            {title} <span className="text-muted-foreground font-normal">:</span>
-          </p>
-          <p className="text-xs text-muted-foreground leading-snug">{description}</p>
-        </div>
-      </a>
-    </NavigationMenuLink>
+    <Link
+      href={href}
+      className="flex items-start gap-3 rounded-md p-2.5 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group"
+    >
+      <div className="shrink-0 w-10 h-10  bg-background flex items-center justify-center overflow-hidden shadow-sm">
+        <Image
+          src={icon}
+          alt={title}
+          width={28}
+          height={28}
+          style={{ width: 'auto', height: 'auto' }}
+          className="object-contain"
+        />
+      </div>
+      <div>
+        <p className="text-sm font-semibold text-foreground">
+          {title} <span className="text-muted-foreground font-normal">:</span>
+        </p>
+        <p className="text-xs text-muted-foreground leading-snug">{description}</p>
+      </div>
+    </Link>
   );
 }
 
@@ -262,7 +260,7 @@ function FeatureItem({ title, description, href, icon }: FeatureItem) {
 function ResourceDocItem({ title, description, href, icon }: ResourceItem) {
   return (
     <NavigationMenuLink asChild>
-      <a
+      <Link
         href={href}
         className="flex items-start gap-3 rounded-md p-2 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group"
       >
@@ -272,6 +270,7 @@ function ResourceDocItem({ title, description, href, icon }: ResourceItem) {
             alt={title}
             width={24}
             height={24}
+            style={{ width: 'auto', height: 'auto' }}
             className="object-contain"
           />
         </div>
@@ -283,7 +282,7 @@ function ResourceDocItem({ title, description, href, icon }: ResourceItem) {
             <p className="text-xs text-muted-foreground leading-snug">{description}</p>
           )}
         </div>
-      </a>
+      </Link>
     </NavigationMenuLink>
   );
 }
@@ -423,7 +422,7 @@ export function Header() {
               {/* ── Resources ── */}
               <NavigationMenuItem>
                 <NavigationMenuTrigger className="bg-transparent hover:bg-transparent focus:bg-transparent data-[state=active]:bg-transparent data-[state=open]:bg-transparent">
-                  <Link href="/resource">  {t('resources')}</Link>
+                  <Link href="/resource-page">  {t('resources')}</Link>
                 </NavigationMenuTrigger>
                 <NavigationMenuContent className="bg-background">
                   <div className="w-120 rounded-xl border border-border bg-popover shadow-xl p-3">

@@ -37,7 +37,6 @@ const notoKhmer = Noto_Sans_Khmer({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://auto-offensive.com"),
   title: "Auto-Offensive | Next-Gen PaaS for Hackers",
   description: "Automated Security Workflows and Pentesting Platform",
 };

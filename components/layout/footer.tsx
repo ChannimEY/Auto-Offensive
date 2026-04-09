@@ -35,7 +35,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
           <div className="flex flex-col">
             <Link href="/" className="flex items-center mb-4">
-              <Image src={logoSrc} alt="Auto-Offensive" width={140} height={80} priority />
+              <Image src={logoSrc} alt="Auto-Offensive" width={140} height={80} priority style={{ width: 'auto', height: 'auto' }} />
             </Link>
             <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed max-w-xs">
               Automated penetration testing platform for developers, security engineers, and DevSecOps teams.
@@ -52,7 +52,7 @@ export function Footer() {
 
           <div className="flex flex-col gap-4 lg:ms-18">
             <h3 className="text-xs font-bold uppercase tracking-widest text-zinc-500 dark:text-zinc-400">Organized and Sponsored by</h3>
-            <Image src={theme === "dark" ? "/istad-logo-white.png" : "/istad_logo.png"} alt="ISTAD logo" width={180} height={90} />
+            <Image src={theme === "dark" ? "/istad-logo-white.png" : "/istad_logo.png"} alt="ISTAD logo" width={180} height={90} style={{ width: 'auto', height: 'auto' }} />
             <p className="text-sm text-zinc-600 text-center dark:text-zinc-400">Institute of Science and Technology Advanced Development</p>
           </div>
 
