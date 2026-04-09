@@ -44,6 +44,11 @@ type ResourceItem = {
   icon: string;
 };
 
+type ResourceLinkCardProps = ResourceItem & {
+  useNavigationMenuLink?: boolean;
+  compact?: boolean;
+};
+
 // ── Data ─────────────────────────────────────────────────────────────────────
 const toolLinks: ToolItem[] = [
   { title: 'Subfinder',    href: '#', icon: '/icons/subfinder.png'    },
@@ -70,10 +75,10 @@ const featureLinks: FeatureItem[] = [
 ];
 
 const resourceDocLinks: ResourceItem[] = [
-  { title: 'CLI Documents',   description: 'Guides for using tools via command line',      href: '/resources/cli-document', icon: '/icons/res-cli.png'   },
-  { title: 'API Documents',   description: 'Accelerate testing with intelligent automation', href: '/resources/api-document', icon: '/icons/res-api.png'   },
-  { title: 'Tools Documents', description: 'Instructions for using security tools',        href: '/resources/tools-document', icon: '/icons/res-tools.png' },
-  { title: 'CI/CD Documents', description: 'Setup guides for pipeline integration',        href: '/resources/integration-ci-cd', icon: '/icons/res-cicd.png'  },
+  { title: 'CLI Documents',   description: 'Guides for using tools via command line',      href: '/resource/cli', icon: '/icons/res-cli.png'   },
+  { title: 'API Documents',   description: 'Accelerate testing with intelligent automation', href: '/resource/api', icon: '/icons/res-api.png'   },
+  { title: 'Tools Documents', description: 'Instructions for using security tools',        href: '/resource/tool', icon: '/icons/res-tools.png' },
+  { title: 'CI/CD Documents', description: 'Setup guides for pipeline integration',        href: '/resource/cicd', icon: '/icons/res-cicd.png'  },
 ];
 
 const resourceMiscLinks: ResourceItem[] = [
@@ -212,14 +217,14 @@ function ToolItem({ title, href, icon }: ToolItem) {
       href={href}
       className="flex items-center gap-2.5 rounded-md px-2 py-2 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group"
     >
-      <div className="shrink-0 w-8 h-8 rounded-md border border-border bg-background flex items-center justify-center overflow-hidden shadow-sm">
+      <div className="shrink-0 w-10 h-10 rounded-md border border-border bg-background flex items-center justify-center overflow-hidden shadow-sm">
         <Image
           src={icon}
           alt={title}
-          width={74}
-          height={74}
+          width={94}
+          height={94}
           style={{ width: 'auto', height: 'auto' }}
-          className="object-cover"
+          className="object-contain"
         />
       </div>
       <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">
@@ -236,12 +241,12 @@ function FeatureItem({ title, description, href, icon }: FeatureItem) {
       href={href}
       className="flex items-start gap-3 rounded-md p-2.5 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group"
     >
-      <div className="shrink-0 w-10 h-10  bg-background flex items-center justify-center overflow-hidden shadow-sm">
-        <Image
+      <div className="shrink-0 w-10 h-10  rounded-md  bg-[#FDF6ED] flex items-center justify-center overflow-hidden shadow-sm">
+          <Image
           src={icon}
           alt={title}
-          width={28}
-          height={28}
+          width={58}
+          height={58}
           style={{ width: 'auto', height: 'auto' }}
           className="object-contain"
         />
@@ -257,57 +262,71 @@ function FeatureItem({ title, description, href, icon }: FeatureItem) {
 }
 
 // ── Resource Doc Item ─────────────────────────────────────────────────────────
-function ResourceDocItem({ title, description, href, icon }: ResourceItem) {
-  return (
-    <NavigationMenuLink asChild>
-      <Link
-        href={href}
-        className="flex items-start gap-3 rounded-md p-2 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group"
+function ResourceLinkCard({
+  title,
+  description,
+  href,
+  icon,
+  useNavigationMenuLink = false,
+  compact = false,
+}: ResourceLinkCardProps) {
+  const content = (
+    <Link
+      href={href}
+      className={cn(
+        'rounded-md transition-colors group hover:bg-gray-100 dark:hover:bg-gray-800',
+        compact ? 'flex items-center gap-2.5 px-2 py-2' : 'flex items-start gap-3 p-2',
+      )}
+    >
+      <div
+        className={cn(
+          'shrink-0 border border-border bg-[#FDF6ED] flex items-center justify-center overflow-hidden shadow-sm',
+          compact ? 'w-10 h-10 rounded-md' : 'w-10 h-10 rounded-md',
+        )}
       >
-        <div className="shrink-0 w-9 h-9 rounded-md border border-border bg-background flex items-center justify-center overflow-hidden shadow-sm">
-          <Image
-            src={icon}
-            alt={title}
-            width={24}
-            height={24}
-            style={{ width: 'auto', height: 'auto' }}
-            className="object-contain"
-          />
-        </div>
-        <div>
-          <p className="text-sm font-semibold text-foreground">
-            {title} <span className="text-muted-foreground font-normal">:</span>
-          </p>
-          {description && (
-            <p className="text-xs text-muted-foreground leading-snug">{description}</p>
-          )}
-        </div>
-      </Link>
-    </NavigationMenuLink>
+        <Image
+          src={icon}
+          alt={title}
+          width={compact ? 52 : 68}
+          height={compact ? 52 : 68}
+          style={{ width: 'auto', height: 'auto' }}
+          className="object-contain"
+        />
+      </div>
+      <div>
+        <p className="text-sm font-semibold text-foreground">
+          {title}
+          {!compact && <span className="text-muted-foreground font-normal"> :</span>}
+        </p>
+        {description && !compact && (
+          <p className="text-xs text-muted-foreground leading-snug">{description}</p>
+        )}
+      </div>
+    </Link>
   );
+
+  if (useNavigationMenuLink) {
+    return <NavigationMenuLink asChild>{content}</NavigationMenuLink>;
+  }
+
+  return content;
+}
+
+function ResourceDocItem(props: ResourceItem) {
+  return <ResourceLinkCard {...props} useNavigationMenuLink />;
 }
 
 // ── Resource Misc Item ────────────────────────────────────────────────────────
-function ResourceMiscItem({ title, href, icon }: ResourceItem) {
-  return (
-    <NavigationMenuLink asChild>
-      <a
-        href={href}
-        className="flex items-center gap-2.5 rounded-md px-2 py-2  hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group"
-      >
-        <div className="shrink-0 w-8 h-8 rounded-md border border-border bg-background flex items-center justify-center overflow-hidden shadow-sm">
-          <Image
-            src={icon}
-            alt={title}
-            width={22}
-            height={22}
-            className="object-contain"
-          />
-        </div>
-        <span className="text-sm font-medium text-foreground">{title}</span>
-      </a>
-    </NavigationMenuLink>
-  );
+function ResourceMiscItem(props: ResourceItem) {
+  return <ResourceLinkCard {...props} compact useNavigationMenuLink />;
+}
+
+function MobileResourceDocItem(props: ResourceItem) {
+  return <ResourceLinkCard {...props} />;
+}
+
+function MobileResourceMiscItem(props: ResourceItem) {
+  return <ResourceLinkCard {...props} compact />;
 }
 
 // ── Scroll hook ───────────────────────────────────────────────────────────────
@@ -385,7 +404,7 @@ export function Header() {
 
               {/* ── Tools ── */}
               <NavigationMenuItem>
-                <NavigationMenuTrigger className="bg-transparent hover:bg-transparent focus:bg-transparent data-[state=active]:bg-transparent data-[state=open]:bg-transparent text-primary font-semibold">
+                <NavigationMenuTrigger className="bg-transparent hover:bg-transparent focus:bg-transparent data-[state=active]:bg-transparent data-[state=open]:bg-transparent text-primary font-semibold text-[18px]">
                 <Link href="/tools">  {t('tools')}</Link>
                 </NavigationMenuTrigger>
                 <NavigationMenuContent className="bg-background">
@@ -403,7 +422,7 @@ export function Header() {
 
               {/* ── Features ── */}
               <NavigationMenuItem>
-                <NavigationMenuTrigger className="bg-transparent hover:bg-transparent focus:bg-transparent data-[state=active]:bg-transparent data-[state=open]:bg-transparent">
+                <NavigationMenuTrigger className="bg-transparent hover:bg-transparent focus:bg-transparent data-[state=active]:bg-transparent data-[state=open]:bg-transparent text-[18px]">
                 <Link href="/feature">  {t('features')}</Link>
                 </NavigationMenuTrigger>
                 <NavigationMenuContent className="bg-background">
@@ -421,7 +440,7 @@ export function Header() {
 
               {/* ── Resources ── */}
               <NavigationMenuItem>
-                <NavigationMenuTrigger className="bg-transparent hover:bg-transparent focus:bg-transparent data-[state=active]:bg-transparent data-[state=open]:bg-transparent">
+                <NavigationMenuTrigger className="bg-transparent hover:bg-transparent focus:bg-transparent data-[state=active]:bg-transparent data-[state=open]:bg-transparent text-[18px]">
                   <Link href="/resource-page">  {t('resources')}</Link>
                 </NavigationMenuTrigger>
                 <NavigationMenuContent className="bg-background">
@@ -504,16 +523,16 @@ export function Header() {
           <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mt-2">Resources</p>
           <div className="grid grid-cols-1 gap-0.5">
             {resourceDocLinks.map((link, i) => (
-              <ResourceDocItem key={i} {...link} />
+              <MobileResourceDocItem key={i} {...link} />
             ))}
             {resourceMiscLinks.map((link, i) => (
-              <ResourceMiscItem key={i} {...link} />
+              <MobileResourceMiscItem key={i} {...link} />
             ))}
           </div>
         </div>
 
         <div className="flex flex-col gap-2 pt-2 border-t border-border">
-          <button className="w-full py-2 rounded-md border border-primary text-primary text-sm font-semibold bg-transparent cursor-pointer hover:bg-primary/10 transition-colors">
+          <button className="w-full py-2 rounded-md border border-primary text-[18px] text-primary text-sm font-semibold bg-transparent cursor-pointer hover:bg-primary/10 transition-colors">
             {t('loginRegister')}
           </button>
         </div>

@@ -88,21 +88,21 @@ export default function CICDFeature() {
                 CI/CD Integration
               </span>
 
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-[#1A1A1A] dark:text-[#EDEDED] leading-tight mb-5">
+              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black text-[#1A1A1A] dark:text-[#EDEDED] leading-tight mb-5">
                 Repository<br />
                 <span className="text-[#00BCA1]">Scanning.</span>
               </h1>
 
-              <p className="text-[#5C5C5C] dark:text-[#9A9A9A] text-base sm:text-lg leading-relaxed mb-8 max-w-md">
+              <p className="text-lg sm:text-xl leading-relaxed text-[#5C5C5C] dark:text-[#9A9A9A] mb-8 max-w-md">
                 Integrate deep-code analysis directly into your SDLC. Detect vulnerabilities before they reach production.
               </p>
 
               <div className="flex flex-wrap gap-3">
-                <button className="inline-flex items-center gap-2 px-5 py-3 bg-[#00BCA1] hover:bg-[#00A390] text-white rounded-xl text-sm font-bold transition-colors">
+                <button className="inline-flex items-center gap-2 px-5 py-3 bg-[#00BCA1] hover:bg-[#00A390] text-white rounded-xl text-base font-bold transition-colors">
                   <GitBranch className="w-4 h-4" />
                   Connect Repository
                 </button>
-                <button className="inline-flex items-center gap-2 px-5 py-3 bg-white dark:bg-[#111113] border border-black/9 dark:border-white/9 text-[#1A1A1A] dark:text-[#EDEDED] rounded-xl text-sm font-semibold hover:border-[#00BCA1] transition-colors">
+                <button className="inline-flex items-center gap-2 px-5 py-3 bg-white dark:bg-[#111113] border border-black/9 dark:border-white/9 text-[#1A1A1A] dark:text-[#EDEDED] rounded-xl text-base font-semibold hover:border-[#00BCA1] transition-colors">
                   View Docs <ExternalLink className="w-4 h-4" />
                 </button>
               </div>
@@ -113,8 +113,8 @@ export default function CICDFeature() {
               <div className="bg-white dark:bg-[#111113] rounded-2xl border border-black/9 dark:border-white/9 p-6 shadow-xl">
                 <div className="flex items-center gap-2 mb-4">
                   <GitBranch className="w-5 h-5 text-[#1A1A1A] dark:text-[#EDEDED]" />
-                  <span className="text-sm font-semibold text-[#1A1A1A] dark:text-[#EDEDED]">auto-offensive/target-repo</span>
-                  <span className="ml-auto text-xs px-2 py-1 rounded-full bg-[#00BCA1]/10 text-[#00BCA1]">Active</span>
+                  <span className="text-base font-semibold text-[#1A1A1A] dark:text-[#EDEDED]">auto-offensive/target-repo</span>
+                  <span className="ml-auto text-sm px-2 py-1 rounded-full bg-[#00BCA1]/10 text-[#00BCA1]">Active</span>
                 </div>
                 <div className="space-y-3">
                   {[1,2,3].map((i) => (
@@ -123,10 +123,10 @@ export default function CICDFeature() {
                         {i === 2 ? <AlertTriangle className="w-4 h-4 text-amber-500" /> : <CheckCircle className="w-4 h-4 text-[#00BCA1]" />}
                       </div>
                       <div className="flex-1">
-                        <div className="text-sm font-medium text-[#1A1A1A] dark:text-[#EDEDED]">Security Scan</div>
-                        <div className="text-xs text-[#9A9A9A]">{i === 2 ? '1 vulnerability found' : 'Passed'}</div>
+                        <div className="text-base font-medium text-[#1A1A1A] dark:text-[#EDEDED]">Security Scan</div>
+                        <div className="text-sm text-[#9A9A9A]">{i === 2 ? '1 vulnerability found' : 'Passed'}</div>
                       </div>
-                      <span className="text-xs text-[#9A9A9A]">{i === 1 ? '2m ago' : i === 2 ? 'Just now' : '5m ago'}</span>
+                      <span className="text-sm text-[#9A9A9A]">{i === 1 ? '2m ago' : i === 2 ? 'Just now' : '5m ago'}</span>
                     </div>
                   ))}
                 </div>
@@ -140,10 +140,10 @@ export default function CICDFeature() {
       <section className="py-16 border-t border-black/9 dark:border-white/9">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div {...fadeUp(0)} className="mb-10">
-            <h2 className="text-2xl sm:text-3xl font-bold text-[#1A1A1A] dark:text-[#EDEDED] mb-3">
+            <h2 className="text-3xl sm:text-4xl font-bold text-[#1A1A1A] dark:text-[#EDEDED] mb-3">
               The Analysis Pipeline
             </h2>
-            <p className="text-[#5C5C5C] dark:text-[#9A9A9A]">
+            <p className="text-lg text-[#5C5C5C] dark:text-[#9A9A9A]">
               Four steps from code commit to security intelligence
             </p>
           </motion.div>
@@ -156,7 +156,7 @@ export default function CICDFeature() {
                 whileHover={{ y: -4 }}
                 className={`rounded-xl p-5 transition-all ${
                   step.active
-                    ? "bg-gradient-to-br from-[#3B82F6] to-indigo-600 shadow-lg shadow-blue-500/20"
+                    ? "bg-linear-to-br from-[#3B82F6] to-indigo-600 shadow-lg shadow-blue-500/20"
                     : "bg-white dark:bg-[#111113] border border-black/9 dark:border-white/9"
                 }`}
               >
@@ -165,10 +165,10 @@ export default function CICDFeature() {
                 }`}>
                   {step.icon}
                 </div>
-                <h3 className={`text-sm font-bold mb-2 ${step.active ? "text-white" : "text-[#1A1A1A] dark:text-[#EDEDED]"}`}>
+                <h3 className={`text-base font-bold mb-2 ${step.active ? "text-white" : "text-[#1A1A1A] dark:text-[#EDEDED]"}`}>
                   {step.num}. {step.title}
                 </h3>
-                <p className={`text-xs leading-relaxed ${step.active ? "text-white/70" : "text-[#5C5C5C] dark:text-[#9A9A9A]"}`}>
+                <p className={`text-sm leading-relaxed ${step.active ? "text-white/70" : "text-[#5C5C5C] dark:text-[#9A9A9A]"}`}>
                   {step.desc}
                 </p>
               </motion.div>
@@ -182,23 +182,23 @@ export default function CICDFeature() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Code Panel */}
-            <motion.div {...fadeUp(0)} className="bg-[#0D1117] rounded-xl border border-white/10 overflow-hidden font-mono text-xs">
+            <motion.div {...fadeUp(0)} className="bg-[#0D1117] rounded-xl border border-white/10 overflow-hidden font-mono text-sm">
               <div className="bg-[#161B22] px-4 py-2.5 border-b border-white/5 flex items-center gap-2">
                 <div className="w-2.5 h-2.5 rounded-full bg-red-500" />
                 <div className="w-2.5 h-2.5 rounded-full bg-amber-500" />
                 <div className="w-2.5 h-2.5 rounded-full bg-[#00BCA1]" />
-                <span className="ml-2 text-slate-500 text-xs">AUTH_SERVICE.PY</span>
-                <span className="ml-auto text-red-500 text-xs font-bold">SQL INJECTION</span>
+                <span className="ml-2 text-slate-500 text-sm">AUTH_SERVICE.PY</span>
+                <span className="ml-auto text-red-500 text-sm font-bold">SQL INJECTION</span>
               </div>
               <div className="p-5">
                 <div className="text-slate-500 mb-1">def validate_user(user_input, password):</div>
-                <div className="text-slate-300 mb-1 pl-4 text-cyan-400">
+                <div className="text-cyan-400 mb-1 pl-4 ">
                   sql = &quot;SELECT * FROM users WHERE user = &apos;...&apos;&quot; [SQL INJECTION]
                 </div>
                 <div className="text-slate-300 mb-4 pl-4">cursor.execute(query)</div>
                 <div className="text-slate-300 mb-4 pl-4">cursor.execute(query)</div>
                 <div className="bg-[#00BCA1]/10 rounded px-3 py-3 border border-[#00BCA1]/20">
-                  <div className="text-[10px] text-[#00BCA1] font-bold tracking-widest mb-2">REMEDIATION</div>
+                  <div className="text-xs text-[#00BCA1] font-bold tracking-widest mb-2">REMEDIATION</div>
                   <div className="text-slate-300">query = &quot;SELECT * FROM users WHERE user = %s&quot;</div>
                   <div className="text-slate-300">cursor.execute(query, (user_input,))</div>
                 </div>
@@ -208,27 +208,27 @@ export default function CICDFeature() {
             {/* Finding Card */}
             <motion.div {...fadeUp(0.1)} className="bg-white dark:bg-[#111113] border border-black/9 dark:border-white/9 rounded-xl p-6">
               <div className="flex items-center gap-2 mb-4">
-                <span className="text-lg">🔴</span>
-                <span className="text-xs font-black text-red-500 tracking-widest uppercase">Critical Flaw</span>
+                <span className="text-2xl">🔴</span>
+                <span className="text-sm font-black text-red-500 tracking-widest uppercase">Critical Flaw</span>
               </div>
-              <p className="text-[#5C5C5C] dark:text-[#9A9A9A] text-sm leading-relaxed mb-5">
+              <p className="text-[#5C5C5C] dark:text-[#9A9A9A] text-base leading-relaxed mb-5">
                 SQL Injection: User input concatenated directly into SQL query. An attacker could bypass authentication.
               </p>
               <div className="space-y-3 mb-5">
                 <div className="flex justify-between py-2 border-b border-black/9 dark:border-white/9">
-                  <span className="text-sm text-[#9A9A9A]">Confidence</span>
-                  <span className="text-sm font-semibold text-[#00BCA1]">98% (High)</span>
+                  <span className="text-base text-[#9A9A9A]">Confidence</span>
+                  <span className="text-base font-semibold text-[#00BCA1]">98% (High)</span>
                 </div>
                 <div className="flex justify-between py-2 border-b border-black/9 dark:border-white/9">
-                  <span className="text-sm text-[#9A9A9A]">CWE</span>
-                  <span className="text-sm font-semibold text-blue-500">CWE-89</span>
+                  <span className="text-base text-[#9A9A9A]">CWE</span>
+                  <span className="text-base font-semibold text-blue-500">CWE-89</span>
                 </div>
                 <div className="flex justify-between py-2">
-                  <span className="text-sm text-[#9A9A9A]">Fix Time</span>
-                  <span className="text-sm font-semibold text-[#1A1A1A] dark:text-[#EDEDED]">5 Minutes</span>
+                  <span className="text-base text-[#9A9A9A]">Fix Time</span>
+                  <span className="text-base font-semibold text-[#1A1A1A] dark:text-[#EDEDED]">5 Minutes</span>
                 </div>
               </div>
-              <button className="w-full py-3 bg-[#00BCA1] hover:bg-[#00A390] text-white rounded-lg text-sm font-bold transition-colors flex items-center justify-center gap-2">
+              <button className="w-full py-3 bg-[#00BCA1] hover:bg-[#00A390] text-white rounded-lg text-base font-bold transition-colors flex items-center justify-center gap-2">
                 <Shield className="w-4 h-4" />
                 Create Fix PR
               </button>
@@ -241,10 +241,10 @@ export default function CICDFeature() {
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div {...fadeUp(0)} className="mb-8">
-            <h2 className="text-2xl sm:text-3xl font-bold text-[#1A1A1A] dark:text-[#EDEDED] mb-3">
+            <h2 className="text-3xl sm:text-4xl font-bold text-[#1A1A1A] dark:text-[#EDEDED] mb-3">
               CI/CD Integration Guide
             </h2>
-            <p className="text-[#5C5C5C] dark:text-[#9A9A9A]">
+            <p className="text-lg text-[#5C5C5C] dark:text-[#9A9A9A]">
               Deploy security scanning in seconds
             </p>
           </motion.div>
@@ -257,7 +257,7 @@ export default function CICDFeature() {
                   <button
                     key={tab}
                     onClick={() => setActiveTab(tab)}
-                    className={`px-5 py-2.5 text-xs font-semibold border-b-2 transition ${
+                    className={`px-5 py-2.5 text-sm font-semibold border-b-2 transition ${
                       activeTab === tab
                         ? "bg-[#161B22] text-white border-[#00BCA1]"
                         : "text-slate-500 border-transparent hover:text-slate-300"
@@ -267,7 +267,7 @@ export default function CICDFeature() {
                   </button>
                 ))}
               </div>
-              <pre className="p-5 m-0 text-xs text-slate-300 leading-relaxed overflow-x-auto font-mono">
+              <pre className="p-5 m-0 text-sm text-slate-300 leading-relaxed overflow-x-auto font-mono">
                 <code>{activeTab === "github" ? githubYaml : gitlabYaml}</code>
               </pre>
             </motion.div>
@@ -280,12 +280,12 @@ export default function CICDFeature() {
                 { icon: "📋", title: "Full Audit Trail", desc: "Compliance-ready scan history" },
               ].map((item, i) => (
                 <div key={i} className="flex gap-4 p-4 bg-white dark:bg-[#111113] border border-black/9 dark:border-white/9 rounded-xl">
-                  <div className="w-10 h-10 rounded-lg bg-[#00BCA1]/10 flex items-center justify-center text-lg shrink-0">
+                  <div className="w-10 h-10 rounded-lg bg-[#00BCA1]/10 flex items-center justify-center text-xl shrink-0">
                     {item.icon}
                   </div>
                   <div>
-                    <h3 className="text-sm font-bold text-[#1A1A1A] dark:text-[#EDEDED] mb-1">{item.title}</h3>
-                    <p className="text-xs text-[#5C5C5C] dark:text-[#9A9A9A] leading-relaxed">{item.desc}</p>
+                    <h3 className="text-base font-bold text-[#1A1A1A] dark:text-[#EDEDED] mb-1">{item.title}</h3>
+                    <p className="text-sm text-[#5C5C5C] dark:text-[#9A9A9A] leading-relaxed">{item.desc}</p>
                   </div>
                 </div>
               ))}
@@ -302,17 +302,17 @@ export default function CICDFeature() {
             <div className="absolute -bottom-16 -right-16 w-48 h-48 rounded-full bg-[#0077B6]/10 blur-3xl" />
             
             <div className="relative z-10 text-center">
-              <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3">
+              <h2 className="text-3xl sm:text-4xl font-bold text-white mb-3">
                 Ready to secure your pipeline?
               </h2>
-              <p className="text-[#9A9A9A] mb-8 max-w-md mx-auto">
+              <p className="text-lg text-[#9A9A9A] mb-8 max-w-md mx-auto">
                 Start scanning your repositories in minutes.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                <button className="bg-[#00BCA1] hover:bg-[#00A390] text-white px-6 py-3 rounded-xl text-sm font-bold transition-colors">
+                <button className="bg-[#00BCA1] hover:bg-[#00A390] text-white px-6 py-3 rounded-xl text-base font-bold transition-colors">
                   Get Started Free
                 </button>
-                <button className="border border-white/20 text-white px-6 py-3 rounded-xl text-sm font-semibold hover:bg-white/5 transition-colors">
+                <button className="border border-white/20 text-white px-6 py-3 rounded-xl text-base font-semibold hover:bg-white/5 transition-colors">
                   Schedule Demo
                 </button>
               </div>

@@ -1,4 +1,5 @@
 import { FileText, Link2, Code2 } from 'lucide-react'
+import { motion } from 'framer-motion'
 
 const resources = [
   {
@@ -28,14 +29,38 @@ const resources = [
 ]
 
 export default function ResourceSections() {
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.1, delayChildren: 0.2 }
+    }
+  }
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+  }
+
   return (
     <section className="py-16 md:py-24 bg-white dark:bg-black dark:to-white">
       <div className="max-w-7xl mx-auto px-4">
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+        <motion.div 
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
           {resources.map((resource, idx) => {
             const Icon = resource.icon
             return (
-              <div key={idx} className={`p-8 rounded-xl border border-border hover:shadow-lg transition ${resource.color}`}>
+              <motion.div 
+                key={idx} 
+                variants={itemVariants}
+                className={`p-8 rounded-xl border border-border hover:shadow-lg transition ${resource.color}`}
+                whileHover={{ scale: 1.05 }}
+              >
                 <div className={`w-12 h-12 ${resource.color} rounded-lg flex items-center justify-center mb-4 border border-border`}>
                   <Icon className={resource.iconColor} size={24} />
                 </div>
@@ -55,12 +80,14 @@ export default function ResourceSections() {
                 </div>
                 <button className="mt-6 text-primary font-semibold hover:text-primary/80 transition flex items-center gap-2 w-full justify-center py-2 border border-border rounded-lg hover:bg-primary/5">
                   Explore
-                  <span>→</span>
+                  <motion.span animate={{ x: [0, 4, 0] }} transition={{ repeat: Infinity, duration: 1.5 }}>
+                    →
+                  </motion.span>
                 </button>
-              </div>
+              </motion.div>
             )
           })}
-        </div>
+        </motion.div>
       </div>
     </section>
   )

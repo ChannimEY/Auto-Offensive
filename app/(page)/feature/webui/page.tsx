@@ -96,7 +96,7 @@ function TerminalHero() {
         </div>
       </div>
 
-      <div className="p-6 min-h-40 font-mono text-sm">
+      <div className="p-6 min-h-40 font-mono text-base">
         {terminalLines.slice(0, visibleLines).map((line, i) => (
           <motion.div key={i} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.3 }} style={{ color: line.color }} className="mb-1.5">
             {line.text}
@@ -138,7 +138,7 @@ function LiveScanSection() {
             initial={{ opacity: 0, x: -10 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.2 }}
-            className="lg:col-span-3 rounded-lg border border-emerald-500/15 bg-slate-900 dark:bg-slate-950 overflow-hidden font-mono text-xs"
+            className="lg:col-span-3 rounded-lg border border-emerald-500/15 bg-slate-900 dark:bg-slate-950 overflow-hidden font-mono text-sm"
           >
             <div className="bg-slate-800 dark:bg-slate-900 px-4 py-2.5 flex justify-between items-center border-b border-slate-700 dark:border-slate-800">
               <span className="text-slate-400">live_output_stream.sh</span>
@@ -188,8 +188,8 @@ function LiveScanSection() {
             transition={{ duration: 0.7, delay: 0.3 }}
             className="rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-6"
           >
-            <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-1">Tool Configuration</h3>
-            <p className="text-sm text-slate-600 dark:text-slate-400 mb-6">Select your automated stack. No syntax flags required.</p>
+            <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-1">Tool Configuration</h3>
+            <p className="text-base text-slate-600 dark:text-slate-400 mb-6">Select your automated stack. No syntax flags required.</p>
             {tools.map((tool, i) => (
               <div
                 key={i}
@@ -204,7 +204,7 @@ function LiveScanSection() {
                     : "border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800"
                 }`}
               >
-                <span className="text-sm font-medium text-slate-900 dark:text-white">
+                <span className="text-base font-medium text-slate-900 dark:text-white">
                   {tool.icon} {tool.name}
                 </span>
                 <div
@@ -221,7 +221,7 @@ function LiveScanSection() {
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="w-full mt-2 px-4 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-semibold transition-colors"
+              className="w-full mt-2 px-4 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-base font-semibold transition-colors"
             >
               Update Live Scan
             </motion.button>
@@ -244,7 +244,7 @@ function HowItWorksSection() {
             initial={{ opacity: 0, y: 5 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6 }}
-            className="text-4xl font-black text-slate-900 dark:text-white leading-tight mb-4"
+            className="text-5xl font-black text-slate-900 dark:text-white leading-tight mb-4"
           >
             How it Works
           </motion.h2>
@@ -252,7 +252,7 @@ function HowItWorksSection() {
             initial={{ opacity: 0 }}
             animate={inView ? { opacity: 1 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-8"
+            className="text-base text-slate-600 dark:text-slate-400 leading-relaxed mb-8"
           >
             The transition from manual terminal inputs to autonomous orchestration is handled by our Guardian Kernel.
           </motion.p>
@@ -263,7 +263,7 @@ function HowItWorksSection() {
             className="rounded-lg bg-slate-900 dark:bg-slate-900 border border-emerald-500/20 p-5"
           >
             <div className="text-amber-500 text-xs font-bold tracking-widest mb-2 font-mono">TECHNICAL NOTE</div>
-            <p className="text-xs text-slate-400 leading-relaxed font-mono">
+            <p className="text-sm text-slate-400 leading-relaxed font-mono">
               &quot;Our backend translates your UI selections into optimized Go-binary commands, handling concurrency and resource management automatically.&quot;
             </p>
           </motion.div>
@@ -282,8 +282,8 @@ function HowItWorksSection() {
                 {step.num}
               </div>
               <div>
-                <h3 className="text-base font-bold text-slate-900 dark:text-white mb-2">{step.title}</h3>
-                <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">{step.desc}</p>
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">{step.title}</h3>
+                <p className="text-base text-slate-600 dark:text-slate-400 leading-relaxed">{step.desc}</p>
               </div>
             </motion.div>
           ))}
@@ -304,7 +304,7 @@ function BenefitsSection() {
           initial={{ opacity: 0, y: 5 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-3xl font-black text-slate-900 dark:text-white text-center mb-12"
+          className="text-4xl font-black text-slate-900 dark:text-white text-center mb-12"
         >
           Engineered for Enterprise ROI
         </motion.h2>
@@ -319,8 +319,8 @@ function BenefitsSection() {
               className="rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-7 transition-colors hover:border-emerald-500/40"
             >
               <div className="text-3xl mb-4">{b.icon}</div>
-              <h3 className="text-base font-bold text-slate-900 dark:text-white mb-3">{b.title}</h3>
-              <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">{b.desc}</p>
+              <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">{b.title}</h3>
+              <p className="text-base text-slate-600 dark:text-slate-400 leading-relaxed">{b.desc}</p>
             </motion.div>
           ))}
         </div>
@@ -352,8 +352,7 @@ export default function WebUIFeature() {
               initial={{ opacity: 0, y: 5 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-5xl lg:text-7
-      xl font-black text-slate-900 dark:text-white leading-tight mb-5"
+              className="text-6xl lg:text-7xl font-black text-slate-900 dark:text-white leading-tight mb-5"
             >
               Orchestrate Scans{" "}
               <span className="text-emerald-600 dark:text-emerald-400 block">Without the CLI.</span>
@@ -363,7 +362,7 @@ export default function WebUIFeature() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.25 }}
-              className="text-base text-slate-600 dark:text-slate-400 leading-relaxed mb-8 max-w-sm"
+              className="text-xl text-slate-600 dark:text-slate-400 leading-relaxed mb-8 max-w-sm"
             >
               Guardian AI bridges the gap between powerful open-source security tools and enterprise-grade usability. Run Subfinder, Naabu, and Nuclei in a seamless, unified workflow.
             </motion.p>
@@ -377,14 +376,14 @@ export default function WebUIFeature() {
               <motion.button
                 whileHover={{ scale: 1.03, boxShadow: "0 0 30px rgba(16,185,129,0.4)" }}
                 whileTap={{ scale: 0.97 }}
-                className="px-7 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-bold transition-colors"
+                className="px-7 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-base font-bold transition-colors"
               >
                 Launch First Scan
               </motion.button>
               <motion.button
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
-                className="px-6 py-3 border border-slate-300 dark:border-slate-600 text-slate-900 dark:text-white rounded-lg text-sm font-semibold hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors"
+                className="px-6 py-3 border border-slate-300 dark:border-slate-600 text-slate-900 dark:text-white rounded-lg text-base font-semibold hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors"
               >
                 Watch Demo
               </motion.button>
@@ -409,24 +408,24 @@ export default function WebUIFeature() {
           className="max-w-4xl mx-auto text-center rounded-3xl border border-emerald-500/20 bg-linear-to-br from-blue-900 to-slate-900 dark:from-slate-950 dark:to-slate-900 p-16 lg:p-20 relative overflow-hidden"
         >
           <div className="absolute inset-0 bg-[radial-linear(rgba(16,185,129,0.06)_1px,transparent_1px)] bg-position-[24px_24px] pointer-events-none" />
-          <h2 className="text-4xl lg:text-5xl font-black text-white mb-4 relative">
+          <h2 className="text-5xl lg:text-6xl font-black text-white mb-4 relative">
             Ready to automate your offensive posture?
           </h2>
-          <p className="text-base text-slate-300 mb-8 relative max-w-2xl mx-auto">
+          <p className="text-xl text-slate-300 mb-8 relative max-w-2xl mx-auto">
             Enterprise-grade reconnaissance pipelines in seconds, not hours.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center relative">
             <motion.button
               whileHover={{ scale: 1.04, boxShadow: "0 0 40px rgba(16,185,129,0.5)" }}
               whileTap={{ scale: 0.96 }}
-              className="px-8 py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-bold transition-colors"
+              className="px-8 py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-base font-bold transition-colors"
             >
               Start Your Free Scan
             </motion.button>
             <motion.button
               whileHover={{ scale: 1.04 }}
               whileTap={{ scale: 0.96 }}
-              className="px-7 py-3.5 border border-white/20 text-white rounded-lg text-sm font-semibold hover:bg-white/5 transition-colors"
+              className="px-7 py-3.5 border border-white/20 text-white rounded-lg text-base font-semibold hover:bg-white/5 transition-colors"
             >
               View Document
             </motion.button>

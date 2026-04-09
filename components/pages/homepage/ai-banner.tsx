@@ -3,13 +3,13 @@ import Image from "next/image";
 
 export default function AiBanner() {
   return (
-    <div className="w-full px-6 pb-8 bg-[#F7F5F0]">
+    <div className="w-full px-6 pb-8 bg-[#F7F5F0] dark:bg-black">
       <div
-        className="relative pt-15 bg-[#F7F5F0]"
+        className="relative pt-15 bg-[#F7F5F0]  dark:bg-black"
         style={{ fontFamily: "var(--font-hackdaddy), var(--font-noto-khmer), sans-serif" }}
       >
         {/* ── Card ── */}
-        <div className="relative rounded-[28px] bg-[#F7F5F0] overflow-hidden min-h-75 px-16 py-13 flex items-center justify-center max-[900px]:flex-col max-[900px]:px-8 max-[900px]:pt-10 max-[900px]:pb-55">
+        <div className="relative rounded-[28px] bg-[#F7F5F0] dark:bg-black overflow-hidden min-h-75 px-16 py-13 flex items-center justify-center max-[900px]:flex-col max-[900px]:px-8 max-[900px]:pt-10 max-[900px]:pb-55">
 
           {/* Blobs */}
           <div className="absolute pointer-events-none rounded-full blur-[80px] w-120 h-110 -top-35 -left-25 bg-[#01509e] opacity-95" />
@@ -24,16 +24,16 @@ export default function AiBanner() {
               className="inline-flex items-center gap-2 text-xs tracking-widest uppercase text-black/60 mb-4"
               style={{ fontFamily: "monospace" }}
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-black/85" />
+              <span className="w-1.5 h-1.5 rounded-full bg-black/85 dark:text-white" />
               Auto Offensive · AI-Powered Security
             </div>
 
-            <h2 className="text-3xl lg:text-4xl font-extrabold leading-tight tracking-tight text-black mb-4.5">
+            <h2 className="text-3xl lg:text-4xl dark:text-white font-extrabold leading-tight tracking-tight text-black mb-4.5">
               AI amplifies your<br />
               <span className="font-extrabold text-primary">expertise, not replace it</span>
             </h2>
 
-            <p className="text-sm leading-relaxed text-gray-600 font-normal max-w-110">
+            <p className="text-sm leading-relaxed text-gray-600 dark:text-white font-normal max-w-110">
               Auto Offensive doesn&apos;t replace skilled security professionals.
               Instead, we empower ethical hackers, penetration testers, and
               infosec practitioners with AI-driven workflows that handle the

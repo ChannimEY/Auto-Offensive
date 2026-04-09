@@ -104,7 +104,7 @@ function AnimatedCLI() {
           {copied ? <Check className="w-3.5 h-3.5 text-[#00BCA1]" /> : <Copy className="w-3.5 h-3.5" />}
         </button>
       </div>
-      <div className="p-5 font-mono text-sm min-h-[200px] space-y-1">
+      <div className="p-5 font-mono text-base min-h-50 space-y-1">
         {cliLines.slice(0, visibleLines).map((line, i) => (
           <motion.div
             key={i}
@@ -139,8 +139,8 @@ function FeatureCard({ card, index }: { card: typeof featureCards[0]; index: num
         style={{ backgroundColor: `${card.accent}15`, borderColor: `${card.accent}30`, color: card.accent }}>
         <Icon className="w-5 h-5" />
       </div>
-      <h3 className="text-base font-bold text-[#1A1A1A] dark:text-[#EDEDED] mb-3">{card.title}</h3>
-      <p className="text-sm text-[#5C5C5C] dark:text-[#9A9A9A] leading-relaxed">{card.desc}</p>
+      <h3 className="text-lg font-bold text-[#1A1A1A] dark:text-[#EDEDED] mb-3">{card.title}</h3>
+      <p className="text-base text-[#5C5C5C] dark:text-[#9A9A9A] leading-relaxed">{card.desc}</p>
     </motion.div>
   );
 }
@@ -164,21 +164,21 @@ export default function CLIFeature() {
                 Managed CLI
               </span>
 
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-[#1A1A1A] dark:text-[#EDEDED] leading-tight mb-5">
+              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black text-[#1A1A1A] dark:text-[#EDEDED] leading-tight mb-5">
                 Command Without<br />
                 <span className="text-[#00BCA1]">Limits.</span>
               </h1>
 
-              <p className="text-[#5C5C5C] dark:text-[#9A9A9A] text-base sm:text-lg leading-relaxed mb-8 max-w-md">
+              <p className="text-[#5C5C5C] dark:text-[#9A9A9A] text-lg sm:text-xl leading-relaxed mb-8 max-w-md">
                 Run 20+ professional security tools from your terminal with zero installation. All processing happens on our secure cloud.
               </p>
 
               <div className="flex flex-wrap gap-3">
-                <button className="inline-flex items-center gap-2 px-5 py-3 bg-[#00BCA1] hover:bg-[#00A390] text-white rounded-xl text-sm font-bold transition-colors">
+                <button className="inline-flex items-center gap-2 px-5 py-3 bg-[#00BCA1] hover:bg-[#00A390] text-white rounded-xl text-base font-bold transition-colors">
                   <Download className="w-4 h-4" />
                   Install the CLI
                 </button>
-                <button className="inline-flex items-center gap-2 px-5 py-3 bg-white dark:bg-[#111113] border border-black/9 dark:border-white/9 text-[#1A1A1A] dark:text-[#EDEDED] rounded-xl text-sm font-semibold hover:border-[#00BCA1] transition-colors">
+                <button className="inline-flex items-center gap-2 px-5 py-3 bg-white dark:bg-[#111113] border border-black/9 dark:border-white/9 text-[#1A1A1A] dark:text-[#EDEDED] rounded-xl text-base font-semibold hover:border-[#00BCA1] transition-colors">
                   <FileText className="w-4 h-4" />
                   View Docs
                 </button>
@@ -203,7 +203,7 @@ export default function CLIFeature() {
       <section className="py-16 bg-white dark:bg-[#111113] border-y border-black/9 dark:border-white/9">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div {...fadeUp(0)} className="text-center mb-10">
-            <h2 className="text-2xl sm:text-3xl font-bold text-[#1A1A1A] dark:text-[#EDEDED] mb-3">
+            <h2 className="text-3xl sm:text-4xl font-bold text-[#1A1A1A] dark:text-[#EDEDED] mb-3">
               Engineering Precision
             </h2>
             <div className="w-14 h-0.5 bg-[#00BCA1] mx-auto" />
@@ -214,7 +214,7 @@ export default function CLIFeature() {
               {specs.map((spec, i) => (
                 <div key={i} className={`flex justify-between px-5 py-4 ${i < specs.length - 1 ? "border-b border-black/9 dark:border-white/9" : ""}`}>
                   <span className="text-xs text-[#9A9A9A] uppercase tracking-widest">{spec.label}</span>
-                  <span className="text-sm text-[#1A1A1A] dark:text-[#EDEDED] font-mono">{spec.value}</span>
+                  <span className="text-base text-[#1A1A1A] dark:text-[#EDEDED] font-mono">{spec.value}</span>
                 </div>
               ))}
             </motion.div>
@@ -224,9 +224,9 @@ export default function CLIFeature() {
                 <div className="w-10 h-10 rounded-xl bg-[#00BCA1]/10 border border-[#00BCA1]/20 flex items-center justify-center">
                   <Shield className="w-5 h-5 text-[#00BCA1]" />
                 </div>
-                <h3 className="text-base font-bold text-[#1A1A1A] dark:text-[#EDEDED]">Hardened Binary</h3>
+                <h3 className="text-lg font-bold text-[#1A1A1A] dark:text-[#EDEDED]">Hardened Binary</h3>
               </div>
-              <p className="text-sm text-[#5C5C5C] dark:text-[#9A9A9A] leading-relaxed mb-4">
+              <p className="text-base text-[#5C5C5C] dark:text-[#9A9A9A] leading-relaxed mb-4">
                 Built with Rust for memory safety. Uses gRPC protocol for real-time streaming. Every session is ephemeral and audit-logged.
               </p>
               <div className="flex gap-2">
@@ -245,7 +245,7 @@ export default function CLIFeature() {
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div {...fadeUp(0)} className="text-center mb-12">
-            <h2 className="text-2xl sm:text-3xl font-bold text-[#1A1A1A] dark:text-[#EDEDED] mb-3">
+            <h2 className="text-3xl sm:text-4xl font-bold text-[#1A1A1A] dark:text-[#EDEDED] mb-3">
               Execution Workflow
             </h2>
           </motion.div>
@@ -262,8 +262,8 @@ export default function CLIFeature() {
                   <div className="w-12 h-12 rounded-full flex items-center justify-center mb-4 border-2 border-[#00BCA1]/25 bg-[#00BCA1]/10">
                     <Icon className="w-5 h-5 text-[#00BCA1]" />
                   </div>
-                  <h3 className="text-sm font-bold text-[#1A1A1A] dark:text-[#EDEDED] mb-2">{step.title}</h3>
-                  <p className="text-xs text-[#5C5C5C] dark:text-[#9A9A9A] leading-relaxed">{step.desc}</p>
+                  <h3 className="text-base font-bold text-[#1A1A1A] dark:text-[#EDEDED] mb-2">{step.title}</h3>
+                  <p className="text-sm text-[#5C5C5C] dark:text-[#9A9A9A] leading-relaxed">{step.desc}</p>
                 </motion.div>
               );
             })}
@@ -279,17 +279,17 @@ export default function CLIFeature() {
             <div className="absolute -bottom-16 -right-16 w-48 h-48 rounded-full bg-[#0077B6]/10 blur-3xl" />
             
             <div className="relative z-10 text-center">
-              <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3">
+              <h2 className="text-3xl sm:text-4xl font-bold text-white mb-3">
                 Ready to upgrade your workflow?
               </h2>
-              <p className="text-[#9A9A9A] mb-8 max-w-md mx-auto">
+              <p className="text-lg text-[#9A9A9A] mb-8 max-w-md mx-auto">
                 Lightweight, secure, and ready for production.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                <button className="bg-[#00BCA1] hover:bg-[#00A390] text-white px-6 py-3 rounded-xl text-sm font-bold transition-colors">
+                <button className="bg-[#00BCA1] hover:bg-[#00A390] text-white px-6 py-3 rounded-xl text-base font-bold transition-colors">
                   Install Now
                 </button>
-                <button className="border border-white/20 text-white px-6 py-3 rounded-xl text-sm font-semibold hover:bg-white/5 transition-colors">
+                <button className="border border-white/20 text-white px-6 py-3 rounded-xl text-base font-semibold hover:bg-white/5 transition-colors">
                   View Documentation
                 </button>
               </div>

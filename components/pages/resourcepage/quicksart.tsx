@@ -1,4 +1,5 @@
-import { Database, BarChart3, Zap, Code2, Shield, GitBranch } from 'lucide-react'
+import { Database, BarChart3, Zap} from 'lucide-react'
+import { motion } from 'framer-motion'
 
 const paths = [
   {
@@ -21,23 +22,60 @@ const paths = [
   }
 ]
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.2
+    }
+  }
+}
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5 }
+  }
+}
+
 export default function QuickStartPaths() {
   return (
     <section className="py-16 md:py-24 bg-white dark:bg-black dark:to-white">
       <div className="max-w-7xl mx-auto px-4">
-        <div className="mb-12">
+        <motion.div 
+          className="mb-12"
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          viewport={{ once: true }}
+        >
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 text-balance">
             Quick Start Paths
           </h2>
           <p className="text-lg text-foreground/60">
             Get up and running with these essential pathways
           </p>
-        </div>
-        <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
+        </motion.div>
+        <motion.div
+          className="grid md:grid-cols-3 gap-6 lg:gap-8"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
           {paths.map((path, idx) => {
             const Icon = path.icon
             return (
-              <div key={idx} className="p-6 md:p-8 border border-border rounded-xl hover:border-primary/50 hover:shadow-lg transition">
+              <motion.div 
+                key={idx} 
+                className="p-6 md:p-8 border border-border rounded-xl hover:border-primary/50 hover:shadow-lg transition"
+                variants={itemVariants}
+                whileHover={{ y: -5 }}
+              >
                 <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
                   <Icon className="text-primary" size={24} />
                 </div>
@@ -51,10 +89,10 @@ export default function QuickStartPaths() {
                   Learn more
                   <span>→</span>
                 </a>
-              </div>
+              </motion.div>
             )
           })}
-        </div>
+        </motion.div>
       </div>
     </section>
   )

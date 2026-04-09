@@ -1,12 +1,28 @@
 'use client';
 
 import { JSX, useState } from 'react';
+import { motion, cubicBezier } from 'framer-motion';
+
+const pageMotion = {
+  hidden: { opacity: 0, y: 16 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.45, ease: cubicBezier(0.25, 0.46, 0.45, 0.94) } },
+};
+
+const listMotion = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.05 } },
+};
+
+const cardMotion = {
+  hidden: { opacity: 0, y: 18 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.35, ease: cubicBezier(0.25, 0.46, 0.45, 0.94) } },
+};
 
 // ── Icons ──────────────────────────────────────────────────────────────
 const SearchIcon = () => (
   <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-    <circle cx="8" cy="8" r="5" stroke="currentColor" strokeWidth="1.5"/>
-    <path d="M12 12L16 16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+    <circle cx="8" cy="8" r="5" stroke="currentColor" strokeWidth="1.5" />
+    <path d="M12 12L16 16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
   </svg>
 )
 
@@ -153,7 +169,13 @@ export default function ToolsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F7F5F0] dark:bg-[#09090B]" style={{ fontFamily: 'var(--font-google-sans), sans-serif' }}>
+    <motion.div
+      initial="hidden"
+      animate="visible"
+      variants={pageMotion}
+      className="min-h-screen mt-17 bg-[#F7F5F0] dark:bg-[#09090B]"
+      style={{ fontFamily: 'var(--font-google-sans), sans-serif' }}
+    >
       <div className="bg-white dark:bg-[#111113] border-b border-black/9 dark:border-white/9">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6">
@@ -211,10 +233,18 @@ export default function ToolsPage() {
             <p className="text-sm mt-1">Try a different search or category</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={listMotion}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
+          >
             {filtered.map((tool) => (
-              <div
+              <motion.div
                 key={tool.id}
+                variants={cardMotion}
+                whileHover={{ y: -5, scale: 1.01 }}
+                transition={{ type: 'spring', stiffness: 220, damping: 18 }}
                 className="group bg-white dark:bg-[#111113] border border-black/9 dark:border-white/9 rounded-2xl p-6 flex flex-col gap-4 shadow-sm hover:shadow-lg hover:border-[#00BCA1]/40 hover:-translate-y-1 transition-all duration-200 cursor-pointer"
               >
                 <div className="flex items-start justify-between">
@@ -255,11 +285,11 @@ export default function ToolsPage() {
                     </svg>
                   </a>
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         )}
       </div>
-    </div>
+    </motion.div>
   )
 }
