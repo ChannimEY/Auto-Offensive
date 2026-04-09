@@ -137,7 +137,7 @@ const CARDS = [
     hlLine: 1,
     desc: "Persistent coverage with scheduled scans that automate recurring tests across assets. Real-time alerts for critical issues via email, Slack, or Webhooks. Hands-off monitoring with Pentest Robots that trigger repeatable scan sequences — plus instant REST API access to all scanning capabilities.",
     link: "#",
-    image: "./home-image/3.png",
+    image: "./home-image/5.png",
     imageAlt: "Continuous Monitoring",
     reverse: false,
     imageW: "540px",

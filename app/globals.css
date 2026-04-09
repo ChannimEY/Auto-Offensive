@@ -148,7 +148,9 @@
     font-family: var(--font-hackdaddy), var(--font-noto-khmer), sans-serif;
   }
   * {
-    @apply border-border outline-ring/50;
+    border-color: var(--border);
+    outline-color: var(--ring);
+    outline-opacity: 0.5;
   }
   html {
     @apply font-sans;
@@ -159,6 +161,35 @@
 @layer utilities {
   .bg-security-gradient {
     background: linear-gradient(to right, var(--color-secondary-start), var(--color-secondary-mid), var(--color-secondary-end));
+  }
+
+  @keyframes doc-skeleton-shimmer {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
+
+  .doc-skeleton {
+    background-image: linear-gradient(
+      90deg,
+      rgba(225, 217, 206, 0.95) 0%,
+      rgba(244, 241, 236, 1) 35%,
+      rgba(225, 217, 206, 0.95) 70%
+    );
+    background-size: 200% 100%;
+    animation: doc-skeleton-shimmer 1.5s linear infinite;
+  }
+
+  .dark .doc-skeleton {
+    background-image: linear-gradient(
+      90deg,
+      rgba(23, 24, 29, 0.95) 0%,
+      rgba(41, 43, 49, 1) 35%,
+      rgba(23, 24, 29, 0.95) 70%
+    );
   }
 }
 
@@ -226,6 +257,7 @@
 
   --sidebar-ring: oklch(0.556 0 0);
 }
+<<<<<<< HEAD
 
 /* --- Font Utility Classes --- */
 
@@ -252,3 +284,5 @@ html[lang="kh"] .big-text,
 html[lang="kh"] .display-text {
   font-family: var(--font-hackdaddy), "Hackdaddy", monospace;
 }
+=======
+>>>>>>> 665eb8b (add skeleton into document pages)

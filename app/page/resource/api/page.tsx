@@ -1,5 +1,5 @@
 import ApiDocument from "@/components/pages/resources/api/api-document";
 
-export default function () {
+export default function ApiPage() {
   return <ApiDocument />;
 }
