@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://auto-offensive.com';
+const siteUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://auto-offensive.com';
 const siteName = 'Auto-Offensive';
 const siteDescription = 'Next-Gen PaaS for Hackers - Automated Security Workflows and Pentesting Platform';
 
@@ -15,12 +15,19 @@ export function generateMetadata(options: PageMetadata): Metadata {
   const { title, description, image, url } = options;
   
   const fullTitle = title === siteName ? title : `${title} | ${siteName}`;
-  const imageUrl = image ? `${siteUrl}${image}` : `${siteUrl}/og-image.png`;
-  const pageUrl = url ? `${siteUrl}${url}` : siteUrl;
+  
+  let resolvedSiteUrl = siteUrl;
+  if (!resolvedSiteUrl.startsWith('http://') && !resolvedSiteUrl.startsWith('https://')) {
+    resolvedSiteUrl = `https://${resolvedSiteUrl}`;
+  }
+  
+  const imageUrl = image ? `${resolvedSiteUrl}${image}` : `${resolvedSiteUrl}/og-image.png`;
+  const pageUrl = url ? `${resolvedSiteUrl}${url}` : resolvedSiteUrl;
 
   return {
     title: fullTitle,
     description: description,
+metadataBase: new URL(resolvedSiteUrl),
     openGraph: {
       title: fullTitle,
       description: description,
