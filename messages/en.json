@@ -88,6 +88,75 @@
     "title": "Platform Capabilities",
     "subtitle": "Everything you need to secure your infrastructure"
   },
+  "homepage": {
+    "hero": {
+      "titleLine1": "Next Gen",
+      "titleLine2": "Platform As A Service",
+      "titleLine3": "for hacker",
+      "description": "Continuously scan your infrastructure for vulnerabilities - faster, smarter, and at scale. No manual setup. Just results.",
+      "primaryCta": "Start Scanning",
+      "secondaryCta": "View Sample Report",
+      "scroll": "Scroll",
+      "stats": {
+        "completed": "Scans completed",
+        "uptime": "Uptime SLA",
+        "faster": "Faster than manual"
+      }
+    },
+    "aiBanner": {
+      "eyebrow": "Auto Offensive · AI-Powered Security",
+      "titleLine1": "AI amplifies your",
+      "titleLine2": "expertise,",
+      "titleLine3": "not replace it",
+      "description": "Auto Offensive doesn't replace skilled security professionals. Instead, we empower ethical hackers, penetration testers, and infosec practitioners with AI-driven workflows that handle the tedious work so you can focus on creative hacking, custom testing, and security research."
+    },
+    "video": {
+      "eyebrow": "Platform Walkthrough",
+      "playLabel": "Play video",
+      "title": "Discover Our Story",
+      "subtitle": "Watch a quick walkthrough of the platform, tools, and workflow experience."
+    },
+    "team": {
+      "eyebrow": "Our company",
+      "titleLine1": "In our company,",
+      "titleLine2": "we build",
+      "titleLine3": "what we use",
+      "paragraph1": "We launched as a team of passionate professionals and we've kept that mindset ever since. Our experts still drive product development today, focusing relentlessly on accuracy, speed, and control.",
+      "paragraph2": "Every new feature comes from real-world experience. We constantly improve our work with updated techniques, smarter processes, and validation that reflects how things actually operate.",
+      "cta": "Read our story",
+      "imagePlaceholder": "Team Photo Placeholder",
+      "teamSizeLabel": "Team size",
+      "teamSizeValue": "12+ Experts",
+      "established": "Est."
+    },
+    "audience": {
+      "eyebrow": "Auto Offensive is for",
+      "seeMore": "See more",
+      "cards": {
+        "consultants": {
+          "title": "Security",
+          "subtitle": "consultants",
+          "description": "Work faster, prove more, grow your practice."
+        },
+        "internalTeams": {
+          "title": "Internal security",
+          "subtitle": "teams",
+          "description": "Maintain visibility, reduce risk, earn trust."
+        },
+        "msps": {
+          "title": "Managed Security",
+          "subtitle": "Providers (MSPs)",
+          "description": "Deliver more value with less overhead."
+        }
+      }
+    },
+    "features": {
+      "sectionEyebrow": "Platform Capabilities",
+      "sectionTitleLine1": "What You Can Do",
+      "sectionTitleLine2": "with Auto Offensive",
+      "exploreCapability": "Explore capability"
+    }
+  },
   "feature": {
     "cli": {
       "title": "Command Without Limits",

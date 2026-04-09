@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { LeftSidebar, RightSidebar } from "./api-sidebar";
 import type { SidebarSection, TocItem } from "./api-sidebar";
 import ApiContent from "./api-content";
+import { useLocale } from "next-intl";
 
 const SIDEBAR_SECTIONS: SidebarSection[] = [
   {
@@ -117,6 +118,11 @@ const ALL_SECTION_IDS = [
 
 export default function ApiDocument() {
   const [activeId, setActiveId] = useState("overview");
+  const locale = useLocale();
+  const isKhmer = locale === "kh";
+  const bodyFontFamily = isKhmer
+    ? "var(--font-noto-khmer), var(--font-google-sans), sans-serif"
+    : "var(--font-google-sans), var(--font-noto-khmer), sans-serif";
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -151,7 +157,7 @@ export default function ApiDocument() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#F7F5F0] dark:bg-[#09090B] transition-colors duration-300">
+    <div className="min-h-screen bg-[#F7F5F0] dark:bg-[#09090B] transition-colors duration-300" style={{ fontFamily: bodyFontFamily }}>
       <div className="mx-auto flex w-full max-w-7xl items-start pt-18 md:pt-20 lg:pt-22">
         <LeftSidebar
           sections={SIDEBAR_SECTIONS}

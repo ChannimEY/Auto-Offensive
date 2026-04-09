@@ -5,10 +5,17 @@ import StatsRow from "@/components/vulnerabilities/buttons/StatsRow";
 import FindingsTable from "@/components/vulnerabilities/mediumLowCards/Findingstable";
 import GuestBanner from "@/components/vulnerabilities/pagination/GuestBanner";
 import Sidebar from "@/components/Sidebar";
+import { useLocale } from "next-intl";
 
 export default function VulnerabilitiesPage() {
+  const locale = useLocale();
+  const isKhmer = locale === "kh";
+  const bodyFontFamily = isKhmer
+    ? "var(--font-noto-khmer), var(--font-google-sans), sans-serif"
+    : "var(--font-google-sans), var(--font-noto-khmer), sans-serif";
+
   return (
-    <div className="flex min-h-screen bg-white dark:bg-gray-900">
+    <div className="flex min-h-screen bg-white dark:bg-gray-900" style={{ fontFamily: bodyFontFamily }}>
       {/* Sidebar */}
       <aside className="w-64 hidden md:block border-r border-gray-200 dark:border-gray-800">
         <Sidebar />

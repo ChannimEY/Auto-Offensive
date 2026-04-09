@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useInView } from "framer-motion";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useRef, useState, useEffect } from "react";
 
 function TerminalHero() {
@@ -312,9 +312,17 @@ function BenefitsSection() {
 
 export default function WebUIFeature() {
   const t = useTranslations("featurePages.webui");
+  const locale = useLocale();
+  const isKhmer = locale === "kh";
+  const bodyFontFamily = isKhmer
+    ? "var(--font-noto-khmer), var(--font-google-sans), sans-serif"
+    : "var(--font-google-sans), var(--font-noto-khmer), sans-serif";
+  const displayFontFamily = isKhmer
+    ? "var(--font-noto-khmer), var(--font-hackdaddy), sans-serif"
+    : "var(--font-hackdaddy), var(--font-noto-khmer), sans-serif";
 
   return (
-    <div className="bg-white dark:bg-slate-950 min-h-screen font-sans">
+    <div className="bg-white dark:bg-slate-950 min-h-screen font-sans" style={{ fontFamily: bodyFontFamily }}>
       {/* Hero */}
       <section className="py-20 bg-white dark:bg-slate-950">
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -336,6 +344,7 @@ export default function WebUIFeature() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
               className="text-6xl lg:text-7xl font-black text-slate-900 dark:text-white leading-tight mb-5"
+              style={{ fontFamily: displayFontFamily }}
             >
               {t("hero.titleLine1")}{" "}
               <span className="text-emerald-600 dark:text-emerald-400 block">{t("hero.titleLine2")}</span>

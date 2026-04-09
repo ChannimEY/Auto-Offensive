@@ -2,7 +2,7 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 import {
   Monitor,
@@ -133,6 +133,14 @@ function Tag({ children }: { children: React.ReactNode }) {
 /* ─── Main Component ─────────────────────────────────────────── */
 export default function PlatformCapabilities() {
   const t = useTranslations("featuresPage");
+  const locale = useLocale();
+  const isKhmer = locale === "kh";
+  const bodyFontFamily = isKhmer
+    ? "var(--font-noto-khmer), var(--font-google-sans), sans-serif"
+    : "var(--font-google-sans), var(--font-noto-khmer), sans-serif";
+  const displayFontFamily = isKhmer
+    ? "var(--font-noto-khmer), var(--font-hackdaddy), sans-serif"
+    : "var(--font-hackdaddy), var(--font-noto-khmer), sans-serif";
 
   const heroRef = useRef(null);
   const gridRef = useRef(null);
@@ -180,7 +188,7 @@ export default function PlatformCapabilities() {
 
   return (
     
-      <div className="min-h-screen bg-white dark:bg-[#030712] font-sans text-slate-900 dark:text-white transition-colors duration-300">
+      <div className="min-h-screen bg-white dark:bg-[#030712] font-sans text-slate-900 dark:text-white transition-colors duration-300" style={{ fontFamily: bodyFontFamily }}>
 
         {/* ── Hero ── */}
         <section
@@ -218,6 +226,7 @@ export default function PlatformCapabilities() {
               custom={1}
               className="text-5xl sm:text-7xl font-black tracking-tight leading-[0.95] mb-6
                 text-slate-900 dark:text-white"
+              style={{ fontFamily: displayFontFamily }}
             >
               {t("hero.titleLine1")}<br />
               <span className="text-[#00BCA1] dark:text-emerald-400">{t("hero.titleLine2")}</span>

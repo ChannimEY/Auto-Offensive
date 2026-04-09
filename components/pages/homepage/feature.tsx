@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import { useLocale, useTranslations } from "next-intl";
 
 // ─── CUSTOMIZATION CONSTANTS ──────────────────────────────────────────────────
 const CONFIG = {
@@ -38,9 +39,7 @@ const FONT_SIZES = {
   "4xl": { desktop: "48px", tablet: "40px", mobile: "32px" },
 };
 
-// ─── Data ────────────────────────────────────────────────────────────────────
-
-const TICKER_ITEMS = [
+const EN_TICKER_ITEMS = [
   "Attack Surface Mapping",
   "Vulnerability Scanning",
   "Auto Exploitation",
@@ -49,13 +48,13 @@ const TICKER_ITEMS = [
   "CI/CD Integration",
 ];
 
-const CARDS = [
+const EN_CARDS = [
   {
     num: "01",
     tag: "Recon",
     title: ["Attack Surface", "Mapping"],
     hlLine: 1,
-    desc: "Powerful, connected scanners for mapping exposed network assets and web apps, including cloud and APIs. Get a global view of open ports, running services, operating systems, and screenshots — plus ML-driven insights from subdomains, outdated technologies, reverse DNS, WAFs, and hidden files.",
+    desc: "Powerful, connected scanners for mapping exposed network assets and web apps, including cloud and APIs. Get a global view of open ports, running services, operating systems, and screenshots - plus ML-driven insights from subdomains, outdated technologies, reverse DNS, WAFs, and hidden files.",
     link: "#",
     image: "./home-image/4.png",
     imageAlt: "Attack Surface Mapping",
@@ -75,7 +74,7 @@ const CARDS = [
     tag: "Scanning",
     title: ["Comprehensive", "Vulnerability Scanning"],
     hlLine: 1,
-    desc: "Proprietary web app and API scanner with benchmark-proven detection accuracy — outperforming both commercial and open-source tools. Network scanner combines 4 detection engines, ranked #1 in remote detection accuracy across 128 environments against Qualys, Nessus, and OpenVAS.",
+    desc: "Proprietary web app and API scanner with benchmark-proven detection accuracy - outperforming both commercial and open-source tools. Network scanner combines 4 detection engines, ranked #1 in remote detection accuracy across 128 environments against Qualys, Nessus, and OpenVAS.",
     link: "#",
     image: "./home-image/1.png",
     imageAlt: "Vulnerability Scanning",
@@ -95,7 +94,7 @@ const CARDS = [
     tag: "Exploitation",
     title: ["Vulnerability", "Exploitation"],
     hlLine: 1,
-    desc: "Automatic exploitation of new, critical CVEs with Sniper Auto Exploiter for validating risk and extracting evidence. Purpose-built to safely confirm exploitability of SQL injection, XSS, and more — with evidence-rich results including screenshots, network maps, exploit paths, and traffic logs.",
+    desc: "Automatic exploitation of new, critical CVEs with Sniper Auto Exploiter for validating risk and extracting evidence. Purpose-built to safely confirm exploitability of SQL injection, XSS, and more - with evidence-rich results including screenshots, network maps, exploit paths, and traffic logs.",
     link: "#",
     image: "./home-image/3.png",
     imageAlt: "Vulnerability Exploitation",
@@ -115,7 +114,7 @@ const CARDS = [
     tag: "Reporting",
     title: ["Pentest Reporting", "& Data Exports"],
     hlLine: 1,
-    desc: "Built-in pentest report generator for creating editable DOCX reports 90% faster. Extensive library of customizable findings with vulnerability descriptions, risk ratings, evidence, and remediation steps. Export as PDF, HTML, CSV, XLSX, or via REST API — with branded templates per client.",
+    desc: "Built-in pentest report generator for creating editable DOCX reports 90% faster. Extensive library of customizable findings with vulnerability descriptions, risk ratings, evidence, and remediation steps. Export as PDF, HTML, CSV, XLSX, or via REST API - with branded templates per client.",
     link: "#",
     image: "./home-image/2.png",
     imageAlt: "Pentest Reporting",
@@ -135,9 +134,9 @@ const CARDS = [
     tag: "Monitoring",
     title: ["Continuous", "Vulnerability Monitoring"],
     hlLine: 1,
-    desc: "Persistent coverage with scheduled scans that automate recurring tests across assets. Real-time alerts for critical issues via email, Slack, or Webhooks. Hands-off monitoring with Pentest Robots that trigger repeatable scan sequences — plus instant REST API access to all scanning capabilities.",
+    desc: "Persistent coverage with scheduled scans that automate recurring tests across assets. Real-time alerts for critical issues via email, Slack, or Webhooks. Hands-off monitoring with Pentest Robots that trigger repeatable scan sequences - plus instant REST API access to all scanning capabilities.",
     link: "#",
-    image: "./home-image/3.png",
+    image: "./home-image/5.png",
     imageAlt: "Continuous Monitoring",
     reverse: false,
     imageW: "540px",
@@ -155,10 +154,144 @@ const CARDS = [
     tag: "CI/CD Integration",
     title: ["Security Baked", "Into Every Pipeline"],
     hlLine: 1,
-    desc: "Embed offensive security directly into your CI/CD workflow. Auto Offensive triggers scans on every build, blocks deployments on critical findings, and feeds results into your existing DevSecOps toolchain — so vulnerabilities are caught before they ever reach production.",
+    desc: "Embed offensive security directly into your CI/CD workflow. Auto Offensive triggers scans on every build, blocks deployments on critical findings, and feeds results into your existing DevSecOps toolchain - so vulnerabilities are caught before they ever reach production.",
     link: "#",
     image: "./home-image/6.png",
     imageAlt: "CI/CD Integration",
+    reverse: true,
+    imageW: "500px",
+    imageH: "420px",
+    gapLeft: "50px",
+    gapRight: "52px",
+    imagePadding: "20px 0px 0px 20px",
+    imageOffsetX: "0px",
+    imageOffsetY: "0px",
+    imageAlign: "center",
+    imageValign: "center",
+  },
+];
+
+// ─── Data ────────────────────────────────────────────────────────────────────
+
+const TICKER_ITEMS = [
+  "ការស្វែងរកផ្ទៃវាយប្រហារ",
+  "ការស្កេនចំណុចខ្សោយ",
+  "ការសាកល្បងវាយប្រហារដោយស្វ័យប្រវត្តិ",
+  "របាយការណ៍ Pentest",
+  "ការតាមដានជាបន្តបន្ទាប់",
+  "ការភ្ជាប់ CI/CD",
+];
+
+const CARDS = [
+  {
+    num: "01",
+    tag: "Recon",
+    title: ["ការស្វែងរកផ្ទៃ", "វាយប្រហារ"],
+    hlLine: 1,
+    desc: "ប្រើម៉ាស៊ីនស្កេនដែលភ្ជាប់គ្នាដើម្បីស្វែងរក asset ដែលបើកចំហរ ទាំងបណ្តាញ Web App, Cloud និង API។ អ្នកអាចឃើញ ports ដែលបើក សេវាកម្មដែលកំពុងដំណើរការ ប្រព័ន្ធប្រតិបត្តិការ screenshots និងព័ត៌មានជ្រៅបន្ថែមពី subdomain, បច្ចេកវិទ្យាចាស់, reverse DNS, WAF និងឯកសារលាក់។",
+    link: "#",
+    image: "./home-image/4.png",
+    imageAlt: "ការស្វែងរកផ្ទៃវាយប្រហារ",
+    reverse: false,
+    imageW: "520px",
+    imageH: "380px",
+    gapLeft: "20px",
+    gapRight: "52px",
+    imagePadding: "0px 0px 0px 0px",
+    imageOffsetX: "0px",
+    imageOffsetY: "0px",
+    imageAlign: "center",
+    imageValign: "center",
+  },
+  {
+    num: "02",
+    tag: "Scanning",
+    title: ["ការស្កេនចំណុចខ្សោយ", "បានគ្រប់ជ្រុងជ្រោយ"],
+    hlLine: 1,
+    desc: "Web App និង API scanner របស់យើងផ្តល់ភាពត្រឹមត្រូវខ្ពស់ក្នុងការរកឃើញបញ្ហា ហើយធ្វើការបានល្អទាំងលើ commercial tools និង open-source tools។ ផ្នែក network scanner រួមបញ្ចូល detection engines ចំនួន 4 ដើម្បីជួយឱ្យការស្វែងរកពីចម្ងាយមានភាពច្បាស់ និងទុកចិត្តបាន។",
+    link: "#",
+    image: "./home-image/1.png",
+    imageAlt: "ការស្កេនចំណុចខ្សោយ",
+    reverse: true,
+    imageW: "480px",
+    imageH: "320px",
+    gapLeft: "50px",
+    gapRight: "52px",
+    imagePadding: "20px 0px 0px 20px",
+    imageOffsetX: "0px",
+    imageOffsetY: "0px",
+    imageAlign: "center",
+    imageValign: "center",
+  },
+  {
+    num: "03",
+    tag: "Exploitation",
+    title: ["ការផ្ទៀងផ្ទាត់", "ការវាយប្រហារ"],
+    hlLine: 1,
+    desc: "ប្រព័ន្ធអាចធ្វើការសាកល្បងវាយប្រហារដោយស្វ័យប្រវត្តិលើ CVE សំខាន់ៗ ដើម្បីផ្ទៀងផ្ទាត់កម្រិតហានិភ័យ និងប្រមូលភស្តុតាង។ វាជួយបញ្ជាក់ដោយសុវត្ថិភាពថា SQL injection, XSS និងបញ្ហាផ្សេងៗអាច exploit បានឬអត់ ជាមួយលទ្ធផលដែលមាន screenshot, network map, exploit path និង traffic log។",
+    link: "#",
+    image: "./home-image/3.png",
+    imageAlt: "ការផ្ទៀងផ្ទាត់ការវាយប្រហារ",
+    reverse: false,
+    imageW: "500px",
+    imageH: "400px",
+    gapLeft: "20px",
+    gapRight: "52px",
+    imagePadding: "0px 0px 0px 0px",
+    imageOffsetX: "0px",
+    imageOffsetY: "0px",
+    imageAlign: "center",
+    imageValign: "center",
+  },
+  {
+    num: "04",
+    tag: "Reporting",
+    title: ["របាយការណ៍ Pentest", "និងការនាំចេញទិន្នន័យ"],
+    hlLine: 1,
+    desc: "បង្កើតរបាយការណ៍ Pentest ដែលអាចកែសម្រួលបានលឿនជាងមុនជាមួយ report generator ក្នុងប្រព័ន្ធ។ មានបណ្ណាល័យ findings ដែលអាចប្ដូរតាមតម្រូវការ រួមទាំងពិពណ៌នាបញ្ហា កម្រិតហានិភ័យ ភស្តុតាង និងជំហានដោះស្រាយ។ អាច export ជា PDF, HTML, CSV, XLSX ឬតាម REST API បានផងដែរ។",
+    link: "#",
+    image: "./home-image/2.png",
+    imageAlt: "របាយការណ៍ Pentest",
+    reverse: true,
+    imageW: "460px",
+    imageH: "340px",
+    gapLeft: "50px",
+    gapRight: "52px",
+    imagePadding: "20px 0px 0px 20px",
+    imageOffsetX: "0px",
+    imageOffsetY: "0px",
+    imageAlign: "center",
+    imageValign: "center",
+  },
+  {
+    num: "05",
+    tag: "Monitoring",
+    title: ["ការតាមដានចំណុចខ្សោយ", "ជាបន្តបន្ទាប់"],
+    hlLine: 1,
+    desc: "កំណត់ពេលស្កេនជាប្រចាំដើម្បីគ្របដណ្តប់លើ asset ទាំងអស់ដោយស្វ័យប្រវត្តិ។ ប្រសិនបើមានបញ្ហាសំខាន់ អ្នកអាចទទួលការជូនដំណឹងភ្លាមៗតាម email, Slack ឬ Webhook។ វាសមស្របសម្រាប់ការតាមដានដោយមិនចាំបាច់ធ្វើដៃជាញឹកញាប់ ហើយអាចចូលប្រើសមត្ថភាពស្កេនតាម REST API បានភ្លាមៗ។",
+    link: "#",
+    image: "./home-image/5.png",
+    imageAlt: "ការតាមដានជាបន្តបន្ទាប់",
+    reverse: false,
+    imageW: "540px",
+    imageH: "360px",
+    gapLeft: "20px",
+    gapRight: "52px",
+    imagePadding: "0px 0px 0px 0px",
+    imageOffsetX: "0px",
+    imageOffsetY: "0px",
+    imageAlign: "center",
+    imageValign: "center",
+  },
+  {
+    num: "06",
+    tag: "CI/CD Integration",
+    title: ["បញ្ចូលសុវត្ថិភាព", "ទៅក្នុងគ្រប់ Pipeline"],
+    hlLine: 1,
+    desc: "បញ្ចូលការត្រួតពិនិត្យសុវត្ថិភាពចូលទៅក្នុង workflow CI/CD របស់អ្នកដោយផ្ទាល់។ Auto Offensive អាចបើកការស្កេនរាល់ពេល build ទប់ស្កាត់ deployment នៅពេលមានបញ្ហាសំខាន់ និងបញ្ជូនលទ្ធផលទៅ DevSecOps toolchain ដែលអ្នកកំពុងប្រើ ដើម្បីរកឃើញបញ្ហាមុនពេលឡើង production។",
+    link: "#",
+    image: "./home-image/6.png",
+    imageAlt: "ការភ្ជាប់ CI/CD",
     reverse: true,
     imageW: "500px",
     imageH: "420px",
@@ -396,7 +529,9 @@ function ProgressBar({ widthPct }: { widthPct: number }) {
 // ─── Ticker ───────────────────────────────────────────────────────────────────
 
 function Ticker({ colors }: { colors: typeof CONFIG.DARK }) {
-  const doubled = [...TICKER_ITEMS, ...TICKER_ITEMS];
+  const locale = useLocale();
+  const items = locale === "kh" ? TICKER_ITEMS : EN_TICKER_ITEMS;
+  const doubled = [...items, ...items];
   return (
     <div
       className="overflow-hidden border-y py-4 my-0"
@@ -442,6 +577,7 @@ function CardRow({
   cardRef,
   colors,
   mode,
+  exploreCapabilityLabel,
 }: {
   card: CardData;
   isLast: boolean;
@@ -449,7 +585,19 @@ function CardRow({
   cardRef: (el: HTMLDivElement | null) => void;
   colors: typeof CONFIG.DARK;
   mode: ResponsiveMode;
+  exploreCapabilityLabel: string;
 }) {
+  const locale = useLocale();
+  const isKhmer = locale === "kh";
+  const bodyFontFamily = isKhmer
+    ? "var(--font-noto-khmer), var(--font-google-sans), sans-serif"
+    : "var(--font-google-sans), var(--font-noto-khmer), sans-serif";
+  const displayFontFamily = isKhmer
+    ? "var(--font-noto-khmer), var(--font-hackdaddy), sans-serif"
+    : "var(--font-hackdaddy), var(--font-noto-khmer), sans-serif";
+  const labelFontFamily = isKhmer
+    ? "var(--font-noto-khmer), sans-serif"
+    : "var(--font-hackdaddy), sans-serif";
   const { reverse, gapLeft, gapRight } = card;
   const isTablet = mode === "tablet";
   const isMobile = mode === "mobile";
@@ -487,7 +635,7 @@ function CardRow({
         <p
           className="uppercase mb-5"
           style={{
-            fontFamily: "var(--font-hackdaddy), sans-serif",
+            fontFamily: labelFontFamily,
             color: colors.accent1,
             fontSize: labelFontSize,
             letterSpacing: "0.2em",
@@ -501,7 +649,7 @@ function CardRow({
         <span
           className="inline-flex items-center gap-1.5 mb-6"
           style={{
-            fontFamily: "var(--font-hackdaddy), sans-serif",
+            fontFamily: labelFontFamily,
             color: colors.accent1,
             backgroundColor: `rgba(1,80,158,0.07)`,
             border: `1px solid rgba(1,80,158,0.18)`,
@@ -519,7 +667,7 @@ function CardRow({
         <h3
           className="font-bold leading-[1.15] mb-5"
           style={{
-            fontFamily: "var(--font-hackdaddy), var(--font-noto-khmer), sans-serif",
+            fontFamily: displayFontFamily,
             fontSize: getResponsiveFontSize("3xl"),
             letterSpacing: "-0.02em",
             color: colors.text,
@@ -540,7 +688,7 @@ function CardRow({
         <p
           className="leading-[1.75] max-w-100 mb-9"
           style={{
-            fontFamily: "var(--font-google-sans), var(--font-noto-khmer), sans-serif",
+            fontFamily: bodyFontFamily,
             color: colors.textMuted,
             fontSize: bodyFontSize,
           }}
@@ -553,14 +701,14 @@ function CardRow({
           href={card.link}
           className="inline-flex items-center gap-2.5 no-underline group"
           style={{
-            fontFamily: "var(--font-hackdaddy), sans-serif",
+            fontFamily: labelFontFamily,
             color: colors.accent1,
             fontSize: labelFontSize,
             letterSpacing: "0.15em",
             textTransform: "uppercase",
           }}
         >
-          Explore capability
+          {exploreCapabilityLabel}
           <span className="text-[14px] transition-transform duration-300 group-hover:translate-x-1">→</span>
         </a>
       </div>
@@ -678,11 +826,21 @@ function CardRow({
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 export default function Features() {
+  const locale = useLocale();
+  const t = useTranslations("homepage.features");
+  const isKhmer = locale === "kh";
+  const displayFontFamily = isKhmer
+    ? "var(--font-noto-khmer), var(--font-hackdaddy), sans-serif"
+    : "var(--font-hackdaddy), var(--font-noto-khmer), sans-serif";
+  const labelFontFamily = isKhmer
+    ? "var(--font-noto-khmer), sans-serif"
+    : "var(--font-hackdaddy), sans-serif";
+  const cards = locale === "kh" ? CARDS : EN_CARDS;
   // FIX: scrollPct is now used by ProgressBar
   const [scrollPct, setScrollPct] = useState(0);
   const [spineFill, setSpineFill] = useState(0);
   const [spineClip, setSpineClip] = useState("inset(9999px 0 0 0)");
-  const [visibleCards, setVisibleCards] = useState<boolean[]>(CARDS.map(() => false));
+  const [visibleCards, setVisibleCards] = useState<boolean[]>(cards.map(() => false));
   const [logoVisible, setLogoVisible] = useState(false);
 
   const colors = useTheme();
@@ -868,44 +1026,45 @@ export default function Features() {
             <p
               className="uppercase mb-2.5"
               style={{
-                fontFamily: "var(--font-hackdaddy), sans-serif",
+                fontFamily: labelFontFamily,
                 color: colors.accent2,
                 fontSize: sectionHeaderLabelSize,
                 letterSpacing: "0.2em",
               }}
             >
-              Platform Capabilities
+              {t("sectionEyebrow")}
             </p>
             <h2
               className="font-bold leading-[1.1]"
               style={{
-                fontFamily: "var(--font-hackdaddy), var(--font-noto-khmer), sans-serif",
+                fontFamily: displayFontFamily,
                 fontSize: getResponsiveFontSize("4xl"),
                 letterSpacing: "-0.02em",
                 color: colors.text,
               }}
             >
-              What You Can Do
+              {t("sectionTitleLine1")}
               <br />
-              with Auto Offensive
+              {t("sectionTitleLine2")}
             </h2>
           </div>
         </div>
 
         {/* Card Rows */}
-        {CARDS.map((card, i) => (
+        {cards.map((card, i) => (
           <CardRow
             key={i}
             card={card}
-            isLast={i === CARDS.length - 1}
+            isLast={i === cards.length - 1}
             isVisible={visibleCards[i]}
             cardRef={(el) => {
               cardRefs.current[i] = el;
               if (i === 0) firstCardRef.current = el;
-              if (i === CARDS.length - 1) lastCardRef.current = el;
+              if (i === cards.length - 1) lastCardRef.current = el;
             }}
             colors={colors}
             mode={mode}
+            exploreCapabilityLabel={t("exploreCapability")}
           />
         ))}
       </section>

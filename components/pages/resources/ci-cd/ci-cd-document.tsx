@@ -8,6 +8,7 @@ import {
   type SidebarSection,
   type TocItem,
 } from "./ci-cd-sidebar";
+import { useLocale } from "next-intl";
 
 const SIDEBAR_SECTIONS: SidebarSection[] = [
   {
@@ -56,6 +57,11 @@ const ALL_SECTION_IDS = TOC.map((item) => item.id);
 
 export default function CICDDocument() {
   const [activeId, setActiveId] = useState("overview");
+  const locale = useLocale();
+  const isKhmer = locale === "kh";
+  const bodyFontFamily = isKhmer
+    ? "var(--font-noto-khmer), var(--font-google-sans), sans-serif"
+    : "var(--font-google-sans), var(--font-noto-khmer), sans-serif";
 
   useEffect(() => {
     const sections = Array.from(document.querySelectorAll("section[id]"));
@@ -94,7 +100,7 @@ export default function CICDDocument() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#F7F5F0] dark:bg-[#09090B] transition-colors duration-300">
+    <div className="min-h-screen bg-[#F7F5F0] dark:bg-[#09090B] transition-colors duration-300" style={{ fontFamily: bodyFontFamily }}>
       <div className="mx-auto flex w-full max-w-7xl items-start pt-22">
         <LeftSidebar
           sections={SIDEBAR_SECTIONS}

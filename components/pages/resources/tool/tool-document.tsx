@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { ToolSidebar } from './tool-sidebar';
 import { ToolRightSidebar } from './tool-right-sidebar';
 import { ToolContent } from './tool-content';
+import { useLocale } from "next-intl";
 
 interface ToolDocumentProps {
   isDark?: boolean;
@@ -21,6 +22,11 @@ interface ToolDocumentProps {
 export const ToolDocument: React.FC<ToolDocumentProps> = ({ isDark = false }) => {
   const [activeSection, setActiveSection] = useState('#overview');
   const [themeIsDark, setThemeIsDark] = useState(isDark);
+  const locale = useLocale();
+  const isKhmer = locale === "kh";
+  const bodyFontFamily = isKhmer
+    ? "var(--font-noto-khmer), var(--font-google-sans), sans-serif"
+    : "var(--font-google-sans), var(--font-noto-khmer), sans-serif";
 
   useEffect(() => {
     const root = document.documentElement;
@@ -70,7 +76,7 @@ export const ToolDocument: React.FC<ToolDocumentProps> = ({ isDark = false }) =>
   const bgColor = themeIsDark ? 'bg-[#09090B]' : 'bg-[#F7F5F0]';
 
   return (
-    <div className={`${bgColor} min-h-screen transition-colors duration-300`}>
+    <div className={`${bgColor} min-h-screen transition-colors duration-300}`} style={{ fontFamily: bodyFontFamily }}>
       <div className="mx-auto flex w-full max-w-7xl items-start pt-22">
         <ToolSidebar
           activeSection={activeSection}

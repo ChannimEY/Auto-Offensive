@@ -2,7 +2,7 @@
 
 import { JSX, useState } from 'react';
 import { motion, cubicBezier } from 'framer-motion';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 const pageMotion = {
   hidden: { opacity: 0, y: 16 },
@@ -138,6 +138,15 @@ const categoryLabelKey: Record<string, 'recon' | 'vuln' | 'fuzzing'> = {
 
 export default function ToolsPage() {
   const t = useTranslations('toolsPage')
+  const locale = useLocale();
+  const isKhmer = locale === "kh";
+  const bodyFontFamily = isKhmer
+    ? "var(--font-noto-khmer), var(--font-google-sans), sans-serif"
+    : "var(--font-google-sans), var(--font-noto-khmer), sans-serif";
+  const displayFontFamily = isKhmer
+    ? "var(--font-noto-khmer), var(--font-hackdaddy), sans-serif"
+    : "var(--font-hackdaddy), var(--font-noto-khmer), sans-serif";
+
   const [search, setSearch] = useState('')
   const [activeCategory, setActiveCategory] = useState('All')
 
@@ -187,7 +196,7 @@ export default function ToolsPage() {
       animate="visible"
       variants={pageMotion}
       className="min-h-screen mt-17 bg-[#F7F5F0] dark:bg-[#09090B]"
-      style={{ fontFamily: 'var(--font-google-sans), sans-serif' }}
+      style={{ fontFamily: bodyFontFamily }}
     >
       <div className="bg-white dark:bg-[#111113] border-b border-black/9 dark:border-white/9">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

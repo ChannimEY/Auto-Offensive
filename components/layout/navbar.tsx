@@ -62,7 +62,7 @@ const toolLinks: ToolItem[] = [
   { title: 'Kiterunner',   href: '#', icon: '/icons/kiterunner.png'   },
   { title: 'Httpx',        href: '#', icon: '/icons/httpx.png'        },
   { title: 'Katana',       href: '#', icon: '/icons/katana.png'       },
-  { title: 'Katana',       href: '#', icon: '/icons/katana.png'       },
+  { title: 'GoBuster',       href: '#', icon: '/icons/gobuster.png'       },
   { title: 'Amass',        href: '#', icon: '/icons/amass.png'        },
   { title: 'Assetfinder',  href: '#', icon: '/icons/assetfinder.png'  },
 ];
@@ -78,7 +78,7 @@ const resourceDocLinks: ResourceItem[] = [
   { title: 'CLI Documents',   description: 'Guides for using tools via command line',      href: '/resource/cli', icon: '/icons/res-cli.png'   },
   { title: 'API Documents',   description: 'Accelerate testing with intelligent automation', href: '/resource/api', icon: '/icons/res-api.png'   },
   { title: 'Tools Documents', description: 'Instructions for using security tools',        href: '/resource/tool', icon: '/icons/res-tools.png' },
-  { title: 'CI/CD Documents', description: 'Setup guides for pipeline integration',        href: '/resource/cicd', icon: '/icons/res-cicd.png'  },
+  { title: 'CI/CD Documents', description: 'Setup guides for pipeline integration',        href: '/resource/ci-cd', icon: '/icons/res-cicd.png'  },
 ];
 
 const resourceMiscLinks: ResourceItem[] = [

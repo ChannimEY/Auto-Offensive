@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from "framer-motion";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { BookOpen, Terminal, Code, GitBranch, ArrowRight, Play, Settings, Shield } from "lucide-react";
 
 const fadeUp = (delay = 0) => ({
@@ -12,6 +12,14 @@ const fadeUp = (delay = 0) => ({
 
 export default function ResourcePage() {
   const t = useTranslations('resourcePage')
+  const locale = useLocale();
+  const isKhmer = locale === "kh";
+  const bodyFontFamily = isKhmer
+    ? "var(--font-noto-khmer), var(--font-google-sans), sans-serif"
+    : "var(--font-google-sans), var(--font-noto-khmer), sans-serif";
+  const displayFontFamily = isKhmer
+    ? "var(--font-noto-khmer), var(--font-hackdaddy), sans-serif"
+    : "var(--font-hackdaddy), var(--font-noto-khmer), sans-serif";
 
   const docCategories = [
     {
@@ -74,7 +82,7 @@ export default function ResourcePage() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#F7F5F0] dark:bg-[#09090B]" style={{ fontFamily: 'var(--font-google-sans), sans-serif' }}>
+    <div className="min-h-screen bg-[#F7F5F0] dark:bg-[#09090B]" style={{ fontFamily: bodyFontFamily }}>
       {/* ── Hero ── */}
       <section className="relative overflow-hidden bg-white dark:bg-[#111113] border-b border-black/9 dark:border-white/9">
         <div className="absolute inset-0 pointer-events-none" style={{

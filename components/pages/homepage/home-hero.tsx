@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useLocale, useTranslations } from "next-intl";
 
 const hexPoints = "28,0 56,16 56,48 28,64 0,48 0,16";
 
@@ -217,6 +218,13 @@ function setupMagneticHover(svgEl: SVGSVGElement | null) {
 }
 
 export default function HomeHero() {
+  const t = useTranslations("homepage.hero");
+  const locale = useLocale();
+  const isKhmer = locale === "kh";
+  const titleLine3 = t("titleLine3");
+  const khmerTitleLine3Match = isKhmer
+    ? titleLine3.match(/^([\u1780-\u17FF\u200B-\u200D\s]+)(.*)$/u)
+    : null;
   const hexLeftRef  = useRef<SVGSVGElement>(null);
   const hexRightRef = useRef<SVGSVGElement>(null);
   const s1Ref       = useRef<HTMLDivElement>(null);
@@ -737,10 +745,14 @@ export default function HomeHero() {
           px-[6%] py-25
           bg-white dark:bg-[#09090B]
           text-[oklch(0.145_0_0)] dark:text-[oklch(0.985_0_0)]
-          font-[var(--font-google-sans),var(--font-noto-khmer),sans-serif]
           transition-[background] duration-400
         "
-        style={{ background: "#fffff" }}
+        style={{
+          background: "#fffff",
+          fontFamily: isKhmer
+            ? "var(--font-noto-khmer), var(--font-google-sans), sans-serif"
+            : "var(--font-google-sans), var(--font-noto-khmer), sans-serif",
+        }}
       >
 
         {/* ── STAR DOTS ── */}
@@ -848,12 +860,19 @@ export default function HomeHero() {
             text-[oklch(0.145_0_0)] dark:text-[oklch(0.985_0_0)]
             mb-[1.4rem] fade-up-2
           ">
-            <span className="text-[#01509e] accent-underline">Next Gen</span>
+            <span className="text-[#01509e] accent-underline">{t("titleLine1")}</span>
             <br />
-            Platform As A Service
+            {t("titleLine2")}
             <br />
             <span className="text-[#00d0b2] dark:text-primary font-light">
-              for hacker
+              {khmerTitleLine3Match ? (
+                <>
+                  <span className="font-khmer">{khmerTitleLine3Match[1]}</span>
+                  {khmerTitleLine3Match[2]}
+                </>
+              ) : (
+                titleLine3
+              )}
             </span>
           </h1>
 
@@ -865,7 +884,7 @@ export default function HomeHero() {
             max-w-125 mx-auto mb-[2.6rem]
             leading-[1.7] font-normal
           ">
-            Continuously scan your infrastructure for vulnerabilities — faster, smarter, and at scale. No manual setup. Just results.
+            {t("description")}
           </p>
 
           {/* Buttons */}
@@ -881,7 +900,7 @@ export default function HomeHero() {
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
               </svg>
-              Start Scanning
+              {t("primaryCta")}
             </button>
 
             <button className="
@@ -899,7 +918,7 @@ export default function HomeHero() {
               <svg className="text-primary" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
               </svg>
-              View Sample Report
+              {t("secondaryCta")}
             </button>
           </div>
 
@@ -916,7 +935,7 @@ export default function HomeHero() {
                 12<em className="text-primary not-italic">K+</em>
               </div>
               <div className="text-[0.78rem] text-[oklch(0.556_0_0)] dark:text-[oklch(0.708_0_0)] mt-0.75">
-                Scans completed
+                {t("stats.completed")}
               </div>
             </div>
             <div className="text-center">
@@ -924,7 +943,7 @@ export default function HomeHero() {
                 <em className="text-primary not-italic">99</em>.9%
               </div>
               <div className="text-[0.78rem] text-[oklch(0.556_0_0)] dark:text-[oklch(0.708_0_0)] mt-0.75">
-                Uptime SLA
+                {t("stats.uptime")}
               </div>
             </div>
             <div className="text-center">
@@ -932,7 +951,7 @@ export default function HomeHero() {
                 3<em className="text-primary not-italic">x</em>
               </div>
               <div className="text-[0.78rem] text-[oklch(0.556_0_0)] dark:text-[oklch(0.708_0_0)] mt-0.75">
-                Faster than manual
+                {t("stats.faster")}
               </div>
             </div>
           </div>
@@ -942,7 +961,7 @@ export default function HomeHero() {
         {/* ── SCROLL INDICATOR ── */}
         <div className="scroll-indicator flex flex-col items-center gap-1.5 pointer-events-none">
           <span className="text-[0.58rem] font-semibold tracking-[0.16em] uppercase text-[oklch(0.708_0_0)] dark:text-[oklch(0.556_0_0)]">
-            Scroll
+            {t("scroll")}
           </span>
           <div
             className="w-px h-7"

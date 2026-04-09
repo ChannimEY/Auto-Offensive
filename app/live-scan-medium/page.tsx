@@ -6,10 +6,17 @@ import ActionBar from "@/components/live-scan-medium/ActionBar";
 import Terminal from "@/components/live-scan-medium/Terminal";
 import BottomActions from "@/components/live-scan-medium/BottomActions";
 import Sidebar from "@/components/Sidebar";
+import { useLocale } from "next-intl";
 
 export default function LiveScanMediumPage() {
+  const locale = useLocale();
+  const isKhmer = locale === "kh";
+  const bodyFontFamily = isKhmer
+    ? "var(--font-noto-khmer), var(--font-google-sans), sans-serif"
+    : "var(--font-google-sans), var(--font-noto-khmer), sans-serif";
+
   return (
-    <div className="flex min-h-screen bg-white text-black dark:bg-black dark:text-white transition-colors">
+    <div className="flex min-h-screen bg-white text-black dark:bg-black dark:text-white transition-colors" style={{ fontFamily: bodyFontFamily }}>
       {/* Sidebar */}
       <aside className="w-64 hidden md:block border-r border-gray-200 dark:border-gray-800">
         <Sidebar />

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useState, useEffect } from "react";
 import { Download, FileText, Monitor, Lock, Zap, Shield, Cpu, Radio, ClipboardCheck, Terminal, Copy, Check, Terminal as TerminalIcon } from "lucide-react";
 
@@ -118,6 +118,14 @@ function FeatureCard({ card, index }: { card: FeatureCardItem; index: number }) 
 
 export default function CLIFeature() {
   const t = useTranslations("featurePages.cli");
+  const locale = useLocale();
+  const isKhmer = locale === "kh";
+  const bodyFontFamily = isKhmer
+    ? "var(--font-noto-khmer), var(--font-google-sans), sans-serif"
+    : "var(--font-google-sans), var(--font-noto-khmer), sans-serif";
+  const displayFontFamily = isKhmer
+    ? "var(--font-noto-khmer), var(--font-hackdaddy), sans-serif"
+    : "var(--font-hackdaddy), var(--font-noto-khmer), sans-serif";
 
   const featureCards = [
     {
@@ -158,7 +166,7 @@ export default function CLIFeature() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#F7F5F0] dark:bg-[#09090B] font-sans">
+    <div className="min-h-screen bg-[#F7F5F0] dark:bg-[#09090B] font-sans" style={{ fontFamily: bodyFontFamily }}>
       {/* Hero */}
       <section className="relative overflow-hidden bg-white dark:bg-[#111113] border-b border-black/9 dark:border-white/9">
         <div className="absolute inset-0 pointer-events-none" style={{
@@ -175,7 +183,7 @@ export default function CLIFeature() {
                 {t("hero.badge")}
               </span>
 
-              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black text-[#1A1A1A] dark:text-[#EDEDED] leading-tight mb-5">
+              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black text-[#1A1A1A] dark:text-[#EDEDED] leading-tight mb-5" style={{ fontFamily: displayFontFamily }}>
                 {t("hero.titleLine1")}<br />
                 <span className="text-[#00BCA1]">{t("hero.titleLine2")}</span>
               </h1>

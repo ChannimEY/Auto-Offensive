@@ -1,6 +1,7 @@
 "use client";
 
   import { useRef, useState, useEffect } from "react";
+  import { useLocale } from "next-intl";
 
   /* ─── Info items ─────────────────────────────────── */
   const INFO_ITEMS = [
@@ -264,6 +265,11 @@
     const hexRightRef = useRef<SVGSVGElement>(null);
     const [submitted, setSubmitted] = useState(false);
     const [disabled, setDisabled] = useState(false);
+    const locale = useLocale();
+    const isKhmer = locale === "kh";
+    const bodyFontFamily = isKhmer
+      ? "var(--font-noto-khmer), var(--font-google-sans), sans-serif"
+      : "var(--font-google-sans), var(--font-noto-khmer), sans-serif";
 
     useEffect(() => {
       setupMagneticHover(hexLeftRef.current);
@@ -498,6 +504,7 @@
             transition-[background] duration-500
             pt-35 pb-25 px-[6%]
           "
+          style={{ fontFamily: bodyFontFamily }}
         >
           {/* ── Soft Blob Background ── */}
           <div className="absolute pointer-events-none inset-0 overflow-hidden">
