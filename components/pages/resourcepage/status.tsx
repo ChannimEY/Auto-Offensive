@@ -1,6 +1,7 @@
 'use client'
 
 import { CheckCircle2, AlertCircle, Clock } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 interface StatusItem {
   service: string
@@ -75,15 +76,17 @@ const getStatusBadge = (status: string) => {
 }
 
 export default function StatusTable() {
+  const t = useTranslations("resourcePage")
+
   return (
     <section className="py-16 md:py-24 bg-white dark:bg-black dark:to-white">
       <div className="max-w-7xl mx-auto px-4">
         <div className="mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            Platform Operational Status
+            {t('status.title')}
           </h2>
           <p className="text-lg text-foreground/60">
-            Real-time status of all Clinical Precision services and infrastructure
+            {t('status.subtitle')}
           </p>
         </div>
 
@@ -91,10 +94,10 @@ export default function StatusTable() {
           <table className="w-full">
             <thead className="bg-muted border-b border-border">
               <tr>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-foreground">Service</th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-foreground">Status</th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-foreground">Uptime</th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-foreground">Last Incident</th>
+                <th className="px-6 py-4 text-left text-sm font-semibold text-foreground">{t('status.service')}</th>
+                <th className="px-6 py-4 text-left text-sm font-semibold text-foreground">{t('status.status')}</th>
+                <th className="px-6 py-4 text-left text-sm font-semibold text-foreground">{t('status.uptime')}</th>
+                <th className="px-6 py-4 text-left text-sm font-semibold text-foreground">{t('status.lastIncident')}</th>
               </tr>
             </thead>
             <tbody>
@@ -107,7 +110,7 @@ export default function StatusTable() {
                     <div className="flex items-center gap-3">
                       {getStatusIcon(item.status)}
                       <span className={`px-3 py-1 rounded-full text-sm font-medium capitalize ${getStatusBadge(item.status)}`}>
-                        {item.status}
+                        {t(`status.${item.status}`)}
                       </span>
                     </div>
                   </td>
@@ -125,10 +128,7 @@ export default function StatusTable() {
 
         <div className="mt-8 p-6 bg-primary/5 border border-primary/20 rounded-xl">
           <p className="text-sm text-foreground/80">
-            <span className="font-semibold text-foreground">Status Page:</span> For detailed status information and incident history, visit our{' '}
-            <a href="#" className="text-primary hover:underline font-semibold">
-              dedicated status page
-            </a>
+            <span className="font-semibold text-foreground">{t('status.statusNote')}</span> {t('status.dedicatedPage')}
           </p>
         </div>
       </div>

@@ -1,7 +1,6 @@
 "use client";
 
-import { useLocale, useTranslations } from "next-intl";
-import { useParams } from "next/navigation";
+import { useLocale } from "next-intl";
 
 export function useFontClass() {
   const locale = useLocale();

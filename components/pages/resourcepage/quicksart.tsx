@@ -1,5 +1,8 @@
+'use client'
+
 import { Database, BarChart3, Zap} from 'lucide-react'
 import { motion } from 'framer-motion'
+import { useTranslations } from 'next-intl'
 
 const paths = [
   {
@@ -43,6 +46,29 @@ const itemVariants = {
 }
 
 export default function QuickStartPaths() {
+  const t = useTranslations("resourcePage")
+
+  const pathsData = [
+    {
+      icon: Database,
+      title: t('quickStart.items.data.title'),
+      description: t('quickStart.items.data.description'),
+      link: '#'
+    },
+    {
+      icon: BarChart3,
+      title: t('quickStart.items.marketplace.title'),
+      description: t('quickStart.items.marketplace.description'),
+      link: '#'
+    },
+    {
+      icon: Zap,
+      title: t('quickStart.items.integration.title'),
+      description: t('quickStart.items.integration.description'),
+      link: '#'
+    }
+  ]
+
   return (
     <section className="py-16 md:py-24 bg-white dark:bg-black dark:to-white">
       <div className="max-w-7xl mx-auto px-4">
@@ -54,10 +80,10 @@ export default function QuickStartPaths() {
           viewport={{ once: true }}
         >
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 text-balance">
-            Quick Start Paths
+            {t('quickStart.title')}
           </h2>
           <p className="text-lg text-foreground/60">
-            Get up and running with these essential pathways
+            {t('quickStart.subtitle')}
           </p>
         </motion.div>
         <motion.div
@@ -67,7 +93,7 @@ export default function QuickStartPaths() {
           whileInView="visible"
           viewport={{ once: true }}
         >
-          {paths.map((path, idx) => {
+          {pathsData.map((path, idx) => {
             const Icon = path.icon
             return (
               <motion.div 
@@ -86,7 +112,7 @@ export default function QuickStartPaths() {
                   {path.description}
                 </p>
                 <a href={path.link} className="text-primary font-semibold hover:text-primary/80 transition flex items-center gap-2">
-                  Learn more
+                  {t('quickStart.learnMore')}
                   <span>→</span>
                 </a>
               </motion.div>

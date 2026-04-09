@@ -4,7 +4,7 @@ import { Link } from "@/i18n/routing";
 
 export default function RegisterPage() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white dark:bg-[#0B0F19] px-6 transition-colors duration-300">
+    <div className="min-h-screen flex items-center justify-center bg-white dark:bg-[#0A0A0A] px-6 transition-colors duration-300">
       <div className="max-w-5xl w-full grid md:grid-cols-2 gap-16 items-center">
         
         {/* Left Side */}

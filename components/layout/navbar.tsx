@@ -404,7 +404,7 @@ export function Header() {
 
               {/* ── Tools ── */}
               <NavigationMenuItem>
-                <NavigationMenuTrigger className="bg-transparent hover:bg-transparent focus:bg-transparent data-[state=active]:bg-transparent data-[state=open]:bg-transparent text-primary font-semibold text-[18px]">
+                <NavigationMenuTrigger className="bg-transparent hover:bg-transparent focus:bg-transparent data-[state=active]:bg-transparent data-[state=open]:bg-transparent text-primary font-semibold text-[16px]">
                 <Link href="/tools">  {t('tools')}</Link>
                 </NavigationMenuTrigger>
                 <NavigationMenuContent className="bg-background">
@@ -422,7 +422,7 @@ export function Header() {
 
               {/* ── Features ── */}
               <NavigationMenuItem>
-                <NavigationMenuTrigger className="bg-transparent hover:bg-transparent focus:bg-transparent data-[state=active]:bg-transparent data-[state=open]:bg-transparent text-[18px]">
+                <NavigationMenuTrigger className="bg-transparent hover:bg-transparent focus:bg-transparent data-[state=active]:bg-transparent data-[state=open]:bg-transparent text-[16px]">
                 <Link href="/feature">  {t('features')}</Link>
                 </NavigationMenuTrigger>
                 <NavigationMenuContent className="bg-background">
@@ -440,7 +440,7 @@ export function Header() {
 
               {/* ── Resources ── */}
               <NavigationMenuItem>
-                <NavigationMenuTrigger className="bg-transparent hover:bg-transparent focus:bg-transparent data-[state=active]:bg-transparent data-[state=open]:bg-transparent text-[18px]">
+                <NavigationMenuTrigger className="bg-transparent hover:bg-transparent focus:bg-transparent data-[state=active]:bg-transparent data-[state=open]:bg-transparent text-[16px]">
                   <Link href="/resource-page">  {t('resources')}</Link>
                 </NavigationMenuTrigger>
                 <NavigationMenuContent className="bg-background">
@@ -504,23 +504,23 @@ export function Header() {
       </nav>
 
       {/* Mobile Menu */}
-      <MobileMenu open={open} className="flex flex-col justify-between gap-2 overflow-y-auto">
+      <MobileMenu open={open} className="flex flex-col justify-between gap-2 overflow-y-auto bg-white dark:bg-[#0A0A0A]">
         <div className="flex flex-col gap-3">
-          <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Tools</p>
+          <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider"><Link href="/tools">Tools</Link></p>
           <div className="grid grid-cols-2 gap-0.5">
             {toolLinks.map((link, i) => (
               <ToolItem key={i} {...link} />
             ))}
           </div>
 
-          <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mt-2">Features</p>
+          <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mt-2"><Link href="/feature">Features</Link></p>
           <div className="grid grid-cols-1 gap-1">
             {featureLinks.map((link, i) => (
               <FeatureItem key={i} {...link} />
             ))}
           </div>
 
-          <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mt-2">Resources</p>
+          <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mt-2"><Link href="/resource-page">Resources</Link></p>
           <div className="grid grid-cols-1 gap-0.5">
             {resourceDocLinks.map((link, i) => (
               <MobileResourceDocItem key={i} {...link} />
@@ -532,7 +532,7 @@ export function Header() {
         </div>
 
         <div className="flex flex-col gap-2 pt-2 border-t border-border">
-          <button className="w-full py-2 rounded-md border border-primary text-[18px] text-primary text-sm font-semibold bg-transparent cursor-pointer hover:bg-primary/10 transition-colors">
+          <button className="w-full py-2 rounded-md border border-primary text-[16px] text-primary font-semibold bg-transparent cursor-pointer hover:bg-primary/10 transition-colors">
             {t('loginRegister')}
           </button>
         </div>

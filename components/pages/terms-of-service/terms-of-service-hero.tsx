@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 const TermsBlobs = () => (
   <>
     <style>{`
@@ -182,6 +184,8 @@ const heroStyles = `
 `;
 
 export default function TermsOfServiceHero() {
+  const t = useTranslations("termsPage.hero");
+
   return (
     <section
       className="relative overflow-hidden border-b border-black/9 dark:border-white/9 bg-white dark:bg-[#111113] min-h-screen flex items-center justify-center"
@@ -217,15 +221,15 @@ export default function TermsOfServiceHero() {
         <div>
           <div className="ph-eyebrow inline-flex items-center gap-2.5 text-[11px] tracking-[0.18em] uppercase text-[#00BCA1] mb-6 font-sans">
             <span className="w-5 h-[1.5px] bg-[#00BCA1] opacity-55 rounded inline-block" />
-            Legal
+            {t("eyebrow")}
             <span className="w-5 h-[1.5px] bg-[#00BCA1] opacity-55 rounded inline-block" />
           </div>
           <h1
             className="ph-h1 font-heading font-bold leading-none text-[#1A1A1A] dark:text-[#EDEDED] tracking-[-0.03em]"
             style={{ fontSize: "clamp(2.8rem, 5.5vw, 5rem)" }}
           >
-            Terms of<br />
-            <em className="not-italic text-[#00BCA1]">Service</em>
+            {t("titleLine1")}<br />
+            <em className="not-italic text-[#00BCA1]">{t("titleLine2")}</em>
           </h1>
         </div>
 
@@ -234,14 +238,14 @@ export default function TermsOfServiceHero() {
             className="ph-sub leading-[1.85] text-[#5C5C5C] dark:text-[#9A9A9A] max-w-104"
             style={{ fontSize: "20px" }}
           >
-            By using Auto Offensive, you agree to use our platform responsibly. We built this tool for security professionals — not for causing harm.
+            {t("subtitle")}
           </p>
           <div className="ph-tags flex gap-2 flex-wrap justify-center">
             <span className="text-[11px] tracking-[0.08em] uppercase px-3.5 py-1.5 border border-[#00BCA1] rounded text-white bg-[#00BCA1]">
-              Ethical Use Only
+              {t("ethicalTag")}
             </span>
             <span className="text-[11px] tracking-[0.08em] uppercase px-3.5 py-1.5 border border-black/[0.14] dark:border-white/[0.14] rounded text-[#5C5C5C] dark:text-[#9A9A9A] bg-white/70 dark:bg-white/6">
-              v2.0 · Apr 2026
+              {t("versionTag")}
             </span>
           </div>
         </div>

@@ -1,34 +1,18 @@
+'use client'
+
 import { FileText, Link2, Code2 } from 'lucide-react'
 import { motion } from 'framer-motion'
+import { useTranslations } from 'next-intl'
 
-const resources = [
-  {
-    title: 'DLL Documents',
-    description: 'Official documentation library with specifications, white papers, and implementation guides.',
-    icon: FileText,
-    items: ['API Specifications', 'Architecture Guide', 'Data Dictionary', 'Compliance Matrix'],
-    color: 'bg-primary/5',
-    iconColor: 'text-primary'
-  },
-  {
-    title: 'API Resources',
-    description: 'Complete API documentation including endpoints, examples, and error handling.',
-    icon: Code2,
-    items: ['REST Endpoints', 'Authentication', 'Rate Limiting', 'Error Codes'],
-    color: 'bg-secondary/5',
-    iconColor: 'text-secondary'
-  },
-  {
-    title: 'Integration Tools',
-    description: 'Pre-built tools and utilities for common integration scenarios.',
-    icon: Link2,
-    items: ['SDKs', 'Libraries', 'CLI Tools', 'Testing Tools'],
-    color: 'bg-accent/5',
-    iconColor: 'text-accent'
-  }
-]
+const staticItems = {
+  dll: ['API Specifications', 'Architecture Guide', 'Data Dictionary', 'Compliance Matrix'],
+  api: ['REST Endpoints', 'Authentication', 'Rate Limiting', 'Error Codes'],
+  integration: ['SDKs', 'Libraries', 'CLI Tools', 'Testing Tools']
+}
 
 export default function ResourceSections() {
+  const t = useTranslations("resourcePage")
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -42,6 +26,36 @@ export default function ResourceSections() {
     visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
   }
 
+  const resourcesData = [
+    {
+      title: t('resourceSections.items.dll.title'),
+      description: t('resourceSections.items.dll.description'),
+      icon: FileText,
+      items: staticItems.dll,
+      color: 'bg-primary/5',
+      iconColor: 'text-primary',
+      cta: t('resourceSections.items.dll.cta')
+    },
+    {
+      title: t('resourceSections.items.api.title'),
+      description: t('resourceSections.items.api.description'),
+      icon: Code2,
+      items: staticItems.api,
+      color: 'bg-secondary/5',
+      iconColor: 'text-secondary',
+      cta: t('resourceSections.items.api.cta')
+    },
+    {
+      title: t('resourceSections.items.integration.title'),
+      description: t('resourceSections.items.integration.description'),
+      icon: Link2,
+      items: staticItems.integration,
+      color: 'bg-accent/5',
+      iconColor: 'text-accent',
+      cta: t('resourceSections.items.integration.cta')
+    }
+  ]
+
   return (
     <section className="py-16 md:py-24 bg-white dark:bg-black dark:to-white">
       <div className="max-w-7xl mx-auto px-4">
@@ -52,7 +66,7 @@ export default function ResourceSections() {
           whileInView="visible"
           viewport={{ once: true }}
         >
-          {resources.map((resource, idx) => {
+          {resourcesData.map((resource, idx) => {
             const Icon = resource.icon
             return (
               <motion.div 
@@ -79,7 +93,7 @@ export default function ResourceSections() {
                   ))}
                 </div>
                 <button className="mt-6 text-primary font-semibold hover:text-primary/80 transition flex items-center gap-2 w-full justify-center py-2 border border-border rounded-lg hover:bg-primary/5">
-                  Explore
+                  {resource.cta}
                   <motion.span animate={{ x: [0, 4, 0] }} transition={{ repeat: Infinity, duration: 1.5 }}>
                     →
                   </motion.span>

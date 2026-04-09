@@ -2,6 +2,7 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import { useTranslations } from "next-intl";
 
 import {
   Monitor,
@@ -26,8 +27,6 @@ interface WorkflowStep {
   color: string;
   bgLight: string;
   bgDark: string;
-  title: string;
-  desc: string;
   step: number;
 }
 
@@ -38,8 +37,6 @@ const workflowSteps: WorkflowStep[] = [
     color: "text-#00BCA1",
     bgLight: "bg-emerald-50 border-emerald-200",
     bgDark: "dark:bg-emerald-950/40 dark:border-emerald-800",
-    title: "Enumerate",
-    desc: "Discover subdomains, ports, and services automatically.",
     step: 1,
   },
   {
@@ -47,8 +44,6 @@ const workflowSteps: WorkflowStep[] = [
     color: "text-red-500",
     bgLight: "bg-red-50 border-red-200",
     bgDark: "dark:bg-red-950/40 dark:border-red-800",
-    title: "Identify",
-    desc: "Map services to known CVE databases instantly.",
     step: 2,
   },
   {
@@ -56,8 +51,6 @@ const workflowSteps: WorkflowStep[] = [
     color: "text-violet-500",
     bgLight: "bg-violet-50 border-violet-200",
     bgDark: "dark:bg-violet-950/40 dark:border-violet-800",
-    title: "Execute",
-    desc: "Launch payloads via remote CLI nodes securely.",
     step: 3,
   },
   {
@@ -65,8 +58,6 @@ const workflowSteps: WorkflowStep[] = [
     color: "text-blue-500",
     bgLight: "bg-blue-50 border-blue-200",
     bgDark: "dark:bg-blue-950/40 dark:border-blue-800",
-    title: "Document",
-    desc: "Export evidence and mitigation paths effortlessly.",
     step: 4,
   },
 ];
@@ -141,6 +132,7 @@ function Tag({ children }: { children: React.ReactNode }) {
 
 /* ─── Main Component ─────────────────────────────────────────── */
 export default function PlatformCapabilities() {
+  const t = useTranslations("featuresPage");
 
   const heroRef = useRef(null);
   const gridRef = useRef(null);
@@ -151,6 +143,40 @@ export default function PlatformCapabilities() {
   const gridInView = useInView(gridRef, { once: true, margin: "-80px" });
   const reportInView = useInView(reportRef, { once: true, margin: "-80px" });
   const workflowInView = useInView(workflowRef, { once: true, margin: "-80px" });
+
+  const aiStats = [
+    { label: t("grid.ai.stats.threats"), val: "12.4K" },
+    { label: t("grid.ai.stats.accuracy"), val: "99.1%" },
+  ];
+
+  const moduleCards = [
+    {
+      icon: <GitBranch className="w-5 h-5" />,
+      iconBg: "bg-violet-50 dark:bg-violet-950/50 border-violet-200 dark:border-violet-800",
+      iconColor: "text-violet-500",
+      title: t("grid.cards.sast.title"),
+      desc: t("grid.cards.sast.desc"),
+      link: t("common.viewDocumentation"),
+      linkColor: "text-emerald-600 dark:text-emerald-400",
+      badge: t("grid.cards.sast.badge"),
+    },
+    {
+      icon: <Terminal className="w-5 h-5" />,
+      iconBg: "bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700",
+      iconColor: "text-slate-700 dark:text-slate-300",
+      title: t("grid.cards.cli.title"),
+      desc: t("grid.cards.cli.desc"),
+      link: t("common.viewDocumentation"),
+      linkColor: "text-slate-700 dark:text-slate-300",
+      badge: t("grid.cards.cli.badge"),
+    },
+  ];
+
+  const reportTags = [
+    t("report.tags.executiveOverview"),
+    t("report.tags.technicalDeepDive"),
+    t("report.tags.developerPatchNotes"),
+  ];
 
   return (
     
@@ -182,7 +208,7 @@ export default function PlatformCapabilities() {
               custom={0}
               className="flex justify-center mb-6"
             >
-              <AiBadge text="Security Platform" />
+              <AiBadge text={t("hero.badge")} />
             </motion.div>
 
             <motion.h1
@@ -193,8 +219,8 @@ export default function PlatformCapabilities() {
               className="text-5xl sm:text-7xl font-black tracking-tight leading-[0.95] mb-6
                 text-slate-900 dark:text-white"
             >
-              Platform<br />
-              <span className="text-[#00BCA1] dark:text-emerald-400">Capabilities</span>
+              {t("hero.titleLine1")}<br />
+              <span className="text-[#00BCA1] dark:text-emerald-400">{t("hero.titleLine2")}</span>
             </motion.h1>
 
             <motion.p
@@ -204,8 +230,7 @@ export default function PlatformCapabilities() {
               custom={2}
               className="text-base sm:text-lg text-slate-500 dark:text-slate-400 leading-relaxed max-w-xl mx-auto"
             >
-              Explore our suite of autonomous security tools and AI-driven analysis engines
-              designed to protect your entire digital footprint.
+              {t("hero.subtitle")}
             </motion.p>
 
             <motion.div
@@ -221,7 +246,7 @@ export default function PlatformCapabilities() {
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold
                   bg-primary hover:bg-emerald-400 text-white transition-colors shadow-lg shadow-primary/20"
               >
-                Get Started <ArrowRight className="w-4 h-4" />
+                {t("hero.primaryCta")} <ArrowRight className="w-4 h-4" />
               </motion.button>
               <motion.button
                 whileHover={{ scale: 1.03 }}
@@ -231,7 +256,7 @@ export default function PlatformCapabilities() {
                   text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700
                   transition-colors"
               >
-                View Docs <ExternalLink className="w-4 h-4" />
+                {t("hero.secondaryCta")} <ExternalLink className="w-4 h-4" />
               </motion.button>
             </motion.div>
           </div>
@@ -266,17 +291,15 @@ export default function PlatformCapabilities() {
               </div>
 
               <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white mb-3 leading-snug">
-                Web-Based Pentesting Automation
+                {t("grid.web.title")}
               </h2>
               <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed mb-5">
-                Orchestrate complex security workflows without touching a terminal. Launch industrial-grade tools like
-                Subfinder for discovery, Nmap for port mapping, and Nuclei for vulnerability scanning through a
-                unified, high-fidelity interface.
+                {t("grid.web.desc")}
               </p>
 
               <a href="#" className="inline-flex items-center gap-1.5 text-sm font-semibold
                 text-emerald-600 dark:text-emerald-400 hover:gap-2.5 transition-all duration-200">
-                View Documentation <ArrowRight className="w-3.5 h-3.5" />
+                {t("common.viewDocumentation")} <ArrowRight className="w-3.5 h-3.5" />
               </a>
 
               <TerminalPreview />
@@ -310,19 +333,15 @@ export default function PlatformCapabilities() {
                   <Brain className="w-5 h-5 text-white" />
                 </div>
                 <h2 className="text-xl sm:text-2xl font-extrabold text-white mb-3 leading-snug">
-                  AI-Powered Security Analysis
+                  {t("grid.ai.title")}
                 </h2>
                 <p className="text-sm text-white/70 leading-relaxed mb-6">
-                  Our neural engine digests raw scanner output to prioritize critical risks and explain complex
-                  vulnerabilities in plain, actionable language.
+                  {t("grid.ai.desc")}
                 </p>
 
                 {/* Mini stat cards */}
                 <div className="grid grid-cols-2 gap-2.5 mb-6">
-                  {[
-                    { label: "Threats Analyzed", val: "12.4K" },
-                    { label: "Accuracy Rate", val: "99.1%" },
-                  ].map((s) => (
+                  {aiStats.map((s) => (
                     <div key={s.label} className="rounded-xl bg-white/10 border border-white/10 px-3 py-3">
                       <div className="text-xl font-black text-white">{s.val}</div>
                       <div className="text-[11px] text-white/60 mt-0.5">{s.label}</div>
@@ -336,7 +355,7 @@ export default function PlatformCapabilities() {
                   className="inline-flex items-center gap-2 text-sm font-semibold text-white
                     bg-white/15 border border-white/20 rounded-xl px-4 py-2.5 transition-colors"
                 >
-                  View Documentation <ChevronRight className="w-4 h-4" />
+                  {t("common.viewDocumentation")} <ChevronRight className="w-4 h-4" />
                 </motion.button>
               </div>
             </motion.div>
@@ -344,28 +363,7 @@ export default function PlatformCapabilities() {
 
           {/* Row 2: SAST + CLI */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {[
-              {
-                icon: <GitBranch className="w-5 h-5" />,
-                iconBg: "bg-violet-50 dark:bg-violet-950/50 border-violet-200 dark:border-violet-800",
-                iconColor: "text-violet-500",
-                title: "Repository Scanning (SAST)",
-                desc: "Seamless SonarQube integration for GitHub and GitLab. Find vulnerabilities in your source code at the speed of development, featuring AI-suggested remediation blocks.",
-                link: "View Documentation",
-                linkColor: "text-emerald-600 dark:text-emerald-400",
-                badge: "GitHub · GitLab · SonarQube",
-              },
-              {
-                icon: <Terminal className="w-5 h-5" />,
-                iconBg: "bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700",
-                iconColor: "text-slate-700 dark:text-slate-300",
-                title: "Managed CLI & API",
-                desc: "A robust, cross-platform binary for remote tool execution. Integrate security testing directly into your Jenkins, GitLab, or GitHub CI/CD pipelines.",
-                link: "View Documentation",
-                linkColor: "text-slate-700 dark:text-slate-300",
-                badge: "Jenkins · GitLab CI · GitHub Actions",
-              },
-            ].map((card, i) => (
+            {moduleCards.map((card, i) => (
               <motion.div
                 key={i}
                 variants={fadeUp}
@@ -420,7 +418,7 @@ export default function PlatformCapabilities() {
                   custom={1}
                   className="mb-5"
                 >
-                  <AiBadge text="Advanced Reporting" />
+                  <AiBadge text={t("report.badge")} />
                 </motion.div>
 
                 <motion.h2
@@ -430,7 +428,7 @@ export default function PlatformCapabilities() {
                   custom={2}
                   className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white mb-4 leading-tight"
                 >
-                  AI-Assisted<br />Reporting
+                  {t("report.titleLine1")}<br />{t("report.titleLine2")}
                 </motion.h2>
                 <motion.p
                   variants={fadeUp}
@@ -439,8 +437,7 @@ export default function PlatformCapabilities() {
                   custom={3}
                   className="text-sm sm:text-base text-slate-500 dark:text-slate-400 leading-relaxed mb-6 max-w-md"
                 >
-                  Generate professional, multi-tier reports with a single click. From high-level Executive
-                  summaries to granular Developer fix-lists, our AI tailors the narrative for every stakeholder.
+                  {t("report.desc")}
                 </motion.p>
 
                 <motion.div
@@ -450,7 +447,7 @@ export default function PlatformCapabilities() {
                   custom={4}
                   className="flex flex-wrap gap-2 mb-8"
                 >
-                  {["Executive Overview", "Technical Deep-dive", "Developer Patch Notes"].map((tag) => (
+                  {reportTags.map((tag) => (
                     <Tag key={tag}>{tag}</Tag>
                   ))}
                 </motion.div>
@@ -465,7 +462,7 @@ export default function PlatformCapabilities() {
                   className="inline-flex items-center gap-2.5 px-6 py-3 rounded-xl text-sm font-bold
                     bg-primary hover:bg-emerald-400 text-white transition-colors shadow-lg shadow-primary/20"
                 >
-                  <FileText className="w-4 h-4" /> View Documentation
+                  <FileText className="w-4 h-4" /> {t("common.viewDocumentation")}
                 </motion.button>
               </div>
 
@@ -500,7 +497,7 @@ export default function PlatformCapabilities() {
                       <Shield className="w-6 h-6 text-slate-700 dark:text-slate-300" />
                     </div>
                     <div className="text-center text-xs font-black text-slate-800 dark:text-white mb-3 tracking-widest uppercase">
-                      Report
+                      {t("report.cardTitle")}
                     </div>
 
                     {/* Bar chart */}
@@ -551,7 +548,7 @@ export default function PlatformCapabilities() {
                     className="absolute -left-12 top-8 w-28 bg-white dark:bg-slate-900 rounded-xl
                       border border-slate-200 dark:border-slate-700 shadow-xl p-3"
                   >
-                    <div className="text-[10px] text-slate-400 dark:text-slate-500 mb-1.5">Critical</div>
+                    <div className="text-[10px] text-slate-400 dark:text-slate-500 mb-1.5">{t("report.criticalLabel")}</div>
                     <div className="text-lg font-black text-red-500">3</div>
                     <div className="flex gap-1 mt-1.5">
                       {[1, 2, 3].map(i => (
@@ -574,10 +571,10 @@ export default function PlatformCapabilities() {
             className="text-center mb-12"
           >
             <h2 className="text-3xl sm:text-4xl font-black text-primary dark:text-emerald-400 mb-3">
-              Integrated Attack Workflow
+              {t("workflow.title")}
             </h2>
             <p className="text-sm sm:text-base text-slate-500 dark:text-slate-400">
-              Seamless transition from identification to exploitation.
+              {t("workflow.subtitle")}
             </p>
           </motion.div>
 
@@ -611,10 +608,10 @@ export default function PlatformCapabilities() {
                     </span>
                   </div>
                   <h3 className="text-base font-extrabold text-slate-900 dark:text-white mb-2 text-left">
-                    {step.title}
+                    {t(`workflow.steps.${i}.title`)}
                   </h3>
                   <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed text-left">
-                    {step.desc}
+                    {t(`workflow.steps.${i}.desc`)}
                   </p>
                 </motion.div>
               ))}
@@ -636,12 +633,12 @@ export default function PlatformCapabilities() {
             bg-primary hover:bg-emerald-400 text-white transition-colors
                 shadow-xl shadow-#00BCA1/20"
             >
-              Start Scanning <ArrowRight className="w-4 h-4" />
+              {t("workflow.primaryCta")} <ArrowRight className="w-4 h-4" />
             </motion.button>
             <a href="/resources" className="inline-flex items-center gap-2 text-sm font-semibold
               text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200
               transition-colors">
-              Read the Docs <ExternalLink className="w-4 h-4" />
+              {t("workflow.secondaryCta")} <ExternalLink className="w-4 h-4" />
             </a>
           </motion.div>
         </section>

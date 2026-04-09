@@ -1,34 +1,46 @@
+'use client'
+
 import { BookOpen, Code, Users, Shield } from 'lucide-react'
 import { motion } from 'framer-motion'
+import { useTranslations } from 'next-intl'
 
-const deepDives = [
-  {
-    icon: BookOpen,
-    title: 'API Integration',
-    description: 'Complete API reference with authentication, rate limits, and advanced query patterns.',
-    tags: ['REST', 'GraphQL', 'Webhooks']
-  },
-  {
-    icon: Code,
-    title: 'SDK Reference',
-    description: 'Native SDKs for Python, JavaScript, Java with full documentation and examples.',
-    tags: ['Python', 'JavaScript', 'Java']
-  },
-  {
-    icon: Shield,
-    title: 'Security Protocols',
-    description: 'Deep dive into encryption, compliance, and security best practices.',
-    tags: ['HIPAA', 'Encryption', 'Audit Logs']
-  },
-  {
-    icon: Users,
-    title: 'User Management',
-    description: 'Role-based access control, user provisioning, and team collaboration features.',
-    tags: ['RBAC', 'SSO', 'Teams']
-  }
-]
+const staticTags = {
+  api: ['REST', 'GraphQL', 'Webhooks'],
+  sdk: ['Python', 'JavaScript', 'Java'],
+  security: ['HIPAA', 'Encryption', 'Audit Logs'],
+  user: ['RBAC', 'SSO', 'Teams']
+}
 
 export default function TechnicalDeepDives() {
+  const t = useTranslations("resourcePage")
+
+  const technicalData = [
+    {
+      icon: BookOpen,
+      title: t('technical.items.api.title'),
+      description: t('technical.items.api.description'),
+      tags: staticTags.api
+    },
+    {
+      icon: Code,
+      title: t('technical.items.sdk.title'),
+      description: t('technical.items.sdk.description'),
+      tags: staticTags.sdk
+    },
+    {
+      icon: Shield,
+      title: t('technical.items.security.title'),
+      description: t('technical.items.security.description'),
+      tags: staticTags.security
+    },
+    {
+      icon: Users,
+      title: t('technical.items.user.title'),
+      description: t('technical.items.user.description'),
+      tags: staticTags.user
+    }
+  ]
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -47,14 +59,14 @@ export default function TechnicalDeepDives() {
       <div className="max-w-7xl mx-auto px-4">
         <motion.div className="mb-12" initial={{ opacity: 0, y: -20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }}>
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            Technical Deep Dives
+            {t('technical.title')}
           </h2>
           <p className="text-lg text-foreground/60">
-            Comprehensive guides for advanced implementations
+            {t('technical.subtitle')}
           </p>
         </motion.div>
         <motion.div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6" variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-          {deepDives.map((dive, idx) => {
+          {technicalData.map((dive, idx) => {
             const Icon = dive.icon
             return (
               <motion.div key={idx} variants={itemVariants} className="p-6 bg-white rounded-xl border border-border hover:border-primary/50 hover:shadow-md transition dark:bg-black dark:to-white" whileHover={{ y: -5 }}>

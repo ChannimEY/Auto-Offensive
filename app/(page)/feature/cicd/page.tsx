@@ -1,39 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { ExternalLink, GitBranch, CheckCircle, AlertTriangle, Shield } from "lucide-react";
-
-const pipelineSteps = [
-  {
-    num: "1",
-    icon: "🔗",
-    title: "Connect",
-    desc: "Native OAuth integration with GitHub, GitLab, and Bitbucket cloud or on-prem.",
-    active: false,
-  },
-  {
-    num: "2",
-    icon: "☁️",
-    title: "Clone & Hash",
-    desc: "Ephemeral cloning in sandbox containers. Every file is SHA-256 hashed for integrity tracking.",
-    active: false,
-  },
-  {
-    num: "3",
-    icon: "🔍",
-    title: "SonarScan",
-    desc: "Deep SAST analysis powered by SonarQube engines, identifying patterns of OWASP Top 10.",
-    active: true,
-  },
-  {
-    num: "4",
-    icon: "📡",
-    title: "Signal",
-    desc: "Instant feedback via Slack, Jira, or inline PR comments with remediation steps.",
-    active: false,
-  },
-];
 
 const githubYaml = `name: Security Scan
 on: [push, pull_request]
@@ -68,7 +38,21 @@ const fadeUp = (delay = 0) => ({
 });
 
 export default function CICDFeature() {
+  const t = useTranslations("featurePages.cicd");
   const [activeTab, setActiveTab] = useState<"github" | "gitlab">("github");
+
+  const pipelineSteps = [
+    { num: "1", icon: "🔗", title: t("pipeline.steps.0.title"), desc: t("pipeline.steps.0.desc"), active: false },
+    { num: "2", icon: "☁️", title: t("pipeline.steps.1.title"), desc: t("pipeline.steps.1.desc"), active: false },
+    { num: "3", icon: "🔍", title: t("pipeline.steps.2.title"), desc: t("pipeline.steps.2.desc"), active: true },
+    { num: "4", icon: "📡", title: t("pipeline.steps.3.title"), desc: t("pipeline.steps.3.desc"), active: false },
+  ];
+
+  const integrationFeatures = [
+    { icon: "🛡️", title: t("integration.items.0.title"), desc: t("integration.items.0.desc") },
+    { icon: "⚡", title: t("integration.items.1.title"), desc: t("integration.items.1.desc") },
+    { icon: "📋", title: t("integration.items.2.title"), desc: t("integration.items.2.desc") },
+  ];
 
   return (
     <div className="min-h-screen bg-[#F7F5F0] dark:bg-[#09090B] font-sans">
@@ -85,25 +69,25 @@ export default function CICDFeature() {
             <motion.div {...fadeUp(0)}>
               <span className="inline-flex items-center gap-2 text-[11px] font-bold tracking-widest uppercase bg-[#00BCA1]/10 text-[#00BCA1] border border-[#00BCA1]/20 rounded-full px-3 py-1.5 mb-6">
                 <GitBranch className="w-3.5 h-3.5" />
-                CI/CD Integration
+                {t("hero.badge")}
               </span>
 
               <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black text-[#1A1A1A] dark:text-[#EDEDED] leading-tight mb-5">
-                Repository<br />
-                <span className="text-[#00BCA1]">Scanning.</span>
+                {t("hero.titleLine1")}<br />
+                <span className="text-[#00BCA1]">{t("hero.titleLine2")}</span>
               </h1>
 
               <p className="text-lg sm:text-xl leading-relaxed text-[#5C5C5C] dark:text-[#9A9A9A] mb-8 max-w-md">
-                Integrate deep-code analysis directly into your SDLC. Detect vulnerabilities before they reach production.
+                {t("hero.subtitle")}
               </p>
 
               <div className="flex flex-wrap gap-3">
                 <button className="inline-flex items-center gap-2 px-5 py-3 bg-[#00BCA1] hover:bg-[#00A390] text-white rounded-xl text-base font-bold transition-colors">
                   <GitBranch className="w-4 h-4" />
-                  Connect Repository
+                  {t("hero.primaryCta")}
                 </button>
                 <button className="inline-flex items-center gap-2 px-5 py-3 bg-white dark:bg-[#111113] border border-black/9 dark:border-white/9 text-[#1A1A1A] dark:text-[#EDEDED] rounded-xl text-base font-semibold hover:border-[#00BCA1] transition-colors">
-                  View Docs <ExternalLink className="w-4 h-4" />
+                  {t("hero.secondaryCta")} <ExternalLink className="w-4 h-4" />
                 </button>
               </div>
             </motion.div>
@@ -113,8 +97,8 @@ export default function CICDFeature() {
               <div className="bg-white dark:bg-[#111113] rounded-2xl border border-black/9 dark:border-white/9 p-6 shadow-xl">
                 <div className="flex items-center gap-2 mb-4">
                   <GitBranch className="w-5 h-5 text-[#1A1A1A] dark:text-[#EDEDED]" />
-                  <span className="text-base font-semibold text-[#1A1A1A] dark:text-[#EDEDED]">auto-offensive/target-repo</span>
-                  <span className="ml-auto text-sm px-2 py-1 rounded-full bg-[#00BCA1]/10 text-[#00BCA1]">Active</span>
+                  <span className="text-base font-semibold text-[#1A1A1A] dark:text-[#EDEDED]">{t("hero.repoName")}</span>
+                  <span className="ml-auto text-sm px-2 py-1 rounded-full bg-[#00BCA1]/10 text-[#00BCA1]">{t("hero.active")}</span>
                 </div>
                 <div className="space-y-3">
                   {[1,2,3].map((i) => (
@@ -123,10 +107,10 @@ export default function CICDFeature() {
                         {i === 2 ? <AlertTriangle className="w-4 h-4 text-amber-500" /> : <CheckCircle className="w-4 h-4 text-[#00BCA1]" />}
                       </div>
                       <div className="flex-1">
-                        <div className="text-base font-medium text-[#1A1A1A] dark:text-[#EDEDED]">Security Scan</div>
-                        <div className="text-sm text-[#9A9A9A]">{i === 2 ? '1 vulnerability found' : 'Passed'}</div>
+                        <div className="text-base font-medium text-[#1A1A1A] dark:text-[#EDEDED]">{t("hero.scanTitle")}</div>
+                        <div className="text-sm text-[#9A9A9A]">{i === 2 ? t("hero.vulnerabilityFound") : t("hero.passed")}</div>
                       </div>
-                      <span className="text-sm text-[#9A9A9A]">{i === 1 ? '2m ago' : i === 2 ? 'Just now' : '5m ago'}</span>
+                      <span className="text-sm text-[#9A9A9A]">{i === 1 ? t("hero.time1") : i === 2 ? t("hero.time2") : t("hero.time3")}</span>
                     </div>
                   ))}
                 </div>
@@ -141,10 +125,10 @@ export default function CICDFeature() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div {...fadeUp(0)} className="mb-10">
             <h2 className="text-3xl sm:text-4xl font-bold text-[#1A1A1A] dark:text-[#EDEDED] mb-3">
-              The Analysis Pipeline
+              {t("pipeline.title")}
             </h2>
             <p className="text-lg text-[#5C5C5C] dark:text-[#9A9A9A]">
-              Four steps from code commit to security intelligence
+              {t("pipeline.subtitle")}
             </p>
           </motion.div>
 
@@ -188,7 +172,7 @@ export default function CICDFeature() {
                 <div className="w-2.5 h-2.5 rounded-full bg-amber-500" />
                 <div className="w-2.5 h-2.5 rounded-full bg-[#00BCA1]" />
                 <span className="ml-2 text-slate-500 text-sm">AUTH_SERVICE.PY</span>
-                <span className="ml-auto text-red-500 text-sm font-bold">SQL INJECTION</span>
+                <span className="ml-auto text-red-500 text-sm font-bold">{t("finding.codeBadge")}</span>
               </div>
               <div className="p-5">
                 <div className="text-slate-500 mb-1">def validate_user(user_input, password):</div>
@@ -198,7 +182,7 @@ export default function CICDFeature() {
                 <div className="text-slate-300 mb-4 pl-4">cursor.execute(query)</div>
                 <div className="text-slate-300 mb-4 pl-4">cursor.execute(query)</div>
                 <div className="bg-[#00BCA1]/10 rounded px-3 py-3 border border-[#00BCA1]/20">
-                  <div className="text-xs text-[#00BCA1] font-bold tracking-widest mb-2">REMEDIATION</div>
+                  <div className="text-xs text-[#00BCA1] font-bold tracking-widest mb-2">{t("finding.remediation")}</div>
                   <div className="text-slate-300">query = &quot;SELECT * FROM users WHERE user = %s&quot;</div>
                   <div className="text-slate-300">cursor.execute(query, (user_input,))</div>
                 </div>
@@ -209,28 +193,28 @@ export default function CICDFeature() {
             <motion.div {...fadeUp(0.1)} className="bg-white dark:bg-[#111113] border border-black/9 dark:border-white/9 rounded-xl p-6">
               <div className="flex items-center gap-2 mb-4">
                 <span className="text-2xl">🔴</span>
-                <span className="text-sm font-black text-red-500 tracking-widest uppercase">Critical Flaw</span>
+                <span className="text-sm font-black text-red-500 tracking-widest uppercase">{t("finding.title")}</span>
               </div>
               <p className="text-[#5C5C5C] dark:text-[#9A9A9A] text-base leading-relaxed mb-5">
-                SQL Injection: User input concatenated directly into SQL query. An attacker could bypass authentication.
+                {t("finding.desc")}
               </p>
               <div className="space-y-3 mb-5">
                 <div className="flex justify-between py-2 border-b border-black/9 dark:border-white/9">
-                  <span className="text-base text-[#9A9A9A]">Confidence</span>
-                  <span className="text-base font-semibold text-[#00BCA1]">98% (High)</span>
+                  <span className="text-base text-[#9A9A9A]">{t("finding.confidence")}</span>
+                  <span className="text-base font-semibold text-[#00BCA1]">{t("finding.confidenceValue")}</span>
                 </div>
                 <div className="flex justify-between py-2 border-b border-black/9 dark:border-white/9">
                   <span className="text-base text-[#9A9A9A]">CWE</span>
                   <span className="text-base font-semibold text-blue-500">CWE-89</span>
                 </div>
                 <div className="flex justify-between py-2">
-                  <span className="text-base text-[#9A9A9A]">Fix Time</span>
-                  <span className="text-base font-semibold text-[#1A1A1A] dark:text-[#EDEDED]">5 Minutes</span>
+                  <span className="text-base text-[#9A9A9A]">{t("finding.fixTime")}</span>
+                  <span className="text-base font-semibold text-[#1A1A1A] dark:text-[#EDEDED]">{t("finding.fixTimeValue")}</span>
                 </div>
               </div>
               <button className="w-full py-3 bg-[#00BCA1] hover:bg-[#00A390] text-white rounded-lg text-base font-bold transition-colors flex items-center justify-center gap-2">
                 <Shield className="w-4 h-4" />
-                Create Fix PR
+                {t("finding.primaryCta")}
               </button>
             </motion.div>
           </div>
@@ -242,10 +226,10 @@ export default function CICDFeature() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div {...fadeUp(0)} className="mb-8">
             <h2 className="text-3xl sm:text-4xl font-bold text-[#1A1A1A] dark:text-[#EDEDED] mb-3">
-              CI/CD Integration Guide
+              {t("integration.title")}
             </h2>
             <p className="text-lg text-[#5C5C5C] dark:text-[#9A9A9A]">
-              Deploy security scanning in seconds
+              {t("integration.subtitle")}
             </p>
           </motion.div>
 
@@ -263,7 +247,7 @@ export default function CICDFeature() {
                         : "text-slate-500 border-transparent hover:text-slate-300"
                     }`}
                   >
-                    {tab === "github" ? "GitHub Actions" : "GitLab CI"}
+                    {tab === "github" ? t("integration.tabs.github") : t("integration.tabs.gitlab")}
                   </button>
                 ))}
               </div>
@@ -274,11 +258,7 @@ export default function CICDFeature() {
 
             {/* Features */}
             <motion.div {...fadeUp(0.1)} className="flex flex-col gap-5">
-              {[
-                { icon: "🛡️", title: "Shift Left Security", desc: "Block vulnerabilities before main branch" },
-                { icon: "⚡", title: "Native Integration", desc: "Pre-configured YAML, copy-paste deploy" },
-                { icon: "📋", title: "Full Audit Trail", desc: "Compliance-ready scan history" },
-              ].map((item, i) => (
+              {integrationFeatures.map((item, i) => (
                 <div key={i} className="flex gap-4 p-4 bg-white dark:bg-[#111113] border border-black/9 dark:border-white/9 rounded-xl">
                   <div className="w-10 h-10 rounded-lg bg-[#00BCA1]/10 flex items-center justify-center text-xl shrink-0">
                     {item.icon}
@@ -303,17 +283,17 @@ export default function CICDFeature() {
             
             <div className="relative z-10 text-center">
               <h2 className="text-3xl sm:text-4xl font-bold text-white mb-3">
-                Ready to secure your pipeline?
+                {t("cta.title")}
               </h2>
               <p className="text-lg text-[#9A9A9A] mb-8 max-w-md mx-auto">
-                Start scanning your repositories in minutes.
+                {t("cta.subtitle")}
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <button className="bg-[#00BCA1] hover:bg-[#00A390] text-white px-6 py-3 rounded-xl text-base font-bold transition-colors">
-                  Get Started Free
+                  {t("cta.primaryCta")}
                 </button>
                 <button className="border border-white/20 text-white px-6 py-3 rounded-xl text-base font-semibold hover:bg-white/5 transition-colors">
-                  Schedule Demo
+                  {t("cta.secondaryCta")}
                 </button>
               </div>
             </div>

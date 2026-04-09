@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 const HelpBlobs = () => (
   <>
     <style>{`
@@ -133,6 +135,8 @@ const heroStyles = `
 `;
 
 export default function HelpCenterHero() {
+  const t = useTranslations("helpCenterPage.hero");
+
   return (
     <section
       className="relative overflow-hidden border-b border-black/9 dark:border-white/9 bg-white dark:bg-[#111113] min-h-screen flex items-center justify-center"
@@ -153,18 +157,18 @@ export default function HelpCenterHero() {
         <div>
           <div className="ph-eyebrow inline-flex items-center gap-2.5 text-[11px] tracking-[0.18em] uppercase text-[#00BCA1] mb-6 font-sans">
             <span className="w-5 h-[1.5px] bg-[#00BCA1] opacity-55 rounded inline-block" />
-            Support
+            {t("eyebrow")}
             <span className="w-5 h-[1.5px] bg-[#00BCA1] opacity-55 rounded inline-block" />
           </div>
           <h1 className="ph-h1 font-heading font-bold leading-none text-[#1A1A1A] dark:text-[#EDEDED] tracking-[-0.03em]" style={{ fontSize: "clamp(2.8rem, 5.5vw, 5rem)" }}>
-            Help<br />
-            <em className="not-italic text-[#00BCA1]">Center</em>
+            {t("titleLine1")}<br />
+            <em className="not-italic text-[#00BCA1]">{t("titleLine2")}</em>
           </h1>
         </div>
 
         <div className="flex flex-col items-center gap-6">
           <p className="ph-sub leading-[1.85] text-[#5C5C5C] dark:text-[#9A9A9A] max-w-104" style={{ fontSize: "20px" }}>
-            Find answers to common questions about Auto Offensive, our pentesting platform.
+            {t("subtitle")}
           </p>
         </div>
       </div>

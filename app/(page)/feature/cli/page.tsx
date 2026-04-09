@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { useState, useEffect } from "react";
 import { Download, FileText, Monitor, Lock, Zap, Shield, Cpu, Radio, ClipboardCheck, Terminal, Copy, Check, Terminal as TerminalIcon } from "lucide-react";
 
@@ -10,16 +11,6 @@ const fadeUp = (delay = 0) => ({
   transition: { duration: 0.6, delay, ease: [0.25, 0.46, 0.45, 0.94] as const },
 });
 
-const cliLines = [
-  { text: "$ auto-off scan --target example.com", type: "cmd" },
-  { text: "[SYS] Initializing remote scan cluster...", type: "muted" },
-  { text: "[SYS] Dispatching Nmap 7.92 to Edge Node #412", type: "muted" },
-  { text: "[NET] Port 80/tcp   OPEN (http)", type: "success" },
-  { text: "[NET] Port 443/tcp  OPEN (https)", type: "success" },
-  { text: "[VULN] CVE-2024-XXXX detected on /admin", type: "warning" },
-  { text: "● Success: Scan completed in 2.3s", type: "success" },
-];
-
 const lineColor: Record<string, string> = {
   cmd: "text-slate-100",
   success: "text-[#00BCA1]",
@@ -28,47 +19,27 @@ const lineColor: Record<string, string> = {
   blank: "",
 };
 
-const featureCards = [
-  {
-    icon: Monitor,
-    accent: "#00BCA1",
-    title: "Remote Execution",
-    highlight: "auto-off scan",
-    desc: "Executing auto-off scan triggers high-performance remote API containers. We handle the heavy lifting on our hardened cloud infrastructure.",
-  },
-  {
-    icon: Lock,
-    accent: "#3B82F6",
-    title: "Cloud Sync & Auth",
-    desc: "Authenticate using OAuth or API keys. Every command and scan history syncs to your secure dashboard automatically.",
-  },
-  {
-    icon: Zap,
-    accent: "#8B5CF6",
-    title: "Instant Results",
-    highlight: "ao get-report",
-    desc: "No more waiting. Get shareable URLs and direct download commands like ao get-report to pull JSON or PDF data.",
-  },
-];
-
-const specs = [
-  { label: "Supported OS", value: "Linux, macOS, Windows" },
-  { label: "Binary Size", value: "<10.2 MB" },
-  { label: "Encryption", value: "TLS 1.3 + AES-256" },
-  { label: "Auth Method", value: "OAuth2 / PKCE / MFA" },
-  { label: "Latency", value: "<40ms (Global Edge)" },
-];
-
-const workflowSteps = [
-  { icon: TerminalIcon, title: "Local Command", desc: "Trigger tool via local CLI." },
-  { icon: Cpu, title: "Backend Execution", desc: "Container runs heavy logic." },
-  { icon: Radio, title: "Real-time Stream", desc: "Live output piped to terminal." },
-  { icon: ClipboardCheck, title: "Final Result", desc: "Report sync & artifact save." },
-];
+interface FeatureCardItem {
+  icon: typeof Monitor;
+  accent: string;
+  title: string;
+  desc: string;
+}
 
 function AnimatedCLI() {
+  const t = useTranslations("featurePages.cli");
   const [visibleLines, setVisibleLines] = useState(0);
   const [copied, setCopied] = useState(false);
+
+  const cliLines = [
+    { text: t("terminal.lines.0"), type: "cmd" },
+    { text: t("terminal.lines.1"), type: "muted" },
+    { text: t("terminal.lines.2"), type: "muted" },
+    { text: t("terminal.lines.3"), type: "success" },
+    { text: t("terminal.lines.4"), type: "success" },
+    { text: t("terminal.lines.5"), type: "warning" },
+    { text: t("terminal.lines.6"), type: "success" },
+  ];
 
   useEffect(() => {
     let i = 0;
@@ -78,10 +49,10 @@ function AnimatedCLI() {
       if (i >= cliLines.length) clearInterval(t);
     }, 400);
     return () => clearInterval(t);
-  }, []);
+  }, [cliLines.length]);
 
   const handleCopy = () => {
-    navigator.clipboard.writeText("auto-off scan --target example.com");
+    navigator.clipboard.writeText(t("terminal.copyValue"));
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -127,7 +98,7 @@ function AnimatedCLI() {
   );
 }
 
-function FeatureCard({ card, index }: { card: typeof featureCards[0]; index: number }) {
+function FeatureCard({ card, index }: { card: FeatureCardItem; index: number }) {
   const Icon = card.icon;
   return (
     <motion.div
@@ -146,6 +117,46 @@ function FeatureCard({ card, index }: { card: typeof featureCards[0]; index: num
 }
 
 export default function CLIFeature() {
+  const t = useTranslations("featurePages.cli");
+
+  const featureCards = [
+    {
+      icon: Monitor,
+      accent: "#00BCA1",
+      title: t("cards.0.title"),
+      highlight: "auto-off scan",
+      desc: t("cards.0.desc"),
+    },
+    {
+      icon: Lock,
+      accent: "#3B82F6",
+      title: t("cards.1.title"),
+      desc: t("cards.1.desc"),
+    },
+    {
+      icon: Zap,
+      accent: "#8B5CF6",
+      title: t("cards.2.title"),
+      highlight: "ao get-report",
+      desc: t("cards.2.desc"),
+    },
+  ];
+
+  const specs = [
+    { label: t("specs.items.0.label"), value: t("specs.items.0.value") },
+    { label: t("specs.items.1.label"), value: t("specs.items.1.value") },
+    { label: t("specs.items.2.label"), value: t("specs.items.2.value") },
+    { label: t("specs.items.3.label"), value: t("specs.items.3.value") },
+    { label: t("specs.items.4.label"), value: t("specs.items.4.value") },
+  ];
+
+  const workflowSteps = [
+    { icon: TerminalIcon, title: t("workflow.steps.0.title"), desc: t("workflow.steps.0.desc") },
+    { icon: Cpu, title: t("workflow.steps.1.title"), desc: t("workflow.steps.1.desc") },
+    { icon: Radio, title: t("workflow.steps.2.title"), desc: t("workflow.steps.2.desc") },
+    { icon: ClipboardCheck, title: t("workflow.steps.3.title"), desc: t("workflow.steps.3.desc") },
+  ];
+
   return (
     <div className="min-h-screen bg-[#F7F5F0] dark:bg-[#09090B] font-sans">
       {/* Hero */}
@@ -161,26 +172,26 @@ export default function CLIFeature() {
             <motion.div {...fadeUp(0)}>
               <span className="inline-flex items-center gap-2 text-[11px] font-bold tracking-widest uppercase bg-[#00BCA1]/10 text-[#00BCA1] border border-[#00BCA1]/20 rounded-full px-3 py-1.5 mb-6">
                 <Terminal className="w-3.5 h-3.5" />
-                Managed CLI
+                {t("hero.badge")}
               </span>
 
               <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black text-[#1A1A1A] dark:text-[#EDEDED] leading-tight mb-5">
-                Command Without<br />
-                <span className="text-[#00BCA1]">Limits.</span>
+                {t("hero.titleLine1")}<br />
+                <span className="text-[#00BCA1]">{t("hero.titleLine2")}</span>
               </h1>
 
               <p className="text-[#5C5C5C] dark:text-[#9A9A9A] text-lg sm:text-xl leading-relaxed mb-8 max-w-md">
-                Run 20+ professional security tools from your terminal with zero installation. All processing happens on our secure cloud.
+                {t("hero.subtitle")}
               </p>
 
               <div className="flex flex-wrap gap-3">
                 <button className="inline-flex items-center gap-2 px-5 py-3 bg-[#00BCA1] hover:bg-[#00A390] text-white rounded-xl text-base font-bold transition-colors">
                   <Download className="w-4 h-4" />
-                  Install the CLI
+                  {t("hero.primaryCta")}
                 </button>
                 <button className="inline-flex items-center gap-2 px-5 py-3 bg-white dark:bg-[#111113] border border-black/9 dark:border-white/9 text-[#1A1A1A] dark:text-[#EDEDED] rounded-xl text-base font-semibold hover:border-[#00BCA1] transition-colors">
                   <FileText className="w-4 h-4" />
-                  View Docs
+                  {t("hero.secondaryCta")}
                 </button>
               </div>
             </motion.div>
@@ -204,7 +215,7 @@ export default function CLIFeature() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div {...fadeUp(0)} className="text-center mb-10">
             <h2 className="text-3xl sm:text-4xl font-bold text-[#1A1A1A] dark:text-[#EDEDED] mb-3">
-              Engineering Precision
+              {t("specs.title")}
             </h2>
             <div className="w-14 h-0.5 bg-[#00BCA1] mx-auto" />
           </motion.div>
@@ -224,10 +235,10 @@ export default function CLIFeature() {
                 <div className="w-10 h-10 rounded-xl bg-[#00BCA1]/10 border border-[#00BCA1]/20 flex items-center justify-center">
                   <Shield className="w-5 h-5 text-[#00BCA1]" />
                 </div>
-                <h3 className="text-lg font-bold text-[#1A1A1A] dark:text-[#EDEDED]">Hardened Binary</h3>
+                <h3 className="text-lg font-bold text-[#1A1A1A] dark:text-[#EDEDED]">{t("specs.binaryTitle")}</h3>
               </div>
               <p className="text-base text-[#5C5C5C] dark:text-[#9A9A9A] leading-relaxed mb-4">
-                Built with Rust for memory safety. Uses gRPC protocol for real-time streaming. Every session is ephemeral and audit-logged.
+                {t("specs.binaryDesc")}
               </p>
               <div className="flex gap-2">
                 {["Rust", "gRPC", "mTLS"].map((tag) => (
@@ -246,7 +257,7 @@ export default function CLIFeature() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div {...fadeUp(0)} className="text-center mb-12">
             <h2 className="text-3xl sm:text-4xl font-bold text-[#1A1A1A] dark:text-[#EDEDED] mb-3">
-              Execution Workflow
+              {t("workflow.title")}
             </h2>
           </motion.div>
 
@@ -280,17 +291,17 @@ export default function CLIFeature() {
             
             <div className="relative z-10 text-center">
               <h2 className="text-3xl sm:text-4xl font-bold text-white mb-3">
-                Ready to upgrade your workflow?
+                {t("cta.title")}
               </h2>
               <p className="text-lg text-[#9A9A9A] mb-8 max-w-md mx-auto">
-                Lightweight, secure, and ready for production.
+                {t("cta.subtitle")}
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <button className="bg-[#00BCA1] hover:bg-[#00A390] text-white px-6 py-3 rounded-xl text-base font-bold transition-colors">
-                  Install Now
+                  {t("cta.primaryCta")}
                 </button>
                 <button className="border border-white/20 text-white px-6 py-3 rounded-xl text-base font-semibold hover:bg-white/5 transition-colors">
-                  View Documentation
+                  {t("cta.secondaryCta")}
                 </button>
               </div>
             </div>

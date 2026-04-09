@@ -1,29 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { Brain, ArrowRight, ExternalLink, Zap, Wrench, RefreshCw, Map } from "lucide-react";
 import { FiBarChart, FiLink2, FiFileText } from "react-icons/fi";
-
-const workflowSteps = [
-  {
-    num: "1",
-    icon: FiBarChart,
-    title: "Findings Aggregation",
-    desc: "Pull data from active scans, manual entries, and exports into unified environment.",
-  },
-  {
-    num: "2",
-    icon: Brain,
-    title: "AI Synthesis",
-    desc: "LLMs analyze and correlate vulnerabilities to generate contextual risk narratives.",
-  },
-  {
-    num: "3",
-    icon: FiFileText,
-    title: "Multi-Persona Output",
-    desc: "Generate distinct versions for Executives, Engineers, and Developers.",
-  },
-];
 
 const severityData = [
   { label: "Critical", count: 38, color: "#ef4444", pct: 31 },
@@ -38,6 +18,62 @@ const fadeUp = (delay = 0) => ({
 });
 
 export default function AIFeature() {
+  const t = useTranslations("featurePages.ai");
+
+  const workflowSteps = [
+    {
+      num: "1",
+      icon: FiBarChart,
+      title: t("workflow.steps.0.title"),
+      desc: t("workflow.steps.0.desc"),
+    },
+    {
+      num: "2",
+      icon: Brain,
+      title: t("workflow.steps.1.title"),
+      desc: t("workflow.steps.1.desc"),
+    },
+    {
+      num: "3",
+      icon: FiFileText,
+      title: t("workflow.steps.2.title"),
+      desc: t("workflow.steps.2.desc"),
+    },
+  ];
+
+  const dashboardBullets = [
+    { icon: FiBarChart, text: t("dashboard.bullets.0") },
+    { icon: FiLink2, text: t("dashboard.bullets.1") },
+    { icon: FiFileText, text: t("dashboard.bullets.2") },
+  ];
+
+  const aiEdgeItems = [
+    {
+      icon: Zap,
+      title: t("edge.items.0.title"),
+      desc: t("edge.items.0.desc"),
+      dark: false,
+    },
+    {
+      icon: Wrench,
+      title: t("edge.items.1.title"),
+      desc: t("edge.items.1.desc"),
+      dark: true,
+    },
+    {
+      icon: RefreshCw,
+      title: t("edge.items.2.title"),
+      desc: t("edge.items.2.desc"),
+      dark: false,
+    },
+    {
+      icon: Map,
+      title: t("edge.items.3.title"),
+      desc: t("edge.items.3.desc"),
+      dark: false,
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-[#F7F5F0] dark:bg-[#09090B] font-sans">
       {/* Hero */}
@@ -53,25 +89,25 @@ export default function AIFeature() {
             <motion.div {...fadeUp(0)}>
               <span className="inline-flex items-center gap-2 text-[12px] font-bold tracking-widest uppercase bg-[#00BCA1]/10 text-[#00BCA1] border border-[#00BCA1]/20 rounded-full px-3 py-1.5 mb-6">
                 <Brain className="w-3.5 h-3.5" />
-                AI-Powered Reporting
+                {t("hero.badge")}
               </span>
 
               <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black text-[#1A1A1A] dark:text-[#EDEDED] leading-tight mb-5">
-                AI-Assisted<br />
-                <span className="text-[#00BCA1]">Reporting.</span>
+                {t("hero.titleLine1")}<br />
+                <span className="text-[#00BCA1]">{t("hero.titleLine2")}</span>
               </h1>
 
               <p className="text-lg sm:text-xl leading-relaxed mb-8 max-w-md text-[#5C5C5C] dark:text-[#9A9A9A]">
-                Transform raw vulnerability data into boardroom-ready intelligence. Our AI automates analysis, narrative, and remediation strategies.
+                {t("hero.subtitle")}
               </p>
 
               <div className="flex flex-wrap gap-3">
                 <button className="inline-flex items-center gap-2 px-5 py-3 bg-[#00BCA1] hover:bg-[#00A390] text-white rounded-xl text-base font-bold transition-colors">
-                  Generate Report
+                  {t("hero.primaryCta")}
                   <ArrowRight className="w-4 h-4" />
                 </button>
                 <button className="inline-flex items-center gap-2 px-5 py-3 bg-white dark:bg-[#111113] border border-black/9 dark:border-white/9 text-[#1A1A1A] dark:text-[#EDEDED] rounded-xl text-base font-semibold hover:border-[#00BCA1] transition-colors">
-                  View Demo <ExternalLink className="w-4 h-4" />
+                  {t("hero.secondaryCta")} <ExternalLink className="w-4 h-4" />
                 </button>
               </div>
             </motion.div>
@@ -80,8 +116,8 @@ export default function AIFeature() {
             <motion.div {...fadeUp(0.2)} className="relative">
               <div className="bg-white dark:bg-[#111113] rounded-2xl border border-black/9 dark:border-white/9 p-6 shadow-xl">
                 <div className="flex items-center justify-between mb-6">
-                  <h3 className="text-xl font-bold text-[#1A1A1A] dark:text-[#EDEDED]">Report Preview</h3>
-                  <span className="text-xs px-2 py-1 rounded-full bg-[#00BCA1]/10 text-[#00BCA1]">AI Generated</span>
+                  <h3 className="text-xl font-bold text-[#1A1A1A] dark:text-[#EDEDED]">{t("hero.previewTitle")}</h3>
+                  <span className="text-xs px-2 py-1 rounded-full bg-[#00BCA1]/10 text-[#00BCA1]">{t("hero.previewBadge")}</span>
                 </div>
                 
                 {/* Severity Donut Chart */}
@@ -94,7 +130,7 @@ export default function AIFeature() {
                     </svg>
                     <div className="absolute inset-0 flex flex-col items-center justify-center">
                       <span className="text-2xl font-black text-[#1A1A1A] dark:text-[#EDEDED]">124</span>
-                      <span className="text-xs text-[#9A9A9A]">findings</span>
+                      <span className="text-xs text-[#9A9A9A]">{t("hero.findingsLabel")}</span>
                     </div>
                   </div>
                 </div>
@@ -102,11 +138,11 @@ export default function AIFeature() {
                 {/* Stats */}
                 <div className="grid grid-cols-2 gap-4">
                   <div className="bg-[#F7F5F0] dark:bg-[#1A1A1A] rounded-lg p-3">
-                    <div className="text-xs text-[#9A9A9A] mb-1">Critical</div>
+                    <div className="text-xs text-[#9A9A9A] mb-1">{t("severity.critical")}</div>
                     <div className="text-xl font-bold text-red-500">38</div>
                   </div>
                   <div className="bg-[#F7F5F0] dark:bg-[#1A1A1A] rounded-lg p-3">
-                    <div className="text-xs text-[#9A9A9A] mb-1">High</div>
+                    <div className="text-xs text-[#9A9A9A] mb-1">{t("severity.high")}</div>
                     <div className="text-xl font-bold text-orange-500">52</div>
                   </div>
                 </div>
@@ -121,10 +157,10 @@ export default function AIFeature() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div {...fadeUp(0)} className="text-center mb-12">
             <h2 className="text-4xl sm:text-5xl font-bold text-[#1A1A1A] dark:text-[#EDEDED] mb-3">
-              The Reporting Workflow
+              {t("workflow.title")}
             </h2>
             <p className="text-lg text-[#5C5C5C] dark:text-[#9A9A9A]">
-              Three steps from raw data to comprehensive documentation
+              {t("workflow.subtitle")}
             </p>
           </motion.div>
 
@@ -159,8 +195,8 @@ export default function AIFeature() {
             {/* Severity Card */}
             <motion.div {...fadeUp(0)} className="bg-[#F7F5F0] dark:bg-[#1A1A1A] rounded-2xl p-6 border border-black/9 dark:border-white/9">
               <div className="flex items-center justify-between mb-6">
-                <h3 className="text-lg font-bold text-[#1A1A1A] dark:text-[#EDEDED]">Severity Distribution</h3>
-                <span className="text-xs bg-[#00BCA1]/10 text-[#00BCA1] px-2 py-1 rounded-full font-semibold">Real Time</span>
+                <h3 className="text-lg font-bold text-[#1A1A1A] dark:text-[#EDEDED]">{t("dashboard.severityTitle")}</h3>
+                <span className="text-xs bg-[#00BCA1]/10 text-[#00BCA1] px-2 py-1 rounded-full font-semibold">{t("dashboard.realTime")}</span>
               </div>
 
               <div className="flex items-center gap-8 mb-6">
@@ -185,7 +221,7 @@ export default function AIFeature() {
                   </svg>
                   <div className="absolute inset-0 flex flex-col items-center justify-center">
                     <span className="text-2xl font-black text-[#1A1A1A] dark:text-[#EDEDED]">124</span>
-                    <span className="text-xs text-[#9A9A9A]">total</span>
+                    <span className="text-xs text-[#9A9A9A]">{t("dashboard.total")}</span>
                   </div>
                 </div>
 
@@ -193,7 +229,7 @@ export default function AIFeature() {
                   {severityData.map((d, i) => (
                     <div key={i} className="flex items-center gap-2 mb-2">
                       <div className="w-2.5 h-2.5 rounded-full" style={{ background: d.color }} />
-                      <span className="text-base text-[#5C5C5C] dark:text-[#9A9A9A]">{d.label} ({d.count})</span>
+                      <span className="text-base text-[#5C5C5C] dark:text-[#9A9A9A]">{t(`severity.${d.label.toLowerCase()}`)} ({d.count})</span>
                     </div>
                   ))}
                 </div>
@@ -201,12 +237,12 @@ export default function AIFeature() {
 
               <div className="grid grid-cols-2 gap-4 pt-4 border-t border-black/9 dark:border-white/9">
                 <div>
-                  <div className="text-xs text-[#9A9A9A] uppercase tracking-wider mb-1">Mean Time to Fix</div>
-                  <div className="text-2xl font-black text-[#1A1A1A] dark:text-[#EDEDED]">4.2 Days</div>
+                  <div className="text-xs text-[#9A9A9A] uppercase tracking-wider mb-1">{t("dashboard.meanTimeToFix")}</div>
+                  <div className="text-2xl font-black text-[#1A1A1A] dark:text-[#EDEDED]">{t("dashboard.meanTimeValue")}</div>
                 </div>
                 <div>
-                  <div className="text-xs text-[#9A9A9A] uppercase tracking-wider mb-1">Exploitability</div>
-                  <div className="text-xl font-black text-red-500">High Risk</div>
+                  <div className="text-xs text-[#9A9A9A] uppercase tracking-wider mb-1">{t("dashboard.exploitability")}</div>
+                  <div className="text-xl font-black text-red-500">{t("dashboard.exploitabilityValue")}</div>
                 </div>
               </div>
             </motion.div>
@@ -214,17 +250,13 @@ export default function AIFeature() {
             {/* Description */}
             <motion.div {...fadeUp(0.1)}>
               <h2 className="text-4xl sm:text-5xl font-bold text-[#1A1A1A] dark:text-[#EDEDED] mb-4">
-                Live Result Dashboard
+                {t("dashboard.title")}
               </h2>
               <p className="text-lg text-[#5C5C5C] dark:text-[#9A9A9A] leading-relaxed mb-6">
-                Provide a living portal of security intelligence. Transform data into actionable insights through dynamic charts and trend analysis.
+                {t("dashboard.desc")}
               </p>
               <div className="space-y-3">
-                {[
-                  { icon: FiBarChart, text: "Interactive severity breakdowns" },
-                  { icon: FiLink2, text: "Secure, shareable live links" },
-                  { icon: FiFileText, text: "Historical remediation tracking" },
-                ].map((item, i) => {
+                {dashboardBullets.map((item, i) => {
                   const IconComp = item.icon;
                   return (
                     <div key={i} className="flex items-center gap-3">
@@ -244,40 +276,15 @@ export default function AIFeature() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div {...fadeUp(0)} className="mb-10">
             <h2 className="text-4xl sm:text-5xl font-bold text-[#1A1A1A] dark:text-[#EDEDED] mb-3">
-              The AI Edge
+              {t("edge.title")}
             </h2>
             <p className="text-lg text-[#5C5C5C] dark:text-[#9A9A9A]">
-              Intelligent features that set us apart
+              {t("edge.subtitle")}
             </p>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {[
-              {
-                icon: Zap,
-                title: "Automated Risk Explanation",
-                desc: "AI cross-references findings with threat intelligence to explain why a vulnerability matters to your business.",
-                dark: false,
-              },
-              {
-                icon: Wrench,
-                title: "Remediation Guidance",
-                desc: "Personalized fix recommendations in your team's programming language.",
-                dark: true,
-              },
-              {
-                icon: RefreshCw,
-                title: "Continuous Updates",
-                desc: "Reports evolve as you fix vulnerabilities. Information is always current.",
-                dark: false,
-              },
-              {
-                icon: Map,
-                title: "Compliance Mapping",
-                desc: "Automatic mapping to SOC2, HIPAA, and ISO 27001 controls.",
-                dark: false,
-              },
-            ].map((item, i) => {
+            {aiEdgeItems.map((item, i) => {
               const IconComp = item.icon;
               return (
                 <motion.div
@@ -315,17 +322,17 @@ export default function AIFeature() {
             
             <div className="relative z-10 text-center">
               <h2 className="text-4xl sm:text-5xl font-bold text-white mb-3">
-                Stop writing reports. Start securing.
+                {t("cta.title")}
               </h2>
               <p className="text-lg text-[#9A9A9A] mb-8 max-w-md mx-auto">
-                Join security teams who have automated their reporting workflows.
+                {t("cta.subtitle")}
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <button className="bg-[#00BCA1] hover:bg-[#00A390] text-white px-6 py-3 rounded-xl text-base font-bold transition-colors">
-                  Try It Free
+                  {t("cta.primaryCta")}
                 </button>
                 <button className="border border-white/20 text-white px-6 py-3 rounded-xl text-base font-semibold hover:bg-white/5 transition-colors">
-                  Schedule Demo
+                  {t("cta.secondaryCta")}
                 </button>
               </div>
             </div>

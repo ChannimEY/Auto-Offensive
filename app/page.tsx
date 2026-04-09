@@ -4,7 +4,7 @@ import { generateMetadata } from "@/lib/metadata";
 export const metadata = generateMetadata({
   title: "Auto-Offensive | Next-Gen PaaS for Hackers",
   description: "Automated Security Workflows and Pentesting Platform - Run 20+ professional security tools from your terminal with zero installation.",
-  image: "/og-image.png",
+  image: "/public/Auto_Offensive_Light-mode.png",
   url: "/",
 });
 

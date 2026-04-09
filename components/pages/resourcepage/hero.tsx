@@ -4,8 +4,11 @@ import { ArrowRight } from 'lucide-react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { easeOut } from 'framer-motion'
+import { useTranslations } from 'next-intl'
 
 export default function Hero() {
+  const t = useTranslations("resourcePage")
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -48,30 +51,30 @@ export default function Hero() {
               variants={itemVariants}
               className="inline-block px-3 py-1 bg-primary/10 text-primary rounded-full text-xs font-semibold mb-4"
             >
-              TECHNICAL RESOURCES
+              {t('hero.badge')}
             </motion.span>
             <motion.h1
               variants={itemVariants}
               className="text-4xl md:text-5xl font-bold text-foreground mb-4 leading-tight text-balance"
             >
-              Clinical Precision <span className='text-primary'>Resource Center</span>
+              {t('hero.titleLine1')} <span className='text-primary'>{t('hero.titleLine2')}</span>
             </motion.h1>
             <motion.p
               variants={itemVariants}
               className="text-lg text-foreground/70 mb-6 leading-relaxed"
             >
-              Access technical specifications, integration guides, and best practices for the comprehensive security workflows.
+              {t('hero.subtitle')}
             </motion.p>
             <motion.div
               variants={itemVariants}
               className="flex flex-col sm:flex-row gap-4"
             >
               <button className="bg-primary text-primary-foreground px-6 py-3 rounded-lg font-semibold hover:bg-primary/90 transition flex items-center justify-center gap-2">
-                Browse Resources
+                {t('categories.viewAll')}
                 <ArrowRight size={18} />
               </button>
               <button className="border text-foreground px-6 py-3 rounded-lg font-semibold hover:bg-muted transition">
-                View Documentation
+                {t('quickLinks.items.0.title')}
               </button>
             </motion.div>
           </motion.div>
