@@ -163,7 +163,8 @@
     "offline": {
       "title": "You're Offline",
       "description": "Please check your internet connection and try again.",
-      "tryAgain": "Try Again"
+      "tryAgain": "Try Again",
+      "goHome": "Go Home"
     }
   }
 }

@@ -1,0 +1,69 @@
+{
+  "common": {
+    "home": "ទំព័រដើម",
+    "about": "អំពីយើងខ្ញុំ",
+    "contact": "ទំនាក់ទំនងយើង",
+    "login": "ចូលប្រើប្រាស់",
+    "register": "ចុះឈ្មោះថ្មី",
+    "logout": "ចេញចូល",
+    "search": "ស្វែងរក",
+    "language": "ភាសា",
+    "documentation": "ឯកសារឯកសារ",
+    "gettingStarted": "ចាប់ផ្តើមប្រើប្រាស់",
+    "learnMore": "ស្វែងយល់បន្ថែម",
+    "viewAll": "មើលទាំងអស់",
+    "tryForFree": "សាកល្បងដោយឥតគិតថ្លៃ",
+    "getStarted": "ចាប់ផ្តើមឥឡូវនេះ",
+    "learn": "រៀន",
+    "reference": "ឯកសារយោង",
+    "execute": "ប្រតិបត្តិការ"
+  },
+  "nav": {
+    "features": "លក្ខណៈពិសេស",
+    "tools": "ឧបករណ៍",
+    "resources": "ធនធាននិងគ្រឿងសម្ភារ",
+    "pricing": "តម្លៃប្រាក់",
+    "documentation": "ឯកសារលម្អិត",
+    "loginRegister": "ចូល / ចុះឈ្មោះ"
+  },
+  "footer": {
+    "product": "ផលិតផល",
+    "features": "លក្ខណៈពិសេស",
+    "tools": "ឧបករណ៍",
+    "pricing": "តម្លៃប្រាក់",
+    "integrations": "ការរួមបញ្ចូល",
+    "resources": "ធនធាននិងគ្រឿងសម្ភារ",
+    "documentation": "ឯកសារលម្អិត",
+    "apiReference": "ឯកសារយោង API",
+    "cliGuide": "មគ្គុទ្ឋសាន CLI",
+    "blog": "ប្លក",
+    "company": "ក្រុមហ៊ុន",
+    "aboutUs": "អំពីក្រុមហ៊ុនយើង",
+    "careers": "ឱកាសការងារ",
+    "contactUs": "ទំនាក់ទំនងយើង",
+    "legal": "ច្បាប់និងលក្ខណៈ",
+    "privacyPolicy": "គោលការណ៍ភាពឯកជន",
+    "termsOfService": "លក្ខខណ្ឌសេវាកម្ម",
+    "security": "សុវត្ថិភាព",
+    "community": "សហគមន៍",
+    "discord": "Discord",
+    "twitter": "Twitter",
+    "github": "GitHub",
+    "allRightsReserved": "រក្សាសិទ្ធិគ្រប់យ៉ាង",
+    "builtWith": "ត្រូវបានបង្កើតដោយ"
+  },
+  "error": {
+    "notFound": {
+      "title": "ទំព័ររកមិនឃើញ",
+      "description": "ទំព័រដែលអ្នកកំពុងរកមិនមានទេ ឬបានផ្លាស់ទីហើយ ។",
+      "goHome": "ទៅផ្ទាល់ខ្លួន",
+      "goBack": "ត្រលប់"
+    },
+    "offline": {
+      "title": "អ្នកកំពុងអស់អ៊ីនធឺណេត",
+      "description": "សូមពិនិត្យមេត្តាកម្មវិធីអ៊ីនធឺណេតរបស់អ្នក ហើយព្យាយាមម្តងទៀត ។",
+      "tryAgain": "ព្យាយាមម្តងទៀត",
+      "goHome": "ទៅផ្ទាល់ខ្លួន"
+    }
+  }
+}

@@ -219,7 +219,7 @@ export default function PlatformCapabilities() {
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold
-                  bg-#00BCA1 hover:bg-emerald-400 text-white transition-colors shadow-lg shadow-#00BCA1/20"
+                  bg-primary hover:bg-emerald-400 text-white transition-colors shadow-lg shadow-primary/20"
               >
                 Get Started <ArrowRight className="w-4 h-4" />
               </motion.button>
@@ -290,7 +290,7 @@ export default function PlatformCapabilities() {
               custom={1}
               whileHover={{ y: -4 }}
               className="lg:col-span-2 rounded-2xl p-7 sm:p-8 relative overflow-hidden
-                bg-linear-to-br from-blue-600 to-violet-600
+                bg-linear-to-br from-primary to-[#2CA3FF]
                 hover:shadow-2xl hover:shadow-violet-500/20 transition-shadow duration-300"
             >
               {/* Dot texture */}
@@ -463,7 +463,7 @@ export default function PlatformCapabilities() {
                   whileHover={{ scale: 1.03, boxShadow: "0 0 28px rgba(16,185,129,0.3)" }}
                   whileTap={{ scale: 0.97 }}
                   className="inline-flex items-center gap-2.5 px-6 py-3 rounded-xl text-sm font-bold
-                    bg-#00BCA1 hover:bg-emerald-400 text-white transition-colors shadow-lg shadow-#00BCA1/20"
+                    bg-primary hover:bg-emerald-400 text-white transition-colors shadow-lg shadow-primary/20"
                 >
                   <FileText className="w-4 h-4" /> View Documentation
                 </motion.button>
@@ -573,7 +573,7 @@ export default function PlatformCapabilities() {
             animate={workflowInView ? "visible" : "hidden"}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl sm:text-4xl font-black text-#00BCA1 dark:text-emerald-400 mb-3">
+            <h2 className="text-3xl sm:text-4xl font-black text-primary dark:text-emerald-400 mb-3">
               Integrated Attack Workflow
             </h2>
             <p className="text-sm sm:text-base text-slate-500 dark:text-slate-400">
@@ -633,12 +633,12 @@ export default function PlatformCapabilities() {
               whileHover={{ scale: 1.04, boxShadow: "0 0 32px rgba(16,185,129,0.3)" }}
               whileTap={{ scale: 0.96 }}
               className="inline-flex items-center gap-2.5 px-8 py-3.5 rounded-xl text-sm font-bold
-                bg-#00BCA1 hover:bg-emerald-400 text-white transition-colors
+            bg-primary hover:bg-emerald-400 text-white transition-colors
                 shadow-xl shadow-#00BCA1/20"
             >
               Start Scanning <ArrowRight className="w-4 h-4" />
             </motion.button>
-            <a href="#" className="inline-flex items-center gap-2 text-sm font-semibold
+            <a href="/resources" className="inline-flex items-center gap-2 text-sm font-semibold
               text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200
               transition-colors">
               Read the Docs <ExternalLink className="w-4 h-4" />

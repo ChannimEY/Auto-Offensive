@@ -136,7 +136,7 @@ function ThemeToggle() {
 }
 
 // ── Language Toggle ───────────────────────────────────────────────────────────
-type Lang = 'en' | 'km';
+type Lang = 'en' | 'kh';
 
 function LanguageToggle() {
   const [mounted, setMounted] = React.useState(false);
@@ -166,7 +166,7 @@ function LanguageToggle() {
 
   const options: { value: Lang; label: string; flagSrc: string }[] = [
     { value: 'en', label: 'English',  flagSrc: '/flags/en.png' },
-    { value: 'km', label: 'ខ្មែរ',     flagSrc: '/flags/kh.png' },
+    { value: 'kh', label: 'ខ្មែរ',     flagSrc: '/flags/kh.png' },
   ];
 
   if (!mounted) return <div className="w-14 h-7" />;
@@ -179,7 +179,7 @@ function LanguageToggle() {
         onClick={() => setOpen(v => !v)}
         className="flex items-center gap-1.5 px-2.5 py-1.5 bg-transparent text-sm font-medium cursor-pointer hover:bg-primary/10 transition-colors"
       >
-        <Image src={current.flagSrc} alt={current.value} width={20} height={14} className="object-cover" />
+        <Image src={current.flagSrc} alt={current.value} width={20} height={14} style={{ width: 'auto', height: 'auto' }} className="object-cover" />
         <span>{current.value.toUpperCase()}</span>
         <ChevronDownIcon className={cn('size-3.5 transition-transform', open && 'rotate-180')} />
       </button>
@@ -195,7 +195,7 @@ function LanguageToggle() {
                 currentLocale === opt.value && 'bg-primary/10 font-semibold',
               )}
             >
-              <Image src={opt.flagSrc} alt={opt.value} width={20} height={14} className="object-cover" />
+              <Image src={opt.flagSrc} alt={opt.value} width={20} height={14} style={{ width: 'auto', height: 'auto' }} className="object-cover" />
               <span>{opt.label}</span>
             </button>
           ))}

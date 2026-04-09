@@ -52,10 +52,6 @@ export function generateMetadata(options: PageMetadata): Metadata {
     },
     alternates: {
       canonical: pageUrl,
-      languages: {
-        en: pageUrl,
-        km: `${pageUrl}?lang=km`,
-      },
     },
   };
 }

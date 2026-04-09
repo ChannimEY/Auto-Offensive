@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 /* ─── Blob background — mirrors AboutHero's spring-entrance + slow-float pattern ─── */
 const PrivacyBlobs = () => (
   <>
@@ -195,6 +197,8 @@ const heroStyles = `
 
 /* ─── Component ──────────────────────────────── */
 export default function PrivacyHero() {
+  const t = useTranslations("privacy");
+
   return (
     <section
       className="relative overflow-hidden border-b border-black/9 dark:border-white/9 bg-white dark:bg-[#111113] min-h-screen flex items-center justify-center"
@@ -234,40 +238,38 @@ export default function PrivacyHero() {
       />
 
       {/* ── Hero content ── */}
-      {/* CHANGED: grid → flex col, items-center + text-center to center all content */}
       <div className="relative z-2 w-full max-w-7xl mx-auto flex flex-col items-center text-center gap-8 lg:gap-2">
 
         {/* Headline */}
         <div>
           <div className="ph-eyebrow inline-flex items-center gap-2.5 text-[11px] tracking-[0.18em] uppercase text-[#00BCA1] mb-6 font-sans">
             <span className="w-5 h-[1.5px] bg-[#00BCA1] opacity-55 rounded inline-block" />
-            Legal / Privacy
+            {t("title")}
             <span className="w-5 h-[1.5px] bg-[#00BCA1] opacity-55 rounded inline-block" />
           </div>
           <h1
             className="ph-h1 font-heading font-bold leading-none text-[#1A1A1A] dark:text-[#EDEDED] tracking-[-0.03em]"
             style={{ fontSize: "clamp(2.8rem, 5.5vw, 5rem)" }}
           >
-            Your data.<br />
-            <em className="not-italic text-[#00BCA1]">Your rules.</em>
+            {t("heroTitle")}<br />
+            <em className="not-italic text-[#00BCA1]">{t("heroTitleHighlight")}</em>
           </h1>
         </div>
 
         {/* Sub-copy + tags */}
         <div className="flex flex-col items-center gap-6">
-          {/* CHANGED: font-size fixed to 20px, max-w kept for readability */}
           <p
             className="ph-sub leading-[1.85] text-[#5C5C5C] dark:text-[#9A9A9A] max-w-104"
             style={{ fontSize: "20px" }}
           >
-            We built Auto Offensive to make penetration testing accessible — not to monetize your data. Here&rsquo;s the plain-language version of what we collect and why.
+            {t("heroDescription")}
           </p>
           <div className="ph-tags flex gap-2 flex-wrap justify-center">
             <span className="text-[11px] tracking-[0.08em] uppercase px-3.5 py-1.5 border border-[#00BCA1] rounded text-white bg-[#00BCA1]">
-              No data selling. Ever.
+              {t("tagNoDataSelling")}
             </span>
             <span className="text-[11px] tracking-[0.08em] uppercase px-3.5 py-1.5 border border-black/[0.14] dark:border-white/[0.14] rounded text-[#5C5C5C] dark:text-[#9A9A9A] bg-white/70 dark:bg-white/6">
-              Free platform
+              {t("tagFreePlatform")}
             </span>
             <span className="text-[11px] tracking-[0.08em] uppercase px-3.5 py-1.5 border border-black/[0.14] dark:border-white/[0.14] rounded text-[#5C5C5C] dark:text-[#9A9A9A] bg-white/70 dark:bg-white/6">
               v2.0 · Mar 2026

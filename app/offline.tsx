@@ -29,7 +29,7 @@ export default function Offline() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-linear-to-b from-zinc-950 to-zinc-900 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-li-to-b from-zinc-950 to-zinc-900 px-4">
       <div className="text-center space-y-8">
         <div className="relative">
           <div className="w-32 h-32 mx-auto bg-zinc-900 rounded-full flex items-center justify-center border-4 border-zinc-800">
