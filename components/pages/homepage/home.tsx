@@ -3,7 +3,8 @@ import Features from "@/components/pages/homepage/feature";
 import AIBanner from "@/components/pages/homepage/ai-banner";
 import ThreeCards, {  } from "@/components/pages/homepage/threecards";
 import TeamShowcase from "./teamshowcase";
-import HomeVideo from "@/components/pages/homepage/home-video";
+import HomeVideo from "./home-video";
+
 
 export default function Home() {
   return (
@@ -14,8 +15,7 @@ export default function Home() {
       <AIBanner />
        <TeamShowcase />
       <ThreeCards />
-     
-    
+      
     </main>
   );
 }

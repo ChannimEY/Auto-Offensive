@@ -1,10 +1,14 @@
 'use client';
 
 import React, { useMemo, useState } from 'react';
+import { useLocale, useTranslations } from 'next-intl';
 
 interface VideoThumbnailPlayerProps {
   title: string;
   subtitle?: string;
+  eyebrow: string;
+  playLabel: string;
+  fontFamily: string;
   thumbnailUrl: string;
   videoUrl: string;
   className?: string;
@@ -40,6 +44,9 @@ function getYouTubeEmbedUrl(url: string) {
 export const VideoThumbnailPlayer: React.FC<VideoThumbnailPlayerProps> = ({
   title,
   subtitle,
+  eyebrow,
+  playLabel,
+  fontFamily,
   thumbnailUrl,
   videoUrl,
   className = '',
@@ -57,10 +64,10 @@ export const VideoThumbnailPlayer: React.FC<VideoThumbnailPlayerProps> = ({
   };
 
   return (
-    <section className={`w-full bg-[#F7F5F0] dark:bg-[#09090B] px-4 py-16 sm:px-6 lg:px-8 ${className}`}>
+    <section className={`w-full bg-[#F7F5F0] px-4 py-16 dark:bg-[#09090B] sm:px-6 lg:px-8 ${className}`}>
       <div className="mx-auto w-full max-w-7xl">
         <div
-          className="group relative mx-auto w-full max-w-5xl overflow-hidden rounded-[2rem] border border-[#DDD6CA] bg-[#111214] "
+          className="group relative mx-auto w-full max-w-5xl overflow-hidden rounded-[2rem] border border-[#DDD6CA] bg-[#111214]"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
@@ -99,11 +106,11 @@ export const VideoThumbnailPlayer: React.FC<VideoThumbnailPlayerProps> = ({
                   type="button"
                   onClick={handlePlayClick}
                   className="absolute inset-0 z-20 flex items-center justify-center"
-                  aria-label={`Play video: ${title}`}
+                  aria-label={`${playLabel}: ${title}`}
                 >
                   <span
-                    className={`flex h-18 w-18 items-center justify-center rounded-full border border-white/25 bg-white/12 backdrop-blur-md  transition-all duration-300 sm:h-21 sm:w-21 ${
-                      isHovered ? 'scale-110 bg-white/18 ' : ''
+                    className={`flex h-18 w-18 items-center justify-center rounded-full border border-white/25 bg-white/12 backdrop-blur-md transition-all duration-300 sm:h-21 sm:w-21 ${
+                      isHovered ? 'scale-110 bg-white/18' : ''
                     }`}
                   >
                     <span className="ml-1 h-0 w-0 border-y-13 border-y-transparent border-l-21 border-l-white sm:border-y-15 sm:border-l-25" />
@@ -112,20 +119,20 @@ export const VideoThumbnailPlayer: React.FC<VideoThumbnailPlayerProps> = ({
 
                 <div className="absolute bottom-0 left-0 z-30 max-w-[78%] p-6 sm:p-8 md:p-10">
                   <p className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/8 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.22em] text-white/72">
-                    Platform Walkthrough
+                    {eyebrow}
                   </p>
                   <h2
                     className={`text-[clamp(2rem,4vw,4.2rem)] font-bold leading-[1.05] tracking-[-0.04em] text-white transition-transform duration-300 ${
                       isHovered ? '-translate-y-1' : 'translate-y-0'
                     }`}
-                    style={{ fontFamily: 'var(--font-google-sans), var(--font-noto-khmer), sans-serif' }}
+                    style={{ fontFamily }}
                   >
                     {title}
                   </h2>
                   {subtitle ? (
                     <p
                       className="mt-3 max-w-2xl text-[16px] leading-[1.75] text-white/76 sm:text-[18px]"
-                      style={{ fontFamily: 'var(--font-google-sans), var(--font-noto-khmer), sans-serif' }}
+                      style={{ fontFamily }}
                     >
                       {subtitle}
                     </p>
@@ -141,10 +148,20 @@ export const VideoThumbnailPlayer: React.FC<VideoThumbnailPlayerProps> = ({
 };
 
 export default function HomeVideo() {
+  const t = useTranslations('homepage.video');
+  const locale = useLocale();
+  const fontFamily =
+    locale === "kh"
+      ? "var(--font-noto-khmer), var(--font-google-sans), sans-serif"
+      : "var(--font-google-sans), var(--font-noto-khmer), sans-serif";
+
   return (
     <VideoThumbnailPlayer
-      title="Discover Our Story"
-      subtitle="Watch a quick walkthrough of the platform, tools, and workflow experience."
+      title={t('title')}
+      subtitle={t('subtitle')}
+      eyebrow={t('eyebrow')}
+      playLabel={t('playLabel')}
+      fontFamily={fontFamily}
       thumbnailUrl="https://images.unsplash.com/photo-1556075798-4825dfaaf498?w=1600&h=900&fit=crop"
       videoUrl="https://www.youtube.com/embed/RSw9066kqHw?si=tGNjgYblVnpV87lA"
     />

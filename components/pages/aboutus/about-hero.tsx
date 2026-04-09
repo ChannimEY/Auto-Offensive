@@ -1,55 +1,57 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useLocale } from "next-intl";
 
-// --- Reusable gradient background (from AuthComponent) ---
 const GradientBackground = () => (
   <>
     <style>{`
       @keyframes float1 {
-        0%   { transform: translate(0, 0); }
-        50%  { transform: translate(-10px, 10px); }
+        0% { transform: translate(0, 0); }
+        50% { transform: translate(-10px, 10px); }
         100% { transform: translate(0, 0); }
       }
       @keyframes float2 {
-        0%   { transform: translate(0, 0); }
-        50%  { transform: translate(10px, -10px); }
+        0% { transform: translate(0, 0); }
+        50% { transform: translate(10px, -10px); }
         100% { transform: translate(0, 0); }
       }
       @keyframes blob-in-1 {
-        0%   { opacity: 0; transform: translate(0, 0) scale(0.72); }
-        40%  { opacity: 0.8; transform: translate(0, 0) scale(1.06); }
-        65%  { opacity: 1; transform: translate(0, 0) scale(0.97); }
-        82%  { transform: translate(0, 0) scale(1.02); }
+        0% { opacity: 0; transform: translate(0, 0) scale(0.72); }
+        40% { opacity: 0.8; transform: translate(0, 0) scale(1.06); }
+        65% { opacity: 1; transform: translate(0, 0) scale(0.97); }
+        82% { transform: translate(0, 0) scale(1.02); }
         100% { opacity: 1; transform: translate(0, 0) scale(1); }
       }
       @keyframes blob-in-2 {
-        0%   { opacity: 0; transform: translate(0, 0) scale(0.65); }
-        45%  { opacity: 0.75; transform: translate(0, 0) scale(1.08); }
-        68%  { opacity: 1; transform: translate(0, 0) scale(0.96); }
-        84%  { transform: translate(0, 0) scale(1.02); }
+        0% { opacity: 0; transform: translate(0, 0) scale(0.65); }
+        45% { opacity: 0.75; transform: translate(0, 0) scale(1.08); }
+        68% { opacity: 1; transform: translate(0, 0) scale(0.96); }
+        84% { transform: translate(0, 0) scale(1.02); }
         100% { opacity: 1; transform: translate(0, 0) scale(1); }
       }
     `}</style>
     <svg
-      width="100%" height="100%"
-      viewBox="0 0 800 600" fill="none"
+      width="100%"
+      height="100%"
+      viewBox="0 0 800 600"
+      fill="none"
       xmlns="http://www.w3.org/2000/svg"
       preserveAspectRatio="xMidYMid slice"
-      className="absolute top-0 left-0 w-full h-full"
+      className="absolute top-0 left-0 h-full w-full"
     >
       <defs>
         <linearGradient id="ao_grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%"   style={{ stopColor: "#6d28d9", stopOpacity: 0.5 }} />
+          <stop offset="0%" style={{ stopColor: "#6d28d9", stopOpacity: 0.5 }} />
           <stop offset="100%" style={{ stopColor: "#00D0B2", stopOpacity: 0.35 }} />
         </linearGradient>
         <linearGradient id="ao_grad2" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%"   style={{ stopColor: "#00D0B2", stopOpacity: 0.55 }} />
-          <stop offset="50%"  style={{ stopColor: "#0ea5e9", stopOpacity: 0.4 }} />
+          <stop offset="0%" style={{ stopColor: "#00D0B2", stopOpacity: 0.55 }} />
+          <stop offset="50%" style={{ stopColor: "#0ea5e9", stopOpacity: 0.4 }} />
           <stop offset="100%" style={{ stopColor: "#6d28d9", stopOpacity: 0.35 }} />
         </linearGradient>
         <radialGradient id="ao_grad3" cx="50%" cy="50%" r="50%">
-          <stop offset="0%"   style={{ stopColor: "#00D0B2", stopOpacity: 0.5 }} />
+          <stop offset="0%" style={{ stopColor: "#00D0B2", stopOpacity: 0.5 }} />
           <stop offset="100%" style={{ stopColor: "#0ea5e9", stopOpacity: 0.2 }} />
         </radialGradient>
         <filter id="ao_blur1" x="-50%" y="-50%" width="200%" height="200%">
@@ -63,7 +65,6 @@ const GradientBackground = () => (
         </filter>
       </defs>
 
-      {/* Group 1: entrance (1.1s) then float1 starts at 1.15s */}
       <g
         style={{
           opacity: 0,
@@ -74,20 +75,26 @@ const GradientBackground = () => (
         }}
       >
         <ellipse
-          cx="200" cy="500" rx="250" ry="180"
+          cx="200"
+          cy="500"
+          rx="250"
+          ry="180"
           fill="url(#ao_grad1)"
           filter="url(#ao_blur1)"
           transform="rotate(-30 200 500)"
         />
         <rect
-          x="500" y="100" width="300" height="250" rx="80"
+          x="500"
+          y="100"
+          width="300"
+          height="250"
+          rx="80"
           fill="url(#ao_grad2)"
           filter="url(#ao_blur2)"
           transform="rotate(15 650 225)"
         />
       </g>
 
-      {/* Group 2: entrance (1.3s) then float2 starts at 1.5s */}
       <g
         style={{
           opacity: 0,
@@ -97,31 +104,56 @@ const GradientBackground = () => (
           `,
         }}
       >
-        <circle
-          cx="650" cy="450" r="150"
-          fill="url(#ao_grad3)"
-          filter="url(#ao_blur3)"
-          opacity="0.6"
-        />
-        <ellipse
-          cx="50" cy="150" rx="180" ry="120"
-          fill="#00D0B2"
-          filter="url(#ao_blur2)"
-          opacity="0.25"
-        />
+        <circle cx="650" cy="450" r="150" fill="url(#ao_grad3)" filter="url(#ao_blur3)" opacity="0.6" />
+        <ellipse cx="50" cy="150" rx="180" ry="120" fill="#00D0B2" filter="url(#ao_blur2)" opacity="0.25" />
       </g>
     </svg>
   </>
 );
 
 export default function AboutHero() {
-  const eyebrowRef  = useRef<HTMLDivElement>(null);
-  const hl0Ref      = useRef<HTMLSpanElement>(null);
-  const hl1Ref      = useRef<HTMLSpanElement>(null);
-  const hl2Ref      = useRef<HTMLSpanElement>(null);
-  const hsubRef     = useRef<HTMLParagraphElement>(null);
-  const hbtnsRef    = useRef<HTMLDivElement>(null);
-  const hstatsRef   = useRef<HTMLDivElement>(null);
+  const locale = useLocale();
+  const isKhmer = locale === "kh";
+  const content = isKhmer
+    ? {
+        eyebrow: "Auto Offensive",
+        titleTop: "ស្គាល់ពី",
+        titleAccent: "វេទិកាសុវត្ថិភាព",
+        titleBottom: "ជំនាន់ថ្មីរបស់យើង",
+        subtitle:
+          "Auto-Offensive គឺជា PaaS សម្រាប់ស្កេនសុវត្ថិភាពលើវេបសាយ បណ្ដាញ និងកូដដោយស្វ័យប្រវត្តិ ដំណើរការដោយ AI ហើយមិនចាំបាច់ដំឡើង CLI ទេ។",
+        primaryButton: "រឿងរ៉ាវរបស់យើង",
+        secondaryButton: "ស្គាល់ក្រុមការងារ",
+        stats: ["ទម្រង់របាយការណ៍", "ស្កេនលឿនជាងមុន", "ត្រៀមសម្រាប់ API", "MCP + SonarQube"],
+        scroll: "រំកិល",
+      }
+    : {
+        eyebrow: "Auto Offensive",
+        titleTop: "Meet Our",
+        titleAccent: "Next-Gen",
+        titleBottom: "Security Platform",
+        subtitle:
+          "Auto-Offensive is a PaaS that automates web, network and code security scanning powered by AI, with zero CLI setup required.",
+        primaryButton: "Our Story",
+        secondaryButton: "Meet the Team",
+        stats: ["Report Formats", "Faster Scanning", "API Ready", "MCP + SonarQube"],
+        scroll: "Scroll",
+      };
+
+  const bodyFont = isKhmer
+    ? "var(--font-noto-khmer), var(--font-google-sans), sans-serif"
+    : "var(--font-google-sans), var(--font-noto-khmer), sans-serif";
+  const titleFont = isKhmer
+    ? "var(--font-noto-khmer), var(--font-hackdaddy), monospace"
+    : "var(--font-hackdaddy), var(--font-noto-khmer), monospace";
+
+  const eyebrowRef = useRef<HTMLDivElement>(null);
+  const hl0Ref = useRef<HTMLSpanElement>(null);
+  const hl1Ref = useRef<HTMLSpanElement>(null);
+  const hl2Ref = useRef<HTMLSpanElement>(null);
+  const hsubRef = useRef<HTMLParagraphElement>(null);
+  const hbtnsRef = useRef<HTMLDivElement>(null);
+  const hstatsRef = useRef<HTMLDivElement>(null);
   const counter1Ref = useRef<HTMLSpanElement>(null);
   const counter2Ref = useRef<HTMLSpanElement>(null);
 
@@ -131,7 +163,7 @@ export default function AboutHero() {
       [hl0Ref, hl1Ref, hl2Ref].forEach((ref, n) =>
         setTimeout(() => ref.current?.classList.add("in"), 180 + n * 110)
       );
-      setTimeout(() => hsubRef.current?.classList.add("in"),  520);
+      setTimeout(() => hsubRef.current?.classList.add("in"), 520);
       setTimeout(() => hbtnsRef.current?.classList.add("in"), 660);
       setTimeout(() => {
         hstatsRef.current?.classList.add("in");
@@ -151,6 +183,7 @@ export default function AboutHero() {
         countUp(counter2Ref.current, 3);
       }, 860);
     }, 80);
+
     return () => clearTimeout(t);
   }, []);
 
@@ -168,28 +201,26 @@ export default function AboutHero() {
         .ao-stats { opacity: 0; }
         .ao-stats.in { opacity: 1; transition: opacity .55s .88s; }
         .ao-hero::before {
-          content: '';
+          content: "";
           position: absolute;
           inset: 0;
           pointer-events: none;
-          background: radial-gradient(
-            ellipse 65% 55% at 50% 42%,
-            color-mix(in srgb, #00D0B2 7%, transparent) 0%,
-            transparent 68%
-          );
+          background: radial-gradient(ellipse 65% 55% at 50% 42%, color-mix(in srgb, #00D0B2 7%, transparent) 0%, transparent 68%);
           z-index: 1;
         }
         .ao-hero::after {
-          content: '';
+          content: "";
           position: absolute;
-          bottom: 0; left: 0; right: 0;
+          bottom: 0;
+          left: 0;
+          right: 0;
           height: 1px;
           background: linear-gradient(90deg, transparent, color-mix(in srgb, #00D0B2 20%, transparent), transparent);
           z-index: 1;
         }
         @keyframes ao-bob {
           0%, 100% { transform: translateX(-50%) translateY(0); }
-          50%       { transform: translateX(-50%) translateY(5px); }
+          50% { transform: translateX(-50%) translateY(5px); }
         }
         .ao-scroll {
           position: absolute;
@@ -295,74 +326,88 @@ export default function AboutHero() {
           px-[6%] py-25
           bg-white dark:bg-[oklch(0.145_0_0)]
           text-[oklch(0.145_0_0)] dark:text-[oklch(0.985_0_0)]
-          font-[var(--font-google-sans),var(--font-noto-khmer),sans-serif]
           transition-[background] duration-400
         "
+        style={{ fontFamily: bodyFont }}
       >
-        {/* ── Gradient background blobs ── */}
         <div className="absolute inset-0 z-0">
           <GradientBackground />
         </div>
 
-        {/* All content sits above the background */}
         <div className="ao-content relative z-10 flex flex-col items-center">
-
-          {/* ── Eyebrow ── */}
           <div
             ref={eyebrowRef}
-            className="ao-eyebrow inline-flex items-center gap-2.5 text-[0.66rem] font-semibold tracking-[0.18em] uppercase text-primary mb-[1.8rem]"
+            className="ao-eyebrow mb-[1.8rem] inline-flex items-center gap-2.5 text-[0.66rem] font-semibold uppercase tracking-[0.18em] text-primary"
           >
-            <span className="w-5.5 h-[1.5px] bg-primary rounded-sm opacity-55" />
-            Auto Offensive
-            <span className="w-5.5 h-[1.5px] bg-primary rounded-sm opacity-55" />
+            <span className="h-[1.5px] w-5.5 rounded-sm bg-primary opacity-55" />
+            {content.eyebrow}
+            <span className="h-[1.5px] w-5.5 rounded-sm bg-primary opacity-55" />
           </div>
 
-          {/* ── Title ── */}
-          <h1 className="font-[var(--font-hackdaddy),var(--font-noto-khmer),monospace] text-[clamp(2.6rem,6vw,5.25rem)] leading-[1.08] tracking-[-0.04em] text-[oklch(0.145_0_0)] dark:text-[oklch(0.985_0_0)] mb-[1.4rem] max-w-225">
-            <span className="block overflow-hidden"><span ref={hl0Ref} className="ao-hli block">Meet Our</span></span>
-            <span className="block overflow-hidden"><span ref={hl1Ref} className="ao-hli block"><span className="text-primary">Next-Gen</span></span></span>
-            <span className="block overflow-hidden"><span ref={hl2Ref} className="ao-hli block"><span className="text-[oklch(0.556_0_0)] dark:text-[oklch(0.708_0_0)] font-light">Security Platform</span></span></span>
+          <h1
+            className="mb-[1.4rem] max-w-225 text-[clamp(2.6rem,6vw,5.25rem)] leading-[1.08] tracking-[-0.04em] text-[oklch(0.145_0_0)] dark:text-[oklch(0.985_0_0)]"
+            style={{ fontFamily: titleFont }}
+          >
+            <span className="block overflow-hidden">
+              <span ref={hl0Ref} className="ao-hli block">{content.titleTop}</span>
+            </span>
+            <span className="block overflow-hidden">
+              <span ref={hl1Ref} className="ao-hli block">
+                <span className="text-primary">{content.titleAccent}</span>
+              </span>
+            </span>
+            <span className="block overflow-hidden">
+              <span ref={hl2Ref} className="ao-hli block">
+                <span className="font-light text-[oklch(0.556_0_0)] dark:text-[oklch(0.708_0_0)]">{content.titleBottom}</span>
+              </span>
+            </span>
           </h1>
 
-          {/* ── Subtitle ── */}
-          <p ref={hsubRef} className="ao-sub ao-body-text text-[oklch(0.556_0_0)] dark:text-[oklch(0.708_0_0)] leading-[1.8] max-w-125 mx-auto mb-[2.4rem]">
-            Auto-Offensive is a PaaS that automates web, network and code security scanning — powered by AI, with zero CLI setup required.
+          <p
+            ref={hsubRef}
+            className="ao-sub ao-body-text mb-[2.4rem] mx-auto max-w-125 leading-[1.8] text-[oklch(0.556_0_0)] dark:text-[oklch(0.708_0_0)]"
+          >
+            {content.subtitle}
           </p>
 
-          {/* ── Buttons ── */}
-          <div ref={hbtnsRef} className="ao-btns flex items-center justify-center gap-2.5 flex-wrap mb-[3.2rem] md:mb-[3.8rem]">
-            <button className="bg-primary text-white border-none px-6 py-3.5 rounded-[8px] text-[0.96rem] md:text-[1rem] font-bold cursor-pointer font-[inherit] hover:bg-[#006C52] transition-colors duration-200">Our Story</button>
-            <button className="bg-transparent text-[oklch(0.145_0_0)] dark:text-[oklch(0.985_0_0)] border border-[color-mix(in_srgb,#00D0B2_18%,transparent)] px-5.5 py-3.5 rounded-[8px] text-[0.96rem] md:text-[1rem] font-medium cursor-pointer font-[inherit] hover:border-primary transition-[border-color] duration-200">Meet the Team</button>
+          <div ref={hbtnsRef} className="ao-btns mb-[3.2rem] flex flex-wrap items-center justify-center gap-2.5 md:mb-[3.8rem]">
+            <button className="rounded-[8px] border-none bg-primary px-6 py-3.5 text-[0.96rem] font-bold text-white transition-colors duration-200 hover:bg-[#006C52] md:text-[1rem]">
+              {content.primaryButton}
+            </button>
+            <button className="rounded-[8px] border border-[color-mix(in_srgb,#00D0B2_18%,transparent)] bg-transparent px-5.5 py-3.5 text-[0.96rem] font-medium text-[oklch(0.145_0_0)] transition-[border-color] duration-200 hover:border-primary dark:text-[oklch(0.985_0_0)] md:text-[1rem]">
+              {content.secondaryButton}
+            </button>
           </div>
 
-          {/* ── Stats ── */}
-          <div ref={hstatsRef} className="ao-stats ao-stats-grid border border-[color-mix(in_srgb,#00D0B2_15%,transparent)] rounded-[14px] overflow-hidden">
+          <div ref={hstatsRef} className="ao-stats ao-stats-grid overflow-hidden rounded-[14px] border border-[color-mix(in_srgb,#00D0B2_15%,transparent)]">
             <div className="ao-stat-card">
               <div className="ao-stat-value"><span ref={counter1Ref}>0</span><span className="text-primary">+</span></div>
-              <div className="ao-stat-label">Report Formats</div>
+              <div className="ao-stat-label">{content.stats[0]}</div>
             </div>
             <div className="ao-stat-card">
               <div className="ao-stat-value"><span ref={counter2Ref}>0</span><span className="text-primary">x</span></div>
-              <div className="ao-stat-label">Faster Scanning</div>
+              <div className="ao-stat-label">{content.stats[1]}</div>
             </div>
             <div className="ao-stat-card">
               <div className="ao-stat-value">CI/<span className="text-primary">CD</span></div>
-              <div className="ao-stat-label">API Ready</div>
+              <div className="ao-stat-label">{content.stats[2]}</div>
             </div>
             <div className="ao-stat-card">
               <div className="ao-stat-value"><span className="text-primary">AI</span></div>
-              <div className="ao-stat-label">MCP + SonarQube</div>
+              <div className="ao-stat-label">{content.stats[3]}</div>
             </div>
           </div>
-
-        </div>{/* end z-10 wrapper */}
-
-        {/* ── Scroll indicator ── */}
-        <div className="ao-scroll flex flex-col items-center gap-1.5 pointer-events-none">
-          <span className="text-[0.58rem] font-semibold tracking-[0.16em] uppercase text-[oklch(0.708_0_0)] dark:text-[oklch(0.556_0_0)]">Scroll</span>
-          <div className="w-px h-7" style={{ background: "linear-gradient(to bottom, color-mix(in srgb, #00D0B2 40%, transparent), transparent)" }} />
         </div>
 
+        <div className="ao-scroll pointer-events-none flex flex-col items-center gap-1.5">
+          <span className="text-[0.58rem] font-semibold uppercase tracking-[0.16em] text-[oklch(0.708_0_0)] dark:text-[oklch(0.556_0_0)]">
+            {content.scroll}
+          </span>
+          <div
+            className="h-7 w-px"
+            style={{ background: "linear-gradient(to bottom, color-mix(in srgb, #00D0B2 40%, transparent), transparent)" }}
+          />
+        </div>
       </section>
     </>
   );

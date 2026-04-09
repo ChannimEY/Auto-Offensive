@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils';
 import { MenuToggleIcon } from '@/components/ui/menu-toggle-icon';
 import { createPortal } from 'react-dom';
 import Image from 'next/image';
-import { useTheme } from 'next-themes';
+import { useTheme } from '@/components/theme-provider';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { useLocale } from 'next-intl';
@@ -70,10 +70,10 @@ const featureLinks: FeatureItem[] = [
 ];
 
 const resourceDocLinks: ResourceItem[] = [
-  { title: 'CLI Documents',   description: 'Guides for using tools via command line',      href: '/resources/cli-document', icon: '/icons/res-cli.png'   },
-  { title: 'API Documents',   description: 'Accelerate testing with intelligent automation', href: '/resources/api-document', icon: '/icons/res-api.png'   },
-  { title: 'Tools Documents', description: 'Instructions for using security tools',        href: '/resources/tools-document', icon: '/icons/res-tools.png' },
-  { title: 'CI/CD Documents', description: 'Setup guides for pipeline integration',        href: '/resources/integration-ci-cd', icon: '/icons/res-cicd.png'  },
+  { title: 'CLI Documents',   description: 'Guides for using tools via command line',        href: '/resource/cli',   icon: '/icons/res-cli.png'   },
+  { title: 'API Documents',   description: 'Accelerate testing with intelligent automation', href: '/resource/api',   icon: '/icons/res-api.png'   },
+  { title: 'Tools Documents', description: 'Instructions for using security tools',          href: '/resource/tool',  icon: '/icons/res-tools.png' },
+  { title: 'CI/CD Documents', description: 'Setup guides for pipeline integration',          href: '/resource/ci-cd', icon: '/icons/res-cicd.png'  },
 ];
 
 const resourceMiscLinks: ResourceItem[] = [
@@ -291,7 +291,7 @@ function ResourceDocItem({ title, description, href, icon }: ResourceItem) {
 function ResourceMiscItem({ title, href, icon }: ResourceItem) {
   return (
     <NavigationMenuLink asChild>
-      <a
+      <Link
         href={href}
         className="flex items-center gap-2.5 rounded-md px-2 py-2  hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group"
       >
@@ -305,7 +305,7 @@ function ResourceMiscItem({ title, href, icon }: ResourceItem) {
           />
         </div>
         <span className="text-sm font-medium text-foreground">{title}</span>
-      </a>
+      </Link>
     </NavigationMenuLink>
   );
 }
@@ -422,7 +422,7 @@ export function Header() {
               {/* ── Resources ── */}
               <NavigationMenuItem>
                 <NavigationMenuTrigger className="bg-transparent hover:bg-transparent focus:bg-transparent data-[state=active]:bg-transparent data-[state=open]:bg-transparent">
-                  <Link href="/resource-page">  {t('resources')}</Link>
+                  <Link href="/resource">  {t('resources')}</Link>
                 </NavigationMenuTrigger>
                 <NavigationMenuContent className="bg-background">
                   <div className="w-120 rounded-xl border border-border bg-popover shadow-xl p-3">
