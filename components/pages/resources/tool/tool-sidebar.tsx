@@ -1,18 +1,16 @@
 'use client';
 
-import React, { useState } from 'react';
-import { Search } from 'lucide-react';
+import React from 'react';
 
-interface SidebarSection {
+interface SidebarItemConfig {
+  href: string;
   label: string;
-  items: SidebarItem[];
+  withDot?: boolean;
 }
 
-interface SidebarItem {
+interface SidebarGroupConfig {
   label: string;
-  href: string;
-  isDot?: boolean;
-  isActive?: boolean;
+  items: SidebarItemConfig[];
 }
 
 interface ToolSidebarProps {
@@ -21,129 +19,119 @@ interface ToolSidebarProps {
   onNavigate?: (href: string) => void;
 }
 
+function SidebarGroup({
+  label,
+  children,
+}: {
+  label: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="px-3 mb-1">
+      <div className="text-[10px] font-semibold tracking-widest uppercase text-[#B5B0A8] dark:text-[#9CA3AF] px-2 pt-2.5 pb-1.5">
+        {label}
+      </div>
+      <div className="flex flex-col gap-px">{children}</div>
+    </div>
+  );
+}
+
+function SidebarItem({
+  href,
+  label,
+  active,
+  withDot,
+  onClick,
+}: {
+  href: string;
+  label: string;
+  active: boolean;
+  withDot?: boolean;
+  onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
+}) {
+  return (
+    <a
+      href={href}
+      onClick={onClick}
+      className={`flex items-center gap-2 text-[18px] font-normal px-2 py-1.25 rounded-md transition-all duration-150 cursor-pointer ${
+        active
+          ? 'text-[#00BCA1] bg-[rgba(0,188,161,0.07)] dark:bg-[rgba(0,188,161,0.12)] font-semibold'
+          : 'text-[#4A4540] dark:text-[#C9CDD4] hover:text-[#1A1714] dark:hover:text-white hover:bg-[#EAE6DE] dark:hover:bg-white/5'
+      }`}
+      style={{ fontFamily: 'var(--font-google-sans), var(--font-noto-khmer), sans-serif' }}
+    >
+      {withDot && (
+        <span
+          className={`w-0.75 h-0.75 rounded-full shrink-0 opacity-50 ${
+            active ? 'bg-[#00BCA1]' : 'bg-current'
+          }`}
+        />
+      )}
+      {label}
+    </a>
+  );
+}
+
 export const ToolSidebar: React.FC<ToolSidebarProps> = ({
   activeSection,
-  isDark = false,
   onNavigate,
 }) => {
-  const [expandedGroups, setExpandedGroups] = useState<Record<string, boolean>>({
-    'Tool Reference': true,
-  });
-
-  const sections: SidebarSection[] = [
-    {
-      label: 'Getting Started',
-      items: [
-        { label: 'Overview', href: '#overview' },
-        { label: 'Quick Start', href: '#quick-start' },
-      ],
-    },
-    {
-      label: 'Automation Tools',
-      items: [
-        { label: 'Web UI Tools', href: '#web-ui' },
-        { label: 'Scan Modules', href: '#scan-modules' },
-        { label: 'Multi-Tool Pipeline', href: '#pipeline' },
-        { label: 'CLI', href: '#cli' },
-      ],
-    },
+  const groups: SidebarGroupConfig[] = [
     {
       label: 'Tool Reference',
       items: [
-        { label: 'Tool Overview', href: '#tool-overview' },
-        { label: 'Overview', href: '#overview', isDot: true },
-        { label: 'subfinder', href: '#subfinder', isDot: true },
-        { label: 'httpx', href: '#httpx', isDot: true },
-        { label: 'naabu', href: '#naabu', isDot: true },
-        { label: 'nuclei', href: '#nuclei', isDot: true },
-        { label: 'Versions & Status', href: '#versions', isDot: true },
-        { label: 'Rate Limits', href: '#limits', isDot: true },
-        { label: 'Output Formats', href: '#output', isDot: true },
-        { label: 'Error Reference', href: '#errors', isDot: true },
+        { href: '#overview', label: 'Overview', withDot: true },
+        { href: '#subfinder', label: 'subfinder', withDot: true },
+        { href: '#httpx', label: 'httpx', withDot: true },
+        { href: '#naabu', label: 'naabu', withDot: true },
+        { href: '#nuclei', label: 'nuclei', withDot: true },
+        { href: '#versions', label: 'Versions & Status', withDot: true },
+        { href: '#limits', label: 'Rate Limits', withDot: true },
+        { href: '#output', label: 'Output Formats', withDot: true },
+        { href: '#errors', label: 'Error Reference', withDot: true },
       ],
     },
     {
       label: 'Reporting',
       items: [
-        { label: 'Report Generation', href: '#report-gen' },
-        { label: 'Templates', href: '#templates' },
-        { label: 'Export Formats', href: '#export' },
+        { href: '#report-gen', label: 'Report Generation' },
+        { href: '#templates', label: 'Templates' },
+        { href: '#export', label: 'Export Formats' },
       ],
     },
     {
       label: 'API',
       items: [
-        { label: 'API Reference', href: '#api-ref' },
-        { label: 'Authentication', href: '#auth' },
+        { href: '#api-ref', label: 'API Reference' },
+        { href: '#auth', label: 'Authentication' },
       ],
     },
   ];
 
-  const toggleGroup = (label: string) => {
-    setExpandedGroups(prev => ({
-      ...prev,
-      [label]: !prev[label],
-    }));
+  const smoothScroll = (event: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (!href.startsWith('#')) return;
+    event.preventDefault();
+    onNavigate?.(href);
   };
-
-  const handleItemClick = (href: string) => {
-    if (onNavigate) {
-      onNavigate(href);
-    }
-  };
-
-  const bgColor = isDark ? 'bg-[#09090B]' : 'bg-[#F7F5F0]';
-  const textColor = isDark ? 'text-[#C9CDD4]' : 'text-[#4A4540]';
-  const labelColor = isDark ? 'text-[#9CA3AF]' : 'text-[#B5B0A8]';
-  const borderColor = isDark ? 'border-white/10' : 'border-[#E2DDD5]';
-  const hoverBg = isDark ? 'hover:bg-white/5 hover:text-white' : 'hover:bg-[#EAE6DE]';
-  const activeBg = isDark ? 'bg-[rgba(0,188,161,0.12)] text-[#00BCA1]' : 'bg-[#EAE6DE] text-[#00BCA1]';
 
   return (
     <aside
-      className={`${bgColor} w-72 shrink-0 sticky top-22 self-start h-[calc(100vh-5.5rem)] overflow-y-auto border-r ${borderColor} py-5.5 hidden lg:block`}
-      style={{
-        scrollbarWidth: 'thin',
-        scrollbarColor: isDark ? '#334155 transparent' : '#E2DDD5 transparent',
-      }}
+      className="w-72 shrink-0 sticky top-22 self-start h-[calc(100vh-5.5rem)] overflow-y-auto py-5.5 border-r border-[#E2DDD5] dark:border-white/10 bg-[#F7F5F0] dark:bg-[#09090B] hidden lg:block"
+      style={{ scrollbarWidth: 'thin', scrollbarColor: '#E2DDD5 transparent' }}
     >
-      {/* Search Bar for Mobile */}
-      <div className="px-3 mb-6 md:hidden">
-        <button className={`w-full flex items-center gap-2 px-3 py-2 rounded-lg border ${borderColor} ${isDark ? 'bg-[#121214]' : 'bg-white'} ${textColor} text-sm`}>
-          <Search size={14} />
-          <span className={labelColor}>Search...</span>
-          <kbd className={`ml-auto text-xs ${isDark ? 'bg-white/5 text-[#A1A1AA]' : 'bg-[#F0EDE6]'} px-1 rounded`}>⌘K</kbd>
-        </button>
-      </div>
-
-      {sections.map((section, idx) => (
-        <div key={idx} className="px-3 mb-4">
-          <button
-            onClick={() => toggleGroup(section.label)}
-            className={`text-xs font-semibold uppercase tracking-widest ${labelColor} px-2 py-2 w-full text-left hover:opacity-75 transition-opacity`}
-          >
-            {section.label}
-          </button>
-          {expandedGroups[section.label] && (
-            <div className="flex flex-col gap-0.5 mt-2">
-              {section.items.map((item, itemIdx) => (
-                <button
-                  key={itemIdx}
-                  onClick={() => handleItemClick(item.href)}
-                  className={`flex items-center gap-2 text-[18px] font-normal px-2 py-1.5 rounded-md transition-colors ${
-                    activeSection === item.href ? activeBg : `${textColor} ${hoverBg}`
-                  }`}
-                  style={{ fontFamily: 'var(--font-google-sans), var(--font-noto-khmer), sans-serif' }}
-                >
-                  {item.isDot && (
-                    <div className="w-1 h-1 rounded-full bg-current opacity-50 shrink-0" />
-                  )}
-                  {item.label}
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
+      {groups.map((group) => (
+        <SidebarGroup key={group.label} label={group.label}>
+          {group.items.map((item) => (
+            <SidebarItem
+              key={item.href}
+              href={item.href}
+              label={item.label}
+              withDot={item.withDot}
+              active={activeSection === item.href}
+              onClick={(event) => smoothScroll(event, item.href)}
+            />
+          ))}
+        </SidebarGroup>
       ))}
     </aside>
   );

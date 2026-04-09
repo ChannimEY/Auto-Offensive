@@ -230,6 +230,28 @@ function useTheme() {
   return isDark ? CONFIG.DARK : CONFIG.LIGHT;
 }
 
+type ResponsiveMode = "desktop" | "tablet" | "mobile";
+
+function useResponsiveMode(): ResponsiveMode {
+  const getMode = (): ResponsiveMode => {
+    if (window.innerWidth < 768) return "mobile";
+    if (window.innerWidth < 1024) return "tablet";
+    return "desktop";
+  };
+
+  const [mode, setMode] = useState<ResponsiveMode>("desktop");
+
+  useEffect(() => {
+    const onResize = () => setMode(getMode());
+
+    onResize();
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+  return mode;
+}
+
 // ─── Responsive Font Size ────────────────────────────────────────────────────
 
 function getResponsiveFontSize(sizeKey: keyof typeof FONT_SIZES) {
@@ -419,24 +441,39 @@ function CardRow({
   isVisible,
   cardRef,
   colors,
+  mode,
 }: {
   card: CardData;
   isLast: boolean;
   isVisible: boolean;
   cardRef: (el: HTMLDivElement | null) => void;
   colors: typeof CONFIG.DARK;
+  mode: ResponsiveMode;
 }) {
   const { reverse, gapLeft, gapRight } = card;
+  const isTablet = mode === "tablet";
+  const isMobile = mode === "mobile";
+  const isCompact = mode !== "desktop";
+
+  const contentPaddingX = isMobile ? "20px" : isTablet ? "32px" : undefined;
+  const contentPaddingY = isCompact ? (isMobile ? "40px" : "48px") : undefined;
+  const imageWidth = isCompact ? "min(100%, 420px)" : card.imageW;
+  const imageHeight = isCompact ? "auto" : card.imageH;
+  const bodyFontSize = isMobile ? "16px" : isTablet ? "18px" : FONT_SIZES.sm.desktop;
+  const labelFontSize = isMobile ? "9px" : isTablet ? "10px" : FONT_SIZES.xs.desktop;
 
   const contentBlock = (
     <div
       className="relative flex flex-col justify-center py-15"
       style={{
-        paddingLeft: gapLeft,
-        paddingRight: gapRight,
+        paddingLeft: contentPaddingX ?? gapLeft,
+        paddingRight: contentPaddingX ?? gapRight,
+        paddingTop: contentPaddingY,
+        paddingBottom: contentPaddingY,
         background: colors.cardBg,
-        borderRight: !reverse ? `1px solid ${colors.border}` : undefined,
-        borderLeft: reverse ? `1px solid ${colors.border}` : undefined,
+        borderRight: !reverse && !isCompact ? `1px solid ${colors.border}` : undefined,
+        borderLeft: reverse && !isCompact ? `1px solid ${colors.border}` : undefined,
+        borderBottom: isCompact ? `1px solid ${colors.border}` : undefined,
       }}
     >
       <div
@@ -452,7 +489,7 @@ function CardRow({
           style={{
             fontFamily: "var(--font-hackdaddy), sans-serif",
             color: colors.accent1,
-            fontSize: FONT_SIZES.xs.desktop,
+            fontSize: labelFontSize,
             letterSpacing: "0.2em",
             opacity: 0.6,
           }}
@@ -470,7 +507,7 @@ function CardRow({
             border: `1px solid rgba(1,80,158,0.18)`,
             borderRadius: 1,
             padding: "6px 12px",
-            fontSize: FONT_SIZES.xs.desktop,
+            fontSize: labelFontSize,
             letterSpacing: "0.15em",
             textTransform: "uppercase",
           }}
@@ -505,7 +542,7 @@ function CardRow({
           style={{
             fontFamily: "var(--font-google-sans), var(--font-noto-khmer), sans-serif",
             color: colors.textMuted,
-            fontSize: FONT_SIZES.sm.desktop,
+            fontSize: bodyFontSize,
           }}
         >
           {card.desc}
@@ -518,7 +555,7 @@ function CardRow({
           style={{
             fontFamily: "var(--font-hackdaddy), sans-serif",
             color: colors.accent1,
-            fontSize: FONT_SIZES.xs.desktop,
+            fontSize: labelFontSize,
             letterSpacing: "0.15em",
             textTransform: "uppercase",
           }}
@@ -549,8 +586,8 @@ function CardRow({
     <div
       className="relative overflow-hidden group/img"
       style={{
-        borderRight: reverse ? `1px solid ${colors.border}` : undefined,
-        padding: card.imagePadding,
+        borderRight: reverse && !isCompact ? `1px solid ${colors.border}` : undefined,
+        padding: isCompact ? (isMobile ? "24px 20px 32px" : "28px 32px 40px") : card.imagePadding,
         display: "flex",
         justifyContent: card.imageAlign as React.CSSProperties["justifyContent"],
         alignItems: card.imageValign as React.CSSProperties["alignItems"],
@@ -571,8 +608,9 @@ function CardRow({
           src={card.image}
           alt={card.imageAlt}
           style={{
-            width: card.imageW,
-            height: card.imageH,
+            width: imageWidth,
+            height: imageHeight,
+            maxWidth: "100%",
             objectFit: "contain",
             display: "block",
           }}
@@ -580,6 +618,27 @@ function CardRow({
       </div>
     </div>
   );
+
+  if (isCompact) {
+    return (
+      <div
+        ref={cardRef}
+        id={isLast ? "lastCard" : undefined}
+        className="border-t"
+        style={{
+          borderColor: colors.border,
+          borderBottomWidth: isLast ? "1px" : "0px",
+          borderBottomStyle: isLast ? "solid" : "none",
+          opacity: isVisible ? 1 : 0,
+          transform: isVisible ? "translateY(0)" : "translateY(50px)",
+          transition: "opacity 0.9s cubic-bezier(.16,1,.3,1), transform 0.9s cubic-bezier(.16,1,.3,1)",
+        }}
+      >
+        {contentBlock}
+        {imageBlock}
+      </div>
+    );
+  }
 
   return (
   <div
@@ -627,6 +686,10 @@ export default function Features() {
   const [logoVisible, setLogoVisible] = useState(false);
 
   const colors = useTheme();
+  const mode = useResponsiveMode();
+  const isDesktop = mode === "desktop";
+  const sectionPaddingX = mode === "mobile" ? "20px" : mode === "tablet" ? "32px" : "52px";
+  const sectionHeaderLabelSize = mode === "mobile" ? "9px" : mode === "tablet" ? "10px" : FONT_SIZES.xs.desktop;
 
   const firstCardRef = useRef<HTMLDivElement | null>(null);
   const lastCardRef = useRef<HTMLDivElement | null>(null);
@@ -784,8 +847,8 @@ export default function Features() {
 
       {/* FIX: Pass scrollPct so the bar actually fills */}
       <ProgressBar widthPct={scrollPct} />
-      <DualSpine fillPct={spineFill} clipPath={spineClip} colors={colors} />
-      <CenterLogo visible={logoVisible} />
+      {isDesktop ? <DualSpine fillPct={spineFill} clipPath={spineClip} colors={colors} /> : null}
+      {isDesktop ? <CenterLogo visible={logoVisible} /> : null}
 
       <section
         ref={featureSectionRef}
@@ -796,8 +859,8 @@ export default function Features() {
         <div
           className="flex items-center justify-between py-12 border-b"
           style={{
-            paddingLeft: "52px",
-            paddingRight: "52px",
+            paddingLeft: sectionPaddingX,
+            paddingRight: sectionPaddingX,
             borderColor: colors.border,
           }}
         >
@@ -807,7 +870,7 @@ export default function Features() {
               style={{
                 fontFamily: "var(--font-hackdaddy), sans-serif",
                 color: colors.accent2,
-                fontSize: FONT_SIZES.xs.desktop,
+                fontSize: sectionHeaderLabelSize,
                 letterSpacing: "0.2em",
               }}
             >
@@ -842,6 +905,7 @@ export default function Features() {
               if (i === CARDS.length - 1) lastCardRef.current = el;
             }}
             colors={colors}
+            mode={mode}
           />
         ))}
       </section>
