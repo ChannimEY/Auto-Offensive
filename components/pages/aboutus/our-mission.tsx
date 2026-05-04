@@ -504,13 +504,21 @@ export default function OurMission() {
         }
         .ms-pp-step-icon { animation: ms-pp-icon-pulse 2s ease-in-out infinite alternate; }
         .ms-pp-step-icon--last { animation-delay: .4s; }
-        .ms-copy { font-size: 16px; }
+        .ms-copy {
+          font-size: 16px;
+        }
         @media (min-width: 768px) {
-          .ms-copy { font-size: 18px; }
+          .ms-copy {
+            font-size: 18px;
+          }
         }
         @media (min-width: 1024px) {
-          .ms-copy { font-size: 20px; }
+          .ms-copy {
+            font-size: 20px;
+          }
         }
+
+        /* ── Mobile overrides ── */
         @media (max-width: 768px) {
           .ms-outer { height: auto !important; }
           .ms-sticky {
@@ -639,8 +647,16 @@ export default function OurMission() {
                     className={`ms-slide relative flex h-full w-[103vw] shrink-0 items-center justify-center px-[4%]${i === 0 ? " active" : ""}`}
                     ref={(el) => { slideRefs.current[i] = el; }}
                   >
-                    <div className="ms-slide-inner grid w-full max-w-7xl items-center gap-9 mx-auto" style={{ gridTemplateColumns: "auto 1fr 1fr" }}>
-                      <div className="ms-slide-num-col flex flex-row items-stretch overflow-visible" style={{ gap: "125px" }}>
+                    <div
+                      className="ms-slide-inner grid items-center gap-9 w-full max-w-7xl mx-auto"
+                      style={{ gridTemplateColumns: "auto 1fr 1fr" }}
+                    >
+
+                      {/* Dotted line + number */}
+                      <div
+                        className="ms-slide-num-col flex flex-row items-stretch overflow-visible"
+                        style={{ gap: "125px" }}
+                      >
                         <div className="ms-slide-dot-line" />
                         <div className="ms-slide-num whitespace-nowrap text-[clamp(4rem,8vw,7rem)] leading-none font-bold tracking-[-0.06em] select-none transition-colors duration-500" style={{ fontFamily: titleFont }}>
                           {slide.num}
@@ -659,12 +675,18 @@ export default function OurMission() {
                             </Fragment>
                           ))}
                         </h2>
-                        <p className="ms-slide-body ms-copy max-w-100 leading-[1.75]" style={{ color: "var(--muted)", fontFamily: bodyFont }}>
+                        <p
+                          className="ms-slide-body ms-copy leading-[1.75] max-w-100"
+                          style={{ color: "var(--muted)", fontFamily: "var(--font-body, sans-serif)" }}
+                        >
                           {slide.body}
                         </p>
                         {slide.quote && (
-                          <blockquote className="ms-bq ms-copy relative mt-[1.4rem] max-w-90 pl-[1.2rem] italic leading-[1.75]" style={{ color: "var(--dim)", fontFamily: bodyFont }}>
-                            <span className="ms-bq-bar absolute top-0 bottom-0 left-0 w-0.5 rounded-xs" />
+                          <blockquote
+                            className="ms-bq ms-copy mt-[1.4rem] pl-[1.2rem] relative italic leading-[1.75] max-w-90"
+                            style={{ color: "var(--dim)", fontFamily: "var(--font-body, sans-serif)" }}
+                          >
+                            <span className="ms-bq-bar absolute left-0 top-0 bottom-0 w-0.5 rounded-xs" />
                             {slide.quote}
                           </blockquote>
                         )}
@@ -707,4 +729,3 @@ export default function OurMission() {
     </>
   );
 }
-
