@@ -55,6 +55,6 @@ const proxyBaseQuery: BaseQueryFn<
 export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: proxyBaseQuery,
-  tagTypes: ["Auth", "Gateway", "Project", "Scan", "Report", "Git"],
+  tagTypes: ["Auth", "Gateway", "Project", "Scan", "Report", "Git", "ScanJob", "Asset"],
   endpoints: () => ({}),
 });

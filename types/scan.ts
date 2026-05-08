@@ -118,3 +118,16 @@ export type SseEvent = {
   event: string;
   data: unknown;
 };
+
+export type JobHistoryItem = {
+  job_id: string;
+  target_name: string;
+  status: string;
+  created_at: string;
+  total_findings: number;
+};
+
+export type JobsListResponse = {
+  jobs: JobHistoryItem[];
+  total_count: number;
+};
