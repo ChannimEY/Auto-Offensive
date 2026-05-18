@@ -2,6 +2,7 @@
 
 import { RotateCcw, ScanLine, Wrench } from "lucide-react";
 import { useState, useRef, useEffect, useLayoutEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import { AdvancedTerminalPanel } from "@/components/scanComponents/AdvancedTerminalPanel";
 import { ProjectSelector, ProjectSelectorSkeleton } from "@/components/scanComponents/ProjectSelector";
 import { ScanModeTabs, ScanModePanel, ScanModeHeader } from "@/components/scanComponents/ScanModeTabs";
@@ -181,8 +182,92 @@ function useStableAsciiScale() {
   return { ref, fontSize };
 }
 
+// ─── Log text colorizer ───────────────────────────────────────────────────────
+// Highlights meaningful parts of scan output so users can quickly parse results.
+function colorizeLogText(text: string): React.ReactNode {
+  const patterns: { regex: RegExp; className: string }[] = [
+    // URLs
+    { regex: /https?:\/\/[^\s]+/g, className: "text-blue-400 dark:text-blue-400" },
+    // IP addresses
+    { regex: /\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}(?:\/\d{1,2})?\b/g, className: "text-violet-500 dark:text-violet-400" },
+    // Port entries like "80/tcp"
+    { regex: /\b\d{1,5}\/(?:tcp|udp)\b/g, className: "text-cyan-500 dark:text-cyan-400" },
+    // "open" state
+    { regex: /\bopen\b/g, className: "text-emerald-500 dark:text-emerald-400 font-semibold" },
+    // "closed" or "filtered" state
+    { regex: /\b(?:closed|filtered)\b/g, className: "text-rose-400 dark:text-rose-400" },
+    // Service names (http, nginx, ssl, ssh, etc.)
+    { regex: /\b(?:http|https|nginx|apache|ssh|ftp|smtp|dns|mysql|postgres|redis|tcpwrapped|ssl)\b/gi, className: "text-amber-500 dark:text-amber-400" },
+    // Timing/duration like "41.92 seconds"
+    { regex: /\b\d+\.\d+\s*(?:seconds?|ms|s)\b/g, className: "text-sky-400 dark:text-sky-400" },
+    // Key success words
+    { regex: /\b(?:completed|done|success|finished|saved)\b/gi, className: "text-emerald-500 dark:text-emerald-400 font-semibold" },
+    // Key failure words
+    { regex: /\b(?:failed|error|timeout)\b/gi, className: "text-red-500 dark:text-red-400 font-semibold" },
+    // Scan action keywords
+    { regex: /\b(?:Starting|submitted|scanning|scanned)\b/gi, className: "text-teal-500 dark:text-teal-400" },
+    // File paths
+    { regex: /\/[\w\-./]+\.(?:json|xml|txt|csv|html|log)\b/g, className: "text-orange-400 dark:text-orange-400" },
+  ];
+
+  type Match = { start: number; end: number; className: string };
+  const matches: Match[] = [];
+
+  for (const { regex, className } of patterns) {
+    const re = new RegExp(regex.source, regex.flags);
+    let m: RegExpExecArray | null;
+    while ((m = re.exec(text)) !== null) {
+      const start = m.index;
+      const end = m.index + m[0].length;
+      const overlaps = matches.some(
+        (existing) => start < existing.end && end > existing.start
+      );
+      if (!overlaps) {
+        matches.push({ start, end, className });
+      }
+    }
+  }
+
+  if (matches.length === 0) {
+    return <span className="text-gray-700 dark:text-gray-300">{text}</span>;
+  }
+
+  matches.sort((a, b) => a.start - b.start);
+
+  const fragments: React.ReactNode[] = [];
+  let cursor = 0;
+
+  matches.forEach((match, i) => {
+    if (cursor < match.start) {
+      fragments.push(
+        <span key={`t-${i}`} className="text-gray-700 dark:text-gray-300">
+          {text.slice(cursor, match.start)}
+        </span>
+      );
+    }
+    fragments.push(
+      <span key={`m-${i}`} className={match.className}>
+        {text.slice(match.start, match.end)}
+      </span>
+    );
+    cursor = match.end;
+  });
+
+  if (cursor < text.length) {
+    fragments.push(
+      <span key="tail" className="text-gray-700 dark:text-gray-300">
+        {text.slice(cursor)}
+      </span>
+    );
+  }
+
+  return <>{fragments}</>;
+}
+
 export default function ScanPage() {
   const [activeTab, setActiveTab] = useState<ScanMode>("basic");
+  const searchParams = useSearchParams();
+  const initialProjectId = searchParams.get("project") || undefined;
 
   // ── Responsive ASCII ──────────────────────────────────────────────────────
   const { ref: asciiRef, fontSize: asciiFontSize } = useStableAsciiScale();
@@ -223,7 +308,7 @@ export default function ScanPage() {
     updateMediumOption,
     addMediumStep,
     removeMediumStep,
-  } = useScanController();
+  } = useScanController(initialProjectId);
 
   const activeRun = activeTab === "basic" ? basicRun : mediumRun;
   const activeLogs = activeTab === "basic" ? basicLogs : mediumLogs;
@@ -232,189 +317,191 @@ export default function ScanPage() {
   const isIdle = activeLogs.length === 0;
 
   return (
-    <div className="space-y-5">
-      <div>
-        <h1 className="text-[28px] font-bold text-foreground">New Scan</h1>
-        <p className="mt-1 text-[16px] text-muted-foreground">
-          Launch Basic, Medium, or Advanced scans and watch live logs as they run.
-        </p>
-      </div>
-
-      {metaError && (
-        <div className="rounded-lg border border-destructive/25 bg-destructive/10 p-4 text-sm text-destructive">
-          {metaError}
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950">
+      <div className="mx-auto space-y-3 px-3 py-3 sm:space-y-4 sm:px-4 sm:py-4 md:space-y-5 md:px-5 md:py-5 lg:space-y-6 lg:px-7 lg:py-6">
+        <div>
+          <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold text-gray-900 dark:text-white leading-tight">New Scan</h1>
+          <p className="mt-1 sm:mt-1.5 text-xs sm:text-sm md:text-sm lg:text-base text-gray-500 dark:text-gray-400 leading-relaxed">
+            Launch Basic, Medium, or Advanced scans and watch live logs as they run.
+          </p>
         </div>
-      )}
 
-      <div className="rounded-xl border border-border bg-card p-4">
-        {loadingMeta ? (
-          <ProjectSelectorSkeleton />
-        ) : (
-          <ProjectSelector
-            projects={projects}
-            value={projectId}
-            onChange={setProjectId}
-            disabled={loadingMeta}
-            loading={loadingMeta}
-          />
+        {metaError && (
+          <div className="rounded-lg border border-red-200 dark:border-red-900/50 bg-red-50 dark:bg-red-950/30 p-3 sm:p-4 text-xs sm:text-sm text-red-700 dark:text-red-400">
+            {metaError}
+          </div>
         )}
-      </div>
 
-      <div className={cn("grid gap-5", activeTab !== "advanced" && "xl:grid-cols-[minmax(0,1.25fr)_minmax(390px,0.75fr)]")}>
-        <div className="space-y-5">
-          <ScanModeTabs value={activeTab} onChange={setActiveTab} />
-
-          <ScanModePanel mode="basic" isActive={activeTab === "basic"}>
-            <ScanModeHeader
-              icon={ScanLine}
-              title="Basic Scan"
-              description="Choose one provided preset for a supported tool."
-            />
-            <BasicScanForm
-              target={basicTarget}
-              onTargetChange={setBasicTarget}
-              toolId={basicToolId}
-              onToolChange={setBasicToolId}
-              preset={basicPreset}
-              onPresetChange={setBasicPreset}
-              tools={basicTools}
-              disabled={isSubmitting}
-              onSubmit={submitBasic}
-            />
-          </ScanModePanel>
-
-          <ScanModePanel mode="medium" isActive={activeTab === "medium"}>
-            <ScanModeHeader
-              icon={Wrench}
-              title="Medium Scan"
-              description="Chain tools with allowed options from the tool metadata."
-            />
-            <MediumScanForm
-              target={mediumTarget}
-              onTargetChange={setMediumTarget}
-              steps={mediumSteps}
-              onStepChange={updateMediumStep}
-              onOptionChange={updateMediumOption}
-              onAddStep={addMediumStep}
-              onRemoveStep={removeMediumStep}
-              tools={mediumTools}
-              disabled={isSubmitting}
-              onSubmit={submitMedium}
-            />
-          </ScanModePanel>
-
-          {activeTab === "advanced" && (
-            <AdvancedTerminalPanel
-              projectId={projectId}
-              selectedProject={selectedProject}
-              logs={advancedLogs}
-              run={advancedRun}
-              errors={advancedErrors}
-              isSubmitting={isSubmitting}
-              onSubmit={submitAdvanced}
-              onReset={() => resetRun("advanced")}
+        <div className="rounded-lg sm:rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-3 sm:p-4">
+          {loadingMeta ? (
+            <ProjectSelectorSkeleton />
+          ) : (
+            <ProjectSelector
+              projects={projects}
+              value={projectId}
+              onChange={setProjectId}
+              disabled={loadingMeta}
+              loading={loadingMeta}
             />
           )}
         </div>
 
+        <div className={cn("grid gap-3 sm:gap-4 md:gap-5", activeTab !== "advanced" && "xl:grid-cols-[minmax(0,1.25fr)_minmax(390px,0.75fr)]")}>
+          <div className="space-y-3 sm:space-y-4 md:space-y-5">
+            <ScanModeTabs value={activeTab} onChange={setActiveTab} />
+
+            <ScanModePanel mode="basic" isActive={activeTab === "basic"}>
+              <ScanModeHeader
+                icon={ScanLine}
+                title="Basic Scan"
+                description="Choose one provided preset for a supported tool."
+              />
+              <BasicScanForm
+                target={basicTarget}
+                onTargetChange={setBasicTarget}
+                toolId={basicToolId}
+                onToolChange={setBasicToolId}
+                preset={basicPreset}
+                onPresetChange={setBasicPreset}
+                tools={basicTools}
+                disabled={isSubmitting || !projectId}
+                onSubmit={submitBasic}
+              />
+            </ScanModePanel>
+
+            <ScanModePanel mode="medium" isActive={activeTab === "medium"}>
+              <ScanModeHeader
+                icon={Wrench}
+                title="Medium Scan"
+                description="Chain tools with allowed options from the tool metadata."
+              />
+              <MediumScanForm
+                target={mediumTarget}
+                onTargetChange={setMediumTarget}
+                steps={mediumSteps}
+                onStepChange={updateMediumStep}
+                onOptionChange={updateMediumOption}
+                onAddStep={addMediumStep}
+                onRemoveStep={removeMediumStep}
+                tools={mediumTools}
+                disabled={isSubmitting || !projectId}
+                onSubmit={submitMedium}
+              />
+            </ScanModePanel>
+
+            {activeTab === "advanced" && (
+              <AdvancedTerminalPanel
+                projectId={projectId}
+                selectedProject={selectedProject}
+                logs={advancedLogs}
+                run={advancedRun}
+                errors={advancedErrors}
+                isSubmitting={isSubmitting}
+                onSubmit={submitAdvanced}
+                onReset={() => resetRun("advanced")}
+              />
+            )}
+          </div>
+
+          {activeTab !== "advanced" && (
+            <LiveConsole
+              run={activeRun}
+              errors={activeErrors}
+            />
+          )}
+        </div>
+
+        {/* BOTTOM SECTION: Full-width stream logs terminal */}
         {activeTab !== "advanced" && (
-          <LiveConsole
-            run={activeRun}
-            errors={activeErrors}
-          />
+          <div className="overflow-hidden rounded-lg sm:rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900">
+            <div className="flex items-center justify-between border-b border-gray-200 dark:border-gray-800 px-3 py-2 sm:px-4 sm:py-2.5">
+              <div className="flex items-center gap-2 sm:gap-3">
+                <div className="flex gap-1.5">
+                  <span className="h-2.5 w-2.5 sm:h-3 sm:w-3 rounded-full bg-red-500" />
+                  <span className="h-2.5 w-2.5 sm:h-3 sm:w-3 rounded-full bg-yellow-400" />
+                  <span className="h-2.5 w-2.5 sm:h-3 sm:w-3 rounded-full bg-green-500" />
+                </div>
+                <span className="font-mono text-[10px] sm:text-xs md:text-sm text-gray-500 dark:text-gray-400 truncate">
+                  {selectedProject ? `${selectedProject.name}@auto-offensive` : "auto-offensive"} - {activeTab} stream logs
+                </span>
+              </div>
+              <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+                {activeLogs.length > 0 && (
+                  <span className="rounded-full bg-teal-50 dark:bg-teal-500/10 px-2 py-0.5 sm:px-2.5 sm:py-1 text-[10px] sm:text-xs font-semibold text-teal-600 dark:text-teal-400">
+                    {activeLogs.length} lines
+                  </span>
+                )}
+                <button
+                  type="button"
+                  onClick={() => resetRun(activeTab)}
+                  className="inline-flex items-center gap-1.5 rounded-md border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 px-2 py-1 sm:px-2.5 text-[10px] sm:text-xs font-medium text-gray-500 dark:text-gray-400 transition-colors hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white"
+                >
+                  <RotateCcw size={12} />
+                  Reset
+                </button>
+              </div>
+            </div>
+            <div className="p-3 sm:p-4">
+              <div className="h-64 sm:h-80 md:h-96 lg:h-110 overflow-y-auto rounded-lg bg-gray-50 dark:bg-gray-800/50 text-[14px] sm:text-[17px] leading-relaxed font-[Consolas,monospace]">
+                {isIdle ? (
+                  <div className="flex flex-col items-center h-full">
+
+                    {/* ── Responsive ASCII container ─────────────────────────── */}
+                    <div
+                      ref={asciiRef}
+                      className="w-full overflow-x-auto"
+                      aria-hidden="true"
+                    >
+                      <pre
+                        className="select-none font-[Consolas,monospace]"
+                        style={{
+                          fontSize: `${asciiFontSize}px`,
+                          lineHeight: "1.2",
+                          letterSpacing: "0.01em",
+                          whiteSpace: "pre",
+                          color: "hsl(var(--primary) / 0.3)",
+                          margin: "0 auto",
+                          display: "table", // shrinks to content width so auto margins work
+                        }}
+                      >
+                        {ASCII_ART}
+                      </pre>
+                    </div>
+                    {/* ── End responsive ASCII ───────────────────────────────── */}
+
+                    <p className="text-gray-400 dark:text-gray-500 py-3 text-center text-[14px] sm:text-[17px] shrink-0">
+                      Logs will appear here when a scan starts.
+                    </p>
+                  </div>
+                ) : (
+                  <div className="p-2 sm:p-3">
+                    {activeLogs.map((line) => (
+                      <div key={line.id} className="flex gap-1.5 sm:gap-2 wrap-break-word py-0.5">
+                        <span className="shrink-0 text-gray-400 dark:text-gray-500">
+                          {new Date(line.timestamp).toLocaleTimeString()}
+                        </span>
+                        <span className="shrink-0 text-teal-600 dark:text-teal-400">[{line.source}]</span>
+                        <span
+                          className={cn(
+                            "shrink-0 font-semibold",
+                            line.level === "ERROR" && "text-red-600 dark:text-red-400",
+                            line.level === "WARN" && "text-amber-500 dark:text-amber-400",
+                            line.level === "INFO" && "text-emerald-500 dark:text-emerald-400",
+                            !["ERROR", "WARN", "INFO"].includes(line.level) && "text-gray-400 dark:text-gray-500"
+                          )}
+                        >
+                          {line.level}
+                        </span>
+                        {colorizeLogText(line.text)}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
         )}
       </div>
-
-      {/* BOTTOM SECTION: Full-width stream logs terminal */}
-      {activeTab !== "advanced" && (
-        <div className="overflow-hidden rounded-xl border border-border bg-card">
-          <div className="flex items-center justify-between border-b border-border px-4 py-2.5">
-            <div className="flex items-center gap-3">
-              <div className="flex gap-1.5">
-                <span className="h-3 w-3 rounded-full bg-red-500" />
-                <span className="h-3 w-3 rounded-full bg-yellow-400" />
-                <span className="h-3 w-3 rounded-full bg-green-500" />
-              </div>
-              <span className="font-mono text-muted-foreground">
-                {selectedProject ? `${selectedProject.name}@auto-offensive` : "auto-offensive"} - {activeTab} stream logs
-              </span>
-            </div>
-            <div className="flex items-center gap-2">
-              {activeLogs.length > 0 && (
-                <span className="rounded-full bg-primary/10 px-2.5 py-1 text-xs font-semibold text-primary">
-                  {activeLogs.length} lines
-                </span>
-              )}
-              <button
-                type="button"
-                onClick={() => resetRun(activeTab)}
-                className="inline-flex items-center gap-1.5 rounded-md border border-border bg-card px-2.5 py-1 text-xs font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-              >
-                <RotateCcw size={12} />
-                Reset
-              </button>
-            </div>
-          </div>
-          <div className="p-4">
-            <div className="h-110 overflow-y-auto rounded-lg bg-muted/30 text-xs leading-relaxed font-[Consolas,monospace]">
-              {isIdle ? (
-                <div className="flex flex-col items-center h-full">
-
-                  {/* ── Responsive ASCII container ─────────────────────────── */}
-                  <div
-                    ref={asciiRef}
-                    className="w-full overflow-x-auto"
-                    aria-hidden="true"
-                  >
-                    <pre
-                      className="select-none font-[Consolas,monospace]"
-                      style={{
-                        fontSize: `${asciiFontSize}px`,
-                        lineHeight: "1.2",
-                        letterSpacing: "0.01em",
-                        whiteSpace: "pre",
-                        color: "hsl(var(--primary) / 0.3)",
-                        margin: "0 auto",
-                        display: "table", // shrinks to content width so auto margins work
-                      }}
-                    >
-                      {ASCII_ART}
-                    </pre>
-                  </div>
-                  {/* ── End responsive ASCII ───────────────────────────────── */}
-
-                  <p className="text-muted-foreground/50 py-3 text-center text-[11px] shrink-0">
-                    Logs will appear here when a scan starts.
-                  </p>
-                </div>
-              ) : (
-                <div className="p-3">
-                  {activeLogs.map((line) => (
-                    <div key={line.id} className="flex gap-2 wrap-break-word py-0.5">
-                      <span className="shrink-0 text-muted-foreground/40">
-                        {new Date(line.timestamp).toLocaleTimeString()}
-                      </span>
-                      <span className="shrink-0 text-primary/70">[{line.source}]</span>
-                      <span
-                        className={cn(
-                          "shrink-0 font-semibold",
-                          line.level === "ERROR" && "text-destructive",
-                          line.level === "WARN" && "text-amber-500 dark:text-amber-400",
-                          line.level === "INFO" && "text-emerald-500 dark:text-emerald-400",
-                          !["ERROR", "WARN", "INFO"].includes(line.level) && "text-muted-foreground/60"
-                        )}
-                      >
-                        {line.level}
-                      </span>
-                      <span className="text-foreground/75">{line.text}</span>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
