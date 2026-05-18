@@ -165,7 +165,7 @@ export default function RegisterForm() {
               name="username"
               value={form.username}
               onChange={handleChange}
-              placeholder="taluntun"
+              placeholder="username"
               required
               autoComplete="username"
               className="w-full rounded-xl bg-slate-100 px-4 py-3 pr-10 text-sm text-gray-700 outline-none transition placeholder:text-gray-400 focus:ring-2 focus:ring-teal-400 dark:bg-gray-800 dark:text-gray-200"
@@ -184,7 +184,7 @@ export default function RegisterForm() {
               name="first_name"
               value={form.first_name}
               onChange={handleChange}
-              placeholder="Ta"
+              placeholder="First Name"
               required
               autoComplete="given-name"
               className="w-full rounded-xl bg-slate-100 px-4 py-3 text-sm text-gray-700 outline-none transition placeholder:text-gray-400 focus:ring-2 focus:ring-teal-400 dark:bg-gray-800 dark:text-gray-200"
@@ -200,7 +200,7 @@ export default function RegisterForm() {
               name="last_name"
               value={form.last_name}
               onChange={handleChange}
-              placeholder="Tun"
+              placeholder="Last Name"
               required
               autoComplete="family-name"
               className="w-full rounded-xl bg-slate-100 px-4 py-3 text-sm text-gray-700 outline-none transition placeholder:text-gray-400 focus:ring-2 focus:ring-teal-400 dark:bg-gray-800 dark:text-gray-200"
